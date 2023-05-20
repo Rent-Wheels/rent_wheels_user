@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "934369741663",
+    "project_id": "rentwheels-4b2e4",
+    "storage_bucket": "rentwheels-4b2e4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:934369741663:android:79ceae7ec829c447e9c4ea",
+        "android_client_info": {
+          "package_name": "com.example.rent_wheels"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "934369741663-f41m3pai5efonqo082f8tbrnm946g9q5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyALOeB6kUG-xLIaF3S8bgSGhi4VWwkMXTs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "934369741663-f41m3pai5efonqo082f8tbrnm946g9q5.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "934369741663-66pu38m0j6bndsqvlmd7f3etq4op0psd.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.rentWheels.RunnerTests"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
