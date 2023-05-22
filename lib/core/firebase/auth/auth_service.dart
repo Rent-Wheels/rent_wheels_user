@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 
-import 'package:rent_wheels/firebase/auth/auth_provider.dart';
-import 'package:rent_wheels/firebase/auth/firebase_auth_provider.dart';
+import 'package:rent_wheels/core/firebase/auth/auth_provider.dart';
+import 'package:rent_wheels/core/firebase/auth/firebase_auth_provider.dart';
 
 class AuthService implements AuthProvider {
   final AuthProvider provider;

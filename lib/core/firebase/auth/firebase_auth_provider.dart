@@ -1,9 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:rent_wheels/firebase/auth/auth_exceptions.dart';
+import 'package:rent_wheels/core/firebase/auth/auth_exceptions.dart';
 
 import 'package:rent_wheels/firebase_options.dart';
-import 'package:rent_wheels/firebase/auth/auth_provider.dart';
+import 'package:rent_wheels/core/firebase/auth/auth_provider.dart';
 
 class FirebaseAuthProvider implements AuthProvider {
   @override
