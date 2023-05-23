@@ -1,13 +1,13 @@
 import 'package:firebase_auth/firebase_auth.dart';
 
-import 'package:rent_wheels/core/firebase/auth/auth_provider.dart';
-import 'package:rent_wheels/core/firebase/auth/firebase_auth_provider.dart';
+import 'package:rent_wheels/core/auth/firebase/firebase_auth_service.dart';
+import 'package:rent_wheels/core/auth/firebase/firebase_auth_provider.dart';
 
-class AuthService implements AuthProvider {
-  final AuthProvider provider;
+class AuthService implements FirebaseAuthProvider {
+  final FirebaseAuthProvider provider;
   const AuthService(this.provider);
 
-  factory AuthService.firebase() => AuthService(FirebaseAuthProvider());
+  factory AuthService.firebase() => AuthService(FirebaseAuthService());
 
   @override
   Future<void> initialize() => provider.initialize();
@@ -17,10 +17,23 @@ class AuthService implements AuthProvider {
 
   @override
   Future createUserWithEmailAndPassword({
-    required email,
-    required password,
+    required String avatar,
+    required String name,
+    required String phoneNumber,
+    required String email,
+    required String password,
+    required DateTime dob,
+    required String residence,
   }) =>
-      provider.createUserWithEmailAndPassword(email: email, password: password);
+      provider.createUserWithEmailAndPassword(
+        avatar: avatar,
+        name: name,
+        phoneNumber: phoneNumber,
+        email: email,
+        password: password,
+        dob: dob,
+        residence: residence,
+      );
 
   @override
   Future signInWithEmailAndPassword({

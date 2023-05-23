@@ -1,11 +1,13 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:rent_wheels/core/firebase/auth/auth_exceptions.dart';
 
 import 'package:rent_wheels/firebase_options.dart';
-import 'package:rent_wheels/core/firebase/auth/auth_provider.dart';
+import 'package:rent_wheels/core/auth/auth_exceptions.dart';
+import 'package:rent_wheels/core/models/enums/auth.enum.dart';
+import 'package:rent_wheels/core/auth/backend/backend_auth_service.dart';
+import 'package:rent_wheels/core/auth/firebase/firebase_auth_provider.dart';
 
-class FirebaseAuthProvider implements AuthProvider {
+class FirebaseAuthService implements FirebaseAuthProvider {
   @override
   Future<void> logout() async {
     await FirebaseAuth.instance.signOut();
@@ -18,14 +20,35 @@ class FirebaseAuthProvider implements AuthProvider {
   }
 
   @override
-  Future createUserWithEmailAndPassword({required email, password}) async {
+  Future createUserWithEmailAndPassword({
+    required String avatar,
+    required String name,
+    required String phoneNumber,
+    required String email,
+    required String password,
+    required DateTime dob,
+    required String residence,
+  }) async {
     try {
       final user = await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
 
-      await verifyEmail(user: user.user!);
+      if (user.user != null) {
+        await verifyEmail(user: user.user!);
+
+        await BackendAuthService().createUser(
+          avatar: avatar,
+          userId: user.user!.uid,
+          name: name,
+          phoneNumber: phoneNumber,
+          email: email,
+          dob: dob,
+          residence: residence,
+          role: Roles.user,
+        );
+      }
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
         throw WeakPasswordAuthException();
@@ -69,6 +92,7 @@ class FirebaseAuthProvider implements AuthProvider {
   @override
   Future<void> deleteUser({required User user}) async {
     try {
+      await BackendAuthService().deleteUser(userId: user.uid);
       await user.delete();
     } on FirebaseAuthException catch (e) {
       if (e.code == 'requires-recent-login') {
