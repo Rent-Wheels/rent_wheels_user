@@ -5,7 +5,7 @@ abstract class FirebaseAuthProvider {
 
   Future<void> initialize();
 
-  Future createUserWithEmailAndPassword({
+  Future<UserCredential> createUserWithEmailAndPassword({
     required String avatar,
     required String name,
     required String phoneNumber,
@@ -15,7 +15,7 @@ abstract class FirebaseAuthProvider {
     required String residence,
   });
 
-  Future signInWithEmailAndPassword({
+  Future<UserCredential> signInWithEmailAndPassword({
     required email,
     required password,
   });

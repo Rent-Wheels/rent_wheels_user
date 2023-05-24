@@ -4,10 +4,9 @@ import 'dart:convert';
 import 'package:http/http.dart';
 import 'package:mime/mime.dart';
 import 'package:http_parser/http_parser.dart';
-import 'package:rent_wheels/core/auth/auth_exceptions.dart';
 
+import 'package:rent_wheels/core/auth/auth_exceptions.dart';
 import 'package:rent_wheels/core/models/auth/auth_model.dart';
-import 'package:rent_wheels/core/models/enums/auth.enum.dart';
 import 'package:rent_wheels/core/global/globals.dart' as global;
 import 'package:rent_wheels/core/auth/backend/backend_auth_provider.dart';
 
@@ -21,18 +20,23 @@ class BackendAuthService implements BackendAuthProvider {
     required String email,
     required DateTime dob,
     required String residence,
-    required Roles role,
   }) async {
     var request = MultipartRequest(
         'POST', Uri.parse('https://rent-wheels.braalex.me/users/'));
 
+    final ext = avatar.split('.').last;
     request.fields['userId'] = userId;
+    request.fields['name'] = name;
+    request.fields['phoneNumber'] = phoneNumber;
+    request.fields['email'] = email;
+    request.fields['dob'] = dob.toIso8601String();
+    request.fields['residence'] = residence;
     request.files.add(
       MultipartFile(
         'avatar',
         File(avatar).readAsBytes().asStream(),
         File(avatar).lengthSync(),
-        filename: 'avatar-$userId',
+        filename: 'avatar-$userId.$ext',
         contentType: MediaType.parse(
           lookupMimeType(avatar) ?? 'image/jpeg',
         ),

@@ -16,7 +16,7 @@ class AuthService implements FirebaseAuthProvider {
   Future<void> logout() => provider.logout();
 
   @override
-  Future createUserWithEmailAndPassword({
+  Future<UserCredential> createUserWithEmailAndPassword({
     required String avatar,
     required String name,
     required String phoneNumber,
@@ -36,7 +36,7 @@ class AuthService implements FirebaseAuthProvider {
       );
 
   @override
-  Future signInWithEmailAndPassword({
+  Future<UserCredential> signInWithEmailAndPassword({
     required email,
     required password,
   }) =>

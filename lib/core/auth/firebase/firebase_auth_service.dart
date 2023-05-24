@@ -3,7 +3,6 @@ import 'package:firebase_core/firebase_core.dart';
 
 import 'package:rent_wheels/firebase_options.dart';
 import 'package:rent_wheels/core/auth/auth_exceptions.dart';
-import 'package:rent_wheels/core/models/enums/auth.enum.dart';
 import 'package:rent_wheels/core/auth/backend/backend_auth_service.dart';
 import 'package:rent_wheels/core/auth/firebase/firebase_auth_provider.dart';
 
@@ -20,7 +19,7 @@ class FirebaseAuthService implements FirebaseAuthProvider {
   }
 
   @override
-  Future createUserWithEmailAndPassword({
+  Future<UserCredential> createUserWithEmailAndPassword({
     required String avatar,
     required String name,
     required String phoneNumber,
@@ -29,24 +28,24 @@ class FirebaseAuthService implements FirebaseAuthProvider {
     required DateTime dob,
     required String residence,
   }) async {
+    dynamic credential;
     try {
-      final user = await FirebaseAuth.instance.createUserWithEmailAndPassword(
+      credential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
 
-      if (user.user != null) {
-        await verifyEmail(user: user.user!);
+      if (credential.user != null) {
+        await verifyEmail(user: credential.user!);
 
         await BackendAuthService().createUser(
           avatar: avatar,
-          userId: user.user!.uid,
+          userId: credential.user!.uid,
           name: name,
           phoneNumber: phoneNumber,
           email: email,
           dob: dob,
           residence: residence,
-          role: Roles.user,
         );
       }
     } on FirebaseAuthException catch (e) {
@@ -56,12 +55,18 @@ class FirebaseAuthService implements FirebaseAuthProvider {
         throw InvalidEmailException();
       }
     }
+
+    return credential;
   }
 
   @override
-  Future signInWithEmailAndPassword({required email, required password}) async {
+  Future<UserCredential> signInWithEmailAndPassword({
+    required email,
+    required password,
+  }) async {
+    dynamic credential;
     try {
-      return await FirebaseAuth.instance.signInWithEmailAndPassword(
+      credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: email,
         password: password,
       );
@@ -72,6 +77,8 @@ class FirebaseAuthService implements FirebaseAuthProvider {
         throw InvalidPasswordAuthException();
       }
     }
+
+    return credential;
   }
 
   Future<void> verifyEmail({required user}) async {
@@ -92,8 +99,8 @@ class FirebaseAuthService implements FirebaseAuthProvider {
   @override
   Future<void> deleteUser({required User user}) async {
     try {
-      await BackendAuthService().deleteUser(userId: user.uid);
       await user.delete();
+      await BackendAuthService().deleteUser(userId: user.uid);
     } on FirebaseAuthException catch (e) {
       if (e.code == 'requires-recent-login') {
         throw GenericAuthException();
@@ -103,8 +110,10 @@ class FirebaseAuthService implements FirebaseAuthProvider {
 
   @override
   Future<void> reauthenticateUser({required email, required password}) async {
-    final UserCredential userCredential =
-        await signInWithEmailAndPassword(email: email, password: password);
+    final userCredential = await signInWithEmailAndPassword(
+      email: email,
+      password: password,
+    );
 
     await userCredential.user
         ?.reauthenticateWithCredential(userCredential.credential!);

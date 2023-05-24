@@ -22,7 +22,7 @@ class User {
         userId: json['userId'],
         name: json['name'],
         email: json['email'],
-        dob: json['dob'],
+        dob: DateTime.parse(json['dob']),
         phoneNumber: json['phoneNumber'],
         role: json['role'],
         profilePicture: json['profilePicture']);
