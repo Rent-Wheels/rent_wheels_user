@@ -1,7 +1,7 @@
-import 'package:rent_wheels/core/models/auth/auth_model.dart';
+import 'package:rent_wheels/core/models/user/user_model.dart';
 
 abstract class BackendAuthProvider {
-  Future<User> createUser({
+  Future<BackendUser> createUser({
     required String avatar,
     required String userId,
     required String name,

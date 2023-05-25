@@ -28,9 +28,9 @@ class FirebaseAuthService implements FirebaseAuthProvider {
     required DateTime dob,
     required String residence,
   }) async {
-    dynamic credential;
     try {
-      credential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
+      UserCredential credential =
+          await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
@@ -48,15 +48,15 @@ class FirebaseAuthService implements FirebaseAuthProvider {
           residence: residence,
         );
       }
+      return credential;
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
         throw WeakPasswordAuthException();
       } else if (e.code == 'email-already-in-use') {
         throw InvalidEmailException();
       }
+      throw GenericAuthException();
     }
-
-    return credential;
   }
 
   @override
@@ -64,9 +64,8 @@ class FirebaseAuthService implements FirebaseAuthProvider {
     required email,
     required password,
   }) async {
-    dynamic credential;
     try {
-      credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
+      return await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: email,
         password: password,
       );
@@ -76,11 +75,11 @@ class FirebaseAuthService implements FirebaseAuthProvider {
       } else if (e.code == 'wrong-password') {
         throw InvalidPasswordAuthException();
       }
+      throw GenericAuthException();
     }
-
-    return credential;
   }
 
+  @override
   Future<void> verifyEmail({required user}) async {
     await user.sendEmailVerification();
   }

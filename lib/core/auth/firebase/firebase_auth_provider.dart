@@ -20,6 +20,8 @@ abstract class FirebaseAuthProvider {
     required password,
   });
 
+  Future<void> verifyEmail({required User user});
+
   Future<void> resetPassword({
     required email,
   });

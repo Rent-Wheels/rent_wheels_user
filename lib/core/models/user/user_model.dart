@@ -1,4 +1,4 @@
-class User {
+class BackendUser {
   String userId;
   String name;
   String email;
@@ -7,7 +7,7 @@ class User {
   num role;
   String profilePicture;
 
-  User({
+  BackendUser({
     required this.userId,
     required this.name,
     required this.email,
@@ -17,8 +17,8 @@ class User {
     required this.profilePicture,
   });
 
-  factory User.fromJSON(Map<String, dynamic> json) {
-    return User(
+  factory BackendUser.fromJSON(Map<String, dynamic> json) {
+    return BackendUser(
         userId: json['userId'],
         name: json['name'],
         email: json['email'],

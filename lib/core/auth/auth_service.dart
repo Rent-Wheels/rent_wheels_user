@@ -43,6 +43,10 @@ class AuthService implements FirebaseAuthProvider {
       provider.signInWithEmailAndPassword(email: email, password: password);
 
   @override
+  Future<void> verifyEmail({required User user}) =>
+      provider.verifyEmail(user: user);
+
+  @override
   Future<void> resetPassword({
     required email,
   }) =>

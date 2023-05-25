@@ -6,13 +6,13 @@ import 'package:mime/mime.dart';
 import 'package:http_parser/http_parser.dart';
 
 import 'package:rent_wheels/core/auth/auth_exceptions.dart';
-import 'package:rent_wheels/core/models/auth/auth_model.dart';
+import 'package:rent_wheels/core/models/user/user_model.dart';
 import 'package:rent_wheels/core/global/globals.dart' as global;
 import 'package:rent_wheels/core/auth/backend/backend_auth_provider.dart';
 
 class BackendAuthService implements BackendAuthProvider {
   @override
-  Future<User> createUser({
+  Future<BackendUser> createUser({
     required String avatar,
     required String userId,
     required String name,
@@ -21,8 +21,8 @@ class BackendAuthService implements BackendAuthProvider {
     required DateTime dob,
     required String residence,
   }) async {
-    var request = MultipartRequest(
-        'POST', Uri.parse('https://rent-wheels.braalex.me/users/'));
+    var request =
+        MultipartRequest('POST', Uri.parse('${global.baseURL}/renters/'));
 
     final ext = avatar.split('.').last;
     request.fields['userId'] = userId;
@@ -47,7 +47,7 @@ class BackendAuthService implements BackendAuthProvider {
     final responseBody = await response.stream.bytesToString();
 
     if (response.statusCode == 201) {
-      return User.fromJSON(jsonDecode(responseBody));
+      return BackendUser.fromJSON(jsonDecode(responseBody));
     } else {
       throw GenericAuthException();
     }
@@ -55,10 +55,9 @@ class BackendAuthService implements BackendAuthProvider {
 
   @override
   deleteUser({required String userId}) async {
-    final headers = {'Authorization': 'Bearer ${global.accessToken}'};
     final response = await delete(
-      Uri.parse('https://rent-wheels.braalex.me/users/$userId'),
-      headers: headers,
+      Uri.parse('${global.baseURL}/users/$userId'),
+      headers: global.headers,
     );
 
     if (response.statusCode != 200) throw GenericAuthException();
