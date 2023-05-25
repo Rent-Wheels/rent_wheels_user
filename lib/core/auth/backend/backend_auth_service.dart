@@ -22,7 +22,7 @@ class BackendAuthService implements BackendAuthProvider {
     required String residence,
   }) async {
     var request =
-        MultipartRequest('POST', Uri.parse('${global.baseURL}/renters/'));
+        MultipartRequest('POST', Uri.parse('${global.baseURL}/users/'));
 
     final ext = avatar.split('.').last;
     request.fields['userId'] = userId;
