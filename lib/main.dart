@@ -4,8 +4,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:rent_wheels/tester.dart';
 import 'package:rent_wheels/core/auth/auth_service.dart';
 import 'package:rent_wheels/src/home/presentation/home.dart';
-import 'package:rent_wheels/core/global/globals.dart' as global;
 import 'package:rent_wheels/src/login/presentation/login.dart';
+import 'package:rent_wheels/core/global/globals.dart' as global;
 import 'package:rent_wheels/src/verify/presentation/verify_email.dart';
 import 'package:rent_wheels/core/backend/users/methods/user_methods.dart';
 
@@ -45,10 +45,12 @@ class _ConnectionPageState extends State<ConnectionPage> {
     final user = FirebaseAuth.instance.currentUser;
 
     if (user != null) {
+      await global.setGlobals(currentUser: user);
+
       final userDetails = await RentWheelsUserMethods()
           .getUserDetails(userId: global.user!.uid);
 
-      global.setGlobals(currentUser: user, fetchedUserDetails: userDetails);
+      await global.setGlobals(fetchedUserDetails: userDetails);
     }
   }
 

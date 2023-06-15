@@ -5,6 +5,7 @@ import 'package:rent_wheels/src/home/presentation/home.dart';
 import 'package:rent_wheels/core/global/globals.dart' as global;
 import 'package:rent_wheels/src/signup/presentation/signup.dart';
 import 'package:rent_wheels/src/verify/presentation/verify_email.dart';
+import 'package:rent_wheels/core/backend/users/methods/user_methods.dart';
 import 'package:rent_wheels/core/widgets/buttons/generic_button_widget.dart';
 
 class Login extends StatefulWidget {
@@ -41,7 +42,12 @@ class _LoginState extends State<Login> {
                   password: password.text,
                 );
 
-                global.setGlobals(currentUser: credential.user!);
+                final userDetails = await RentWheelsUserMethods()
+                    .getUserDetails(userId: credential.user!.uid);
+
+                global.setGlobals(
+                    currentUser: credential.user!,
+                    fetchedUserDetails: userDetails);
 
                 if (!mounted) return;
 

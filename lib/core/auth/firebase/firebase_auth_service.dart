@@ -36,8 +36,6 @@ class FirebaseAuthService implements FirebaseAuthProvider {
       );
 
       if (credential.user != null) {
-        await verifyEmail(user: credential.user!);
-
         await BackendAuthService().createUser(
           avatar: avatar,
           userId: credential.user!.uid,
@@ -47,6 +45,8 @@ class FirebaseAuthService implements FirebaseAuthProvider {
           dob: dob,
           residence: residence,
         );
+
+        await verifyEmail(user: credential.user!);
       }
       return credential;
     } on FirebaseAuthException catch (e) {
