@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:rent_wheels/core/models/cars/cars_model.dart';
+import 'package:rent_wheels/src/cars/presentation/car_details.dart';
 
 class AvailableCars extends StatefulWidget {
   final List<Car> cars;
@@ -18,8 +19,16 @@ class _AvailableCarsState extends State<AvailableCars> {
         itemCount: widget.cars.length,
         itemBuilder: (context, index) {
           List<Car> cars = widget.cars;
-          return ListTile(
-            title: Text(cars[index].make),
+          return InkWell(
+            onTap: () {
+              Navigator.of(context).push(MaterialPageRoute(
+                builder: (context) => CarDetails(car: cars[index]),
+              ));
+            },
+            child: ListTile(
+              title: Text(
+                  "${cars[index].yearOfManufacture} ${cars[index].make} ${cars[index].model}"),
+            ),
           );
         },
       ),
