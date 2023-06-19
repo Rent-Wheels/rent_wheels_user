@@ -30,7 +30,7 @@ class BackendAuthService implements BackendAuthProvider {
     request.fields['phoneNumber'] = phoneNumber;
     request.fields['email'] = email;
     request.fields['dob'] = dob.toIso8601String();
-    request.fields['residence'] = residence;
+    request.fields['placeOfResidence'] = residence;
     request.files.add(
       MultipartFile(
         'avatar',

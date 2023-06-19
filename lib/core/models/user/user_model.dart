@@ -8,6 +8,7 @@ class BackendUser {
   String phoneNumber;
   num role;
   String profilePicture;
+  String placeOfResidence;
   List<Car>? cars;
 
   BackendUser({
@@ -19,6 +20,7 @@ class BackendUser {
     required this.phoneNumber,
     required this.role,
     required this.profilePicture,
+    required this.placeOfResidence,
   });
 
   factory BackendUser.fromJSON(Map<String, dynamic> json) {
@@ -30,6 +32,7 @@ class BackendUser {
       phoneNumber: json['phoneNumber'],
       role: json['role'],
       profilePicture: json['profilePicture'],
+      placeOfResidence: json['placeOfResidence'],
       cars: List<Car>.from(json['cars'].map((car) => Car.fromJSON(car))),
     );
   }
