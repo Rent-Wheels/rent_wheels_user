@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:rent_wheels/core/backend/users/methods/user_methods.dart';
 
 import 'package:rent_wheels/core/models/cars/cars_model.dart';
+import 'package:rent_wheels/core/models/user/user_model.dart';
 import 'package:rent_wheels/src/renter/presentation/renter_profile.dart';
 
 class CarDetails extends StatefulWidget {
@@ -20,10 +22,13 @@ class _CarDetailsState extends State<CarDetails> {
         children: [
           Text(widget.car.make),
           GestureDetector(
-              onTap: () {
+              onTap: () async {
+                BackendUser? renter = await RentWheelsUserMethods()
+                    .getRenterDetails(userId: widget.car.owner);
+
+                if (!mounted) return;
                 Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) =>
-                      RenterDetails(renterId: widget.car.owner),
+                  builder: (context) => RenterDetails(renter: renter),
                 ));
               },
               child: const Text('Renter Details'))

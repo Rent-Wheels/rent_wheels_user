@@ -14,22 +14,18 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: FutureBuilder(
-          future: RentWheelsCarsMethods().getAllAvailableCars(),
-          builder: (context, snapshot) {
-            switch (snapshot.connectionState) {
-              case ConnectionState.done:
-                return snapshot.hasData
-                    ? AvailableCars(cars: snapshot.data!)
-                    : Text(snapshot.error.toString());
-              case ConnectionState.waiting:
-                return const CircularProgressIndicator();
-              default:
-                return const Text('Error');
-            }
-          },
-        ),
-      ),
+          child: StreamBuilder(
+        stream: RentWheelsCarsMethods().getAllAvailableCars(),
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            return AvailableCars(cars: snapshot.data!);
+          }
+          if (snapshot.hasError) {
+            return Text(snapshot.error.toString());
+          }
+          return const CircularProgressIndicator();
+        },
+      )),
     );
   }
 }

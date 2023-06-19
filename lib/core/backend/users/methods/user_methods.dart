@@ -17,7 +17,21 @@ class RentWheelsUserMethods implements RentWheelsUserEndpoints {
     if (response.statusCode == 200) {
       return BackendUser.fromJSON(jsonDecode(response.body));
     } else {
-      throw Exception();
+      throw Exception(response.body);
+    }
+  }
+
+  @override
+  Future<BackendUser> getRenterDetails({required String userId}) async {
+    final response = await get(
+      Uri.parse('${global.baseURL}/renters/$userId'),
+      headers: global.headers,
+    );
+
+    if (response.statusCode == 200) {
+      return BackendUser.fromJSON(jsonDecode(response.body));
+    } else {
+      throw Exception(response.body);
     }
   }
 }

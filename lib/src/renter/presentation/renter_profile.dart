@@ -1,19 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:rent_wheels/core/backend/users/methods/user_methods.dart';
+import 'package:rent_wheels/core/models/user/user_model.dart';
 
 class RenterDetails extends StatelessWidget {
-  final String renterId;
-  const RenterDetails({super.key, required this.renterId});
+  final BackendUser renter;
+  const RenterDetails({super.key, required this.renter});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: FutureBuilder(
-        future: RentWheelsUserMethods().getUserDetails(userId: renterId),
-        builder: (context, snapshot) {
-          return Text(snapshot.data!.name);
-        },
-      ),
-    );
+        body: Center(
+      child: Text(renter.name),
+    ));
   }
 }
