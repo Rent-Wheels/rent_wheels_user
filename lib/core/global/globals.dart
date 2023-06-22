@@ -10,8 +10,12 @@ String baseURL = 'http://10.0.2.2:3000';
 BackendUser? userDetails;
 
 setGlobals({User? currentUser, BackendUser? fetchedUserDetails}) async {
-  accessToken = await currentUser!.getIdToken();
-  user = currentUser;
-  headers = {'Authorization': 'Bearer $accessToken'};
-  userDetails = fetchedUserDetails;
+  if (currentUser != null) {
+    accessToken = await currentUser.getIdToken();
+    user = currentUser;
+    headers = {'Authorization': 'Bearer $accessToken'};
+  }
+  if (fetchedUserDetails != null) {
+    userDetails = fetchedUserDetails;
+  }
 }
