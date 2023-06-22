@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:rent_wheels/screen_implementer.dart';
 
 import 'package:rent_wheels/tester.dart';
 import 'package:rent_wheels/core/auth/auth_service.dart';
@@ -27,7 +26,7 @@ class RentWheelsApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const SelectLocation(),
+      home: const ConnectionPage(),
     );
   }
 }

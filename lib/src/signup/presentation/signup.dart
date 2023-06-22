@@ -4,7 +4,11 @@ import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_maps_webservice/places.dart';
+import 'package:google_api_headers/google_api_headers.dart';
+import 'package:flutter_google_places/flutter_google_places.dart';
 
+import 'package:rent_wheels/core/secrets/secrets.dart' as secret;
 import 'package:rent_wheels/core/auth/auth_service.dart';
 import 'package:rent_wheels/core/global/globals.dart' as global;
 import 'package:rent_wheels/src/verify/presentation/verify_email.dart';
@@ -21,6 +25,7 @@ class _SignUpState extends State<SignUp> {
   File? avatar;
   DateTime? dob;
   final picker = ImagePicker();
+  final placesKey = secret.mapsKey;
   TextEditingController name = TextEditingController();
   TextEditingController email = TextEditingController();
   TextEditingController password = TextEditingController();
@@ -50,6 +55,39 @@ class _SignUpState extends State<SignUp> {
         avatar = File(image.path);
       });
     }
+  }
+
+  Future<void> handlePressButton() async {
+    // show input autocomplete with selected mode
+    // then get the Prediction selected
+    Prediction? p = await PlacesAutocomplete.show(
+      context: context,
+      apiKey: placesKey,
+      language: "en",
+      decoration: InputDecoration(
+        hintText: 'Search',
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(20),
+          borderSide: const BorderSide(
+            color: Colors.white,
+          ),
+        ),
+      ),
+      components: [Component(Component.country, "gh")],
+      types: [],
+      strictbounds: false,
+    );
+    GoogleMapsPlaces places = GoogleMapsPlaces(
+      apiKey: placesKey,
+      apiHeaders: await const GoogleApiHeaders().getHeaders(),
+    );
+    PlacesDetailsResponse detail =
+        await places.getDetailsByPlaceId(p?.placeId ?? "");
+
+    setState(() {
+      residence.text =
+          '${detail.result.name}, ${detail.result.formattedAddress}';
+    });
   }
 
   @override
@@ -92,6 +130,8 @@ class _SignUpState extends State<SignUp> {
             controller: residence,
             decoration: const InputDecoration(hintText: 'Residence'),
           ),
+          // buildLocationTextfield(
+          //     location: residence.text, onTap: handlePressButton),
           Row(
             children: [
               Expanded(

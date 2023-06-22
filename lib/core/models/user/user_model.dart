@@ -33,7 +33,9 @@ class BackendUser {
       role: json['role'],
       profilePicture: json['profilePicture'],
       placeOfResidence: json['placeOfResidence'],
-      cars: List<Car>.from(json['cars'].map((car) => Car.fromJSON(car))),
+      cars: json['cars'] == null
+          ? null
+          : List<Car>.from(json['cars'].map((car) => Car.fromJSON(car))),
     );
   }
 }

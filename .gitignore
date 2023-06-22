@@ -1,5 +1,5 @@
 # Miscellaneous
-secrets.dart
+secrets
 *.class
 *.log
 *.pyc
