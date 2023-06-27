@@ -20,11 +20,11 @@ class _CarDetailsState extends State<CarDetails> {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          Text(widget.car.make),
+          Text(widget.car.make!),
           GestureDetector(
               onTap: () async {
                 BackendUser? renter = await RentWheelsUserMethods()
-                    .getRenterDetails(userId: widget.car.owner);
+                    .getRenterDetails(userId: widget.car.owner!);
 
                 if (!mounted) return;
                 Navigator.of(context).push(MaterialPageRoute(
