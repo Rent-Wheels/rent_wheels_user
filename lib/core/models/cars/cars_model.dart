@@ -4,6 +4,7 @@ class Car {
   String make;
   String model;
   num capacity;
+  String color;
   String yearOfManufacture;
   String registrationNumber;
   String condition;
@@ -23,6 +24,7 @@ class Car {
     required this.make,
     required this.model,
     required this.capacity,
+    required this.color,
     required this.yearOfManufacture,
     required this.registrationNumber,
     required this.condition,
@@ -45,6 +47,7 @@ class Car {
       model: json['model'],
       capacity: json['capacity'],
       yearOfManufacture: json['yearOfManufacture'],
+      color: json['color'],
       registrationNumber: json['registrationNumber'],
       condition: json['condition'],
       rate: json['rate'],
