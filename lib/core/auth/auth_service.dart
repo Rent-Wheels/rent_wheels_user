@@ -40,7 +40,10 @@ class AuthService implements FirebaseAuthProvider {
     required email,
     required password,
   }) =>
-      provider.signInWithEmailAndPassword(email: email, password: password);
+      provider.signInWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
 
   @override
   Future<void> verifyEmail({required User user}) =>
@@ -53,6 +56,15 @@ class AuthService implements FirebaseAuthProvider {
       provider.resetPassword(email: email);
 
   @override
+  Future<void> updateUserDetails(
+          {required User user, String? email, String? password}) =>
+      provider.updateUserDetails(
+        user: user,
+        email: email,
+        password: password,
+      );
+
+  @override
   Future<void> deleteUser({
     required User user,
   }) =>
@@ -63,5 +75,8 @@ class AuthService implements FirebaseAuthProvider {
     required email,
     required password,
   }) =>
-      provider.reauthenticateUser(email: email, password: password);
+      provider.reauthenticateUser(
+        email: email,
+        password: password,
+      );
 }

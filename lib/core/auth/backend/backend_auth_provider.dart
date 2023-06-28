@@ -12,6 +12,16 @@ abstract class BackendAuthProvider {
     required DateTime dob,
     required String residence,
   });
+
+  Future<BackendUser> updateUser({
+    required String? avatar,
+    required String userId,
+    required String name,
+    required String phoneNumber,
+    required String email,
+    required DateTime dob,
+    required String residence,
+  });
   Future<void> deleteUser({
     required String userId,
   });

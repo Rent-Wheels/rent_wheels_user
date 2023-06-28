@@ -34,4 +34,10 @@ abstract class FirebaseAuthProvider {
     required email,
     required password,
   });
+
+  Future<void> updateUserDetails({
+    required User user,
+    String? email,
+    String? password,
+  });
 }

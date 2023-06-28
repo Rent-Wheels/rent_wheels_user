@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:rent_wheels/screen_implementer.dart';
 
 import 'package:rent_wheels/tester.dart';
 import 'package:rent_wheels/core/auth/auth_service.dart';
-import 'package:rent_wheels/src/home/presentation/home.dart';
 import 'package:rent_wheels/src/login/presentation/login.dart';
 import 'package:rent_wheels/core/global/globals.dart' as global;
 import 'package:rent_wheels/src/verify/presentation/verify_email.dart';
@@ -20,13 +20,10 @@ class RentWheelsApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Rent Wheels',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
-      home: const ConnectionPage(),
+      home: ConnectionPage(),
     );
   }
 }
@@ -61,9 +58,9 @@ class _ConnectionPageState extends State<ConnectionPage> {
       builder: (context, snapshot) {
         switch (snapshot.connectionState) {
           case ConnectionState.done:
-            if (global.user != null) {
+            if (global.user != null && global.userDetails != null) {
               if (global.user!.emailVerified) {
-                return const Home();
+                return const AccountProfileMock();
               }
               return const VerifyEmail();
             } else {

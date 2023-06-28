@@ -2,6 +2,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 
 import 'package:rent_wheels/firebase_options.dart';
+
+import 'package:rent_wheels/core/global/globals.dart';
 import 'package:rent_wheels/core/auth/auth_exceptions.dart';
 import 'package:rent_wheels/core/auth/backend/backend_auth_service.dart';
 import 'package:rent_wheels/core/auth/firebase/firebase_auth_provider.dart';
@@ -10,6 +12,7 @@ class FirebaseAuthService implements FirebaseAuthProvider {
   @override
   Future<void> logout() async {
     await FirebaseAuth.instance.signOut();
+    resetGlobals();
   }
 
   @override
@@ -85,12 +88,31 @@ class FirebaseAuthService implements FirebaseAuthProvider {
   }
 
   @override
+  Future<void> updateUserDetails(
+      {required User user, String? email, String? password}) async {
+    try {
+      if (email != null) {
+        await user.updateEmail(email);
+      }
+      if (password != null) {
+        await user.updatePassword(password);
+      }
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'requires-recent-login') {
+        throw GenericAuthException();
+      } else if (e.code == 'email-already-in-use') {
+        throw InvalidEmailException();
+      }
+    }
+  }
+
+  @override
   Future<void> resetPassword({required email}) async {
     try {
       await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
     } on FirebaseAuthException catch (e) {
       if (e.code == 'requires-recent-login') {
-        throw GenericAuthException();
+        throw RequiresRecentLoginException();
       }
     }
   }
@@ -102,7 +124,7 @@ class FirebaseAuthService implements FirebaseAuthProvider {
       await BackendAuthService().deleteUser(userId: user.uid);
     } on FirebaseAuthException catch (e) {
       if (e.code == 'requires-recent-login') {
-        throw GenericAuthException();
+        throw RequiresRecentLoginException();
       }
     }
   }
