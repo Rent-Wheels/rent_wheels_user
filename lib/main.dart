@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:rent_wheels/screen_implementer.dart';
+import 'package:rent_wheels/src/home/presentation/home.dart';
 
 import 'package:rent_wheels/tester.dart';
 import 'package:rent_wheels/core/auth/auth_service.dart';
@@ -60,7 +60,7 @@ class _ConnectionPageState extends State<ConnectionPage> {
           case ConnectionState.done:
             if (global.user != null && global.userDetails != null) {
               if (global.user!.emailVerified) {
-                return const AccountProfileMock();
+                return const Home();
               }
               return const VerifyEmail();
             } else {
