@@ -99,7 +99,7 @@ class FirebaseAuthService implements FirebaseAuthProvider {
       }
     } on FirebaseAuthException catch (e) {
       if (e.code == 'requires-recent-login') {
-        throw GenericAuthException();
+        throw RequiresRecentLoginException();
       } else if (e.code == 'email-already-in-use') {
         throw InvalidEmailException();
       }
@@ -114,6 +114,7 @@ class FirebaseAuthService implements FirebaseAuthProvider {
       if (e.code == 'requires-recent-login') {
         throw RequiresRecentLoginException();
       }
+      throw Exception('Could not send email');
     }
   }
 
