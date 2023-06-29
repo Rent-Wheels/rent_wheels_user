@@ -353,7 +353,7 @@ class _SignUpState extends State<SignUp> {
                       residence: residence.text,
                     );
 
-                    global.setGlobals(currentUser: userCredential.user!);
+                    await global.setGlobals(currentUser: userCredential.user!);
 
                     if (!mounted) return;
                     Navigator.pop(context);

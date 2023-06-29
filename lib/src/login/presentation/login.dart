@@ -124,7 +124,7 @@ class _LoginState extends State<Login> {
                         final user = await RentWheelsUserMethods()
                             .getUserDetails(userId: global.user!.uid);
 
-                        global.setGlobals(fetchedUserDetails: user);
+                        await global.setGlobals(fetchedUserDetails: user);
 
                         if (!mounted) return;
                         Navigator.pop(context);

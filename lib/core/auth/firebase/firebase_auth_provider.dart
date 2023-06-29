@@ -30,7 +30,7 @@ abstract class FirebaseAuthProvider {
     required User user,
   });
 
-  Future<void> reauthenticateUser({
+  Future<UserCredential?> reauthenticateUser({
     required email,
     required password,
   });
