@@ -21,9 +21,11 @@ class _AvailableCarsState extends State<AvailableCars> {
           List<Car> cars = widget.cars;
           return InkWell(
             onTap: () {
-              Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) => CarDetails(car: cars[index]),
-              ));
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => CarDetails(car: cars[index]),
+                  ));
             },
             child: ListTile(
               title: Text(

@@ -80,6 +80,7 @@ class BackendAuthService implements BackendAuthProvider {
       request.fields['email'] = email;
       request.fields['dob'] = dob.toIso8601String();
       request.fields['placeOfResidence'] = residence;
+      request.fields['profilePicture'] = global.userDetails!.profilePicture;
 
       if (avatar != null) {
         request.files.add(

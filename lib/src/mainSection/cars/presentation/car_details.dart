@@ -27,9 +27,11 @@ class _CarDetailsState extends State<CarDetails> {
                     .getRenterDetails(userId: widget.car.owner!);
 
                 if (!mounted) return;
-                Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => RenterDetails(renter: renter),
-                ));
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => RenterDetails(renter: renter),
+                    ));
               },
               child: const Text('Renter Details'))
         ],

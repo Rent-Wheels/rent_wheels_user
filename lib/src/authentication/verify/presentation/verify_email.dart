@@ -48,7 +48,8 @@ class _VerifyEmailState extends State<VerifyEmail> {
                   await AuthService.firebase().logout();
                   if (!mounted) return;
                   Navigator.pop(context);
-                  Navigator.of(context).pushAndRemoveUntil(
+                  Navigator.pushAndRemoveUntil(
+                      context,
                       CupertinoPageRoute(
                         builder: (context) => const Login(),
                       ),

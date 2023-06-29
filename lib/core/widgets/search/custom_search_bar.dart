@@ -61,7 +61,7 @@ class CustomSearchScaffoldState extends PlacesAutocompleteState {
         onTap: (p) async {
           final location = await setLocation(p);
           if (!mounted) return;
-          Navigator.of(context).pop(location);
+          Navigator.pop(context, location);
         },
         logo: const Row(
           mainAxisAlignment: MainAxisAlignment.center,
