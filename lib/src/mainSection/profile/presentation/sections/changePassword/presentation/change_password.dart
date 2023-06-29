@@ -15,14 +15,14 @@ import 'package:rent_wheels/core/widgets/loadingIndicator/loading_indicator.dart
 import 'package:rent_wheels/core/widgets/buttons/adaptive_back_button_widget.dart';
 import 'package:rent_wheels/core/widgets/textfields/generic_textfield_widget.dart';
 
-class ResetPassword extends StatefulWidget {
-  const ResetPassword({super.key});
+class ChangePassword extends StatefulWidget {
+  const ChangePassword({super.key});
 
   @override
-  State<ResetPassword> createState() => _ResetPasswordState();
+  State<ChangePassword> createState() => _ChangePasswordState();
 }
 
-class _ResetPasswordState extends State<ResetPassword> {
+class _ChangePasswordState extends State<ChangePassword> {
   bool isOldPasswordValid = false;
   bool isNewPasswordValid = false;
   bool isPasswordConfirmationValid = false;

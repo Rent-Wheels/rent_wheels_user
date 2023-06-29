@@ -339,6 +339,12 @@ const heading5Information = TextStyle(
   fontSize: 16,
   color: rentWheelsInformationDark900,
 );
+const heading5Information500 = TextStyle(
+  fontWeight: FontWeight.w500,
+  fontFamily: 'Urbanist',
+  fontSize: 16,
+  color: rentWheelsInformationDark900,
+);
 const heading6Information = TextStyle(
   fontWeight: FontWeight.w500,
   fontFamily: 'Urbanist',
