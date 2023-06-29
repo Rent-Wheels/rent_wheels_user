@@ -5,6 +5,7 @@ import 'package:rent_wheels/core/widgets/theme/colors.dart';
 import 'package:rent_wheels/core/widgets/textStyles/text_styles.dart';
 
 buildGenericTextfield({
+  Widget? icon,
   int? minLines,
   int? maxLines,
   bool? isPassword,
@@ -56,6 +57,7 @@ buildGenericTextfield({
             hintText: hint,
             border: InputBorder.none,
             hintStyle: heading6Neutral500,
+            suffix: icon,
           ),
           onChanged: onChanged,
         ),
