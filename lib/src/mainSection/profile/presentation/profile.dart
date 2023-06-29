@@ -7,12 +7,13 @@ import 'package:rent_wheels/src/mainSection/profile/presentation/sections/accoun
 import 'package:rent_wheels/src/mainSection/profile/presentation/sections/changePassword/presentation/change_password.dart';
 
 import 'package:rent_wheels/core/auth/auth_service.dart';
-import 'package:rent_wheels/core/widgets/popups/error_popup.dart';
 import 'package:rent_wheels/core/widgets/sizes/sizes.dart';
 import 'package:rent_wheels/core/widgets/theme/colors.dart';
 import 'package:rent_wheels/core/widgets/spacing/spacing.dart';
 import 'package:rent_wheels/core/global/globals.dart' as global;
+import 'package:rent_wheels/core/widgets/popups/error_popup.dart';
 import 'package:rent_wheels/core/widgets/textStyles/text_styles.dart';
+import 'package:rent_wheels/core/backend/users/methods/user_methods.dart';
 import 'package:rent_wheels/core/widgets/buttons/generic_button_widget.dart';
 import 'package:rent_wheels/src/authentication/login/presentation/login.dart';
 import 'package:rent_wheels/core/widgets/loadingIndicator/loading_indicator.dart';
@@ -25,6 +26,13 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
+  @override
+  void initState() {
+    RentWheelsUserMethods().getUserDetails(userId: global.user!.uid).then(
+        (userDetails) => global.setGlobals(fetchedUserDetails: userDetails));
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

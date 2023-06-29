@@ -76,21 +76,9 @@ class _MainSectionState extends State<MainSection> {
             ),
           ),
           BottomNavigationBarItem(
-            label: 'All Cars',
-            icon: SvgPicture.asset(
-              currentIndex == 1
-                  ? 'assets/svgs/active_car.svg'
-                  : 'assets/svgs/inactive_car.svg',
-              colorFilter: const ColorFilter.mode(
-                rentWheelsBrandDark900,
-                BlendMode.srcIn,
-              ),
-            ),
-          ),
-          BottomNavigationBarItem(
             label: 'Reservations',
             icon: SvgPicture.asset(
-              currentIndex == 2
+              currentIndex == 1
                   ? 'assets/svgs/active_reservation.svg'
                   : 'assets/svgs/inactive_reservation.svg',
               colorFilter: const ColorFilter.mode(
@@ -102,7 +90,7 @@ class _MainSectionState extends State<MainSection> {
           BottomNavigationBarItem(
             label: 'Profile',
             icon: SvgPicture.asset(
-              currentIndex == 3
+              currentIndex == 2
                   ? 'assets/svgs/active_profile.svg'
                   : 'assets/svgs/inactive_profile.svg',
               colorFilter: const ColorFilter.mode(

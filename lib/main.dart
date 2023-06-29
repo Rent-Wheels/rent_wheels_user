@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:rent_wheels/src/mainSection/home/presentation/home.dart';
 
 import 'package:rent_wheels/tester.dart';
-import 'package:rent_wheels/core/auth/auth_service.dart';
+
+import 'package:rent_wheels/src/mainSection/base.dart';
 import 'package:rent_wheels/src/authentication/login/presentation/login.dart';
-import 'package:rent_wheels/core/global/globals.dart' as global;
 import 'package:rent_wheels/src/authentication/verify/presentation/verify_email.dart';
+
+import 'package:rent_wheels/core/auth/auth_service.dart';
+import 'package:rent_wheels/core/global/globals.dart' as global;
 import 'package:rent_wheels/core/backend/users/methods/user_methods.dart';
 
 void main() {
@@ -60,7 +62,7 @@ class _ConnectionPageState extends State<ConnectionPage> {
           case ConnectionState.done:
             if (global.user != null && global.userDetails != null) {
               if (global.user!.emailVerified) {
-                return const Home();
+                return const MainSection();
               }
               return const VerifyEmail();
             } else {
