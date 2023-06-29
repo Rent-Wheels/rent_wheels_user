@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:string_validator/string_validator.dart';
 
-import 'package:rent_wheels/src/home/presentation/home.dart';
-import 'package:rent_wheels/src/signup/presentation/signup.dart';
-import 'package:rent_wheels/src/verify/presentation/verify_email.dart';
-import 'package:rent_wheels/src/resetPassword/presentation/forgot_password.dart';
+import 'package:rent_wheels/src/mainSection/home/presentation/home.dart';
+import 'package:rent_wheels/src/authentication/signup/presentation/signup.dart';
+import 'package:rent_wheels/src/authentication/verify/presentation/verify_email.dart';
+import 'package:rent_wheels/src/authentication/resetPassword/presentation/forgot_password.dart';
 
 import 'package:rent_wheels/core/auth/auth_service.dart';
 import 'package:rent_wheels/core/widgets/sizes/sizes.dart';

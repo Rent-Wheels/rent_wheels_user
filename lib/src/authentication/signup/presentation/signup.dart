@@ -7,8 +7,8 @@ import 'package:image_picker/image_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:string_validator/string_validator.dart';
 
-import 'package:rent_wheels/src/search/presentation/custom_search_bar.dart';
-import 'package:rent_wheels/src/verify/presentation/verify_email.dart';
+import 'package:rent_wheels/core/widgets/search/custom_search_bar.dart';
+import 'package:rent_wheels/src/authentication/verify/presentation/verify_email.dart';
 
 import 'package:rent_wheels/core/auth/auth_service.dart';
 import 'package:rent_wheels/core/widgets/sizes/sizes.dart';

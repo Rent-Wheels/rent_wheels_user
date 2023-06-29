@@ -3,7 +3,7 @@ import 'package:rent_wheels/core/backend/users/methods/user_methods.dart';
 
 import 'package:rent_wheels/core/models/cars/cars_model.dart';
 import 'package:rent_wheels/core/models/user/user_model.dart';
-import 'package:rent_wheels/src/renter/presentation/renter_profile.dart';
+import 'package:rent_wheels/src/mainSection/renter/presentation/renter_profile.dart';
 
 class CarDetails extends StatefulWidget {
   final Car car;

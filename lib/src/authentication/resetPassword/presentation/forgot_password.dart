@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:string_validator/string_validator.dart';
 
-import 'package:rent_wheels/src/resetPassword/presentation/reset_password_success.dart';
+import 'package:rent_wheels/src/authentication/resetPassword/presentation/reset_password_success.dart';
 
 import 'package:rent_wheels/core/auth/auth_service.dart';
 import 'package:rent_wheels/core/widgets/sizes/sizes.dart';
