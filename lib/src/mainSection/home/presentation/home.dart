@@ -18,9 +18,9 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  int promoIndex = 0;
-  final CarouselController promo = CarouselController();
-  List<String> items = ['1', '2', '3', '4', '5', '6'];
+  int _promoIndex = 0;
+  final CarouselController _promo = CarouselController();
+  final List<String> _items = ['1', '2', '3', '4', '5', '6'];
 
   String getLocationSuffix() {
     List<String> splitLocation =
@@ -32,7 +32,7 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    List<Widget> carouselItems = items
+    List<Widget> carouselItems = _items
         .map(
           (e) => Center(
             child: Text(e),
@@ -82,12 +82,12 @@ class _HomeState extends State<Home> {
                 ],
               ),
               buildPromoCarousel(
-                index: promoIndex,
+                index: _promoIndex,
                 context: context,
-                controller: promo,
+                controller: _promo,
                 onPageChanged: (index, _) {
                   setState(() {
-                    promoIndex = index;
+                    _promoIndex = index;
                   });
                 },
                 items: carouselItems,
