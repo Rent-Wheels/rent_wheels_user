@@ -1,5 +1,3 @@
-import 'package:rent_wheels/core/models/cars/cars_model.dart';
-
 class BackendUser {
   String userId;
   String name;
@@ -9,7 +7,7 @@ class BackendUser {
   num role;
   String profilePicture;
   String placeOfResidence;
-  List<Car>? cars;
+  List<String>? cars;
 
   BackendUser({
     this.cars,
@@ -35,7 +33,7 @@ class BackendUser {
       placeOfResidence: json['placeOfResidence'],
       cars: json['cars'] == null
           ? null
-          : List<Car>.from(json['cars'].map((car) => Car.fromJSON(car))),
+          : List<String>.from(json['cars'].map((car) => car.toString())),
     );
   }
 }

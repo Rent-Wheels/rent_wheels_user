@@ -1,8 +1,9 @@
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:rent_wheels/src/mainSection/home/widgets/promo_carousel_widget.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 
+import 'package:rent_wheels/src/mainSection/home/widgets/promo_carousel_widget.dart';
 import 'package:rent_wheels/src/mainSection/home/widgets/svg_icon_button_widgets.dart';
+import 'package:rent_wheels/src/mainSection/home/widgets/promo_carousel_item_widget.dart';
 
 import 'package:rent_wheels/core/widgets/sizes/sizes.dart';
 import 'package:rent_wheels/core/widgets/theme/colors.dart';
@@ -20,7 +21,6 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   int _promoIndex = 0;
   final CarouselController _promo = CarouselController();
-  final List<String> _items = ['1', '2', '3', '4', '5', '6'];
 
   String getLocationSuffix() {
     List<String> splitLocation =
@@ -32,13 +32,18 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    List<Widget> carouselItems = _items
-        .map(
-          (e) => Center(
-            child: Text(e),
-          ),
-        )
-        .toList();
+    List<Widget> carouselItems = [
+      buildPromoCarouselItem(
+        label: 'Get up to 20% off your first ride',
+        image: 'assets/images/new_user_promo_banner.jpeg',
+        context: context,
+      ),
+      buildPromoCarouselItem(
+        label: 'New year 2023 25% off promo',
+        image: 'assets/images/new_year_promo_banner.jpg',
+        context: context,
+      ),
+    ];
 
     return Scaffold(
         backgroundColor: rentWheelsNeutralLight0,
@@ -81,6 +86,7 @@ class _HomeState extends State<Home> {
                   ),
                 ],
               ),
+              Space().height(context, 0.03),
               buildPromoCarousel(
                 index: _promoIndex,
                 context: context,
