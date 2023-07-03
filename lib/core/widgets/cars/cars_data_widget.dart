@@ -7,35 +7,62 @@ import 'package:rent_wheels/core/widgets/sizes/sizes.dart';
 import 'package:rent_wheels/core/widgets/spacing/spacing.dart';
 import 'package:rent_wheels/core/widgets/textStyles/text_styles.dart';
 
-SizedBox buildCarsData({
+Container buildCarsData({
   required double width,
   required Car carDetails,
+  required bool isLoading,
   required BuildContext context,
 }) {
-  return SizedBox(
+  return Container(
     width: width,
+    margin: EdgeInsets.only(right: Sizes().width(context, 0.03)),
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Container(
-          height: Sizes().height(context, 0.03),
+          height: Sizes().height(context, 0.2),
+          width: width,
           decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(Sizes().height(context, 0.02)),
+            color: Colors.black,
             image: DecorationImage(
+              fit: BoxFit.cover,
               image: CachedNetworkImageProvider(
                 '${global.baseURL}/${carDetails.media![0].mediaURL}',
               ),
             ),
           ),
         ),
-        Text(
-          '${carDetails.yearOfManufacture} ${carDetails.make} ${carDetails.model}',
-          style: heading4Information,
-        ),
-        Space().height(context, 0.02),
-        Text(
-          'GH¢${carDetails.rate} ${carDetails.plan}',
-          style: heading4Information,
-        ),
+        Space().height(context, 0.01),
+        isLoading
+            ? Container(
+                width: double.infinity,
+                height: Sizes().height(context, 0.02),
+                decoration: BoxDecoration(
+                  color: Colors.black,
+                  borderRadius:
+                      BorderRadius.circular(Sizes().height(context, 0.2)),
+                ),
+              )
+            : Text(
+                '${carDetails.yearOfManufacture} ${carDetails.make} ${carDetails.model}',
+                style: heading4Information,
+              ),
+        Space().height(context, 0.01),
+        isLoading
+            ? Container(
+                width: Sizes().width(context, 0.2),
+                height: Sizes().height(context, 0.02),
+                decoration: BoxDecoration(
+                  color: Colors.black,
+                  borderRadius:
+                      BorderRadius.circular(Sizes().height(context, 0.2)),
+                ),
+              )
+            : Text(
+                'GH¢${carDetails.rate} ${carDetails.plan}',
+                style: body1Information,
+              ),
       ],
     ),
   );

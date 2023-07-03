@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:rent_wheels/core/models/cars/cars_model.dart';
+import 'package:rent_wheels/core/widgets/loadingIndicator/shimmer_loading_placeholder.dart';
 
 import 'package:rent_wheels/core/widgets/sizes/sizes.dart';
 import 'package:rent_wheels/core/widgets/cars/cars_data_widget.dart';
@@ -24,18 +26,13 @@ class _AvailableCarsNearYouDataState extends State<AvailableCarsNearYouData> {
             scrollDirection: Axis.horizontal,
             children: snapshot.data!.map((car) {
               return buildCarsData(
-                width: Sizes().width(context, 0.5),
                 carDetails: car,
+                isLoading: false,
                 context: context,
+                width: Sizes().width(context, 0.6),
               );
             }).toList(),
           );
-          // return buildCarsData(
-          //   width: Sizes().width(context, 0.3),
-          //   carDetails: snapshot!.data,
-          //   context: context,
-          // );
-          // return AvailableCars(cars: snapshot.data!);
         }
         if (snapshot.hasError) {
           return const Text(
@@ -43,7 +40,21 @@ class _AvailableCarsNearYouDataState extends State<AvailableCarsNearYouData> {
             style: heading3Error,
           );
         }
-        return const CircularProgressIndicator();
+        return ListView.builder(
+          itemCount: 2,
+          scrollDirection: Axis.horizontal,
+          itemBuilder: (context, _) {
+            return ShimmerLoading(
+              isLoading: true,
+              child: buildCarsData(
+                isLoading: true,
+                context: context,
+                carDetails: Car(media: [Media(mediaURL: '')]),
+                width: Sizes().width(context, 0.6),
+              ),
+            );
+          },
+        );
       },
     );
   }
