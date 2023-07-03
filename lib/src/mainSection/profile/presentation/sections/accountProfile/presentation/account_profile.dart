@@ -7,8 +7,6 @@ import 'package:image_picker/image_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:string_validator/string_validator.dart';
 
-import 'package:rent_wheels/core/widgets/search/custom_search_bar.dart';
-
 import 'package:rent_wheels/core/auth/auth_service.dart';
 import 'package:rent_wheels/core/widgets/sizes/sizes.dart';
 import 'package:rent_wheels/core/widgets/theme/colors.dart';
@@ -18,6 +16,7 @@ import 'package:rent_wheels/core/global/globals.dart' as global;
 import 'package:rent_wheels/core/widgets/popups/error_popup.dart';
 import 'package:rent_wheels/core/widgets/popups/success_popup.dart';
 import 'package:rent_wheels/core/widgets/textStyles/text_styles.dart';
+import 'package:rent_wheels/core/widgets/search/custom_search_bar.dart';
 import 'package:rent_wheels/core/auth/backend/backend_auth_service.dart';
 import 'package:rent_wheels/core/widgets/buttons/generic_button_widget.dart';
 import 'package:rent_wheels/core/widgets/textfields/tappable_textfield.dart';

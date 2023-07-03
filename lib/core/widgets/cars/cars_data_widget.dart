@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
-import 'package:rent_wheels/core/models/cars/cars_model.dart';
-import 'package:rent_wheels/core/global/globals.dart' as global;
 import 'package:rent_wheels/core/widgets/sizes/sizes.dart';
+import 'package:rent_wheels/core/widgets/theme/colors.dart';
+import 'package:rent_wheels/core/models/cars/cars_model.dart';
 import 'package:rent_wheels/core/widgets/spacing/spacing.dart';
+import 'package:rent_wheels/core/global/globals.dart' as global;
 import 'package:rent_wheels/core/widgets/textStyles/text_styles.dart';
 
 Container buildCarsData({
@@ -24,7 +25,7 @@ Container buildCarsData({
           width: width,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(Sizes().height(context, 0.02)),
-            color: Colors.black,
+            color: rentWheelsNeutralLight0,
             image: DecorationImage(
               fit: BoxFit.cover,
               image: CachedNetworkImageProvider(
@@ -39,7 +40,7 @@ Container buildCarsData({
                 width: double.infinity,
                 height: Sizes().height(context, 0.02),
                 decoration: BoxDecoration(
-                  color: Colors.black,
+                  color: rentWheelsNeutralLight0,
                   borderRadius:
                       BorderRadius.circular(Sizes().height(context, 0.2)),
                 ),
@@ -54,7 +55,7 @@ Container buildCarsData({
                 width: Sizes().width(context, 0.2),
                 height: Sizes().height(context, 0.02),
                 decoration: BoxDecoration(
-                  color: Colors.black,
+                  color: rentWheelsNeutralLight0,
                   borderRadius:
                       BorderRadius.circular(Sizes().height(context, 0.2)),
                 ),

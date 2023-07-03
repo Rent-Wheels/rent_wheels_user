@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:loading_indicator/loading_indicator.dart';
 
 import 'package:rent_wheels/core/widgets/sizes/sizes.dart';
+import 'package:rent_wheels/core/widgets/theme/colors.dart';
 import 'package:rent_wheels/core/widgets/spacing/spacing.dart';
 import 'package:rent_wheels/core/widgets/textStyles/text_styles.dart';
-import 'package:rent_wheels/core/widgets/theme/colors.dart';
 
 Future<dynamic> buildLoadingIndicator(
         BuildContext context, String loadingMessage) =>

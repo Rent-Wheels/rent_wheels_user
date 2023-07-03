@@ -48,10 +48,6 @@ class _MainSectionState extends State<MainSection> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: rentWheelsNeutralLight0,
-      appBar: AppBar(
-        backgroundColor: rentWheelsNeutralLight0,
-        elevation: 0,
-      ),
       body: _pages.elementAt(currentIndex),
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
-import 'package:rent_wheels/core/models/cars/cars_model.dart';
 import 'package:rent_wheels/src/mainSection/cars/presentation/car_details.dart';
+
+import 'package:rent_wheels/core/models/cars/cars_model.dart';
 
 class AvailableCars extends StatefulWidget {
   final List<Car> cars;

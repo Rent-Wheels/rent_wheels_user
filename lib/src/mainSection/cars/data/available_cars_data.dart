@@ -7,19 +7,18 @@ import 'package:rent_wheels/core/widgets/textStyles/text_styles.dart';
 import 'package:rent_wheels/core/backend/car/methods/cars_methods.dart';
 import 'package:rent_wheels/core/widgets/loadingIndicator/shimmer_loading_placeholder.dart';
 
-class AvailableCarsNearYouData extends StatefulWidget {
-  const AvailableCarsNearYouData({super.key});
+class AvailableCarsData extends StatefulWidget {
+  const AvailableCarsData({super.key});
 
   @override
-  State<AvailableCarsNearYouData> createState() =>
-      _AvailableCarsNearYouDataState();
+  State<AvailableCarsData> createState() => _AvailableCarsDataState();
 }
 
-class _AvailableCarsNearYouDataState extends State<AvailableCarsNearYouData> {
+class _AvailableCarsDataState extends State<AvailableCarsData> {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
-      stream: RentWheelsCarsMethods().getAvailableCarsNearYou(),
+      stream: RentWheelsCarsMethods().getAllAvailableCars(),
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           return ListView(
