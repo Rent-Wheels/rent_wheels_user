@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:rent_wheels/core/models/enums/enums.dart';
 
 import 'package:rent_wheels/src/mainSection/cars/data/available_cars_data.dart';
 import 'package:rent_wheels/src/mainSection/home/widgets/promo_carousel_widget.dart';
@@ -33,22 +34,6 @@ class _HomeState extends State<Home> {
     return '$place, $country';
   }
 
-  final _shimmerGradient = const LinearGradient(
-    colors: [
-      Color(0xFFEBEBF4),
-      Color(0xFFF4F4F4),
-      Color(0xFFEBEBF4),
-    ],
-    stops: [
-      0.1,
-      0.3,
-      0.4,
-    ],
-    begin: Alignment(-1.0, -0.3),
-    end: Alignment(1.0, 0.3),
-    tileMode: TileMode.clamp,
-  );
-
   @override
   Widget build(BuildContext context) {
     List<Widget> carouselItems = [
@@ -66,38 +51,8 @@ class _HomeState extends State<Home> {
 
     return Scaffold(
         backgroundColor: rentWheelsNeutralLight0,
-        // appBar: AppBar(
-        //   elevation: 0,
-        //   backgroundColor: rentWheelsNeutralLight0,
-        //   foregroundColor: rentWheelsInformationDark900,
-        //   title: Column(
-        //     crossAxisAlignment: CrossAxisAlignment.start,
-        //     children: [
-        //       const Text(
-        //         'Your location',
-        //         style: body1Information,
-        //       ),
-        //       Space().height(context, 0.003),
-        //       Text(
-        //         getLocationSuffix(),
-        //         style: heading4Information,
-        //       ),
-        //     ],
-        //   ),
-        //   actions: [
-        //     buildSVGIconButton(
-        //       svg: 'assets/svgs/search.svg',
-        //       onPressed: () {},
-        //     ),
-        //     Space().width(context, 0.07),
-        //     buildSVGIconButton(
-        //       svg: 'assets/svgs/notifications.svg',
-        //       onPressed: () {},
-        //     ),
-        //   ],
-        // ),
         body: Shimmer(
-          linearGradient: _shimmerGradient,
+          linearGradient: global.shimmerGradient,
           child: CustomScrollView(
             physics: const BouncingScrollPhysics(
               parent: AlwaysScrollableScrollPhysics(),
@@ -107,12 +62,15 @@ class _HomeState extends State<Home> {
                 pinned: true,
                 backgroundColor: rentWheelsNeutralLight0,
                 elevation: 0,
-                collapsedHeight: Sizes().height(context, 0.07),
+                collapsedHeight: Sizes().height(context, 0.083),
                 expandedHeight: Sizes().height(context, 0.13),
                 flexibleSpace: FlexibleSpaceBar(
                   title: Padding(
-                    padding: EdgeInsets.symmetric(
-                        horizontal: Sizes().height(context, 0.02)),
+                    padding: EdgeInsets.only(
+                      left: Sizes().height(context, 0.02),
+                      right: Sizes().height(context, 0.02),
+                      top: Sizes().height(context, 0.04),
+                    ),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
@@ -216,7 +174,9 @@ class _HomeState extends State<Home> {
                       Space().height(context, 0.02),
                       SizedBox(
                         height: Sizes().height(context, 0.27),
-                        child: const AvailableCarsData(),
+                        child: const AvailableCarsData(
+                          type: AvailableCarsType.preview,
+                        ),
                       ),
                     ],
                   ),

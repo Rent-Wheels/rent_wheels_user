@@ -1,5 +1,6 @@
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter/material.dart';
+import 'package:rent_wheels/src/mainSection/cars/presentation/available_cars.dart';
 
 import 'package:rent_wheels/src/mainSection/home/presentation/home.dart';
 import 'package:rent_wheels/src/mainSection/profile/presentation/profile.dart';
@@ -34,6 +35,7 @@ class _MainSectionState extends State<MainSection> {
 
   static const List<Widget> _pages = [
     Home(),
+    AvailableCars(),
     Reservations(),
     Profile(),
   ];
@@ -72,9 +74,21 @@ class _MainSectionState extends State<MainSection> {
             ),
           ),
           BottomNavigationBarItem(
-            label: 'Reservations',
+            label: 'Available Cars',
             icon: SvgPicture.asset(
               currentIndex == 1
+                  ? 'assets/svgs/active_car.svg'
+                  : 'assets/svgs/inactive_car.svg',
+              colorFilter: const ColorFilter.mode(
+                rentWheelsBrandDark900,
+                BlendMode.srcIn,
+              ),
+            ),
+          ),
+          BottomNavigationBarItem(
+            label: 'Reservations',
+            icon: SvgPicture.asset(
+              currentIndex == 2
                   ? 'assets/svgs/active_reservation.svg'
                   : 'assets/svgs/inactive_reservation.svg',
               colorFilter: const ColorFilter.mode(
@@ -86,7 +100,7 @@ class _MainSectionState extends State<MainSection> {
           BottomNavigationBarItem(
             label: 'Profile',
             icon: SvgPicture.asset(
-              currentIndex == 2
+              currentIndex == 3
                   ? 'assets/svgs/active_profile.svg'
                   : 'assets/svgs/inactive_profile.svg',
               colorFilter: const ColorFilter.mode(

@@ -37,6 +37,10 @@ class _ProfileState extends State<Profile> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: rentWheelsNeutralLight0,
+      appBar: AppBar(
+        elevation: 0,
+        backgroundColor: rentWheelsNeutralLight0,
+      ),
       body: SingleChildScrollView(
         child: Padding(
           padding: EdgeInsets.all(Sizes().height(context, 0.02)),

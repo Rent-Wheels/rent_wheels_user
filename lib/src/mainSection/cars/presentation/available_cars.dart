@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 
-import 'package:rent_wheels/src/mainSection/cars/presentation/car_details.dart';
+import 'package:rent_wheels/src/mainSection/cars/data/available_cars_data.dart';
 
-import 'package:rent_wheels/core/models/cars/cars_model.dart';
+import 'package:rent_wheels/core/models/enums/enums.dart';
+import 'package:rent_wheels/core/widgets/sizes/sizes.dart';
+import 'package:rent_wheels/core/widgets/theme/colors.dart';
+import 'package:rent_wheels/core/global/globals.dart' as global;
+import 'package:rent_wheels/core/widgets/loadingIndicator/shimmer_loading_placeholder.dart';
 
 class AvailableCars extends StatefulWidget {
-  final List<Car> cars;
-  const AvailableCars({super.key, required this.cars});
+  const AvailableCars({super.key});
 
   @override
   State<AvailableCars> createState() => _AvailableCarsState();
@@ -16,24 +19,15 @@ class _AvailableCarsState extends State<AvailableCars> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: ListView.builder(
-        itemCount: widget.cars.length,
-        itemBuilder: (context, index) {
-          List<Car> cars = widget.cars;
-          return InkWell(
-            onTap: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => CarDetails(car: cars[index]),
-                  ));
-            },
-            child: ListTile(
-              title: Text(
-                  "${cars[index].yearOfManufacture} ${cars[index].make} ${cars[index].model}"),
-            ),
-          );
-        },
+      backgroundColor: rentWheelsNeutralLight0,
+      body: Shimmer(
+        linearGradient: global.shimmerGradient,
+        child: Padding(
+          padding: EdgeInsets.all(Sizes().height(context, 0.02)),
+          child: const AvailableCarsData(
+            type: AvailableCarsType.allAvailableCars,
+          ),
+        ),
       ),
     );
   }

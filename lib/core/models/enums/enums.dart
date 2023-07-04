@@ -1,0 +1,1 @@
+enum AvailableCarsType { preview, allAvailableCars }

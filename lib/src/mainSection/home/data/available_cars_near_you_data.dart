@@ -22,16 +22,17 @@ class _AvailableCarsNearYouDataState extends State<AvailableCarsNearYouData> {
       stream: RentWheelsCarsMethods().getAvailableCarsNearYou(),
       builder: (context, snapshot) {
         if (snapshot.hasData) {
-          return ListView(
+          return ListView.builder(
+            itemCount: snapshot.data!.length > 4 ? 5 : snapshot.data!.length,
             scrollDirection: Axis.horizontal,
-            children: snapshot.data!.map((car) {
+            itemBuilder: (context, index) {
               return buildCarsData(
-                carDetails: car,
+                carDetails: snapshot.data![index],
                 isLoading: false,
                 context: context,
                 width: Sizes().width(context, 0.6),
               );
-            }).toList(),
+            },
           );
         }
         if (snapshot.hasError) {
