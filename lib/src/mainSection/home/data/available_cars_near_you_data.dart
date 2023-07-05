@@ -24,9 +24,11 @@ class _AvailableCarsNearYouDataState extends State<AvailableCarsNearYouData> {
         if (snapshot.hasData) {
           return ListView.builder(
             itemCount: snapshot.data!.length > 4 ? 5 : snapshot.data!.length,
+            shrinkWrap: true,
             scrollDirection: Axis.horizontal,
             itemBuilder: (context, index) {
               return buildCarsData(
+                margin: Sizes().width(context, 0.03),
                 carDetails: snapshot.data![index],
                 isLoading: false,
                 context: context,
@@ -44,10 +46,12 @@ class _AvailableCarsNearYouDataState extends State<AvailableCarsNearYouData> {
         return ListView.builder(
           itemCount: 2,
           scrollDirection: Axis.horizontal,
+          shrinkWrap: true,
           itemBuilder: (context, _) {
             return ShimmerLoading(
               isLoading: true,
               child: buildCarsData(
+                margin: Sizes().width(context, 0.03),
                 isLoading: true,
                 context: context,
                 carDetails: Car(media: [Media(mediaURL: '')]),

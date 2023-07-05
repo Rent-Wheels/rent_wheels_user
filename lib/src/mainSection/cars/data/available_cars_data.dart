@@ -25,6 +25,7 @@ class _AvailableCarsDataState extends State<AvailableCarsData> {
         if (snapshot.hasData) {
           return widget.type == AvailableCarsType.preview
               ? ListView.builder(
+                  shrinkWrap: true,
                   itemCount:
                       snapshot.data!.length > 4 ? 5 : snapshot.data!.length,
                   scrollDirection: Axis.horizontal,
@@ -69,6 +70,7 @@ class _AvailableCarsDataState extends State<AvailableCarsData> {
         }
         return widget.type == AvailableCarsType.preview
             ? ListView.builder(
+                shrinkWrap: true,
                 itemCount: 2,
                 scrollDirection: Axis.horizontal,
                 itemBuilder: (context, _) {
