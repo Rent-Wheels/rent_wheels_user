@@ -118,7 +118,9 @@ class _HomeState extends State<Home> {
                   delegate: SliverChildBuilderDelegate(childCount: 1,
                       (context, index) {
                 return Padding(
-                  padding: EdgeInsets.all(Sizes().height(context, 0.02)),
+                  padding: EdgeInsets.symmetric(
+                    horizontal: Sizes().height(context, 0.02),
+                  ),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,

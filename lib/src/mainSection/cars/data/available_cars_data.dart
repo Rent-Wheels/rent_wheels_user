@@ -30,27 +30,35 @@ class _AvailableCarsDataState extends State<AvailableCarsData> {
                   scrollDirection: Axis.horizontal,
                   itemBuilder: (context, index) {
                     return buildCarsData(
+                      margin: Sizes().width(context, 0.03),
                       carDetails: snapshot.data![index],
                       isLoading: false,
                       context: context,
                       width: Sizes().width(context, 0.6),
                     );
                   })
-              : ListView(
-                  scrollDirection: Axis.vertical,
-                  children: snapshot.data!.map((car) {
+              : GridView.builder(
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    mainAxisExtent: Sizes().height(context, 0.3),
+                    crossAxisSpacing: Sizes().width(context, 0.02),
+                  ),
+                  itemCount: snapshot.data!.length,
+                  shrinkWrap: true,
+                  itemBuilder: (context, index) {
                     return Padding(
                       padding: EdgeInsets.symmetric(
                         vertical: Sizes().height(context, 0.02),
                       ),
                       child: buildCarsData(
-                        carDetails: car,
+                        height: Sizes().height(context, 0.15),
+                        carDetails: snapshot.data![index],
                         isLoading: false,
                         context: context,
-                        width: double.infinity,
+                        width: Sizes().width(context, 0.5),
                       ),
                     );
-                  }).toList(),
+                  },
                 );
         }
         if (snapshot.hasError) {
@@ -75,9 +83,14 @@ class _AvailableCarsDataState extends State<AvailableCarsData> {
                   );
                 },
               )
-            : ListView.builder(
-                itemCount: 5,
-                scrollDirection: Axis.vertical,
+            : GridView.builder(
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  mainAxisExtent: Sizes().height(context, 0.28),
+                  crossAxisSpacing: Sizes().width(context, 0.02),
+                ),
+                itemCount: 8,
+                shrinkWrap: true,
                 itemBuilder: (context, _) {
                   return Padding(
                     padding: EdgeInsets.symmetric(
@@ -86,10 +99,11 @@ class _AvailableCarsDataState extends State<AvailableCarsData> {
                     child: ShimmerLoading(
                       isLoading: true,
                       child: buildCarsData(
+                        height: Sizes().height(context, 0.15),
+                        carDetails: Car(media: [Media(mediaURL: '')]),
                         isLoading: true,
                         context: context,
-                        carDetails: Car(media: [Media(mediaURL: '')]),
-                        width: double.infinity,
+                        width: Sizes().width(context, 0.5),
                       ),
                     ),
                   );

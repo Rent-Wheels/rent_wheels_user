@@ -9,6 +9,8 @@ import 'package:rent_wheels/core/global/globals.dart' as global;
 import 'package:rent_wheels/core/widgets/textStyles/text_styles.dart';
 
 Container buildCarsData({
+  double? margin,
+  double? height,
   required double width,
   required Car carDetails,
   required bool isLoading,
@@ -16,12 +18,14 @@ Container buildCarsData({
 }) {
   return Container(
     width: width,
-    margin: EdgeInsets.only(right: Sizes().width(context, 0.03)),
+    margin: EdgeInsets.only(
+      right: margin ?? 0,
+    ),
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Container(
-          height: Sizes().height(context, 0.2),
+          height: height ?? Sizes().height(context, 0.2),
           width: width,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(Sizes().height(context, 0.02)),

@@ -23,7 +23,8 @@ class _AvailableCarsState extends State<AvailableCars> {
       body: Shimmer(
         linearGradient: global.shimmerGradient,
         child: Padding(
-          padding: EdgeInsets.all(Sizes().height(context, 0.02)),
+          padding:
+              EdgeInsets.symmetric(horizontal: Sizes().height(context, 0.02)),
           child: const AvailableCarsData(
             type: AvailableCarsType.allAvailableCars,
           ),
