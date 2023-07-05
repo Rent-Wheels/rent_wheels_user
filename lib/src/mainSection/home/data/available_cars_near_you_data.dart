@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart' show timeDilation;
 
 import 'package:rent_wheels/core/widgets/sizes/sizes.dart';
 import 'package:rent_wheels/core/models/cars/cars_model.dart';
@@ -6,6 +7,7 @@ import 'package:rent_wheels/core/widgets/cars/cars_data_widget.dart';
 import 'package:rent_wheels/core/widgets/textStyles/text_styles.dart';
 import 'package:rent_wheels/core/backend/car/methods/cars_methods.dart';
 import 'package:rent_wheels/core/widgets/loadingIndicator/shimmer_loading_placeholder.dart';
+import 'package:rent_wheels/src/mainSection/cars/presentation/car_details.dart';
 
 class AvailableCarsNearYouData extends StatefulWidget {
   const AvailableCarsNearYouData({super.key});
@@ -16,8 +18,11 @@ class AvailableCarsNearYouData extends StatefulWidget {
 }
 
 class _AvailableCarsNearYouDataState extends State<AvailableCarsNearYouData> {
+  static Interval opacityCurve =
+      const Interval(0.0, 0.75, curve: Curves.fastOutSlowIn);
   @override
   Widget build(BuildContext context) {
+    timeDilation = 3.0;
     return StreamBuilder(
       stream: RentWheelsCarsMethods().getAvailableCarsNearYou(),
       builder: (context, snapshot) {
@@ -33,6 +38,24 @@ class _AvailableCarsNearYouDataState extends State<AvailableCarsNearYouData> {
                 isLoading: false,
                 context: context,
                 width: Sizes().width(context, 0.6),
+                onTap: () {
+                  Navigator.push(context, PageRouteBuilder<void>(
+                      pageBuilder: (context, animation, secondaryAnimation) {
+                    return AnimatedBuilder(
+                      animation: animation,
+                      builder: (context, child) {
+                        return Opacity(
+                          opacity: opacityCurve.transform(animation.value),
+                          child: CarDetails(car: snapshot.data![index]),
+                        );
+                      },
+                    );
+                    // MaterialPageRoute(
+                    //   builder: (context) =>
+                    //       CarDetails(car: snapshot.data![index]),
+                    // ),
+                  }));
+                },
               );
             },
           );
@@ -56,6 +79,7 @@ class _AvailableCarsNearYouDataState extends State<AvailableCarsNearYouData> {
                 context: context,
                 carDetails: Car(media: [Media(mediaURL: '')]),
                 width: Sizes().width(context, 0.6),
+                onTap: null,
               ),
             );
           },

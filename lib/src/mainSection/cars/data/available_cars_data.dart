@@ -36,6 +36,7 @@ class _AvailableCarsDataState extends State<AvailableCarsData> {
                       isLoading: false,
                       context: context,
                       width: Sizes().width(context, 0.6),
+                      onTap: () {},
                     );
                   })
               : GridView.builder(
@@ -57,6 +58,7 @@ class _AvailableCarsDataState extends State<AvailableCarsData> {
                         isLoading: false,
                         context: context,
                         width: Sizes().width(context, 0.5),
+                        onTap: () {},
                       ),
                     );
                   },
@@ -81,6 +83,7 @@ class _AvailableCarsDataState extends State<AvailableCarsData> {
                       context: context,
                       carDetails: Car(media: [Media(mediaURL: '')]),
                       width: Sizes().width(context, 0.6),
+                      onTap: () {},
                     ),
                   );
                 },
@@ -106,6 +109,7 @@ class _AvailableCarsDataState extends State<AvailableCarsData> {
                         isLoading: true,
                         context: context,
                         width: Sizes().width(context, 0.5),
+                        onTap: () {},
                       ),
                     ),
                   );
