@@ -62,7 +62,7 @@ class _HomeState extends State<Home> {
                 pinned: true,
                 backgroundColor: rentWheelsNeutralLight0,
                 elevation: 0,
-                collapsedHeight: Sizes().height(context, 0.083),
+                collapsedHeight: Sizes().height(context, 0.1),
                 expandedHeight: Sizes().height(context, 0.13),
                 flexibleSpace: FlexibleSpaceBar(
                   title: Padding(
@@ -175,7 +175,7 @@ class _HomeState extends State<Home> {
                       ),
                       Space().height(context, 0.02),
                       SizedBox(
-                        height: Sizes().height(context, 0.27),
+                        height: Sizes().height(context, 0.3),
                         child: const AvailableCarsData(
                           type: AvailableCarsType.preview,
                         ),

@@ -113,7 +113,7 @@ class _SignUpState extends State<SignUp> {
             context: context,
             builder: (_) {
               return Container(
-                height: Sizes().height(context, 0.33),
+                height: Sizes().height(context, 0.4),
                 color: const Color.fromARGB(255, 255, 255, 255),
                 child: Column(
                   children: [

@@ -209,7 +209,7 @@ class _CarDetailsState extends State<CarDetails> {
       bottomSheet: Container(
         color: rentWheelsNeutralLight0,
         padding: EdgeInsets.all(Sizes().height(context, 0.02)),
-        height: Sizes().height(context, 0.1),
+        height: Sizes().height(context, 0.13),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.start,
