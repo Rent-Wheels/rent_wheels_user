@@ -30,7 +30,7 @@ buildPromoCarousel({
         children: items.asMap().entries.map((entry) {
           return AnimatedContainer(
             curve: Curves.easeInOut,
-            duration: const Duration(milliseconds: 400),
+            duration: const Duration(milliseconds: 200),
             width: index == entry.key
                 ? Sizes().width(context, 0.1)
                 : Sizes().width(context, 0.03),

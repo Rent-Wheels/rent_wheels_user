@@ -11,7 +11,7 @@ buildPromoCarouselItem({
 }) {
   return Container(
     margin: EdgeInsets.symmetric(
-      horizontal: Sizes().height(context, 0.005),
+      horizontal: Sizes().width(context, 0.01),
     ),
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,

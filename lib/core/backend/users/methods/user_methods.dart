@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:http/http.dart';
+import 'package:rent_wheels/core/models/renter/renter_model.dart';
 
 import 'package:rent_wheels/core/models/user/user_model.dart';
 import 'package:rent_wheels/core/global/globals.dart' as global;
@@ -22,14 +23,14 @@ class RentWheelsUserMethods implements RentWheelsUserEndpoints {
   }
 
   @override
-  Future<BackendUser> getRenterDetails({required String userId}) async {
+  Future<Renter> getRenterDetails({required String userId}) async {
     final response = await get(
       Uri.parse('${global.baseURL}/renters/$userId'),
       headers: global.headers,
     );
 
     if (response.statusCode == 200) {
-      return BackendUser.fromJSON(jsonDecode(response.body));
+      return Renter.fromJSON(jsonDecode(response.body));
     } else {
       throw Exception(response.body);
     }

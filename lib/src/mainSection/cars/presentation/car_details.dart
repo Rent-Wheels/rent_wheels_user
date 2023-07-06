@@ -1,21 +1,28 @@
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:rent_wheels/core/widgets/buttons/adaptive_back_button_widget.dart';
-import 'package:rent_wheels/core/widgets/sizes/sizes.dart';
-import 'package:rent_wheels/core/widgets/theme/colors.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:carousel_slider/carousel_slider.dart';
+import 'package:rent_wheels/core/widgets/buttons/generic_button_widget.dart';
+
 import 'package:rent_wheels/src/mainSection/cars/widgets/car_details_carousel.dart';
+import 'package:rent_wheels/src/mainSection/cars/widgets/car_details_key_value.dart';
+import 'package:rent_wheels/src/mainSection/renter/presentation/renter_profile.dart';
+import 'package:rent_wheels/src/mainSection/cars/widgets/renter_overview_widget.dart';
 import 'package:rent_wheels/src/mainSection/cars/widgets/car_details_carousel_items.dart';
 
-import 'package:rent_wheels/src/mainSection/renter/presentation/renter_profile.dart';
-
+import 'package:rent_wheels/core/widgets/sizes/sizes.dart';
+import 'package:rent_wheels/core/widgets/theme/colors.dart';
 import 'package:rent_wheels/core/models/cars/cars_model.dart';
-import 'package:rent_wheels/core/models/user/user_model.dart';
+import 'package:rent_wheels/core/widgets/spacing/spacing.dart';
 import 'package:rent_wheels/core/global/globals.dart' as global;
-import 'package:rent_wheels/core/backend/users/methods/user_methods.dart';
+import 'package:rent_wheels/core/models/renter/renter_model.dart';
+import 'package:rent_wheels/core/widgets/textStyles/text_styles.dart';
+import 'package:rent_wheels/core/widgets/buttons/adaptive_back_button_widget.dart';
 
 class CarDetails extends StatefulWidget {
   final Car car;
-  const CarDetails({super.key, required this.car});
+  final Renter renter;
+
+  const CarDetails({super.key, required this.car, required this.renter});
 
   @override
   State<CarDetails> createState() => _CarDetailsState();
@@ -50,92 +57,190 @@ class _CarDetailsState extends State<CarDetails> {
 
   @override
   Widget build(BuildContext context) {
+    Car car = widget.car;
     List<Widget> carouselItems = widget.car.media!.map((media) {
       return buildCarDetailsCarouselItem(
           image: '${global.baseURL}/${media.mediaURL}', context: context);
     }).toList();
+
     return Scaffold(
-        backgroundColor: rentWheelsNeutralLight0,
-        body: CustomScrollView(
-          controller: scroll,
-          slivers: [
-            SliverAppBar(
-              backgroundColor: rentWheelsNeutralLight0,
-              foregroundColor: !changeColor
-                  ? rentWheelsNeutralLight0
-                  : rentWheelsBrandDark900,
-              elevation: 0,
-              leading: buildAdaptiveBackButton(
-                onPressed: () => Navigator.pop(context),
-              ),
-              pinned: true,
-              expandedHeight: Sizes().height(context, 0.3),
-              flexibleSpace: FlexibleSpaceBar(
-                background: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Hero(
-                      tag: widget.car.media![0].mediaURL,
-                      child: GestureDetector(
-                        // onTap: () => Navigator.pop(context),
-                        child: buildCarImageCarousel(
-                          index: _carImageIndex,
-                          items: carouselItems,
-                          context: context,
-                          controller: _carImage,
-                          onPageChanged: (index, _) {
-                            setState(() {
-                              _carImageIndex = index;
-                            });
-                          },
-                        ),
-                        // Container(
-                        //   height: Sizes().height(context, 0.3),
-                        //   width: double.infinity,
-                        //   decoration: BoxDecoration(
-                        //     color: rentWheelsNeutralLight0,
-                        //     image: DecorationImage(
-                        //       fit: BoxFit.cover,
-                        //       image: CachedNetworkImageProvider(
-                        //         '${global.baseURL}/${widget.car.media![0].mediaURL}',
-                        //       ),
-                        //     ),
-                        //   ),
-                        // ),
+      backgroundColor: rentWheelsNeutralLight0,
+      body: CustomScrollView(
+        controller: scroll,
+        slivers: [
+          SliverAppBar(
+            backgroundColor: rentWheelsNeutralLight0,
+            foregroundColor:
+                !changeColor ? rentWheelsNeutralLight0 : rentWheelsBrandDark900,
+            elevation: 0,
+            leading: buildAdaptiveBackButton(
+              onPressed: () => Navigator.pop(context),
+            ),
+            pinned: true,
+            expandedHeight: Sizes().height(context, 0.3),
+            flexibleSpace: FlexibleSpaceBar(
+              background: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Hero(
+                    tag: car.media![0].mediaURL,
+                    child: GestureDetector(
+                      // onTap: () => Navigator.pop(context),
+                      child: buildCarImageCarousel(
+                        index: _carImageIndex,
+                        items: carouselItems,
+                        context: context,
+                        controller: _carImage,
+                        onPageChanged: (index, _) {
+                          setState(() {
+                            _carImageIndex = index;
+                          });
+                        },
                       ),
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
-            SliverList(
-              delegate: SliverChildBuilderDelegate(
-                // childCount: 1,
-                (context, index) {
-                  return Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          ),
+          SliverList(
+            delegate: SliverChildBuilderDelegate(
+              childCount: 1,
+              (context, index) {
+                return Padding(
+                  padding: EdgeInsets.only(
+                    left: Sizes().width(context, 0.04),
+                    right: Sizes().width(context, 0.04),
+                    top: Sizes().height(context, 0.02),
+                    bottom: Sizes().width(context, 0.25),
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(widget.car.make!),
+                      Text(
+                        '${car.yearOfManufacture} ${car.make} ${car.model}',
+                        style: heading3Information,
+                      ),
+                      Space().height(context, 0.01),
+                      Text(
+                        car.description!,
+                        style: body1Neutral900,
+                      ),
+                      Space().height(context, 0.02),
+                      const Text(
+                        'Vehicle Details',
+                        style: heading4Information,
+                      ),
+                      Space().height(context, 0.01),
+                      buildCarDetailsKeyValue(
+                        context: context,
+                        label: 'Registration Number',
+                        value: car.registrationNumber!,
+                      ),
+                      Space().height(context, 0.01),
+                      buildCarDetailsKeyValue(
+                        context: context,
+                        label: 'Color',
+                        value: car.color!,
+                      ),
+                      Space().height(context, 0.01),
+                      buildCarDetailsKeyValue(
+                        context: context,
+                        label: 'Number of Seats',
+                        value: car.capacity.toString(),
+                      ),
+                      Space().height(context, 0.01),
+                      buildCarDetailsKeyValue(
+                        context: context,
+                        label: 'Type',
+                        value: car.type!,
+                      ),
+                      Space().height(context, 0.01),
+                      buildCarDetailsKeyValue(
+                        context: context,
+                        label: 'Condition',
+                        value: car.condition!,
+                      ),
+                      Space().height(context, 0.01),
+                      buildCarDetailsKeyValue(
+                        context: context,
+                        label: 'Location',
+                        value: car.location!,
+                      ),
+                      Space().height(context, 0.02),
+                      const Text(
+                        'Terms & Conditions',
+                        style: heading4Information,
+                      ),
+                      Space().height(context, 0.01),
+                      Text(
+                        car.terms!,
+                        style: body1Neutral900,
+                      ),
+                      Space().height(context, 0.02),
+                      const Text(
+                        'Renter Details',
+                        style: heading4Information,
+                      ),
+                      Space().height(context, 0.01),
                       GestureDetector(
-                          onTap: () async {
-                            BackendUser? renter = await RentWheelsUserMethods()
-                                .getRenterDetails(userId: widget.car.owner!);
-
-                            if (!mounted) return;
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) =>
-                                      RenterDetails(renter: renter),
-                                ));
-                          },
-                          child: const Text('Renter Details'))
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              CupertinoPageRoute(
+                                builder: (context) =>
+                                    RenterDetails(renter: widget.renter),
+                              ));
+                        },
+                        child: buildRenterOverview(
+                          context: context,
+                          renter: widget.renter,
+                        ),
+                      )
                     ],
-                  );
-                },
-              ),
+                  ),
+                );
+              },
             ),
-          ],
-        ));
+          ),
+        ],
+      ),
+      bottomSheet: Container(
+        color: rentWheelsNeutralLight0,
+        height: Sizes().height(context, 0.08),
+        child: Padding(
+          padding:
+              EdgeInsets.symmetric(horizontal: Sizes().width(context, 0.04)),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    '${car.yearOfManufacture} ${car.make} ${car.model}',
+                    style: heading4Information,
+                  ),
+                  Space().height(context, 0.01),
+                  Text(
+                    'GH¢${car.rate} ${car.plan}',
+                    style: body1Information,
+                  ),
+                ],
+              ),
+              buildGenericButtonWidget(
+                width: Sizes().width(context, 0.3),
+                isActive: car.availability!,
+                buttonName: 'Rent Car',
+                context: context,
+                onPressed: () {},
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }

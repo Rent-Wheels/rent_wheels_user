@@ -44,7 +44,7 @@ class _ProfileState extends State<Profile> {
       body: SingleChildScrollView(
         child: Padding(
           padding:
-              EdgeInsets.symmetric(horizontal: Sizes().height(context, 0.02)),
+              EdgeInsets.symmetric(horizontal: Sizes().width(context, 0.04)),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,

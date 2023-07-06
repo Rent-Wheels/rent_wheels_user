@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
 
+import 'package:rent_wheels/src/mainSection/cars/presentation/car_details.dart';
+
 import 'package:rent_wheels/core/models/enums/enums.dart';
 import 'package:rent_wheels/core/widgets/sizes/sizes.dart';
 import 'package:rent_wheels/core/models/cars/cars_model.dart';
+import 'package:rent_wheels/core/widgets/popups/error_popup.dart';
 import 'package:rent_wheels/core/widgets/cars/cars_data_widget.dart';
 import 'package:rent_wheels/core/widgets/textStyles/text_styles.dart';
 import 'package:rent_wheels/core/backend/car/methods/cars_methods.dart';
+import 'package:rent_wheels/core/backend/users/methods/user_methods.dart';
+import 'package:rent_wheels/core/widgets/loadingIndicator/loading_indicator.dart';
 import 'package:rent_wheels/core/widgets/loadingIndicator/shimmer_loading_placeholder.dart';
-import 'package:rent_wheels/src/mainSection/cars/presentation/car_details.dart';
 
 class AvailableCarsData extends StatefulWidget {
   final AvailableCarsType type;
@@ -37,14 +41,29 @@ class _AvailableCarsDataState extends State<AvailableCarsData> {
                       isLoading: false,
                       context: context,
                       width: Sizes().width(context, 0.6),
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) =>
-                                CarDetails(car: snapshot.data![index]),
-                          ),
-                        );
+                      onTap: () async {
+                        buildLoadingIndicator(context, '');
+                        try {
+                          final renter = await RentWheelsUserMethods()
+                              .getRenterDetails(
+                                  userId: snapshot.data![index].owner!);
+
+                          if (!mounted) return;
+                          Navigator.pop(context);
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => CarDetails(
+                                car: snapshot.data![index],
+                                renter: renter,
+                              ),
+                            ),
+                          );
+                        } catch (e) {
+                          if (!mounted) return;
+                          Navigator.pop(context);
+                          showErrorPopUp(e.toString(), context);
+                        }
                       },
                     );
                   })
@@ -67,14 +86,29 @@ class _AvailableCarsDataState extends State<AvailableCarsData> {
                         isLoading: false,
                         context: context,
                         width: Sizes().width(context, 0.5),
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) =>
-                                  CarDetails(car: snapshot.data![index]),
-                            ),
-                          );
+                        onTap: () async {
+                          buildLoadingIndicator(context, '');
+                          try {
+                            final renter = await RentWheelsUserMethods()
+                                .getRenterDetails(
+                                    userId: snapshot.data![index].owner!);
+
+                            if (!mounted) return;
+                            Navigator.pop(context);
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => CarDetails(
+                                  car: snapshot.data![index],
+                                  renter: renter,
+                                ),
+                              ),
+                            );
+                          } catch (e) {
+                            if (!mounted) return;
+                            Navigator.pop(context);
+                            showErrorPopUp(e.toString(), context);
+                          }
                         },
                       ),
                     );

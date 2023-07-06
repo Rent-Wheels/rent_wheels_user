@@ -24,7 +24,7 @@ class _AvailableCarsState extends State<AvailableCars> {
         linearGradient: global.shimmerGradient,
         child: Padding(
           padding:
-              EdgeInsets.symmetric(horizontal: Sizes().height(context, 0.02)),
+              EdgeInsets.symmetric(horizontal: Sizes().width(context, 0.04)),
           child: const AvailableCarsData(
             type: AvailableCarsType.allAvailableCars,
           ),

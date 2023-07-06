@@ -4,6 +4,7 @@ import 'package:rent_wheels/core/models/enums/enums.dart';
 
 import 'package:rent_wheels/src/mainSection/cars/data/available_cars_data.dart';
 import 'package:rent_wheels/src/mainSection/home/widgets/promo_carousel_widget.dart';
+import 'package:rent_wheels/src/mainSection/home/widgets/svg_icon_button_widgets.dart';
 import 'package:rent_wheels/src/mainSection/home/data/available_cars_near_you_data.dart';
 import 'package:rent_wheels/src/mainSection/home/widgets/promo_carousel_item_widget.dart';
 
@@ -13,7 +14,6 @@ import 'package:rent_wheels/core/widgets/spacing/spacing.dart';
 import 'package:rent_wheels/core/global/globals.dart' as global;
 import 'package:rent_wheels/core/widgets/textStyles/text_styles.dart';
 import 'package:rent_wheels/core/widgets/loadingIndicator/shimmer_loading_placeholder.dart';
-import 'package:rent_wheels/src/mainSection/home/widgets/svg_icon_button_widgets.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -67,8 +67,8 @@ class _HomeState extends State<Home> {
                 flexibleSpace: FlexibleSpaceBar(
                   title: Padding(
                     padding: EdgeInsets.only(
-                      left: Sizes().height(context, 0.02),
-                      right: Sizes().height(context, 0.02),
+                      left: Sizes().width(context, 0.04),
+                      right: Sizes().width(context, 0.04),
                       top: Sizes().height(context, 0.04),
                     ),
                     child: Column(
@@ -119,7 +119,7 @@ class _HomeState extends State<Home> {
                       (context, index) {
                 return Padding(
                   padding: EdgeInsets.symmetric(
-                    horizontal: Sizes().height(context, 0.02),
+                    horizontal: Sizes().width(context, 0.04),
                   ),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,

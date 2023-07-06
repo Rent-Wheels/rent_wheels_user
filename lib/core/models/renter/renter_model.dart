@@ -1,4 +1,6 @@
-class BackendUser {
+import 'package:rent_wheels/core/models/cars/cars_model.dart';
+
+class Renter {
   String userId;
   String name;
   String email;
@@ -6,9 +8,9 @@ class BackendUser {
   String phoneNumber;
   String profilePicture;
   String placeOfResidence;
-  List<String>? cars;
+  List<Car>? cars;
 
-  BackendUser({
+  Renter({
     this.cars,
     required this.userId,
     required this.name,
@@ -19,8 +21,8 @@ class BackendUser {
     required this.placeOfResidence,
   });
 
-  factory BackendUser.fromJSON(Map<String, dynamic> json) {
-    return BackendUser(
+  factory Renter.fromJSON(Map<String, dynamic> json) {
+    return Renter(
       userId: json['userId'],
       name: json['name'],
       email: json['email'],
@@ -30,9 +32,9 @@ class BackendUser {
       placeOfResidence: json['placeOfResidence'],
       cars: json['cars'] == null
           ? null
-          : List<String>.from(
+          : List<Car>.from(
               json['cars'].map(
-                (car) => car.toString(),
+                (car) => Car.fromJSON(car),
               ),
             ),
     );
