@@ -14,13 +14,13 @@ buildCarDetailsKeyValue({
     children: [
       Text(
         label,
-        style: body2Neutral900,
+        style: body1Neutral900,
       ),
       SizedBox(
         width: Sizes().width(context, 0.4),
         child: Text(
           value,
-          style: heading6InformationBold,
+          style: heading5Information,
         ),
       ),
     ],

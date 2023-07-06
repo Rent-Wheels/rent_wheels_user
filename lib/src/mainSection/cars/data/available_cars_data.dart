@@ -130,6 +130,7 @@ class _AvailableCarsDataState extends State<AvailableCarsData> {
                   return ShimmerLoading(
                     isLoading: true,
                     child: buildCarsData(
+                      margin: Sizes().width(context, 0.03),
                       isLoading: true,
                       context: context,
                       carDetails: Car(media: [Media(mediaURL: '')]),

@@ -208,37 +208,34 @@ class _CarDetailsState extends State<CarDetails> {
       ),
       bottomSheet: Container(
         color: rentWheelsNeutralLight0,
-        height: Sizes().height(context, 0.08),
-        child: Padding(
-          padding:
-              EdgeInsets.symmetric(horizontal: Sizes().width(context, 0.04)),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    '${car.yearOfManufacture} ${car.make} ${car.model}',
-                    style: heading4Information,
-                  ),
-                  Space().height(context, 0.01),
-                  Text(
-                    'GH¢${car.rate} ${car.plan}',
-                    style: body1Information,
-                  ),
-                ],
-              ),
-              buildGenericButtonWidget(
-                width: Sizes().width(context, 0.3),
-                isActive: car.availability!,
-                buttonName: 'Rent Car',
-                context: context,
-                onPressed: () {},
-              ),
-            ],
-          ),
+        padding: EdgeInsets.all(Sizes().height(context, 0.02)),
+        height: Sizes().height(context, 0.1),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  '${car.yearOfManufacture} ${car.make} ${car.model}',
+                  style: heading4Information,
+                ),
+                Space().height(context, 0.01),
+                Text(
+                  'GH¢${car.rate} ${car.plan}',
+                  style: body1Information,
+                ),
+              ],
+            ),
+            buildGenericButtonWidget(
+              width: Sizes().width(context, 0.3),
+              isActive: car.availability!,
+              buttonName: 'Rent Car',
+              context: context,
+              onPressed: () {},
+            ),
+          ],
         ),
       ),
     );
