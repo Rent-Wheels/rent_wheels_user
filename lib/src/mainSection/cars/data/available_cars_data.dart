@@ -7,6 +7,7 @@ import 'package:rent_wheels/core/widgets/cars/cars_data_widget.dart';
 import 'package:rent_wheels/core/widgets/textStyles/text_styles.dart';
 import 'package:rent_wheels/core/backend/car/methods/cars_methods.dart';
 import 'package:rent_wheels/core/widgets/loadingIndicator/shimmer_loading_placeholder.dart';
+import 'package:rent_wheels/src/mainSection/cars/presentation/car_details.dart';
 
 class AvailableCarsData extends StatefulWidget {
   final AvailableCarsType type;
@@ -36,7 +37,15 @@ class _AvailableCarsDataState extends State<AvailableCarsData> {
                       isLoading: false,
                       context: context,
                       width: Sizes().width(context, 0.6),
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) =>
+                                CarDetails(car: snapshot.data![index]),
+                          ),
+                        );
+                      },
                     );
                   })
               : GridView.builder(
@@ -58,7 +67,15 @@ class _AvailableCarsDataState extends State<AvailableCarsData> {
                         isLoading: false,
                         context: context,
                         width: Sizes().width(context, 0.5),
-                        onTap: () {},
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  CarDetails(car: snapshot.data![index]),
+                            ),
+                          );
+                        },
                       ),
                     );
                   },
@@ -83,7 +100,7 @@ class _AvailableCarsDataState extends State<AvailableCarsData> {
                       context: context,
                       carDetails: Car(media: [Media(mediaURL: '')]),
                       width: Sizes().width(context, 0.6),
-                      onTap: () {},
+                      onTap: null,
                     ),
                   );
                 },
@@ -109,7 +126,7 @@ class _AvailableCarsDataState extends State<AvailableCarsData> {
                         isLoading: true,
                         context: context,
                         width: Sizes().width(context, 0.5),
-                        onTap: () {},
+                        onTap: null,
                       ),
                     ),
                   );
