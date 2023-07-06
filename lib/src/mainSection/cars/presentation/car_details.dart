@@ -19,10 +19,6 @@ class CarDetails extends StatefulWidget {
 }
 
 class _CarDetailsState extends State<CarDetails> {
-  static RectTween _createRectTween(Rect? begin, Rect? end) {
-    return MaterialRectCenterArcTween(begin: begin, end: end);
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,7 +27,6 @@ class _CarDetailsState extends State<CarDetails> {
         children: [
           Hero(
             tag: widget.car.media![0].mediaURL,
-            createRectTween: _createRectTween,
             child: GestureDetector(
               onTap: () => Navigator.pop(context),
               child: Container(

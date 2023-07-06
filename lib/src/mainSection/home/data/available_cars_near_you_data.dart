@@ -18,8 +18,6 @@ class AvailableCarsNearYouData extends StatefulWidget {
 }
 
 class _AvailableCarsNearYouDataState extends State<AvailableCarsNearYouData> {
-  static Interval opacityCurve =
-      const Interval(0.0, 0.75, curve: Curves.fastOutSlowIn);
   @override
   Widget build(BuildContext context) {
     timeDilation = 3.0;
@@ -39,22 +37,13 @@ class _AvailableCarsNearYouDataState extends State<AvailableCarsNearYouData> {
                 context: context,
                 width: Sizes().width(context, 0.6),
                 onTap: () {
-                  Navigator.push(context, PageRouteBuilder<void>(
-                      pageBuilder: (context, animation, secondaryAnimation) {
-                    return AnimatedBuilder(
-                      animation: animation,
-                      builder: (context, child) {
-                        return Opacity(
-                          opacity: opacityCurve.transform(animation.value),
-                          child: CarDetails(car: snapshot.data![index]),
-                        );
-                      },
-                    );
-                    // MaterialPageRoute(
-                    //   builder: (context) =>
-                    //       CarDetails(car: snapshot.data![index]),
-                    // ),
-                  }));
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) =>
+                          CarDetails(car: snapshot.data![index]),
+                    ),
+                  );
                 },
               );
             },
