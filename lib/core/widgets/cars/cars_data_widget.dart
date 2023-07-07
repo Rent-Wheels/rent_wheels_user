@@ -5,7 +5,6 @@ import 'package:rent_wheels/core/widgets/sizes/sizes.dart';
 import 'package:rent_wheels/core/widgets/theme/colors.dart';
 import 'package:rent_wheels/core/models/cars/cars_model.dart';
 import 'package:rent_wheels/core/widgets/spacing/spacing.dart';
-import 'package:rent_wheels/core/global/globals.dart' as global;
 import 'package:rent_wheels/core/widgets/textStyles/text_styles.dart';
 
 buildCarsData({
@@ -39,7 +38,7 @@ buildCarsData({
                 image: DecorationImage(
                   fit: BoxFit.cover,
                   image: CachedNetworkImageProvider(
-                    '${global.baseURL}/${carDetails.media![0].mediaURL}',
+                    carDetails.media![0].mediaURL,
                   ),
                 ),
               ),

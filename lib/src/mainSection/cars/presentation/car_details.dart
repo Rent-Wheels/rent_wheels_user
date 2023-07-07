@@ -13,7 +13,6 @@ import 'package:rent_wheels/core/widgets/sizes/sizes.dart';
 import 'package:rent_wheels/core/widgets/theme/colors.dart';
 import 'package:rent_wheels/core/models/cars/cars_model.dart';
 import 'package:rent_wheels/core/widgets/spacing/spacing.dart';
-import 'package:rent_wheels/core/global/globals.dart' as global;
 import 'package:rent_wheels/core/models/renter/renter_model.dart';
 import 'package:rent_wheels/core/widgets/textStyles/text_styles.dart';
 import 'package:rent_wheels/core/widgets/buttons/adaptive_back_button_widget.dart';
@@ -60,7 +59,7 @@ class _CarDetailsState extends State<CarDetails> {
     Car car = widget.car;
     List<Widget> carouselItems = widget.car.media!.map((media) {
       return buildCarDetailsCarouselItem(
-          image: '${global.baseURL}/${media.mediaURL}', context: context);
+          image: media.mediaURL, context: context);
     }).toList();
 
     return Scaffold(

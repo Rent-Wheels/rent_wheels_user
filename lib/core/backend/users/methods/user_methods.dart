@@ -1,10 +1,10 @@
 import 'dart:convert';
 
 import 'package:http/http.dart';
-import 'package:rent_wheels/core/models/renter/renter_model.dart';
 
 import 'package:rent_wheels/core/models/user/user_model.dart';
 import 'package:rent_wheels/core/global/globals.dart' as global;
+import 'package:rent_wheels/core/models/renter/renter_model.dart';
 import 'package:rent_wheels/core/backend/users/endpoints/user_endpoints.dart';
 
 class RentWheelsUserMethods implements RentWheelsUserEndpoints {

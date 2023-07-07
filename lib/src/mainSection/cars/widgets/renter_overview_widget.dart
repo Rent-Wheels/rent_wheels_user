@@ -4,7 +4,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:rent_wheels/core/widgets/sizes/sizes.dart';
 import 'package:rent_wheels/core/widgets/theme/colors.dart';
 import 'package:rent_wheels/core/widgets/spacing/spacing.dart';
-import 'package:rent_wheels/core/global/globals.dart' as global;
 import 'package:rent_wheels/core/models/renter/renter_model.dart';
 import 'package:rent_wheels/core/widgets/textStyles/text_styles.dart';
 
@@ -23,7 +22,7 @@ buildRenterOverview({
           image: DecorationImage(
             fit: BoxFit.cover,
             image: CachedNetworkImageProvider(
-              '${global.baseURL}/${renter.profilePicture}',
+              renter.profilePicture,
             ),
           ),
           border: Border.all(color: rentWheelsNeutralLight200),

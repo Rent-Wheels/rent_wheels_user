@@ -335,7 +335,6 @@ class _AccountProfileState extends State<AccountProfile> {
                   try {
                     final updatedUser = await BackendAuthService().updateUser(
                       avatar: avatar?.path,
-                      userId: global.user!.uid,
                       name: name.text,
                       phoneNumber: phoneNumber.text,
                       email: email.text,

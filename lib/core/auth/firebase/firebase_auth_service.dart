@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:rent_wheels/core/backend/files/file_methods.dart';
 
 import 'package:rent_wheels/firebase_options.dart';
 
@@ -122,6 +123,7 @@ class FirebaseAuthService implements FirebaseAuthProvider {
   Future<void> deleteUser({required User user}) async {
     try {
       await user.delete();
+      await RentWheelsFilesMethods().deleteFile(filePath: 'users/${user.uid}/');
       await BackendAuthService().deleteUser(userId: user.uid);
     } on FirebaseAuthException catch (e) {
       if (e.code == 'requires-recent-login') {
