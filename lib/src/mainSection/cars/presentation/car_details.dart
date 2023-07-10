@@ -110,8 +110,8 @@ class _CarDetailsState extends State<CarDetails> {
                   padding: EdgeInsets.only(
                     left: Sizes().width(context, 0.04),
                     right: Sizes().width(context, 0.04),
-                    top: Sizes().height(context, 0.02),
-                    bottom: Sizes().width(context, 0.25),
+                    top: Sizes().height(context, 0.01),
+                    bottom: Sizes().width(context, 0.3),
                   ),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
