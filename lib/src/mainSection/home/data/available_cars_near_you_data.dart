@@ -35,11 +35,12 @@ class _AvailableCarsNearYouDataState extends State<AvailableCarsNearYouData> {
             scrollDirection: Axis.horizontal,
             itemBuilder: (context, index) {
               return buildCarsData(
-                margin: Sizes().width(context, 0.03),
-                carDetails: snapshot.data![index],
-                isLoading: false,
                 context: context,
+                isLoading: false,
+                carDetails: snapshot.data![index],
                 width: Sizes().width(context, 0.6),
+                margin: Sizes().width(context, 0.03),
+                heroTag: 'near-${snapshot.data![index].registrationNumber}',
                 onTap: () async {
                   buildLoadingIndicator(context, '');
                   try {
@@ -52,8 +53,10 @@ class _AvailableCarsNearYouDataState extends State<AvailableCarsNearYouData> {
                       context,
                       MaterialPageRoute(
                         builder: (context) => CarDetails(
-                          car: snapshot.data![index],
                           renter: renter,
+                          car: snapshot.data![index],
+                          heroTag:
+                              'near-${snapshot.data![index].registrationNumber}',
                         ),
                       ),
                     );

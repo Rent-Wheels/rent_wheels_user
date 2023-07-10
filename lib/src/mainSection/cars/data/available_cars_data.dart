@@ -36,11 +36,11 @@ class _AvailableCarsDataState extends State<AvailableCarsData> {
                   scrollDirection: Axis.horizontal,
                   itemBuilder: (context, index) {
                     return buildCarsData(
-                      margin: Sizes().width(context, 0.03),
-                      carDetails: snapshot.data![index],
-                      isLoading: false,
                       context: context,
+                      isLoading: false,
+                      carDetails: snapshot.data![index],
                       width: Sizes().width(context, 0.6),
+                      margin: Sizes().width(context, 0.03),
                       onTap: () async {
                         buildLoadingIndicator(context, '');
                         try {

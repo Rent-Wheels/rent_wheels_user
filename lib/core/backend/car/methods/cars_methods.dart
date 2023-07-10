@@ -10,7 +10,7 @@ class RentWheelsCarsMethods extends RentWheelsCarsEndpoint {
   String getRegion() {
     List<String> splitLocation =
         global.userDetails!.placeOfResidence.split(', ');
-    return splitLocation[splitLocation.length - 2];
+    return '${splitLocation[splitLocation.length - 2]}, ${splitLocation[splitLocation.length - 1]}';
   }
 
   @override

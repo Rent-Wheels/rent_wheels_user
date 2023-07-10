@@ -10,6 +10,7 @@ import 'package:rent_wheels/core/widgets/textStyles/text_styles.dart';
 buildCarsData({
   double? margin,
   double? height,
+  String? heroTag,
   required double width,
   required Car carDetails,
   required bool isLoading,
@@ -27,7 +28,7 @@ buildCarsData({
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Hero(
-            tag: carDetails.media![0].mediaURL,
+            tag: heroTag ?? carDetails.media![0].mediaURL,
             child: Container(
               height: height ?? Sizes().height(context, 0.2),
               width: width,
@@ -35,12 +36,14 @@ buildCarsData({
                 borderRadius:
                     BorderRadius.circular(Sizes().height(context, 0.02)),
                 color: rentWheelsNeutralLight0,
-                image: DecorationImage(
-                  fit: BoxFit.cover,
-                  image: CachedNetworkImageProvider(
-                    carDetails.media![0].mediaURL,
-                  ),
-                ),
+                image: carDetails.media![0].mediaURL == ''
+                    ? null
+                    : DecorationImage(
+                        fit: BoxFit.cover,
+                        image: CachedNetworkImageProvider(
+                          carDetails.media![0].mediaURL,
+                        ),
+                      ),
               ),
             ),
           ),

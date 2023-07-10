@@ -20,8 +20,10 @@ import 'package:rent_wheels/core/widgets/buttons/adaptive_back_button_widget.dar
 class CarDetails extends StatefulWidget {
   final Car car;
   final Renter renter;
+  final String? heroTag;
 
-  const CarDetails({super.key, required this.car, required this.renter});
+  const CarDetails(
+      {super.key, required this.car, required this.renter, this.heroTag});
 
   @override
   State<CarDetails> createState() => _CarDetailsState();
@@ -82,7 +84,7 @@ class _CarDetailsState extends State<CarDetails> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Hero(
-                    tag: car.media![0].mediaURL,
+                    tag: widget.heroTag ?? car.media![0].mediaURL,
                     child: GestureDetector(
                       // onTap: () => Navigator.pop(context),
                       child: buildCarImageCarousel(

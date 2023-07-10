@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:rent_wheels/core/models/enums/enums.dart';
+import 'package:rent_wheels/src/mainSection/base.dart';
 
 import 'package:rent_wheels/src/mainSection/cars/data/available_cars_data.dart';
 import 'package:rent_wheels/src/mainSection/home/widgets/promo_carousel_widget.dart';
@@ -145,6 +146,13 @@ class _HomeState extends State<Home> {
                             style: heading4Information,
                           ),
                           GestureDetector(
+                            onTap: () => Navigator.pushAndRemoveUntil(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      const MainSection(pageIndex: 1),
+                                ),
+                                (route) => false),
                             child: const Text(
                               'See all',
                               style: heading6Neutral500,
@@ -166,6 +174,13 @@ class _HomeState extends State<Home> {
                             style: heading4Information,
                           ),
                           GestureDetector(
+                            onTap: () => Navigator.pushAndRemoveUntil(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      const MainSection(pageIndex: 1),
+                                ),
+                                (route) => false),
                             child: const Text(
                               'See all',
                               style: heading6Neutral500,
