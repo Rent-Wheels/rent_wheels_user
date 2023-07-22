@@ -114,7 +114,7 @@ class _SignUpState extends State<SignUp> {
             builder: (_) {
               return Container(
                 height: Sizes().height(context, 0.4),
-                color: const Color.fromARGB(255, 255, 255, 255),
+                color: rentWheelsNeutralLight0,
                 child: Column(
                   children: [
                     LayoutBuilder(

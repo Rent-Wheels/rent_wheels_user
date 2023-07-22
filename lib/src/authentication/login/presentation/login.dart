@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:rent_wheels/src/mainSection/base.dart';
 import 'package:string_validator/string_validator.dart';
 
+import 'package:rent_wheels/src/mainSection/base.dart';
 import 'package:rent_wheels/src/authentication/signup/presentation/signup.dart';
 import 'package:rent_wheels/src/authentication/verify/presentation/verify_email.dart';
 import 'package:rent_wheels/src/authentication/resetPassword/presentation/forgot_password.dart';

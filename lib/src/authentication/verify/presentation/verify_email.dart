@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-import 'package:rent_wheels/src/mainSection/home/presentation/home.dart';
+import 'package:rent_wheels/src/mainSection/base.dart';
 import 'package:rent_wheels/src/authentication/login/presentation/login.dart';
 
 import 'package:rent_wheels/core/auth/auth_service.dart';
@@ -122,7 +122,7 @@ class _VerifyEmailState extends State<VerifyEmail> {
                     Navigator.pushAndRemoveUntil(
                       context,
                       CupertinoPageRoute(
-                        builder: (context) => const Home(),
+                        builder: (context) => const MainSection(),
                       ),
                       (route) => false,
                     );

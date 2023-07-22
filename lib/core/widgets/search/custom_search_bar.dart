@@ -26,7 +26,6 @@ class CustomSearchScaffold extends PlacesAutocompleteWidget {
 
 class CustomSearchScaffoldState extends PlacesAutocompleteState {
   Future<String> setLocation(Prediction p) async {
-    // get detail (lat/lng)
     GoogleMapsPlaces places = GoogleMapsPlaces(
       apiKey: secret.mapsKey,
       apiHeaders: await const GoogleApiHeaders().getHeaders(),
