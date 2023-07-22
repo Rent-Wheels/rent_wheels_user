@@ -230,9 +230,9 @@ class _CarDetailsState extends State<CarDetails> {
               ],
             ),
             buildGenericButtonWidget(
-              width: Sizes().width(context, 0.26),
+              width: Sizes().width(context, 0.28),
               isActive: car.availability!,
-              buttonName: 'Rent Car',
+              buttonName: 'Reserve Car',
               context: context,
               onPressed: () {},
             ),

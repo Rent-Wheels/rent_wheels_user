@@ -384,6 +384,7 @@ class _AccountProfileState extends State<AccountProfile> {
                   }
                 },
               ),
+              Space().height(context, 0.03),
             ],
           ),
         ),

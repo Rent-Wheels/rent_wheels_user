@@ -23,7 +23,9 @@ GestureDetector buildGenericButtonWidget({
             : rentWheelsBrandDark900Trans,
         borderRadius: BorderRadius.circular(Sizes().width(context, 0.035)),
       ),
-      child: Center(
+      child: Container(
+        alignment: Alignment.center,
+        padding: EdgeInsets.symmetric(horizontal: Sizes().width(context, 0.02)),
         child: Text(
           buttonName,
           style: heading5Neutral0,
