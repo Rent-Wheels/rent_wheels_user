@@ -32,6 +32,11 @@ presentDatePicker({
   required void Function(DateTime) onDateTimeChanged,
   required void Function() onPressed,
 }) {
+  final currentDate = DateTime(
+    DateTime.now().year,
+    DateTime.now().month,
+    DateTime.now().day,
+  );
   Platform.isIOS
       ? showCupertinoModalPopup(
           context: context,
@@ -47,9 +52,15 @@ presentDatePicker({
                         height: constraints.minHeight + 200,
                         child: CupertinoDatePicker(
                           minimumDate: DateTime(1950),
-                          maximumDate: DateTime(2006),
+                          maximumDate: DateTime(
+                            currentDate.year - 18,
+                            currentDate.month,
+                            currentDate.day,
+                          ),
                           mode: CupertinoDatePickerMode.date,
-                          initialDateTime: DateTime(2005),
+                          initialDateTime: DateTime(
+                            currentDate.year - 18,
+                          ),
                           onDateTimeChanged: onDateTimeChanged,
                         ),
                       );
