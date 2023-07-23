@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:rent_wheels/core/widgets/popups/date_picker_widget.dart';
 import 'package:string_validator/string_validator.dart';
 
 import 'package:rent_wheels/core/widgets/search/custom_search_bar.dart';
@@ -62,27 +63,6 @@ class _SignUpState extends State<SignUp> {
         isPhoneNumberValid;
   }
 
-  MaterialColor getMaterialColor(Color color) {
-    final int red = color.red;
-    final int green = color.green;
-    final int blue = color.blue;
-
-    final Map<int, Color> shades = {
-      50: Color.fromRGBO(red, green, blue, .1),
-      100: Color.fromRGBO(red, green, blue, .2),
-      200: Color.fromRGBO(red, green, blue, .3),
-      300: Color.fromRGBO(red, green, blue, .4),
-      400: Color.fromRGBO(red, green, blue, .5),
-      500: Color.fromRGBO(red, green, blue, .6),
-      600: Color.fromRGBO(red, green, blue, .7),
-      700: Color.fromRGBO(red, green, blue, .8),
-      800: Color.fromRGBO(red, green, blue, .9),
-      900: Color.fromRGBO(red, green, blue, 1),
-    };
-
-    return MaterialColor(color.value, shades);
-  }
-
   openImage({required ImageSource source}) async {
     final XFile? image = await picker.pickImage(source: source);
     if (image != null) {
@@ -105,88 +85,6 @@ class _SignUpState extends State<SignUp> {
         Navigator.pop(context);
       },
     );
-  }
-
-  presentDatePicker() {
-    Platform.isIOS
-        ? showCupertinoModalPopup(
-            context: context,
-            builder: (_) {
-              return Container(
-                height: Sizes().height(context, 0.4),
-                color: rentWheelsNeutralLight0,
-                child: Column(
-                  children: [
-                    LayoutBuilder(
-                      builder: (context, constraints) {
-                        return SizedBox(
-                          height: constraints.minHeight + 200,
-                          child: CupertinoDatePicker(
-                            minimumDate: DateTime(1950),
-                            maximumDate: DateTime(2006),
-                            mode: CupertinoDatePickerMode.date,
-                            initialDateTime: DateTime(2005),
-                            onDateTimeChanged: (pickedDate) {
-                              setState(() {
-                                dob.text =
-                                    DateFormat.yMMMMd().format(pickedDate);
-                                isDobValid = true;
-                              });
-                            },
-                          ),
-                        );
-                      },
-                    ),
-                    CupertinoButton(
-                      child: const Text(
-                        'OK',
-                        style: heading6Neutral900,
-                      ),
-                      onPressed: () {
-                        if (dob.text.isEmpty) {
-                          setState(() {
-                            DateFormat.yMMMMd().format(DateTime(2005));
-                          });
-                        }
-                        Navigator.pop(context);
-                      },
-                    )
-                  ],
-                ),
-              );
-            },
-          )
-        : showDatePicker(
-            context: context,
-            initialDate: DateTime(2005),
-            firstDate: DateTime(1950),
-            lastDate: DateTime(2006),
-            initialEntryMode: DatePickerEntryMode.inputOnly,
-            builder: (context, child) {
-              return Theme(
-                data: Theme.of(context).copyWith(
-                  colorScheme: ColorScheme.fromSwatch(
-                    primarySwatch:
-                        getMaterialColor(rentWheelsInformationDark900),
-                    accentColor: rentWheelsBrandDark700,
-                  ),
-                  textTheme: const TextTheme(
-                    titleMedium: heading6Neutral900,
-                    headlineMedium: heading2BrandLight,
-                  ),
-                ),
-                child: child!,
-              );
-            },
-          ).then((pickedDate) {
-            if (pickedDate == null) {
-              return;
-            }
-            setState(() {
-              dob.text = DateFormat.yMMMMd().format(pickedDate);
-              isDobValid = true;
-            });
-          });
   }
 
   @override
@@ -331,7 +229,22 @@ class _SignUpState extends State<SignUp> {
                 hint: 'Date of Birth',
                 context: context,
                 controller: dob,
-                onTap: presentDatePicker,
+                onTap: () => presentDatePicker(
+                    context: context,
+                    onDateTimeChanged: (pickedDate) {
+                      setState(() {
+                        dob.text = DateFormat.yMMMMd().format(pickedDate);
+                        isDobValid = true;
+                      });
+                    },
+                    onPressed: () {
+                      if (dob.text.isEmpty) {
+                        setState(() {
+                          DateFormat.yMMMMd().format(DateTime(2005));
+                        });
+                      }
+                      Navigator.pop(context);
+                    }),
               ),
               Space().height(context, 0.05),
               buildGenericButtonWidget(
