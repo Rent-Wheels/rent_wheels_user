@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rent_wheels/core/widgets/buttons/generic_button_widget.dart';
 
 import 'package:rent_wheels/core/widgets/sizes/sizes.dart';
 import 'package:rent_wheels/core/widgets/theme/colors.dart';
@@ -15,9 +16,12 @@ class MakeReservationMock extends StatefulWidget {
 }
 
 class _MakeReservationMockState extends State<MakeReservationMock> {
-  DateTime currentDate = DateTime.now();
+  bool isDateRangeSelected = false;
+  Duration duration = const Duration(days: 2);
+  DateTime? currentDate;
   // DateTime endDate = new DateTime(currentDate.year, currentDate.month)
   DateRangePickerController date = DateRangePickerController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,26 +47,58 @@ class _MakeReservationMockState extends State<MakeReservationMock> {
               ),
               Space().height(context, 0.03),
               const Text(
-                "Please your start and end date.",
+                "Select date range.",
                 style: body1Information,
               ),
               Space().height(context, 0.03),
-
               SfDateRangePicker(
-                selectionMode: DateRangePickerSelectionMode.range,
-                enablePastDates: false,
                 controller: date,
-                onSelectionChanged: (dateRangePickerSelectionChangedArgs) {},
+                enablePastDates: false,
+                toggleDaySelection: true,
+                maxDate: currentDate?.add(duration),
+                endRangeSelectionColor: rentWheelsBrandDark800,
+                startRangeSelectionColor: rentWheelsBrandDark800,
+                selectionMode: DateRangePickerSelectionMode.range,
+                rangeSelectionColor: rentWheelsBrandDark800.withOpacity(0.3),
+                onSelectionChanged: (dateRange) {
+                  if (dateRange.value is PickerDateRange) {
+                    setState(() {
+                      currentDate = dateRange.value.startDate;
+                    });
+                    if (dateRange.value.startDate != null &&
+                        dateRange.value.endDate != null) {
+                      setState(() {
+                        isDateRangeSelected = true;
+                      });
+                    } else {
+                      setState(() {
+                        currentDate = null;
+                        isDateRangeSelected = false;
+                      });
+                    }
+                  }
+                },
               )
-              // DateRangePickerDialog(
-              //     firstDate: currentDate,
-              //     lastDate: DateTime(
-              //       currentDate.year,
-              //       currentDate.month + 6,
-              //       currentDate.day,
-              //     ))
             ],
           ),
+        ),
+      ),
+      bottomSheet: Container(
+        color: rentWheelsNeutralLight0,
+        padding: EdgeInsets.all(Sizes().height(context, 0.02)),
+        height: Sizes().height(context, 0.13),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            buildGenericButtonWidget(
+              width: Sizes().width(context, 0.85),
+              isActive: isDateRangeSelected,
+              buttonName: 'Continue',
+              context: context,
+              onPressed: () {},
+            ),
+          ],
         ),
       ),
     );
