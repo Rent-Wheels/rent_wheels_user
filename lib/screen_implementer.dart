@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:rent_wheels/core/widgets/buttons/generic_button_widget.dart';
+import 'package:rent_wheels/core/widgets/popups/date_range_picker_widget.dart';
+import 'package:rent_wheels/core/widgets/search/custom_search_bar.dart';
 
 import 'package:rent_wheels/core/widgets/sizes/sizes.dart';
+import 'package:rent_wheels/core/widgets/textfields/tappable_textfield.dart';
 import 'package:rent_wheels/core/widgets/theme/colors.dart';
 import 'package:rent_wheels/core/widgets/spacing/spacing.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
@@ -18,8 +21,14 @@ class MakeReservationMock extends StatefulWidget {
 class _MakeReservationMockState extends State<MakeReservationMock> {
   bool isDateRangeSelected = false;
   Duration duration = const Duration(days: 2);
-  DateTime? end;
-  String endDate = '';
+  TextEditingController location = TextEditingController();
+
+  DateTime? maxDate;
+
+  DateTime? endDate;
+  DateTime? startDate;
+
+  TextEditingController dateText = TextEditingController();
   DateRangePickerController date = DateRangePickerController();
 
   @override
@@ -46,43 +55,58 @@ class _MakeReservationMockState extends State<MakeReservationMock> {
                 style: heading3Information,
               ),
               Space().height(context, 0.03),
-              const Text(
-                "Select date range.",
-                style: body1Information,
-              ),
-              Text(
-                endDate,
-                style: body1Information,
-              ),
-              Space().height(context, 0.03),
-              SfDateRangePicker(
-                maxDate: end,
-                controller: date,
-                enablePastDates: false,
-                endRangeSelectionColor: rentWheelsBrandDark800,
-                startRangeSelectionColor: rentWheelsBrandDark800,
-                selectionMode: DateRangePickerSelectionMode.range,
-                rangeSelectionColor: rentWheelsBrandDark800.withOpacity(0.3),
-                onSelectionChanged: (dateRange) {
-                  if (dateRange.value is PickerDateRange) {
-                    setState(() {
-                      end = dateRange.value.startDate.add(duration);
-                    });
-                    if (dateRange.value.startDate != null &&
-                        dateRange.value.endDate != null &&
-                        !dateRange.value.endDate.isAfter(end)) {
+              buildTappableTextField(
+                  hint: 'Destination',
+                  context: context,
+                  controller: location,
+                  onTap: () async {
+                    final response = await Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => CustomSearchScaffold(),
+                      ),
+                    );
+
+                    if (response != null) {
                       setState(() {
-                        isDateRangeSelected = true;
-                        endDate = dateRange.value.endDate.toString();
-                      });
-                    } else {
-                      setState(() {
-                        isDateRangeSelected = false;
+                        location.text = response;
                       });
                     }
-                  }
-                },
-              )
+                  }),
+              Space().height(context, 0.03),
+              buildTappableTextField(
+                  hint: 'Date',
+                  context: context,
+                  controller: dateText,
+                  onTap: () async {
+                    buildDateRangePicker(
+                      endDate: maxDate,
+                      controller: date,
+                      context: context,
+                      onCancel: () => Navigator.pop(context),
+                      onSubmit: (dateRange) {
+                        if (dateRange is PickerDateRange) {}
+                      },
+                      onSelectionChanged: (dateRange) {
+                        if (dateRange.value is PickerDateRange) {
+                          setState(() {
+                            maxDate = dateRange.value.startDate.add(duration);
+                          });
+                          if (dateRange.value.startDate != null &&
+                              dateRange.value.endDate != null &&
+                              !dateRange.value.endDate.isAfter(maxDate)) {
+                            setState(() {
+                              isDateRangeSelected = true;
+                            });
+                          } else {
+                            setState(() {
+                              isDateRangeSelected = false;
+                            });
+                          }
+                        }
+                      },
+                    );
+                  }),
             ],
           ),
         ),
