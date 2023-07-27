@@ -18,8 +18,8 @@ class MakeReservationMock extends StatefulWidget {
 class _MakeReservationMockState extends State<MakeReservationMock> {
   bool isDateRangeSelected = false;
   Duration duration = const Duration(days: 2);
-  DateTime? currentDate;
-  // DateTime endDate = new DateTime(currentDate.year, currentDate.month)
+  DateTime? end;
+  String endDate = '';
   DateRangePickerController date = DateRangePickerController();
 
   @override
@@ -50,12 +50,15 @@ class _MakeReservationMockState extends State<MakeReservationMock> {
                 "Select date range.",
                 style: body1Information,
               ),
+              Text(
+                endDate,
+                style: body1Information,
+              ),
               Space().height(context, 0.03),
               SfDateRangePicker(
+                maxDate: end,
                 controller: date,
                 enablePastDates: false,
-                toggleDaySelection: true,
-                maxDate: currentDate?.add(duration),
                 endRangeSelectionColor: rentWheelsBrandDark800,
                 startRangeSelectionColor: rentWheelsBrandDark800,
                 selectionMode: DateRangePickerSelectionMode.range,
@@ -63,16 +66,17 @@ class _MakeReservationMockState extends State<MakeReservationMock> {
                 onSelectionChanged: (dateRange) {
                   if (dateRange.value is PickerDateRange) {
                     setState(() {
-                      currentDate = dateRange.value.startDate;
+                      end = dateRange.value.startDate.add(duration);
                     });
                     if (dateRange.value.startDate != null &&
-                        dateRange.value.endDate != null) {
+                        dateRange.value.endDate != null &&
+                        !dateRange.value.endDate.isAfter(end)) {
                       setState(() {
                         isDateRangeSelected = true;
+                        endDate = dateRange.value.endDate.toString();
                       });
                     } else {
                       setState(() {
-                        currentDate = null;
                         isDateRangeSelected = false;
                       });
                     }
