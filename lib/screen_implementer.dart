@@ -19,17 +19,36 @@ class MakeReservationMock extends StatefulWidget {
 }
 
 class _MakeReservationMockState extends State<MakeReservationMock> {
-  bool isDateRangeSelected = false;
+  bool isDateValid = false;
+  bool isLocationValid = false;
+
   Duration duration = const Duration(days: 2);
   TextEditingController location = TextEditingController();
 
   DateTime? maxDate;
 
-  DateTime? endDate;
-  DateTime? startDate;
+  TextEditingController date = TextEditingController();
 
-  TextEditingController dateText = TextEditingController();
-  DateRangePickerController date = DateRangePickerController();
+  showDateRangeSelector() {
+    return buildDateRangePicker(
+      endDate: maxDate,
+      context: context,
+      duration: duration,
+      onCancel: () => Navigator.pop(context),
+      onSubmit: (dateRange) {
+        if (dateRange is PickerDateRange) {
+          Navigator.pop(context);
+          setState(() {
+            date.text = dateRange.startDate.toString();
+          });
+        }
+      },
+    );
+  }
+
+  bool isActive() {
+    return isDateValid && isLocationValid;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -75,38 +94,11 @@ class _MakeReservationMockState extends State<MakeReservationMock> {
                   }),
               Space().height(context, 0.03),
               buildTappableTextField(
-                  hint: 'Date',
-                  context: context,
-                  controller: dateText,
-                  onTap: () async {
-                    buildDateRangePicker(
-                      endDate: maxDate,
-                      controller: date,
-                      context: context,
-                      onCancel: () => Navigator.pop(context),
-                      onSubmit: (dateRange) {
-                        if (dateRange is PickerDateRange) {}
-                      },
-                      onSelectionChanged: (dateRange) {
-                        if (dateRange.value is PickerDateRange) {
-                          setState(() {
-                            maxDate = dateRange.value.startDate.add(duration);
-                          });
-                          if (dateRange.value.startDate != null &&
-                              dateRange.value.endDate != null &&
-                              !dateRange.value.endDate.isAfter(maxDate)) {
-                            setState(() {
-                              isDateRangeSelected = true;
-                            });
-                          } else {
-                            setState(() {
-                              isDateRangeSelected = false;
-                            });
-                          }
-                        }
-                      },
-                    );
-                  }),
+                hint: 'Date',
+                context: context,
+                controller: date,
+                onTap: showDateRangeSelector,
+              ),
             ],
           ),
         ),
@@ -121,7 +113,7 @@ class _MakeReservationMockState extends State<MakeReservationMock> {
           children: [
             buildGenericButtonWidget(
               width: Sizes().width(context, 0.85),
-              isActive: isDateRangeSelected,
+              isActive: isActive(),
               buttonName: 'Continue',
               context: context,
               onPressed: () {},

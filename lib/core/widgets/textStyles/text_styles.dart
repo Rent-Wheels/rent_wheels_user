@@ -41,6 +41,12 @@ const heading5Brand = TextStyle(
   fontSize: 16,
   color: rentWheelsBrandDark900,
 );
+final heading5BrandDeselect = TextStyle(
+  fontWeight: FontWeight.w700,
+  fontFamily: 'Urbanist',
+  fontSize: 16,
+  color: rentWheelsBrandDark900.withOpacity(0.5),
+);
 const heading6Brand = TextStyle(
   fontWeight: FontWeight.w500,
   fontFamily: 'Urbanist',
