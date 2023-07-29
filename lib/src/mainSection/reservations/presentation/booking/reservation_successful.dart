@@ -1,72 +1,51 @@
 import 'package:flutter/material.dart';
+import 'package:rent_wheels/core/widgets/buttons/generic_button_widget.dart';
 import 'package:rent_wheels/core/widgets/sizes/sizes.dart';
+import 'package:rent_wheels/core/widgets/spacing/spacing.dart';
 
-import '../../../../../core/widgets/buttons/adaptive_back_button_widget.dart';
-import '../../../../../core/widgets/textStyles/text_styles.dart';
-import '../../../../../core/widgets/theme/colors.dart';
+import 'package:rent_wheels/core/widgets/theme/colors.dart';
+import 'package:rent_wheels/core/widgets/textStyles/text_styles.dart';
 
-class ReservationSuccessfulScreen extends StatelessWidget {
-  const ReservationSuccessfulScreen({super.key});
+class ReservationSuccessful extends StatelessWidget {
+  const ReservationSuccessful({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return  Scaffold(
-      body: SafeArea(
-        child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 30),
-          child: Stack(
-            children: [
-            Align(
-              alignment: Alignment.topLeft,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                buildAdaptiveBackButton(onPressed: ()=> Navigator.of(context).pop()),
-                 const Text('Checkout', style: heading2Brand,),
-              ],)
-          ),
-              Align(
-                alignment: Alignment.center,
-                child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-               mainAxisSize: MainAxisSize.min,
-               children: [
-                 Column(children: [
-                   const Image(image: AssetImage('assets/images/car_image.webp')),
-                  const Padding(
-                    padding: EdgeInsets.fromLTRB(0 ,20 ,0 ,20),
-                    child: Text('Your booking success!', style: heading4Brand,),
-                  ),
-                   Text('Congratulations you booking has been made.', style: heading5BrandDeselect,),
-                   const SizedBox(height: 5),
-                   Text('Thanks for trusting us!', style: heading5BrandDeselect),
-                 ],
-                 )
-               ],
-              ),
-              ),
-              Align(
-                alignment: Alignment.bottomCenter,
-                child: GestureDetector(
-                  onTap: (){},
-                  child: Container(
-                    height: 60,
-                      width:MediaQuery.of(context).size.width - 60 ,
-                    decoration:  BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                        color: rentWheelsNeutralDark900,),
-                    child: const Center(child: Text('Back to homepage',
-                      style: TextStyle(color: rentWheelsNeutralLight100,
-                          fontSize:22,
-                          fontFamily: 'Urbanist',
-                          fontWeight: FontWeight.bold),
-                    ),
-                    ),
-                  ),
-                ),
-              )
-            ],
-          ),
+    return Scaffold(
+      backgroundColor: rentWheelsNeutralLight0,
+      body: Padding(
+        padding: EdgeInsets.symmetric(
+          horizontal: Sizes().width(context, 0.04),
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Image.asset('assets/images/car_image.webp'),
+            Space().height(context, 0.04),
+            const Text(
+              'Reservation success!',
+              style: heading3Information,
+            ),
+            Space().height(context, 0.01),
+            const Text(
+              'Congratulations you booking has been made.',
+              style: body1Neutral900,
+            ),
+            Space().height(context, 0.01),
+            const Text(
+              'Thanks for trusting us!',
+              style: body1Neutral900,
+            ),
+            Space().height(context, 0.04),
+            buildGenericButtonWidget(
+              width: Sizes().width(context, 0.85),
+              isActive: true,
+              buttonName: 'Back to homepage',
+              context: context,
+              onPressed: () {},
+            ),
+          ],
         ),
       ),
     );
