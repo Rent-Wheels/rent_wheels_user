@@ -3,7 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 
 import 'package:rent_wheels/src/mainSection/cars/widgets/car_details_carousel.dart';
-import 'package:rent_wheels/src/mainSection/cars/widgets/car_details_key_value.dart';
+import 'package:rent_wheels/core/widgets/details/key_value_widget.dart';
 import 'package:rent_wheels/src/mainSection/renter/presentation/renter_profile.dart';
 import 'package:rent_wheels/src/mainSection/cars/widgets/renter_overview_widget.dart';
 import 'package:rent_wheels/src/mainSection/cars/widgets/car_details_carousel_items.dart';
@@ -126,43 +126,43 @@ class _CarDetailsState extends State<CarDetails> {
                         style: heading4Information,
                       ),
                       Space().height(context, 0.01),
-                      buildCarDetailsKeyValue(
+                      buildDetailsKeyValue(
                         context: context,
                         label: 'Registration Number',
                         value: car.registrationNumber!,
                       ),
                       Space().height(context, 0.01),
-                      buildCarDetailsKeyValue(
+                      buildDetailsKeyValue(
                         context: context,
                         label: 'Color',
                         value: car.color!,
                       ),
                       Space().height(context, 0.01),
-                      buildCarDetailsKeyValue(
+                      buildDetailsKeyValue(
                         context: context,
                         label: 'Number of Seats',
                         value: car.capacity.toString(),
                       ),
                       Space().height(context, 0.01),
-                      buildCarDetailsKeyValue(
+                      buildDetailsKeyValue(
                         context: context,
                         label: 'Type',
                         value: car.type!,
                       ),
                       Space().height(context, 0.01),
-                      buildCarDetailsKeyValue(
+                      buildDetailsKeyValue(
                         context: context,
                         label: 'Condition',
                         value: car.condition!,
                       ),
                       Space().height(context, 0.01),
-                      buildCarDetailsKeyValue(
+                      buildDetailsKeyValue(
                         context: context,
                         label: 'Maximum Rental Duration',
                         value: '${car.maxDuration!} ${car.durationUnit!}',
                       ),
                       Space().height(context, 0.01),
-                      buildCarDetailsKeyValue(
+                      buildDetailsKeyValue(
                         context: context,
                         label: 'Location',
                         value: car.location!,
