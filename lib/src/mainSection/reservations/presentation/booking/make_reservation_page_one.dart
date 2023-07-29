@@ -1,17 +1,24 @@
-import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/scheduler.dart' show timeDilation;
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
+import 'package:rent_wheels/src/mainSection/reservations/presentation/booking/make_reservation_page_two.dart';
+
 import 'package:rent_wheels/core/widgets/sizes/sizes.dart';
+import 'package:rent_wheels/core/util/date_formatter.dart';
 import 'package:rent_wheels/core/widgets/theme/colors.dart';
 import 'package:rent_wheels/core/models/cars/cars_model.dart';
 import 'package:rent_wheels/core/widgets/spacing/spacing.dart';
+import 'package:rent_wheels/core/widgets/popups/error_popup.dart';
 import 'package:rent_wheels/core/widgets/textStyles/text_styles.dart';
 import 'package:rent_wheels/core/widgets/search/custom_search_bar.dart';
+import 'package:rent_wheels/core/backend/users/methods/user_methods.dart';
 import 'package:rent_wheels/core/widgets/buttons/generic_button_widget.dart';
 import 'package:rent_wheels/core/widgets/textfields/tappable_textfield.dart';
+import 'package:rent_wheels/core/models/reservations/reservations_model.dart';
 import 'package:rent_wheels/core/widgets/popups/date_range_picker_widget.dart';
+import 'package:rent_wheels/core/widgets/loadingIndicator/loading_indicator.dart';
 import 'package:rent_wheels/core/widgets/buttons/adaptive_back_button_widget.dart';
 
 class MakeReservationPageOne extends StatefulWidget {
@@ -82,7 +89,7 @@ class _MakeReservationPageOneState extends State<MakeReservationPageOne> {
             startDate = dateRange.startDate;
             setCarPrice();
             date.text =
-                '${DateFormat.yMMMMd().format(dateRange.startDate!)} - ${DateFormat.yMMMMd().format(dateRange.endDate!)}';
+                '${formatDate(dateRange.startDate!)} - ${formatDate(dateRange.endDate!)}';
           });
         }
       },
@@ -220,7 +227,35 @@ class _MakeReservationPageOneState extends State<MakeReservationPageOne> {
                 isActive: isActive(),
                 buttonName: 'Continue',
                 context: context,
-                onPressed: () {},
+                onPressed: () async {
+                  try {
+                    final reservation = ReservationModel(
+                      startDate: startDate,
+                      returnDate: endDate,
+                      destination: location.text,
+                      price: price,
+                    );
+                    buildLoadingIndicator(context, '');
+                    final renter = await RentWheelsUserMethods()
+                        .getRenterDetails(userId: car.owner!);
+                    if (!mounted) return;
+                    Navigator.pop(context);
+                    Navigator.push(
+                      context,
+                      CupertinoPageRoute(
+                        builder: (context) => MakeReservationPageTwo(
+                          car: car,
+                          renter: renter,
+                          reservation: reservation,
+                        ),
+                      ),
+                    );
+                  } catch (e) {
+                    if (!mounted) return;
+                    Navigator.pop(context);
+                    showErrorPopUp(e.toString(), context);
+                  }
+                },
               ),
             ],
           ),

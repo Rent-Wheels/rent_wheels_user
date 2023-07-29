@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:rent_wheels/core/util/date_formatter.dart';
 import 'package:rent_wheels/core/widgets/popups/date_picker_widget.dart';
 import 'package:string_validator/string_validator.dart';
 
@@ -233,14 +234,14 @@ class _SignUpState extends State<SignUp> {
                     context: context,
                     onDateTimeChanged: (pickedDate) {
                       setState(() {
-                        dob.text = DateFormat.yMMMMd().format(pickedDate);
+                        dob.text = formatDate(pickedDate);
                         isDobValid = true;
                       });
                     },
                     onPressed: () {
                       if (dob.text.isEmpty) {
                         setState(() {
-                          DateFormat.yMMMMd().format(DateTime(2005));
+                          formatDate(DateTime(2005));
                         });
                       }
                       Navigator.pop(context);

@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:rent_wheels/core/widgets/buttons/generic_button_widget.dart';
 
+import 'package:rent_wheels/core/widgets/loadingIndicator/loading_indicator.dart';
+import 'package:rent_wheels/core/widgets/spacing/spacing.dart';
 import 'package:rent_wheels/src/mainSection/profile/widgets/profile_options_widget.dart';
 import 'package:rent_wheels/src/mainSection/profile/presentation/sections/accountProfile/presentation/account_profile.dart';
 import 'package:rent_wheels/src/mainSection/profile/presentation/sections/changePassword/presentation/change_password.dart';
@@ -9,14 +12,11 @@ import 'package:rent_wheels/src/mainSection/profile/presentation/sections/change
 import 'package:rent_wheels/core/auth/auth_service.dart';
 import 'package:rent_wheels/core/widgets/sizes/sizes.dart';
 import 'package:rent_wheels/core/widgets/theme/colors.dart';
-import 'package:rent_wheels/core/widgets/spacing/spacing.dart';
 import 'package:rent_wheels/core/global/globals.dart' as global;
 import 'package:rent_wheels/core/widgets/popups/error_popup.dart';
 import 'package:rent_wheels/core/widgets/textStyles/text_styles.dart';
 import 'package:rent_wheels/core/backend/users/methods/user_methods.dart';
-import 'package:rent_wheels/core/widgets/buttons/generic_button_widget.dart';
 import 'package:rent_wheels/src/authentication/login/presentation/login.dart';
-import 'package:rent_wheels/core/widgets/loadingIndicator/loading_indicator.dart';
 
 class Profile extends StatefulWidget {
   const Profile({super.key});

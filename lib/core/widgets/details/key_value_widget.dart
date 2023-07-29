@@ -20,7 +20,7 @@ buildDetailsKeyValue({
         width: Sizes().width(context, 0.4),
         child: Text(
           value,
-          style: heading5Neutral,
+          style: heading6Neutral900,
         ),
       ),
     ],
