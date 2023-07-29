@@ -1,3 +1,4 @@
+import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart' show timeDilation;
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
@@ -22,6 +23,8 @@ class MakeReservationPageOne extends StatefulWidget {
 }
 
 class _MakeReservationPageOneState extends State<MakeReservationPageOne> {
+  late num price;
+
   bool isDateValid = false;
   bool isLocationValid = false;
 
@@ -66,6 +69,7 @@ class _MakeReservationPageOneState extends State<MakeReservationPageOne> {
   showDateRangeSelector() {
     timeDilation = 1;
     return buildDateRangePicker(
+      selectedRange: PickerDateRange(startDate, endDate),
       context: context,
       duration: getDuration(),
       onCancel: () => Navigator.pop(context),
@@ -73,13 +77,45 @@ class _MakeReservationPageOneState extends State<MakeReservationPageOne> {
         if (dateRange is PickerDateRange) {
           Navigator.pop(context);
           setState(() {
-            date.text = dateRange.startDate.toString();
-            startDate = dateRange.startDate;
+            isDateValid = true;
             endDate = dateRange.endDate;
+            startDate = dateRange.startDate;
+            setCarPrice();
+            date.text =
+                '${DateFormat.yMMMMd().format(dateRange.startDate!)} - ${DateFormat.yMMMMd().format(dateRange.endDate!)}';
           });
         }
       },
     );
+  }
+
+  num setCarPrice() {
+    Car car = widget.car;
+
+    Duration duration = endDate?.difference(startDate ?? DateTime.now()) ??
+        const Duration(days: 0);
+
+    if (endDate!.isAtSameMomentAs(startDate!)) {
+      duration = const Duration(days: 1);
+    }
+
+    switch (car.plan) {
+      case '/hr':
+        price = car.rate! * duration.inHours;
+        break;
+      case '/day':
+        price = car.rate! * duration.inDays;
+        break;
+      default:
+        price = car.rate!;
+    }
+    return price;
+  }
+
+  @override
+  void initState() {
+    price = widget.car.rate!;
+    super.initState();
   }
 
   @override
@@ -137,6 +173,7 @@ class _MakeReservationPageOneState extends State<MakeReservationPageOne> {
                     if (response != null) {
                       setState(() {
                         location.text = response;
+                        isLocationValid = true;
                       });
                     }
                   }),
@@ -154,19 +191,39 @@ class _MakeReservationPageOneState extends State<MakeReservationPageOne> {
       bottomSheet: Container(
         color: rentWheelsNeutralLight0,
         padding: EdgeInsets.all(Sizes().height(context, 0.02)),
-        height: Sizes().height(context, 0.13),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            buildGenericButtonWidget(
-              width: Sizes().width(context, 0.85),
-              isActive: isActive(),
-              buttonName: 'Continue',
-              context: context,
-              onPressed: () {},
-            ),
-          ],
+        height: Sizes().height(context, 0.2),
+        child: Padding(
+          padding: EdgeInsets.symmetric(
+            horizontal: Sizes().width(context, 0.04),
+          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  const Text(
+                    'Price',
+                    style: heading4Information,
+                  ),
+                  Text(
+                    "GH¢ $price",
+                    style: heading4Information,
+                  )
+                ],
+              ),
+              Space().height(context, 0.04),
+              buildGenericButtonWidget(
+                width: Sizes().width(context, 0.85),
+                isActive: isActive(),
+                buttonName: 'Continue',
+                context: context,
+                onPressed: () {},
+              ),
+            ],
+          ),
         ),
       ),
     );

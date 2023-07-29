@@ -6,6 +6,7 @@ import 'package:rent_wheels/core/widgets/theme/colors.dart';
 import 'package:rent_wheels/core/widgets/buttons/text_button_widget.dart';
 
 buildDateRangePicker({
+  PickerDateRange? selectedRange,
   required Duration duration,
   required BuildContext context,
   required void Function() onCancel,
@@ -33,6 +34,7 @@ buildDateRangePicker({
                 children: [
                   SfDateRangePicker(
                     maxDate: endDate,
+                    initialSelectedRange: selectedRange,
                     onCancel: onCancel,
                     onSubmit: onSubmit,
                     controller: date,
