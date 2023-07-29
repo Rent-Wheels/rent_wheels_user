@@ -14,6 +14,7 @@ class Car {
   bool? availability;
   String? location;
   num? maxDuration;
+  String? durationUnit;
   String? description;
   String? terms;
   List<Media>? media;
@@ -34,6 +35,7 @@ class Car {
     this.availability,
     this.location,
     this.maxDuration,
+    this.durationUnit,
     this.description,
     this.terms,
     this.media,
@@ -56,6 +58,7 @@ class Car {
       availability: json['availability'],
       location: json['location'],
       maxDuration: json['maxDuration'],
+      durationUnit: json['durationUnit'],
       description: json['description'],
       terms: json['terms'],
       media: List<Media>.from(
