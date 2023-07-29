@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:rent_wheels/core/widgets/buttons/generic_button_widget.dart';
 
 import 'package:rent_wheels/src/mainSection/cars/widgets/car_details_carousel.dart';
 import 'package:rent_wheels/src/mainSection/cars/widgets/car_details_key_value.dart';
@@ -15,6 +14,7 @@ import 'package:rent_wheels/core/models/cars/cars_model.dart';
 import 'package:rent_wheels/core/widgets/spacing/spacing.dart';
 import 'package:rent_wheels/core/models/renter/renter_model.dart';
 import 'package:rent_wheels/core/widgets/textStyles/text_styles.dart';
+import 'package:rent_wheels/core/widgets/buttons/generic_button_widget.dart';
 import 'package:rent_wheels/core/widgets/buttons/adaptive_back_button_widget.dart';
 import 'package:rent_wheels/src/mainSection/reservations/presentation/booking/make_reservation_page_one.dart';
 
@@ -236,10 +236,7 @@ class _CarDetailsState extends State<CarDetails> {
               onPressed: () => Navigator.push(
                 context,
                 CupertinoPageRoute(
-                  builder: (context) => MakeReservationPageOne(
-                    maxDuration: car.maxDuration!,
-                    duration: car.durationUnit!,
-                  ),
+                  builder: (context) => MakeReservationPageOne(car: car),
                 ),
               ),
             ),

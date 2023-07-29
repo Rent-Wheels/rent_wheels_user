@@ -53,6 +53,12 @@ const heading6Brand = TextStyle(
   fontSize: 14,
   color: rentWheelsBrandDark900,
 );
+const heading6BrandBold = TextStyle(
+  fontWeight: FontWeight.w700,
+  fontFamily: 'Urbanist',
+  fontSize: 14,
+  color: rentWheelsBrandDark900,
+);
 const heading7Brand = TextStyle(
   fontWeight: FontWeight.w700,
   fontFamily: 'Urbanist',

@@ -6,14 +6,15 @@ import 'package:rent_wheels/core/widgets/theme/colors.dart';
 import 'package:rent_wheels/core/widgets/buttons/text_button_widget.dart';
 
 buildDateRangePicker({
-  required DateTime? endDate,
   required Duration duration,
   required BuildContext context,
   required void Function() onCancel,
   required void Function(Object?)? onSubmit,
 }) {
+  DateTime? endDate;
   bool isDateRangeSelected = false;
   DateRangePickerController date = DateRangePickerController();
+
   return showDialog(
     context: context,
     builder: (context) {
