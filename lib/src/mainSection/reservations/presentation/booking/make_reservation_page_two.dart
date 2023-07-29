@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:dotted_dashed_line/dotted_dashed_line.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -13,6 +14,7 @@ import 'package:rent_wheels/core/widgets/details/key_value_widget.dart';
 import 'package:rent_wheels/core/widgets/buttons/generic_button_widget.dart';
 import 'package:rent_wheels/core/models/reservations/reservations_model.dart';
 import 'package:rent_wheels/core/widgets/buttons/adaptive_back_button_widget.dart';
+import 'package:rent_wheels/src/mainSection/reservations/presentation/booking/reservation_successful.dart';
 import 'package:rent_wheels/src/mainSection/reservations/widgets/price_details_widget.dart';
 
 class MakeReservationPageTwo extends StatefulWidget {
@@ -112,7 +114,7 @@ class _MakeReservationPageTwoState extends State<MakeReservationPageTwo> {
                           Space().height(context, 0.008),
                           Text(
                             '${formatDate(reservation.startDate!)} - ${formatDate(reservation.returnDate!)}',
-                            style: body2Neutral900,
+                            style: heading6Neutral900Bold,
                           ),
                         ],
                       ),
@@ -234,7 +236,15 @@ class _MakeReservationPageTwoState extends State<MakeReservationPageTwo> {
               isActive: true,
               buttonName: 'Continue',
               context: context,
-              onPressed: () {},
+              onPressed: () async {
+                if (!mounted) return;
+                Navigator.push(
+                  context,
+                  CupertinoPageRoute(
+                    builder: (context) => const ReservationSuccessful(),
+                  ),
+                );
+              },
             ),
           ],
         ),
