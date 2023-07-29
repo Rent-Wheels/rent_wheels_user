@@ -16,6 +16,7 @@ import 'package:rent_wheels/core/widgets/spacing/spacing.dart';
 import 'package:rent_wheels/core/models/renter/renter_model.dart';
 import 'package:rent_wheels/core/widgets/textStyles/text_styles.dart';
 import 'package:rent_wheels/core/widgets/buttons/adaptive_back_button_widget.dart';
+import 'package:rent_wheels/src/mainSection/reservations/presentation/booking/make_reservation_page_one.dart';
 
 class CarDetails extends StatefulWidget {
   final Car car;
@@ -37,27 +38,18 @@ class _CarDetailsState extends State<CarDetails> {
   final CarouselController _carImage = CarouselController();
 
   @override
-  void initState() {
-    scroll.addListener(() {
-      setState(() {
-        if (scroll.offset < 196) {
-          changeColor = false;
-        } else {
-          changeColor = true;
-        }
-      });
-    });
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    scroll.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
+    scroll.addListener(() {
+      if (scroll.offset < 196) {
+        setState(() {
+          changeColor = false;
+        });
+      } else {
+        setState(() {
+          changeColor = true;
+        });
+      }
+    });
     Car car = widget.car;
     List<Widget> carouselItems = widget.car.media!.map((media) {
       return buildCarDetailsCarouselItem(
@@ -166,6 +158,12 @@ class _CarDetailsState extends State<CarDetails> {
                       Space().height(context, 0.01),
                       buildCarDetailsKeyValue(
                         context: context,
+                        label: 'Maximum Rental Duration',
+                        value: '${car.maxDuration!} ${car.durationUnit!}',
+                      ),
+                      Space().height(context, 0.01),
+                      buildCarDetailsKeyValue(
+                        context: context,
                         label: 'Location',
                         value: car.location!,
                       ),
@@ -188,11 +186,12 @@ class _CarDetailsState extends State<CarDetails> {
                       GestureDetector(
                         onTap: () {
                           Navigator.push(
-                              context,
-                              CupertinoPageRoute(
-                                builder: (context) =>
-                                    RenterDetails(renter: widget.renter),
-                              ));
+                            context,
+                            CupertinoPageRoute(
+                              builder: (context) =>
+                                  RenterDetails(renter: widget.renter),
+                            ),
+                          );
                         },
                         child: buildRenterOverview(
                           context: context,
@@ -234,7 +233,15 @@ class _CarDetailsState extends State<CarDetails> {
               isActive: car.availability!,
               buttonName: 'Reserve Car',
               context: context,
-              onPressed: () {},
+              onPressed: () => Navigator.push(
+                context,
+                CupertinoPageRoute(
+                  builder: (context) => MakeReservationPageOne(
+                    maxDuration: car.maxDuration!,
+                    duration: car.durationUnit!,
+                  ),
+                ),
+              ),
             ),
           ],
         ),
