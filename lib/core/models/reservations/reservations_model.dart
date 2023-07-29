@@ -1,5 +1,5 @@
 class ReservationModel {
-  String? customer;
+  Customer? customer;
   String? renter;
   String? car;
   DateTime? startDate;
@@ -21,14 +21,31 @@ class ReservationModel {
 
   factory ReservationModel.fromJSON(Map<String, dynamic> json) {
     return ReservationModel(
-      customer: json['customer'],
+      customer: Customer.fromJSON(json['customer']),
       renter: json['renter'],
       car: json['car'],
-      startDate: json['startDate'],
-      returnDate: json['returnDate'],
+      startDate: DateTime.parse(json['startDate']),
+      returnDate: DateTime.parse(json['returnDate']),
       status: json['status'],
       destination: json['destination'],
       price: json['price'],
+    );
+  }
+}
+
+class Customer {
+  String? id;
+  String? name;
+
+  Customer({
+    this.id,
+    this.name,
+  });
+
+  factory Customer.fromJSON(Map<String, dynamic> json) {
+    return Customer(
+      id: json['id'],
+      name: json['name'],
     );
   }
 }

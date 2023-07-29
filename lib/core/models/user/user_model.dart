@@ -1,4 +1,5 @@
 class BackendUser {
+  String id;
   String userId;
   String name;
   String email;
@@ -10,6 +11,7 @@ class BackendUser {
 
   BackendUser({
     this.cars,
+    required this.id,
     required this.userId,
     required this.name,
     required this.email,
@@ -21,6 +23,7 @@ class BackendUser {
 
   factory BackendUser.fromJSON(Map<String, dynamic> json) {
     return BackendUser(
+      id: json['_id'],
       userId: json['userId'],
       name: json['name'],
       email: json['email'],

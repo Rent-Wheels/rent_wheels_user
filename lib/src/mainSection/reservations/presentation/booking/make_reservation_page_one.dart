@@ -10,6 +10,7 @@ import 'package:rent_wheels/core/util/date_formatter.dart';
 import 'package:rent_wheels/core/widgets/theme/colors.dart';
 import 'package:rent_wheels/core/models/cars/cars_model.dart';
 import 'package:rent_wheels/core/widgets/spacing/spacing.dart';
+import 'package:rent_wheels/core/global/globals.dart' as global;
 import 'package:rent_wheels/core/widgets/popups/error_popup.dart';
 import 'package:rent_wheels/core/widgets/textStyles/text_styles.dart';
 import 'package:rent_wheels/core/widgets/search/custom_search_bar.dart';
@@ -230,6 +231,12 @@ class _MakeReservationPageOneState extends State<MakeReservationPageOne> {
                 onPressed: () async {
                   try {
                     final reservation = ReservationModel(
+                      customer: Customer(
+                        id: global.userDetails!.id,
+                        name: global.userDetails!.name,
+                      ),
+                      renter: car.owner,
+                      car: car.carId,
                       startDate: startDate,
                       returnDate: endDate,
                       destination: location.text,

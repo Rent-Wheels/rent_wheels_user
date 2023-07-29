@@ -2,7 +2,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:dotted_dashed_line/dotted_dashed_line.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:rent_wheels/core/backend/reservations/methods/reservations_methods.dart';
 import 'package:rent_wheels/core/util/date_formatter.dart';
+import 'package:rent_wheels/core/widgets/loadingIndicator/loading_indicator.dart';
+import 'package:rent_wheels/core/widgets/popups/error_popup.dart';
 
 import 'package:rent_wheels/core/widgets/sizes/sizes.dart';
 import 'package:rent_wheels/core/widgets/theme/colors.dart';
@@ -237,13 +240,23 @@ class _MakeReservationPageTwoState extends State<MakeReservationPageTwo> {
               buttonName: 'Continue',
               context: context,
               onPressed: () async {
-                if (!mounted) return;
-                Navigator.push(
-                  context,
-                  CupertinoPageRoute(
-                    builder: (context) => const ReservationSuccessful(),
-                  ),
-                );
+                try {
+                  buildLoadingIndicator(context, 'Booking Reservation');
+                  await RentWheelsReservationsMethods()
+                      .makeReservation(reservationDetails: reservation);
+                  if (!mounted) return;
+                  Navigator.pop(context);
+                  Navigator.push(
+                    context,
+                    CupertinoPageRoute(
+                      builder: (context) => const ReservationSuccessful(),
+                    ),
+                  );
+                } catch (e) {
+                  if (!mounted) return;
+                  Navigator.pop(context);
+                  showErrorPopUp(e.toString(), context);
+                }
               },
             ),
           ],
