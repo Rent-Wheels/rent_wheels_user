@@ -52,6 +52,7 @@ dependencies:
   carousel_slider: ^4.2.1
   firebase_storage: ^11.2.4
   syncfusion_flutter_datepicker: ^22.1.39
+  dotted_dashed_line: ^0.0.3
 
 dev_dependencies:
   flutter_test:
