@@ -1,17 +1,19 @@
 import 'package:flutter/cupertino.dart';
-import 'package:rent_wheels/core/backend/reservations/methods/reservations_methods.dart';
-import 'package:rent_wheels/core/models/cars/cars_model.dart';
+
+import 'package:rent_wheels/src/mainSection/reservations/widgets/filter_buttons_widget.dart';
+import 'package:rent_wheels/src/mainSection/reservations/presentation/booking/make_reservation_page_two.dart';
+import 'package:rent_wheels/src/mainSection/reservations/widgets/reservation_information_sections_widget.dart';
+
 import 'package:rent_wheels/core/models/enums/enums.dart';
-import 'package:rent_wheels/core/models/reservations/reservations_model.dart';
-import 'package:rent_wheels/core/widgets/error/error_message_widget.dart';
-import 'package:rent_wheels/core/widgets/loadingIndicator/shimmer_loading_placeholder.dart';
 import 'package:rent_wheels/core/widgets/sizes/sizes.dart';
+import 'package:rent_wheels/core/widgets/theme/colors.dart';
+import 'package:rent_wheels/core/models/cars/cars_model.dart';
 import 'package:rent_wheels/core/widgets/spacing/spacing.dart';
 import 'package:rent_wheels/core/widgets/textStyles/text_styles.dart';
-import 'package:rent_wheels/core/widgets/theme/colors.dart';
-import 'package:rent_wheels/src/mainSection/reservations/presentation/booking/make_reservation_page_two.dart';
-import 'package:rent_wheels/src/mainSection/reservations/widgets/filter_buttons_widget.dart';
-import 'package:rent_wheels/src/mainSection/reservations/widgets/reservation_information_sections_widget.dart';
+import 'package:rent_wheels/core/widgets/error/error_message_widget.dart';
+import 'package:rent_wheels/core/models/reservations/reservations_model.dart';
+import 'package:rent_wheels/core/backend/reservations/methods/reservations_methods.dart';
+import 'package:rent_wheels/core/widgets/loadingIndicator/shimmer_loading_placeholder.dart';
 
 class ReservationsData extends StatefulWidget {
   const ReservationsData({super.key});
@@ -24,8 +26,8 @@ class _ReservationsDataState extends State<ReservationsData> {
   int currentIndex = 0;
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder(
-      stream: RentWheelsReservationsMethods().getAllReservations(),
+    return FutureBuilder(
+      future: RentWheelsReservationsMethods().getAllReservations(),
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           List<ReservationModel> reservations = snapshot.data!;
@@ -78,7 +80,7 @@ class _ReservationsDataState extends State<ReservationsData> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox(
-                height: Sizes().height(context, 0.03),
+                height: Sizes().height(context, 0.05),
                 child: ListView.builder(
                   scrollDirection: Axis.horizontal,
                   itemCount: sections.length,
@@ -109,6 +111,10 @@ class _ReservationsDataState extends State<ReservationsData> {
                           bottom: Sizes().height(context, 0.04),
                         ),
                         child: buildReservationSections(
+                          isLoading: false,
+                          context: context,
+                          car: reservation.car!,
+                          reservation: reservation,
                           onPressed: () => Navigator.push(
                             context,
                             CupertinoPageRoute(
@@ -120,10 +126,6 @@ class _ReservationsDataState extends State<ReservationsData> {
                               ),
                             ),
                           ),
-                          isLoading: false,
-                          context: context,
-                          car: reservation.car!,
-                          reservation: reservation,
                         ),
                       ))
                   .toList()
@@ -144,7 +146,7 @@ class _ReservationsDataState extends State<ReservationsData> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox(
-                height: Sizes().height(context, 0.03),
+                height: Sizes().height(context, 0.05),
                 child: ListView.builder(
                   scrollDirection: Axis.horizontal,
                   itemCount: 4,

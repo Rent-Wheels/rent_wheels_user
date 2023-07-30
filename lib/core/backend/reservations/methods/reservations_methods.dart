@@ -8,25 +8,21 @@ import 'package:rent_wheels/core/backend/reservations/endpoints/reservations_end
 
 class RentWheelsReservationsMethods extends RentWheelsReservationsEndpoint {
   @override
-  Stream<List<ReservationModel>> getAllReservations() async* {
-    yield* Stream.periodic(const Duration(milliseconds: 30), (_) {
-      return get(
-              Uri.parse(
-                  '${global.baseURL}/reservations/?userId=${global.userDetails!.id}/'),
-              headers: global.headers)
-          .then((response) {
-        if (response.statusCode == 200) {
-          List results = jsonDecode(response.body);
-          return List<ReservationModel>.from(
-            results.map(
-              (result) => ReservationModel.fromJSON(result),
-            ),
-          );
-        } else {
-          throw Exception(response.body);
-        }
-      });
-    }).asyncMap((event) async => await event);
+  Future<List<ReservationModel>> getAllReservations() async {
+    final response = await get(
+        Uri.parse(
+            '${global.baseURL}/reservations/?userId=${global.userDetails!.id}/'),
+        headers: global.headers);
+    if (response.statusCode == 200) {
+      List results = jsonDecode(response.body);
+      return List<ReservationModel>.from(
+        results.map(
+          (result) => ReservationModel.fromJSON(result),
+        ),
+      );
+    } else {
+      throw Exception(response.body);
+    }
   }
 
   @override
