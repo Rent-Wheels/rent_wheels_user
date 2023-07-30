@@ -11,8 +11,9 @@ import 'package:rent_wheels/core/widgets/theme/colors.dart';
 import 'package:rent_wheels/src/mainSection/reservations/widgets/car_image_widget.dart';
 
 Widget buildReservationSections({
-  required BuildContext context,
   required Car car,
+  required bool isLoading,
+  required BuildContext context,
   required ReservationModel reservation,
 }) {
   return Column(
@@ -20,46 +21,58 @@ Widget buildReservationSections({
     children: [
       buildCarImage(
         imageUrl: car.media![0].mediaURL,
-        reservationStatus: reservation.status!,
+        reservationStatus: reservation.status ?? '',
         context: context,
       ),
       Space().height(context, 0.01),
-      Text(
-        '${car.yearOfManufacture} ${car.make} ${car.model}',
-        style: heading3Information,
-      ),
+      isLoading
+          ? Container(
+              width: double.infinity,
+              height: Sizes().height(context, 0.02),
+              decoration: BoxDecoration(
+                color: rentWheelsNeutralLight0,
+                borderRadius:
+                    BorderRadius.circular(Sizes().height(context, 0.2)),
+              ),
+            )
+          : Text(
+              '${car.yearOfManufacture} ${car.make} ${car.model}',
+              style: heading3Information,
+            ),
       Space().height(context, 0.01),
-      Text(
-        '${reservation.destination}, ${formatDate(reservation.startDate!)} - ${formatDate(reservation.returnDate!)}',
-        style: heading6Brand,
-      ),
+      isLoading
+          ? Container(
+              width: double.infinity,
+              height: Sizes().height(context, 0.02),
+              decoration: BoxDecoration(
+                color: rentWheelsNeutralLight0,
+                borderRadius:
+                    BorderRadius.circular(Sizes().height(context, 0.2)),
+              ),
+            )
+          : Text(
+              '${reservation.destination}, ${formatDate(reservation.startDate!)} - ${formatDate(reservation.returnDate!)}',
+              style: heading6Brand,
+            ),
       Space().height(context, 0.02),
       Row(
         children: [
           buildGenericButtonWidget(
-            width: Sizes().width(context, 0.44),
+            width: Sizes().width(context, 0.4),
             isActive: true,
             buttonName: 'Write review',
             context: context,
             onPressed: () {},
           ),
-          SizedBox(
-            width: Sizes().width(context, 0.04),
-          ),
-          GestureDetector(
-            onTap: () {},
-            child: Container(
-              width: Sizes().width(context, 0.44),
-              height: Sizes().height(context, 0.06),
-              decoration: BoxDecoration(
-                  border: Border.all(color: rentWheelsNeutralLight400),
-                  borderRadius: BorderRadius.circular(20)),
-              child: const Center(
-                  child: Text(
-                'Booking again',
-                style: heading6Brand,
-              )),
-            ),
+          Space().width(context, 0.04),
+          buildGenericButtonWidget(
+            isActive: true,
+            context: context,
+            buttonName: 'Write review',
+            btnColor: rentWheelsNeutralLight0,
+            textStyle: heading5NeutralLight,
+            width: Sizes().width(context, 0.4),
+            onPressed: () {},
           ),
         ],
       )

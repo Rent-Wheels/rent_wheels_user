@@ -19,10 +19,12 @@ buildCarImage({
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(Sizes().height(context, 0.02)),
           color: rentWheelsNeutralLight0,
-          image: DecorationImage(
-            fit: BoxFit.cover,
-            image: CachedNetworkImageProvider(imageUrl),
-          ),
+          image: imageUrl == ''
+              ? null
+              : DecorationImage(
+                  fit: BoxFit.cover,
+                  image: CachedNetworkImageProvider(imageUrl),
+                ),
         ),
       ),
       buildReservationStatus(status: reservationStatus, context: context),

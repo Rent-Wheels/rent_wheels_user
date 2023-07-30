@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+
 import 'package:rent_wheels/core/widgets/sizes/sizes.dart';
-import 'package:rent_wheels/core/widgets/textStyles/text_styles.dart';
 import 'package:rent_wheels/core/widgets/theme/colors.dart';
+import 'package:rent_wheels/core/widgets/textStyles/text_styles.dart';
 
 buildReservationStatus({
   required String status,

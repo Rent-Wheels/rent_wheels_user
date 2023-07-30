@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:rent_wheels/core/backend/reservations/methods/reservations_methods.dart';
+import 'package:rent_wheels/core/models/cars/cars_model.dart';
 import 'package:rent_wheels/core/models/reservations/reservations_model.dart';
 import 'package:rent_wheels/core/widgets/error/error_message_widget.dart';
+import 'package:rent_wheels/core/widgets/loadingIndicator/shimmer_loading_placeholder.dart';
 import 'package:rent_wheels/core/widgets/sizes/sizes.dart';
 import 'package:rent_wheels/core/widgets/spacing/spacing.dart';
 import 'package:rent_wheels/src/mainSection/reservations/widgets/filter_buttons_widget.dart';
@@ -52,6 +54,7 @@ class _ReservationsDataState extends State<ReservationsData> {
                           bottom: Sizes().height(context, 0.04),
                         ),
                         child: buildReservationSections(
+                          isLoading: false,
                           context: context,
                           car: reservation.car!,
                           reservation: reservation,
@@ -69,7 +72,48 @@ class _ReservationsDataState extends State<ReservationsData> {
           );
         }
 
-        return const Text('');
+        return ShimmerLoading(
+          isLoading: true,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedBox(
+                height: Sizes().height(context, 0.03),
+                child: ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  itemCount: 4,
+                  itemBuilder: (context, index) {
+                    return buildFilterButtons(
+                      width: Sizes().width(context, 0.2),
+                      label: '',
+                      context: context,
+                      onTap: () {},
+                    );
+                  },
+                ),
+              ),
+              Space().height(context, 0.02),
+              SizedBox(
+                height: Sizes().height(context, 0.9),
+                child: ListView.builder(
+                  itemCount: 2,
+                  itemBuilder: (context, index) {
+                    return Padding(
+                      padding: EdgeInsets.only(
+                          bottom: Sizes().height(context, 0.04)),
+                      child: buildReservationSections(
+                        isLoading: true,
+                        context: context,
+                        car: Car(media: [Media(mediaURL: '')]),
+                        reservation: ReservationModel(),
+                      ),
+                    );
+                  },
+                ),
+              ),
+            ],
+          ),
+        );
       },
     );
   }
