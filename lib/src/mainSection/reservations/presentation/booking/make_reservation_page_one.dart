@@ -240,7 +240,7 @@ class _MakeReservationPageOneState extends State<MakeReservationPageOne> {
                       car: car,
                       startDate: startDate,
                       returnDate: endDate,
-                      // destination: location.text,
+                      destination: location.text,
                       price: price,
                     );
                     buildLoadingIndicator(context, '');
