@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:rent_wheels/core/widgets/popups/success_popup.dart';
 
 import 'package:rent_wheels/src/mainSection/reservations/widgets/reservation_details_widget.dart';
 import 'package:rent_wheels/src/mainSection/reservations/presentation/booking/reservation_successful.dart';
@@ -60,7 +61,7 @@ class _MakeReservationPageTwoState extends State<MakeReservationPageTwo> {
         foregroundColor: rentWheelsBrandDark900,
         backgroundColor: rentWheelsNeutralLight0,
         leading: buildAdaptiveBackButton(
-          onPressed: () => Navigator.pop(context),
+          onPressed: () => Navigator.pop(context, reservation.status),
         ),
       ),
       body: Padding(
@@ -93,7 +94,7 @@ class _MakeReservationPageTwoState extends State<MakeReservationPageTwo> {
               context: context,
               onPressed: () async {
                 try {
-                  buildLoadingIndicator(context, 'Booking Reservation');
+                  buildLoadingIndicator(context, 'Making Reservation');
                   await RentWheelsReservationsMethods()
                       .makeReservation(reservationDetails: reservation);
                   if (!mounted) return;
@@ -118,7 +119,24 @@ class _MakeReservationPageTwoState extends State<MakeReservationPageTwo> {
                   context: context,
                   btnColor: rentWheelsErrorDark700,
                   buttonTitle: 'Cancel Reservation',
-                  onPressed: () {},
+                  onPressed: () async {
+                    try {
+                      buildLoadingIndicator(context, 'Cancelling Reservation');
+                      await RentWheelsReservationsMethods()
+                          .cancelReservation(reservationId: reservation.id!);
+                      if (!mounted) return;
+                      Navigator.pop(context);
+                      showSuccessPopUp('Reservation Cancelled', context);
+
+                      setState(() {
+                        reservation.status = 'Cancelled';
+                      });
+                    } catch (e) {
+                      if (!mounted) return;
+                      Navigator.pop(context);
+                      showErrorPopUp(e.toString(), context);
+                    }
+                  },
                 )
               : null,
     );

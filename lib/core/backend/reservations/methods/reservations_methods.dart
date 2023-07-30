@@ -73,7 +73,7 @@ class RentWheelsReservationsMethods extends RentWheelsReservationsEndpoint {
 
     try {
       final body = {'status': 'Cancelled'};
-      final response = await post(
+      final response = await patch(
         Uri.parse('${global.baseURL}/reservations/$reservationId/status'),
         headers: global.headers,
         body: jsonEncode(body),

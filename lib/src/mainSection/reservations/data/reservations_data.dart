@@ -115,17 +115,25 @@ class _ReservationsDataState extends State<ReservationsData> {
                           context: context,
                           car: reservation.car!,
                           reservation: reservation,
-                          onPressed: () => Navigator.push(
-                            context,
-                            CupertinoPageRoute(
-                              builder: (context) => MakeReservationPageTwo(
-                                car: reservation.car!,
-                                view: ReservationView.view,
-                                renter: reservation.renter!,
-                                reservation: reservation,
+                          onPressed: () async {
+                            final status = await Navigator.push(
+                              context,
+                              CupertinoPageRoute(
+                                builder: (context) => MakeReservationPageTwo(
+                                  car: reservation.car!,
+                                  view: ReservationView.view,
+                                  renter: reservation.renter!,
+                                  reservation: reservation,
+                                ),
                               ),
-                            ),
-                          ),
+                            );
+
+                            if (status != null) {
+                              setState(() {
+                                reservation.status = status;
+                              });
+                            }
+                          },
                         ),
                       ))
                   .toList()
