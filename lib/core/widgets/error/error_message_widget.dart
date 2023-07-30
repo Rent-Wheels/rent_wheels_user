@@ -19,7 +19,7 @@ buildErrorMessage({
         style: heading3Information,
       ),
       Text(
-        errorMessage ?? '',
+        errorMessage?.replaceAll(RegExp(r'(Exception:|")'), '') ?? '',
         style: body2Neutral,
       )
     ],

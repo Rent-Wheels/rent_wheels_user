@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/scheduler.dart' show timeDilation;
+import 'package:rent_wheels/core/models/enums/enums.dart';
 import 'package:rent_wheels/core/models/renter/renter_model.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
@@ -236,7 +237,7 @@ class _MakeReservationPageOneState extends State<MakeReservationPageOne> {
                         id: global.userDetails!.id,
                         name: global.userDetails!.name,
                       ),
-                      renter: Renter(userId: car.owner),
+                      renter: Renter(id: car.owner!),
                       car: car,
                       startDate: startDate,
                       returnDate: endDate,
@@ -255,6 +256,7 @@ class _MakeReservationPageOneState extends State<MakeReservationPageOne> {
                           car: car,
                           renter: renter,
                           reservation: reservation,
+                          view: ReservationView.make,
                         ),
                       ),
                     );
