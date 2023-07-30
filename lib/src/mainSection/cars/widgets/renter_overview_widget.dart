@@ -22,7 +22,7 @@ buildRenterOverview({
           image: DecorationImage(
             fit: BoxFit.cover,
             image: CachedNetworkImageProvider(
-              renter.profilePicture,
+              renter.profilePicture!,
             ),
           ),
           border: Border.all(color: rentWheelsNeutralLight200),
@@ -37,12 +37,12 @@ buildRenterOverview({
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            renter.name,
+            renter.name!,
             style: heading5Neutral,
           ),
           Space().height(context, 0.005),
           Text(
-            renter.placeOfResidence,
+            renter.placeOfResidence!,
             style: heading6Neutral500,
           ),
         ],

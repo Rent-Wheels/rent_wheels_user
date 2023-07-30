@@ -10,7 +10,7 @@ class RenterDetails extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: Text(renter.name),
+        child: Text(renter.name!),
       ),
     );
   }

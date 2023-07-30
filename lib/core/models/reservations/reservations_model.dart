@@ -1,7 +1,10 @@
+import 'package:rent_wheels/core/models/cars/cars_model.dart';
+import 'package:rent_wheels/core/models/renter/renter_model.dart';
+
 class ReservationModel {
   Customer? customer;
-  String? renter;
-  String? car;
+  Renter? renter;
+  Car? car;
   DateTime? startDate;
   DateTime? returnDate;
   String? status;
@@ -22,8 +25,8 @@ class ReservationModel {
   factory ReservationModel.fromJSON(Map<String, dynamic> json) {
     return ReservationModel(
       customer: Customer.fromJSON(json['customer']),
-      renter: json['renter'],
-      car: json['car'],
+      renter: Renter.fromJSON(json['renter']),
+      car: Car.fromJSON(json['car']),
       startDate: DateTime.parse(json['startDate']),
       returnDate: DateTime.parse(json['returnDate']),
       status: json['status'],

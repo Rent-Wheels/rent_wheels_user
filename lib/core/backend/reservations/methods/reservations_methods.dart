@@ -12,7 +12,7 @@ class RentWheelsReservationsMethods extends RentWheelsReservationsEndpoint {
     yield* Stream.periodic(const Duration(milliseconds: 30), (_) {
       return get(
               Uri.parse(
-                  '${global.baseURL}/${global.userDetails!.userId}/reservations/history'),
+                  '${global.baseURL}/reservations/?userId=${global.userDetails!.id}/'),
               headers: global.headers)
           .then((response) {
         if (response.statusCode == 200) {
@@ -40,10 +40,10 @@ class RentWheelsReservationsMethods extends RentWheelsReservationsEndpoint {
 
     try {
       final body = {
-        'car': reservationDetails.car,
+        'car': reservationDetails.car!.carId,
         'price': reservationDetails.price,
-        'renter': reservationDetails.renter,
-        'destination': reservationDetails.destination,
+        'renter': reservationDetails.renter!.id,
+        // 'destination': reservationDetails.destination,
         'startDate': reservationDetails.startDate!.toIso8601String(),
         'returnDate': reservationDetails.returnDate!.toIso8601String(),
         'customer': {
