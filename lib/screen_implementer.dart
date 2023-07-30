@@ -34,6 +34,11 @@ class _ReservationsPageMockState extends State<ReservationsPageMock> {
                 style: heading3Information,
               ),
               Space().height(context, 0.03),
+
+              // Reservation filters
+              // TODO: Add the horizontal scroll list for the reservation filters.
+
+              // Reservation Data
               const ReservationsData(),
             ],
           ),

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:rent_wheels/core/backend/reservations/methods/reservations_methods.dart';
 import 'package:rent_wheels/core/models/reservations/reservations_model.dart';
 import 'package:rent_wheels/core/widgets/error/error_message_widget.dart';
-import 'package:rent_wheels/src/mainSection/reservations/widgets/car_image_widget.dart';
+import 'package:rent_wheels/src/mainSection/reservations/widgets/reservation_information_sections_widget.dart';
 
 class ReservationsData extends StatefulWidget {
   const ReservationsData({super.key});
@@ -19,10 +19,10 @@ class _ReservationsDataState extends State<ReservationsData> {
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           List<ReservationModel> reservations = snapshot.data!;
-          return buildCarImage(
-            imageUrl: reservations[0].car!.media![0].mediaURL,
-            reservationStatus: reservations[0].status!,
+          return buildReservationSections(
             context: context,
+            car: reservations[0].car!,
+            reservation: reservations[0],
           );
         }
         if (snapshot.hasError) {
