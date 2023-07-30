@@ -61,4 +61,30 @@ class RentWheelsReservationsMethods extends RentWheelsReservationsEndpoint {
       throw Exception(e);
     }
   }
+
+  @override
+  Future<ReservationModel> cancelReservation({
+    required String reservationId,
+  }) async {
+    global.headers.addEntries({
+      'content-type': 'application/json',
+      'accept': 'application/json'
+    }.entries);
+
+    try {
+      final body = {'status': 'Cancelled'};
+      final response = await post(
+        Uri.parse('${global.baseURL}/reservations/$reservationId/status'),
+        headers: global.headers,
+        body: jsonEncode(body),
+      );
+
+      if (response.statusCode == 200) {
+        return ReservationModel.fromJSON(jsonDecode(response.body));
+      }
+      throw Exception(response.body);
+    } catch (e) {
+      throw Exception(e);
+    }
+  }
 }

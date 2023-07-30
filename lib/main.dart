@@ -62,9 +62,7 @@ class _ConnectionPageState extends State<ConnectionPage> {
           case ConnectionState.done:
             if (global.user != null && global.userDetails != null) {
               if (global.user!.emailVerified) {
-                return const MainSection(
-                  pageIndex: 2,
-                );
+                return const MainSection();
               }
               return const VerifyEmail();
             } else {
