@@ -190,7 +190,7 @@ class _HomeState extends State<Home> {
                       ),
                       Space().height(context, 0.02),
                       SizedBox(
-                        height: Sizes().height(context, 0.3),
+                        height: Sizes().height(context, 0.35),
                         child: const AvailableCarsData(
                           type: AvailableCarsType.preview,
                         ),
