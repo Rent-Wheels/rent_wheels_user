@@ -2,6 +2,7 @@ import 'package:rent_wheels/core/models/cars/cars_model.dart';
 import 'package:rent_wheels/core/models/renter/renter_model.dart';
 
 class ReservationModel {
+  String? id;
   Customer? customer;
   Renter? renter;
   Car? car;
@@ -12,6 +13,7 @@ class ReservationModel {
   num? price;
 
   ReservationModel({
+    this.id,
     this.customer,
     this.renter,
     this.car,
@@ -24,6 +26,7 @@ class ReservationModel {
 
   factory ReservationModel.fromJSON(Map<String, dynamic> json) {
     return ReservationModel(
+      id: json['_id'],
       customer: Customer.fromJSON(json['customer']),
       renter: Renter.fromJSON(json['renter']),
       car: Car.fromJSON(json['car']),
