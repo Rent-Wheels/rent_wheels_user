@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:rent_wheels/screen_implementer.dart';
 
 import 'package:rent_wheels/tester.dart';
 
-import 'package:rent_wheels/src/mainSection/base.dart';
 import 'package:rent_wheels/src/authentication/login/presentation/login.dart';
 import 'package:rent_wheels/src/authentication/verify/presentation/verify_email.dart';
 
@@ -62,9 +62,7 @@ class _ConnectionPageState extends State<ConnectionPage> {
           case ConnectionState.done:
             if (global.user != null && global.userDetails != null) {
               if (global.user!.emailVerified) {
-                return const MainSection(
-                  pageIndex: 2,
-                );
+                return const ReservationsPageMock();
               }
               return const VerifyEmail();
             } else {
