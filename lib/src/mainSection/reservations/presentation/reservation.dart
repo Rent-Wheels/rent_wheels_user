@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 
 import 'package:rent_wheels/src/mainSection/reservations/data/reservations_data.dart';
 
-import 'package:rent_wheels/core/widgets/theme/colors.dart';
 import 'package:rent_wheels/core/widgets/sizes/sizes.dart';
+import 'package:rent_wheels/core/widgets/theme/colors.dart';
+import 'package:rent_wheels/core/widgets/spacing/spacing.dart';
+import 'package:rent_wheels/core/widgets/textStyles/text_styles.dart';
 
 class Reservations extends StatelessWidget {
   const Reservations({super.key});
@@ -20,8 +22,16 @@ class Reservations extends StatelessWidget {
         child: Padding(
           padding:
               EdgeInsets.symmetric(horizontal: Sizes().width(context, 0.04)),
-          child: const Column(
-            children: [ReservationsData()],
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Text(
+                "Reservations",
+                style: heading3Information,
+              ),
+              Space().height(context, 0.03),
+              const ReservationsData(),
+            ],
           ),
         ),
       ),
