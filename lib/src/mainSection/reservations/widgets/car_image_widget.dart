@@ -15,7 +15,7 @@ buildCarImage({
     children: [
       Container(
         height: Sizes().height(context, 0.2),
-        width: Sizes().width(context, 0.85),
+        width: Sizes().width(context, 0.92),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(Sizes().height(context, 0.02)),
           color: rentWheelsNeutralLight0,

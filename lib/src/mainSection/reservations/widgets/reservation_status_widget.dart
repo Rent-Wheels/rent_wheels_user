@@ -18,7 +18,7 @@ buildReservationStatus({
     ),
     child: Text(
       status,
-      style: body1Neutral900,
+      style: heading6Brand,
     ),
   );
 }
