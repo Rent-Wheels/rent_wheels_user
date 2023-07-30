@@ -87,29 +87,36 @@ class _MakeReservationPageTwoState extends State<MakeReservationPageTwo> {
                 reservation: reservation,
               ),
       ),
-      bottomSheet: buildReservationDetailsBottomSheet(
-        buttonTitle: 'Make Reservation',
-        context: context,
-        onPressed: () async {
-          try {
-            buildLoadingIndicator(context, 'Booking Reservation');
-            await RentWheelsReservationsMethods()
-                .makeReservation(reservationDetails: reservation);
-            if (!mounted) return;
-            Navigator.pop(context);
-            Navigator.push(
-              context,
-              CupertinoPageRoute(
-                builder: (context) => const ReservationSuccessful(),
-              ),
-            );
-          } catch (e) {
-            if (!mounted) return;
-            Navigator.pop(context);
-            showErrorPopUp(e.toString(), context);
-          }
-        },
-      ),
+      bottomSheet: widget.view == ReservationView.make
+          ? buildReservationDetailsBottomSheet(
+              buttonTitle: 'Make Reservation',
+              context: context,
+              onPressed: () async {
+                try {
+                  buildLoadingIndicator(context, 'Booking Reservation');
+                  await RentWheelsReservationsMethods()
+                      .makeReservation(reservationDetails: reservation);
+                  if (!mounted) return;
+                  Navigator.pop(context);
+                  Navigator.push(
+                    context,
+                    CupertinoPageRoute(
+                      builder: (context) => const ReservationSuccessful(),
+                    ),
+                  );
+                } catch (e) {
+                  if (!mounted) return;
+                  Navigator.pop(context);
+                  showErrorPopUp(e.toString(), context);
+                }
+              },
+            )
+          : buildReservationDetailsBottomSheet(
+              context: context,
+              btnColor: rentWheelsErrorDark700,
+              buttonTitle: 'Cancel Reservation',
+              onPressed: () {},
+            ),
     );
   }
 }

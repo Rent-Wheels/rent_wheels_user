@@ -4,6 +4,7 @@ import 'package:rent_wheels/core/widgets/sizes/sizes.dart';
 import 'package:rent_wheels/core/widgets/theme/colors.dart';
 
 buildReservationDetailsBottomSheet({
+  Color? btnColor,
   required String buttonTitle,
   required BuildContext context,
   required void Function() onPressed,
@@ -17,11 +18,13 @@ buildReservationDetailsBottomSheet({
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         buildGenericButtonWidget(
-            width: Sizes().width(context, 0.85),
-            isActive: true,
-            buttonName: 'Make Reservation',
-            context: context,
-            onPressed: onPressed),
+          isActive: true,
+          context: context,
+          btnColor: btnColor,
+          onPressed: onPressed,
+          buttonName: buttonTitle,
+          width: Sizes().width(context, 0.85),
+        ),
       ],
     ),
   );

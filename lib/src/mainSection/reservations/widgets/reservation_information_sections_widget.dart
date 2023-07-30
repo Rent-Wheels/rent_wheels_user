@@ -14,46 +14,55 @@ Widget buildReservationSections({
   required Car car,
   required bool isLoading,
   required BuildContext context,
+  required void Function()? onPressed,
   required ReservationModel reservation,
 }) {
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
-      buildCarImage(
-        imageUrl: car.media![0].mediaURL,
-        reservationStatus: reservation.status ?? '',
-        context: context,
+      GestureDetector(
+        onTap: onPressed,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            buildCarImage(
+              imageUrl: car.media![0].mediaURL,
+              reservationStatus: reservation.status ?? '',
+              context: context,
+            ),
+            Space().height(context, 0.01),
+            isLoading
+                ? Container(
+                    width: double.infinity,
+                    height: Sizes().height(context, 0.02),
+                    decoration: BoxDecoration(
+                      color: rentWheelsNeutralLight0,
+                      borderRadius:
+                          BorderRadius.circular(Sizes().height(context, 0.2)),
+                    ),
+                  )
+                : Text(
+                    '${car.yearOfManufacture} ${car.make} ${car.model}',
+                    style: heading3Information,
+                  ),
+            Space().height(context, 0.01),
+            isLoading
+                ? Container(
+                    width: double.infinity,
+                    height: Sizes().height(context, 0.02),
+                    decoration: BoxDecoration(
+                      color: rentWheelsNeutralLight0,
+                      borderRadius:
+                          BorderRadius.circular(Sizes().height(context, 0.2)),
+                    ),
+                  )
+                : Text(
+                    '${reservation.destination}, ${formatDate(reservation.startDate!)} - ${formatDate(reservation.returnDate!)}',
+                    style: heading6Brand,
+                  ),
+          ],
+        ),
       ),
-      Space().height(context, 0.01),
-      isLoading
-          ? Container(
-              width: double.infinity,
-              height: Sizes().height(context, 0.02),
-              decoration: BoxDecoration(
-                color: rentWheelsNeutralLight0,
-                borderRadius:
-                    BorderRadius.circular(Sizes().height(context, 0.2)),
-              ),
-            )
-          : Text(
-              '${car.yearOfManufacture} ${car.make} ${car.model}',
-              style: heading3Information,
-            ),
-      Space().height(context, 0.01),
-      isLoading
-          ? Container(
-              width: double.infinity,
-              height: Sizes().height(context, 0.02),
-              decoration: BoxDecoration(
-                color: rentWheelsNeutralLight0,
-                borderRadius:
-                    BorderRadius.circular(Sizes().height(context, 0.2)),
-              ),
-            )
-          : Text(
-              '${reservation.destination}, ${formatDate(reservation.startDate!)} - ${formatDate(reservation.returnDate!)}',
-              style: heading6Brand,
-            ),
       Space().height(context, 0.02),
       Row(
         children: [

@@ -7,7 +7,7 @@ buildFilterButtons({
   double? width,
   required String label,
   required BuildContext context,
-  required void Function() onTap,
+  required void Function()? onTap,
 }) {
   return Padding(
     padding: EdgeInsets.only(right: Sizes().width(context, 0.04)),

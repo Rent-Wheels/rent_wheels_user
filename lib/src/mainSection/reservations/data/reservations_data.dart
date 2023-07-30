@@ -1,11 +1,13 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:rent_wheels/core/backend/reservations/methods/reservations_methods.dart';
 import 'package:rent_wheels/core/models/cars/cars_model.dart';
+import 'package:rent_wheels/core/models/enums/enums.dart';
 import 'package:rent_wheels/core/models/reservations/reservations_model.dart';
 import 'package:rent_wheels/core/widgets/error/error_message_widget.dart';
 import 'package:rent_wheels/core/widgets/loadingIndicator/shimmer_loading_placeholder.dart';
 import 'package:rent_wheels/core/widgets/sizes/sizes.dart';
 import 'package:rent_wheels/core/widgets/spacing/spacing.dart';
+import 'package:rent_wheels/src/mainSection/reservations/presentation/booking/make_reservation_page_two.dart';
 import 'package:rent_wheels/src/mainSection/reservations/widgets/filter_buttons_widget.dart';
 import 'package:rent_wheels/src/mainSection/reservations/widgets/reservation_information_sections_widget.dart';
 
@@ -54,6 +56,17 @@ class _ReservationsDataState extends State<ReservationsData> {
                           bottom: Sizes().height(context, 0.04),
                         ),
                         child: buildReservationSections(
+                          onPressed: () => Navigator.push(
+                            context,
+                            CupertinoPageRoute(
+                              builder: (context) => MakeReservationPageTwo(
+                                car: reservation.car!,
+                                view: ReservationView.view,
+                                renter: reservation.renter!,
+                                reservation: reservation,
+                              ),
+                            ),
+                          ),
                           isLoading: false,
                           context: context,
                           car: reservation.car!,
@@ -87,7 +100,7 @@ class _ReservationsDataState extends State<ReservationsData> {
                       width: Sizes().width(context, 0.2),
                       label: '',
                       context: context,
-                      onTap: () {},
+                      onTap: null,
                     );
                   },
                 ),
@@ -104,8 +117,9 @@ class _ReservationsDataState extends State<ReservationsData> {
                       child: buildReservationSections(
                         isLoading: true,
                         context: context,
-                        car: Car(media: [Media(mediaURL: '')]),
+                        onPressed: null,
                         reservation: ReservationModel(),
+                        car: Car(media: [Media(mediaURL: '')]),
                       ),
                     );
                   },
