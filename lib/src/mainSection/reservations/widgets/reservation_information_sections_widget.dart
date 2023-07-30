@@ -50,6 +50,7 @@ String takeAndBringDates(DateTime? take, DateTime? bring) {
   /// If take and bring dates of the same month, return <Month> <take_day> - <bring_day> <year>
   /// Else if of the same year but different months, return <take_month> <take_day> - <bring_month> <bring_day> <year>
   /// Else if of different years do the above and specify the years for each.
+  /// Didn't put this in the global functions just because this is a demo screen.
   if(take == null || bring == null) return '';
 
   bool eqlMonth = take.month == bring.month;
