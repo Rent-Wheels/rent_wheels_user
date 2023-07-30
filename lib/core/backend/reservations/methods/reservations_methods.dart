@@ -8,25 +8,26 @@ import 'package:rent_wheels/core/backend/reservations/endpoints/reservations_end
 
 class RentWheelsReservationsMethods extends RentWheelsReservationsEndpoint {
   @override
-  Stream<List<ReservationModel>> getAllReservations() {
-    // TODO: implement getAllReservations
-    throw UnimplementedError();
+  Stream<List<ReservationModel>> getAllReservations() async* {
+    yield* Stream.periodic(const Duration(milliseconds: 30), (_) {
+      return get(
+              Uri.parse(
+                  '${global.baseURL}/${global.userDetails!.userId}/reservations/history'),
+              headers: global.headers)
+          .then((response) {
+        if (response.statusCode == 200) {
+          List results = jsonDecode(response.body);
+          return List<ReservationModel>.from(
+            results.map(
+              (result) => ReservationModel.fromJSON(result),
+            ),
+          );
+        } else {
+          throw Exception(response.body);
+        }
+      });
+    }).asyncMap((event) async => await event);
   }
-  // @override
-  // Stream<List<Car>> getAllAvailableCars() async* {
-  //   yield* Stream.periodic(const Duration(milliseconds: 30), (_) {
-  //     return get(Uri.parse('${global.baseURL}/cars/available'),
-  //             headers: global.headers)
-  //         .then((response) {
-  //       if (response.statusCode == 200) {
-  //         List results = jsonDecode(response.body);
-  //         return List<Car>.from(results.map((car) => Car.fromJSON(car)));
-  //       } else {
-  //         throw Exception(response.body);
-  //       }
-  //     });
-  //   }).asyncMap((event) async => await event);
-  // }
 
   @override
   Future<ReservationModel> makeReservation({
@@ -64,22 +65,4 @@ class RentWheelsReservationsMethods extends RentWheelsReservationsEndpoint {
       throw Exception(e);
     }
   }
-
-  // @override
-  // Stream<List<Car>> getAvailableCarsNearYou() async* {
-  //   yield* Stream.periodic(const Duration(milliseconds: 30), (_) {
-  //     return get(
-  //             Uri.parse(
-  //                 '${global.baseURL}/cars/available?location=${getRegion()}'),
-  //             headers: global.headers)
-  //         .then((response) {
-  //       if (response.statusCode == 200) {
-  //         List results = jsonDecode(response.body);
-  //         return List<Car>.from(results.map((car) => Car.fromJSON(car)));
-  //       } else {
-  //         throw Exception(response.body);
-  //       }
-  //     });
-  //   }).asyncMap((event) async => await event);
-  // }
 }
