@@ -1,14 +1,25 @@
 import 'package:flutter/material.dart';
-
-import 'package:rent_wheels/src/mainSection/reservations/data/reservations_data.dart';
-
 import 'package:rent_wheels/core/widgets/sizes/sizes.dart';
-import 'package:rent_wheels/core/widgets/theme/colors.dart';
 import 'package:rent_wheels/core/widgets/spacing/spacing.dart';
 import 'package:rent_wheels/core/widgets/textStyles/text_styles.dart';
+import 'package:rent_wheels/core/widgets/theme/colors.dart';
+import 'package:rent_wheels/src/mainSection/reservations/data/reservations_data.dart';
+import 'package:rent_wheels/src/mainSection/reservations/widgets/filter_buttons_widget.dart';
 
-class Reservations extends StatelessWidget {
+class Reservations extends StatefulWidget {
   const Reservations({super.key});
+
+  @override
+  State<Reservations> createState() => _ReservationsState();
+}
+
+class _ReservationsState extends State<Reservations> {
+  final List<String> sections = [
+    'All',
+    'Ongoing',
+    'Completed',
+    'Cancelled',
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -25,11 +36,23 @@ class Reservations extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
-                "Reservations",
-                style: heading3Information,
+              const Text("Reservations", style: heading3Information),
+              Space().height(context, 0.02),
+              SizedBox(
+                height: Sizes().height(context, 0.03),
+                child: ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  itemCount: sections.length,
+                  itemBuilder: (context, index) {
+                    return buildFilterButtons(
+                      label: sections[index],
+                      context: context,
+                      onTap: () {},
+                    );
+                  },
+                ),
               ),
-              Space().height(context, 0.03),
+              Space().height(context, 0.02),
               const ReservationsData(),
             ],
           ),

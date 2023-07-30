@@ -19,10 +19,15 @@ class _ReservationsDataState extends State<ReservationsData> {
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           List<ReservationModel> reservations = snapshot.data!;
-          return buildReservationSections(
-            context: context,
-            car: reservations[0].car!,
-            reservation: reservations[0],
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: reservations
+                .map((reservation) => buildReservationSections(
+                      context: context,
+                      car: reservation.car!,
+                      reservation: reservation,
+                    ))
+                .toList(),
           );
         }
         if (snapshot.hasError) {

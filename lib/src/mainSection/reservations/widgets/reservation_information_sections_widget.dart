@@ -10,7 +10,7 @@ import 'package:rent_wheels/core/widgets/textStyles/text_styles.dart';
 import 'package:rent_wheels/core/widgets/theme/colors.dart';
 import 'package:rent_wheels/src/mainSection/reservations/widgets/car_image_widget.dart';
 
-buildReservationSections({
+Widget buildReservationSections({
   required BuildContext context,
   required Car car,
   required ReservationModel reservation,
