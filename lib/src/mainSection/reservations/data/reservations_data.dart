@@ -37,6 +37,13 @@ class _ReservationsDataState extends State<ReservationsData> {
                 .toList();
           }
 
+          List<ReservationModel> acceptedReservations() {
+            return reservations
+                .where((reservation) =>
+                    reservation.status!.toLowerCase() == 'accepted')
+                .toList();
+          }
+
           List<ReservationModel> ongoingReservations() {
             return reservations
                 .where((reservation) =>
@@ -61,6 +68,7 @@ class _ReservationsDataState extends State<ReservationsData> {
           final Map<String, List<ReservationModel>> sections = {
             'All': reservations,
             'Pending': pendingReservations(),
+            'Accepted': acceptedReservations(),
             'Ongoing': ongoingReservations(),
             'Completed': completedReservations(),
             'Cancelled': cancelledReservations(),

@@ -111,12 +111,16 @@ class _MakeReservationPageTwoState extends State<MakeReservationPageTwo> {
                 }
               },
             )
-          : buildReservationDetailsBottomSheet(
-              context: context,
-              btnColor: rentWheelsErrorDark700,
-              buttonTitle: 'Cancel Reservation',
-              onPressed: () {},
-            ),
+          : widget.view == ReservationView.view &&
+                  (reservation.status != 'Completed' &&
+                      reservation.status != 'Cancelled')
+              ? buildReservationDetailsBottomSheet(
+                  context: context,
+                  btnColor: rentWheelsErrorDark700,
+                  buttonTitle: 'Cancel Reservation',
+                  onPressed: () {},
+                )
+              : null,
     );
   }
 }
