@@ -5,6 +5,8 @@ import 'package:rent_wheels/core/widgets/theme/colors.dart';
 
 buildFilterButtons({
   double? width,
+  Color? btnColor,
+  TextStyle? style,
   required String label,
   required BuildContext context,
   required void Function()? onTap,
@@ -13,7 +15,8 @@ buildFilterButtons({
     padding: EdgeInsets.only(right: Sizes().width(context, 0.04)),
     child: GestureDetector(
       onTap: onTap,
-      child: Container(
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 200),
         width: width,
         alignment: Alignment.center,
         padding: EdgeInsets.symmetric(horizontal: Sizes().width(context, 0.04)),
@@ -23,10 +26,10 @@ buildFilterButtons({
             borderRadius: BorderRadius.circular(
               Sizes().height(context, 0.01),
             ),
-            color: rentWheelsNeutralLight0),
+            color: btnColor ?? rentWheelsNeutralLight0),
         child: Text(
           label,
-          style: heading6Brand,
+          style: style ?? heading6Brand,
         ),
       ),
     ),

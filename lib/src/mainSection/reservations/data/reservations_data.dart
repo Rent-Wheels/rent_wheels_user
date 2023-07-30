@@ -7,6 +7,8 @@ import 'package:rent_wheels/core/widgets/error/error_message_widget.dart';
 import 'package:rent_wheels/core/widgets/loadingIndicator/shimmer_loading_placeholder.dart';
 import 'package:rent_wheels/core/widgets/sizes/sizes.dart';
 import 'package:rent_wheels/core/widgets/spacing/spacing.dart';
+import 'package:rent_wheels/core/widgets/textStyles/text_styles.dart';
+import 'package:rent_wheels/core/widgets/theme/colors.dart';
 import 'package:rent_wheels/src/mainSection/reservations/presentation/booking/make_reservation_page_two.dart';
 import 'package:rent_wheels/src/mainSection/reservations/widgets/filter_buttons_widget.dart';
 import 'package:rent_wheels/src/mainSection/reservations/widgets/reservation_information_sections_widget.dart';
@@ -19,12 +21,7 @@ class ReservationsData extends StatefulWidget {
 }
 
 class _ReservationsDataState extends State<ReservationsData> {
-  final List<String> sections = [
-    'All',
-    'Ongoing',
-    'Completed',
-    'Cancelled',
-  ];
+  int currentIndex = 0;
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
@@ -32,6 +29,43 @@ class _ReservationsDataState extends State<ReservationsData> {
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           List<ReservationModel> reservations = snapshot.data!;
+
+          List<ReservationModel> pendingReservations() {
+            return reservations
+                .where((reservation) =>
+                    reservation.status!.toLowerCase() == 'pending')
+                .toList();
+          }
+
+          List<ReservationModel> ongoingReservations() {
+            return reservations
+                .where((reservation) =>
+                    reservation.status!.toLowerCase() == 'ongoing')
+                .toList();
+          }
+
+          List<ReservationModel> completedReservations() {
+            return reservations
+                .where((reservation) =>
+                    reservation.status!.toLowerCase() == 'completed')
+                .toList();
+          }
+
+          List<ReservationModel> cancelledReservations() {
+            return reservations
+                .where((reservation) =>
+                    reservation.status!.toLowerCase() == 'cancelled')
+                .toList();
+          }
+
+          final Map<String, List<ReservationModel>> sections = {
+            'All': reservations,
+            'Pending': pendingReservations(),
+            'Ongoing': ongoingReservations(),
+            'Completed': completedReservations(),
+            'Cancelled': cancelledReservations(),
+          };
+
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -42,15 +76,26 @@ class _ReservationsDataState extends State<ReservationsData> {
                   itemCount: sections.length,
                   itemBuilder: (context, index) {
                     return buildFilterButtons(
-                      label: sections[index],
+                      btnColor: currentIndex == index
+                          ? rentWheelsBrandDark900
+                          : rentWheelsNeutralLight0,
+                      style: currentIndex == index
+                          ? heading6Neutral0
+                          : heading6Brand,
+                      label: sections.keys.toList()[index],
                       context: context,
-                      onTap: () {},
+                      onTap: () {
+                        setState(() {
+                          currentIndex = index;
+                        });
+                      },
                     );
                   },
                 ),
               ),
               Space().height(context, 0.02),
-              ...reservations
+              ...sections.values
+                  .elementAt(currentIndex)
                   .map((reservation) => Padding(
                         padding: EdgeInsets.only(
                           bottom: Sizes().height(context, 0.04),

@@ -19,8 +19,8 @@ import 'package:rent_wheels/core/backend/reservations/methods/reservations_metho
 class MakeReservationPageTwo extends StatefulWidget {
   final Car car;
   final Renter renter;
-  final ReservationModel reservation;
   final ReservationView view;
+  final ReservationModel reservation;
 
   const MakeReservationPageTwo({
     super.key,
