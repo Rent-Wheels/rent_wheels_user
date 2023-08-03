@@ -11,7 +11,7 @@ class RentWheelsReservationsMethods extends RentWheelsReservationsEndpoint {
   Future<List<ReservationModel>> getAllReservations() async {
     final response = await get(
         Uri.parse(
-            '${global.baseURL}/reservations/?userId=${global.userDetails!.id}/'),
+            '${global.baseURL}/reservations/?userId=${global.userDetails!.id}'),
         headers: global.headers);
     if (response.statusCode == 200) {
       List results = jsonDecode(response.body);
