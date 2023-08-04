@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-import 'package:rent_wheels/tester.dart';
-
+import 'package:rent_wheels/src/loading/loading.dart';
 import 'package:rent_wheels/src/mainSection/base.dart';
 import 'package:rent_wheels/src/authentication/login/presentation/login.dart';
 import 'package:rent_wheels/src/authentication/verify/presentation/verify_email.dart';
@@ -70,7 +69,7 @@ class _ConnectionPageState extends State<ConnectionPage> {
             }
 
           default:
-            return const Tester();
+            return const LoadingScreen();
         }
       },
     );
