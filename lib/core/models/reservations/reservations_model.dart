@@ -11,6 +11,8 @@ class ReservationModel {
   String? status;
   String? destination;
   num? price;
+  DateTime? createdAt;
+  DateTime? updatedAt;
 
   ReservationModel({
     this.id,
@@ -19,6 +21,8 @@ class ReservationModel {
     this.car,
     this.startDate,
     this.returnDate,
+    this.createdAt,
+    this.updatedAt,
     this.status,
     this.destination,
     this.price,
@@ -32,6 +36,8 @@ class ReservationModel {
       car: Car.fromJSON(json['car']),
       startDate: DateTime.parse(json['startDate']),
       returnDate: DateTime.parse(json['returnDate']),
+      createdAt: DateTime.parse(json['createdAt']),
+      updatedAt: DateTime.parse(json['updatedAt']),
       status: json['status'],
       destination: json['destination'],
       price: json['price'],

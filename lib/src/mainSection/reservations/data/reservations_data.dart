@@ -31,6 +31,11 @@ class _ReservationsDataState extends State<ReservationsData> {
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           List<ReservationModel> reservations = snapshot.data!;
+          if (reservations.isNotEmpty) {
+            reservations.sort(
+              (a, b) => b.createdAt!.compareTo(a.createdAt!),
+            );
+          }
 
           List<ReservationModel> pendingReservations() {
             return reservations
@@ -104,39 +109,48 @@ class _ReservationsDataState extends State<ReservationsData> {
                 ),
               ),
               Space().height(context, 0.02),
-              ...sections.values
-                  .elementAt(currentIndex)
-                  .map((reservation) => Padding(
-                        padding: EdgeInsets.only(
-                          bottom: Sizes().height(context, 0.04),
-                        ),
-                        child: buildReservationSections(
-                          isLoading: false,
-                          context: context,
-                          car: reservation.car!,
-                          reservation: reservation,
-                          onPressed: () async {
-                            final status = await Navigator.push(
-                              context,
-                              CupertinoPageRoute(
-                                builder: (context) => MakeReservationPageTwo(
-                                  car: reservation.car!,
-                                  view: ReservationView.view,
-                                  renter: reservation.renter!,
-                                  reservation: reservation,
+              reservations.isEmpty
+                  ? buildErrorMessage(
+                      label: 'You have no reservations!',
+                      context: context,
+                    )
+                  : Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: sections.values
+                          .elementAt(currentIndex)
+                          .map((reservation) => Padding(
+                                padding: EdgeInsets.only(
+                                  bottom: Sizes().height(context, 0.04),
                                 ),
-                              ),
-                            );
+                                child: buildReservationSections(
+                                  isLoading: false,
+                                  context: context,
+                                  car: reservation.car!,
+                                  reservation: reservation,
+                                  onPressed: () async {
+                                    final status = await Navigator.push(
+                                      context,
+                                      CupertinoPageRoute(
+                                        builder: (context) =>
+                                            MakeReservationPageTwo(
+                                          car: reservation.car!,
+                                          view: ReservationView.view,
+                                          renter: reservation.renter!,
+                                          reservation: reservation,
+                                        ),
+                                      ),
+                                    );
 
-                            if (status != null) {
-                              setState(() {
-                                reservation.status = status;
-                              });
-                            }
-                          },
-                        ),
-                      ))
-                  .toList()
+                                    if (status != null) {
+                                      setState(() {
+                                        reservation.status = status;
+                                      });
+                                    }
+                                  },
+                                ),
+                              ))
+                          .toList(),
+                    ),
             ],
           );
         }
