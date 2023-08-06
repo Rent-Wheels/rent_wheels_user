@@ -1,4 +1,8 @@
 import 'package:flutter/cupertino.dart';
+import 'package:rent_wheels/core/widgets/loadingIndicator/loading_indicator.dart';
+import 'package:rent_wheels/core/widgets/popups/error_popup.dart';
+import 'package:rent_wheels/core/widgets/popups/success_popup.dart';
+import 'package:rent_wheels/src/mainSection/reservations/presentation/booking/make_reservation_page_one.dart';
 
 import 'package:rent_wheels/src/mainSection/reservations/widgets/filter_buttons_widget.dart';
 import 'package:rent_wheels/src/mainSection/reservations/presentation/booking/make_reservation_page_two.dart';
@@ -24,6 +28,59 @@ class ReservationsData extends StatefulWidget {
 
 class _ReservationsDataState extends State<ReservationsData> {
   int currentIndex = 0;
+
+  cancelReservation({required String reservationId}) async {
+    try {
+      buildLoadingIndicator(context, 'Cancelling Reservation');
+      await RentWheelsReservationsMethods().changeReservationStatus(
+          reservationId: reservationId, status: 'Cancelled');
+      if (!mounted) return;
+      Navigator.pop(context);
+      showSuccessPopUp('Reservation Cancelled', context);
+    } catch (e) {
+      if (!mounted) return;
+      Navigator.pop(context);
+      showErrorPopUp(e.toString(), context);
+    }
+  }
+
+  startTrip({required String reservationId}) async {
+    try {
+      buildLoadingIndicator(context, 'Starting Trip');
+      await RentWheelsReservationsMethods().changeReservationStatus(
+          reservationId: reservationId, status: 'Ongoing');
+      if (!mounted) return;
+      Navigator.pop(context);
+      showSuccessPopUp('Trip Started', context);
+    } catch (e) {
+      if (!mounted) return;
+      Navigator.pop(context);
+      showErrorPopUp(e.toString(), context);
+    }
+  }
+
+  endTrip({required String reservationId}) async {
+    try {
+      buildLoadingIndicator(context, 'Ending Trip');
+      await RentWheelsReservationsMethods().changeReservationStatus(
+          reservationId: reservationId, status: 'Completed');
+      if (!mounted) return;
+      Navigator.pop(context);
+      showSuccessPopUp('Trip Ended', context);
+    } catch (e) {
+      if (!mounted) return;
+      Navigator.pop(context);
+      showErrorPopUp(e.toString(), context);
+    }
+  }
+
+  bookTrip({required Car car}) => Navigator.push(
+        context,
+        CupertinoPageRoute(
+          builder: (context) => MakeReservationPageOne(car: car),
+        ),
+      );
+
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
@@ -48,6 +105,20 @@ class _ReservationsDataState extends State<ReservationsData> {
             return reservations
                 .where((reservation) =>
                     reservation.status!.toLowerCase() == 'accepted')
+                .toList();
+          }
+
+          List<ReservationModel> declinedReservations() {
+            return reservations
+                .where((reservation) =>
+                    reservation.status!.toLowerCase() == 'declined')
+                .toList();
+          }
+
+          List<ReservationModel> paidReservations() {
+            return reservations
+                .where((reservation) =>
+                    reservation.status!.toLowerCase() == 'paid')
                 .toList();
           }
 
@@ -76,6 +147,8 @@ class _ReservationsDataState extends State<ReservationsData> {
             'All': reservations,
             'Pending': pendingReservations(),
             'Accepted': acceptedReservations(),
+            'Declined': declinedReservations(),
+            'Paid': paidReservations(),
             'Ongoing': ongoingReservations(),
             'Completed': completedReservations(),
             'Cancelled': cancelledReservations(),
@@ -127,7 +200,28 @@ class _ReservationsDataState extends State<ReservationsData> {
                                   context: context,
                                   car: reservation.car!,
                                   reservation: reservation,
-                                  onCancel: null,
+                                  onBook: () => bookTrip(car: reservation.car!),
+                                  onStart: () async {
+                                    await startTrip(
+                                        reservationId: reservation.id!);
+                                    setState(() {
+                                      reservation.status = 'Ongoing';
+                                    });
+                                  },
+                                  onEnd: () async {
+                                    await endTrip(
+                                        reservationId: reservation.id!);
+                                    setState(() {
+                                      reservation.status = 'Completed';
+                                    });
+                                  },
+                                  onCancel: () async {
+                                    await cancelReservation(
+                                        reservationId: reservation.id!);
+                                    setState(() {
+                                      reservation.status = 'Cancelled';
+                                    });
+                                  },
                                   onPressed: () async {
                                     final status = await Navigator.push(
                                       context,
@@ -193,7 +287,6 @@ class _ReservationsDataState extends State<ReservationsData> {
                       padding: EdgeInsets.only(
                           bottom: Sizes().height(context, 0.04)),
                       child: buildReservationSections(
-                        onCancel: null,
                         isLoading: true,
                         onPressed: null,
                         context: context,

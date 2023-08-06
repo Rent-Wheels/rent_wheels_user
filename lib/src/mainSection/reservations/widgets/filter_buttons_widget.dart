@@ -12,7 +12,7 @@ buildFilterButtons({
   required void Function()? onTap,
 }) {
   return Padding(
-    padding: EdgeInsets.only(right: Sizes().width(context, 0.04)),
+    padding: EdgeInsets.only(right: Sizes().width(context, 0.03)),
     child: GestureDetector(
       onTap: onTap,
       child: AnimatedContainer(

@@ -125,7 +125,9 @@ class _MakeReservationPageTwoState extends State<MakeReservationPageTwo> {
                     try {
                       buildLoadingIndicator(context, 'Cancelling Reservation');
                       await RentWheelsReservationsMethods()
-                          .cancelReservation(reservationId: reservation.id!);
+                          .changeReservationStatus(
+                              reservationId: reservation.id!,
+                              status: 'Cancelled');
                       if (!mounted) return;
                       Navigator.pop(context);
                       showSuccessPopUp('Reservation Cancelled', context);

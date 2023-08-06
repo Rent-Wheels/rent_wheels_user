@@ -16,11 +16,11 @@ buildReservationStatus({
     decoration: BoxDecoration(
       color: status == 'Completed'
           ? rentWheelsSuccessDark800
-          : status == 'Cancelled'
+          : status == 'Cancelled' || status == 'Declined'
               ? rentWheelsErrorDark700
               : status == 'Pending'
                   ? rentWheelsWarningDark700
-                  : status == 'Accepted'
+                  : status == 'Accepted' || status == 'Paid'
                       ? rentWheelsSuccess
                       : status == 'Ongoing'
                           ? rentWheelsSuccessDark600
