@@ -21,22 +21,19 @@ class _ReservationsState extends State<Reservations> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: rentWheelsNeutralLight0,
-      appBar: AppBar(
-        backgroundColor: rentWheelsNeutralLight0,
-        elevation: 0,
-      ),
-      body: Shimmer(
-        linearGradient: global.shimmerGradient,
-        child: SingleChildScrollView(
+      body: SafeArea(
+        child: Shimmer(
+          linearGradient: global.shimmerGradient,
           child: Padding(
             padding:
                 EdgeInsets.symmetric(horizontal: Sizes().width(context, 0.04)),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                Space().height(context, 0.04),
                 const Text("Reservations", style: heading3Information),
                 Space().height(context, 0.02),
-                const ReservationsData(),
+                const Expanded(child: ReservationsData()),
               ],
             ),
           ),

@@ -38,93 +38,92 @@ class _ProfileState extends State<Profile> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: rentWheelsNeutralLight0,
-      appBar: AppBar(
-        elevation: 0,
-        backgroundColor: rentWheelsNeutralLight0,
-      ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding:
-              EdgeInsets.symmetric(horizontal: Sizes().width(context, 0.04)),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Text(
-                "Profile",
-                style: heading3Information,
-              ),
-              Space().height(context, 0.03),
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Container(
-                    height: Sizes().height(context, 0.081),
-                    width: Sizes().width(context, 0.162),
-                    decoration: BoxDecoration(
-                      image: DecorationImage(
-                        fit: BoxFit.cover,
-                        image: CachedNetworkImageProvider(
-                          global.userDetails!.profilePicture,
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Padding(
+            padding:
+                EdgeInsets.symmetric(horizontal: Sizes().width(context, 0.04)),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Space().height(context, 0.04),
+                const Text(
+                  "Profile",
+                  style: heading3Information,
+                ),
+                Space().height(context, 0.03),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Container(
+                      height: Sizes().height(context, 0.081),
+                      width: Sizes().width(context, 0.162),
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                          fit: BoxFit.cover,
+                          image: CachedNetworkImageProvider(
+                            global.userDetails!.profilePicture,
+                          ),
+                        ),
+                        border: Border.all(color: rentWheelsNeutralLight200),
+                        color: rentWheelsNeutralLight0,
+                        borderRadius: BorderRadius.circular(
+                          Sizes().height(context, 0.015),
                         ),
                       ),
-                      border: Border.all(color: rentWheelsNeutralLight200),
-                      color: rentWheelsNeutralLight0,
-                      borderRadius: BorderRadius.circular(
-                        Sizes().height(context, 0.015),
-                      ),
+                    ),
+                    Space().width(context, 0.03),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          global.userDetails!.name,
+                          style: heading5Neutral,
+                        ),
+                        Space().height(context, 0.005),
+                        Text(
+                          global.userDetails!.email,
+                          style: heading6Neutral900,
+                        ),
+                      ],
+                    )
+                  ],
+                ),
+                Space().height(context, 0.03),
+                buildProfileOptions(
+                  context: context,
+                  section: 'Account Profile',
+                  svg: 'assets/svgs/account_profile.svg',
+                  onTap: () => Navigator.push(
+                    context,
+                    CupertinoPageRoute(
+                      builder: (context) => const AccountProfile(),
                     ),
                   ),
-                  Space().width(context, 0.03),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        global.userDetails!.name,
-                        style: heading5Neutral,
-                      ),
-                      Space().height(context, 0.005),
-                      Text(
-                        global.userDetails!.email,
-                        style: heading6Neutral900,
-                      ),
-                    ],
-                  )
-                ],
-              ),
-              Space().height(context, 0.03),
-              buildProfileOptions(
-                context: context,
-                section: 'Account Profile',
-                svg: 'assets/svgs/account_profile.svg',
-                onTap: () => Navigator.push(
-                  context,
-                  CupertinoPageRoute(
-                    builder: (context) => const AccountProfile(),
+                ),
+                const Divider(),
+                buildProfileOptions(
+                  context: context,
+                  section: 'Change Password',
+                  svg: 'assets/svgs/change_password.svg',
+                  onTap: () => Navigator.push(
+                    context,
+                    CupertinoPageRoute(
+                      builder: (context) => const ChangePassword(),
+                    ),
                   ),
                 ),
-              ),
-              const Divider(),
-              buildProfileOptions(
-                context: context,
-                section: 'Change Password',
-                svg: 'assets/svgs/change_password.svg',
-                onTap: () => Navigator.push(
-                  context,
-                  CupertinoPageRoute(
-                    builder: (context) => const ChangePassword(),
-                  ),
+                const Divider(),
+                buildProfileOptions(
+                  context: context,
+                  section: 'Notifications',
+                  svg: 'assets/svgs/notifications.svg',
+                  onTap: () {},
                 ),
-              ),
-              const Divider(),
-              buildProfileOptions(
-                context: context,
-                section: 'Notifications',
-                svg: 'assets/svgs/notifications.svg',
-                onTap: () {},
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

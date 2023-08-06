@@ -189,72 +189,77 @@ class _ReservationsDataState extends State<ReservationsData> {
                       label: 'You have no reservations!',
                       context: context,
                     )
-                  : Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: sections.values
-                          .elementAt(currentIndex)
-                          .map((reservation) => Padding(
-                                padding: EdgeInsets.only(
-                                  bottom: Sizes().height(context, 0.04),
-                                ),
-                                child: buildReservationSections(
-                                  isLoading: false,
-                                  context: context,
-                                  car: reservation.car!,
-                                  reservation: reservation,
-                                  onBook: () => bookTrip(car: reservation.car!),
-                                  onStart: () async {
-                                    await startTrip(
-                                        reservationId: reservation.id!);
-                                    setState(() {
-                                      reservation.status = 'Ongoing';
-                                    });
-                                  },
-                                  onEnd: () async {
-                                    await endTrip(
-                                        reservationId: reservation.id!);
-                                    setState(() {
-                                      reservation.status = 'Completed';
-                                    });
-                                  },
-                                  onCancel: () => buildConfirmationDialog(
-                                    context: context,
-                                    label: 'Cancel Reservation',
-                                    buttonName: 'Cancel Reservation',
-                                    message: reservation.status == 'Paid'
-                                        ? 'Are you sure want to cancel your reservation? Only 50% of the trip price will be refunded to you.'
-                                        : 'Are you sure you want to cancel your reservation?',
-                                    onAccept: () async {
-                                      await cancelReservation(
-                                          reservationId: reservation.id!);
-                                      setState(() {
-                                        reservation.status = 'Cancelled';
-                                      });
-                                    },
-                                  ),
-                                  onPressed: () async {
-                                    final status = await Navigator.push(
-                                      context,
-                                      CupertinoPageRoute(
-                                        builder: (context) =>
-                                            MakeReservationPageTwo(
-                                          car: reservation.car!,
-                                          view: ReservationView.view,
-                                          renter: reservation.renter!,
-                                          reservation: reservation,
-                                        ),
+                  : Expanded(
+                      child: SingleChildScrollView(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: sections.values
+                              .elementAt(currentIndex)
+                              .map((reservation) => Padding(
+                                    padding: EdgeInsets.only(
+                                      bottom: Sizes().height(context, 0.04),
+                                    ),
+                                    child: buildReservationSections(
+                                      isLoading: false,
+                                      context: context,
+                                      car: reservation.car!,
+                                      reservation: reservation,
+                                      onBook: () =>
+                                          bookTrip(car: reservation.car!),
+                                      onStart: () async {
+                                        await startTrip(
+                                            reservationId: reservation.id!);
+                                        setState(() {
+                                          reservation.status = 'Ongoing';
+                                        });
+                                      },
+                                      onEnd: () async {
+                                        await endTrip(
+                                            reservationId: reservation.id!);
+                                        setState(() {
+                                          reservation.status = 'Completed';
+                                        });
+                                      },
+                                      onCancel: () => buildConfirmationDialog(
+                                        context: context,
+                                        label: 'Cancel Reservation',
+                                        buttonName: 'Cancel Reservation',
+                                        message: reservation.status == 'Paid'
+                                            ? 'Are you sure want to cancel your reservation? Only 50% of the trip price will be refunded to you.'
+                                            : 'Are you sure you want to cancel your reservation?',
+                                        onAccept: () async {
+                                          await cancelReservation(
+                                              reservationId: reservation.id!);
+                                          setState(() {
+                                            reservation.status = 'Cancelled';
+                                          });
+                                        },
                                       ),
-                                    );
+                                      onPressed: () async {
+                                        final status = await Navigator.push(
+                                          context,
+                                          CupertinoPageRoute(
+                                            builder: (context) =>
+                                                MakeReservationPageTwo(
+                                              car: reservation.car!,
+                                              view: ReservationView.view,
+                                              renter: reservation.renter!,
+                                              reservation: reservation,
+                                            ),
+                                          ),
+                                        );
 
-                                    if (status != null) {
-                                      setState(() {
-                                        reservation.status = status;
-                                      });
-                                    }
-                                  },
-                                ),
-                              ))
-                          .toList(),
+                                        if (status != null) {
+                                          setState(() {
+                                            reservation.status = status;
+                                          });
+                                        }
+                                      },
+                                    ),
+                                  ))
+                              .toList(),
+                        ),
+                      ),
                     ),
             ],
           );
@@ -288,8 +293,7 @@ class _ReservationsDataState extends State<ReservationsData> {
                 ),
               ),
               Space().height(context, 0.02),
-              SizedBox(
-                height: Sizes().height(context, 0.9),
+              Expanded(
                 child: ListView.builder(
                   itemCount: 2,
                   itemBuilder: (context, index) {
