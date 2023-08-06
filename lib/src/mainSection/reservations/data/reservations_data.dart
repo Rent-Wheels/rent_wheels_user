@@ -127,6 +127,7 @@ class _ReservationsDataState extends State<ReservationsData> {
                                   context: context,
                                   car: reservation.car!,
                                   reservation: reservation,
+                                  onCancel: null,
                                   onPressed: () async {
                                     final status = await Navigator.push(
                                       context,
@@ -192,9 +193,10 @@ class _ReservationsDataState extends State<ReservationsData> {
                       padding: EdgeInsets.only(
                           bottom: Sizes().height(context, 0.04)),
                       child: buildReservationSections(
+                        onCancel: null,
                         isLoading: true,
-                        context: context,
                         onPressed: null,
+                        context: context,
                         reservation: ReservationModel(),
                         car: Car(media: [Media(mediaURL: '')]),
                       ),

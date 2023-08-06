@@ -25,6 +25,7 @@ buildReservationDetails({
   return Column(
     mainAxisAlignment: MainAxisAlignment.start,
     crossAxisAlignment: CrossAxisAlignment.start,
+    mainAxisSize: MainAxisSize.min,
     children: [
       Text(
         pageTitle,
@@ -126,6 +127,7 @@ buildReservationDetails({
           ],
         ),
       ),
+      Space().height(context, 0.06),
       Flexible(
         flex: 1,
         child: Column(

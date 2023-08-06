@@ -16,6 +16,10 @@ Widget buildReservationSections({
   required BuildContext context,
   required void Function()? onPressed,
   required ReservationModel reservation,
+  void Function()? onEnd,
+  void Function()? onBook,
+  void Function()? onCancel,
+  void Function()? onPayment,
 }) {
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
@@ -64,27 +68,68 @@ Widget buildReservationSections({
         ),
       ),
       Space().height(context, 0.02),
-      Row(
-        children: [
-          buildGenericButtonWidget(
-            width: Sizes().width(context, 0.4),
-            isActive: true,
-            buttonName: 'Write review',
-            context: context,
-            onPressed: () {},
-          ),
-          Space().width(context, 0.04),
-          buildGenericButtonWidget(
-            isActive: true,
-            context: context,
-            buttonName: 'Write review',
-            btnColor: rentWheelsNeutralLight0,
-            textStyle: heading5NeutralLight,
-            width: Sizes().width(context, 0.4),
-            onPressed: () {},
-          ),
-        ],
-      )
+      reservation.status == 'Pending'
+          ? Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                buildGenericButtonWidget(
+                  width: Sizes().width(context, 0.9),
+                  isActive: true,
+                  btnColor: rentWheelsErrorDark700,
+                  buttonName: 'Cancel Reservation',
+                  context: context,
+                  onPressed: onCancel,
+                ),
+              ],
+            )
+          : reservation.status == 'Ongoing'
+              ? Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    buildGenericButtonWidget(
+                      width: Sizes().width(context, 0.9),
+                      isActive: true,
+                      btnColor: rentWheelsErrorDark700,
+                      buttonName: 'End Trip',
+                      context: context,
+                      onPressed: onEnd,
+                    ),
+                  ],
+                )
+              : reservation.status == 'Completed' ||
+                      reservation.status == 'Cancelled'
+                  ? Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        buildGenericButtonWidget(
+                          width: Sizes().width(context, 0.9),
+                          isActive: true,
+                          buttonName: 'Book Again',
+                          context: context,
+                          onPressed: onBook,
+                        ),
+                      ],
+                    )
+                  : Row(
+                      children: [
+                        buildGenericButtonWidget(
+                          width: Sizes().width(context, 0.4),
+                          isActive: true,
+                          buttonName: 'Make Payment',
+                          context: context,
+                          onPressed: onPayment,
+                        ),
+                        Space().width(context, 0.04),
+                        buildGenericButtonWidget(
+                          isActive: true,
+                          context: context,
+                          btnColor: rentWheelsErrorDark700,
+                          buttonName: 'Cancel Reservation',
+                          width: Sizes().width(context, 0.4),
+                          onPressed: onCancel,
+                        ),
+                      ],
+                    )
     ],
   );
 }

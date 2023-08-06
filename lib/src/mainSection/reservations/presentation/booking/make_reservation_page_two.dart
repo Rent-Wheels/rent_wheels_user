@@ -64,29 +64,31 @@ class _MakeReservationPageTwoState extends State<MakeReservationPageTwo> {
           onPressed: () => Navigator.pop(context, reservation.status),
         ),
       ),
-      body: Padding(
-        padding: EdgeInsets.only(
-          left: Sizes().width(context, 0.04),
-          right: Sizes().width(context, 0.04),
-          bottom: Sizes().height(context, 0.1),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: EdgeInsets.only(
+            left: Sizes().width(context, 0.04),
+            right: Sizes().width(context, 0.04),
+            bottom: Sizes().height(context, 0.15),
+          ),
+          child: widget.view == ReservationView.make
+              ? buildReservationDetails(
+                  car: car,
+                  renter: renter,
+                  pageTitle: 'Make Reservation',
+                  duration: getDuration(),
+                  context: context,
+                  reservation: reservation,
+                )
+              : buildReservationDetails(
+                  car: car,
+                  renter: renter,
+                  pageTitle: 'Reservation',
+                  duration: getDuration(),
+                  context: context,
+                  reservation: reservation,
+                ),
         ),
-        child: widget.view == ReservationView.make
-            ? buildReservationDetails(
-                car: car,
-                renter: renter,
-                pageTitle: 'Make Reservation',
-                duration: getDuration(),
-                context: context,
-                reservation: reservation,
-              )
-            : buildReservationDetails(
-                car: car,
-                renter: renter,
-                pageTitle: 'Reservation',
-                duration: getDuration(),
-                context: context,
-                reservation: reservation,
-              ),
       ),
       bottomSheet: widget.view == ReservationView.make
           ? buildReservationDetailsBottomSheet(
