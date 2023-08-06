@@ -63,8 +63,9 @@ class RentWheelsReservationsMethods extends RentWheelsReservationsEndpoint {
   }
 
   @override
-  Future<ReservationModel> cancelReservation({
+  Future<ReservationModel> changeReservationStatus({
     required String reservationId,
+    required String status,
   }) async {
     global.headers.addEntries({
       'content-type': 'application/json',
@@ -72,7 +73,7 @@ class RentWheelsReservationsMethods extends RentWheelsReservationsEndpoint {
     }.entries);
 
     try {
-      final body = {'status': 'Cancelled'};
+      final body = {'status': status};
       final response = await patch(
         Uri.parse('${global.baseURL}/reservations/$reservationId/status'),
         headers: global.headers,
