@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:rent_wheels/core/widgets/buttons/generic_button_widget.dart';
+
 import 'package:rent_wheels/core/widgets/sizes/sizes.dart';
 import 'package:rent_wheels/core/widgets/theme/colors.dart';
 
 buildReservationDetailsBottomSheet({
-  Color? btnColor,
-  required String buttonTitle,
+  required List<Widget> items,
   required BuildContext context,
-  required void Function() onPressed,
 }) {
   return Container(
     color: rentWheelsNeutralLight0,
@@ -16,16 +14,7 @@ buildReservationDetailsBottomSheet({
     child: Row(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        buildGenericButtonWidget(
-          isActive: true,
-          context: context,
-          btnColor: btnColor,
-          onPressed: onPressed,
-          buttonName: buttonTitle,
-          width: Sizes().width(context, 0.85),
-        ),
-      ],
+      children: items,
     ),
   );
 }

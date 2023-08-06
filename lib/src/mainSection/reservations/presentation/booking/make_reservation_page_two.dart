@@ -1,6 +1,6 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:rent_wheels/core/widgets/popups/success_popup.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:rent_wheels/src/mainSection/reservations/presentation/booking/make_reservation_page_one.dart';
 
 import 'package:rent_wheels/src/mainSection/reservations/widgets/reservation_details_widget.dart';
 import 'package:rent_wheels/src/mainSection/reservations/presentation/booking/reservation_successful.dart';
@@ -10,8 +10,12 @@ import 'package:rent_wheels/core/models/enums/enums.dart';
 import 'package:rent_wheels/core/widgets/sizes/sizes.dart';
 import 'package:rent_wheels/core/widgets/theme/colors.dart';
 import 'package:rent_wheels/core/models/cars/cars_model.dart';
+import 'package:rent_wheels/core/widgets/spacing/spacing.dart';
+import 'package:rent_wheels/core/extenstions/date_compare.dart';
 import 'package:rent_wheels/core/widgets/popups/error_popup.dart';
 import 'package:rent_wheels/core/models/renter/renter_model.dart';
+import 'package:rent_wheels/core/widgets/popups/success_popup.dart';
+import 'package:rent_wheels/core/widgets/buttons/generic_button_widget.dart';
 import 'package:rent_wheels/core/models/reservations/reservations_model.dart';
 import 'package:rent_wheels/core/widgets/loadingIndicator/loading_indicator.dart';
 import 'package:rent_wheels/core/widgets/buttons/adaptive_back_button_widget.dart';
@@ -36,6 +40,78 @@ class MakeReservationPageTwo extends StatefulWidget {
 }
 
 class _MakeReservationPageTwoState extends State<MakeReservationPageTwo> {
+  makeReservation() async {
+    try {
+      buildLoadingIndicator(context, 'Making Reservation');
+      await RentWheelsReservationsMethods()
+          .makeReservation(reservationDetails: widget.reservation);
+      if (!mounted) return;
+      Navigator.pop(context);
+      Navigator.push(
+        context,
+        CupertinoPageRoute(
+          builder: (context) => const ReservationSuccessful(),
+        ),
+      );
+    } catch (e) {
+      if (!mounted) return;
+      Navigator.pop(context);
+      showErrorPopUp(e.toString(), context);
+    }
+  }
+
+  cancelReservation() async {
+    try {
+      buildLoadingIndicator(context, 'Cancelling Reservation');
+      await RentWheelsReservationsMethods().changeReservationStatus(
+          reservationId: widget.reservation.id!, status: 'Cancelled');
+      if (!mounted) return;
+      Navigator.pop(context);
+      showSuccessPopUp('Reservation Cancelled', context);
+    } catch (e) {
+      if (!mounted) return;
+      Navigator.pop(context);
+      showErrorPopUp(e.toString(), context);
+    }
+  }
+
+  startTrip() async {
+    try {
+      buildLoadingIndicator(context, 'Starting Trip');
+      await RentWheelsReservationsMethods().changeReservationStatus(
+          reservationId: widget.reservation.id!, status: 'Ongoing');
+      if (!mounted) return;
+      Navigator.pop(context);
+      showSuccessPopUp('Trip Started', context);
+    } catch (e) {
+      if (!mounted) return;
+      Navigator.pop(context);
+      showErrorPopUp(e.toString(), context);
+    }
+  }
+
+  endTrip() async {
+    try {
+      buildLoadingIndicator(context, 'Ending Trip');
+      await RentWheelsReservationsMethods().changeReservationStatus(
+          reservationId: widget.reservation.id!, status: 'Completed');
+      if (!mounted) return;
+      Navigator.pop(context);
+      showSuccessPopUp('Trip Completed', context);
+    } catch (e) {
+      if (!mounted) return;
+      Navigator.pop(context);
+      showErrorPopUp(e.toString(), context);
+    }
+  }
+
+  bookAgain() => Navigator.push(
+        context,
+        CupertinoPageRoute(
+          builder: (context) => MakeReservationPageOne(car: widget.car),
+        ),
+      );
+
   @override
   Widget build(BuildContext context) {
     Car car = widget.car;
@@ -92,56 +168,128 @@ class _MakeReservationPageTwoState extends State<MakeReservationPageTwo> {
       ),
       bottomSheet: widget.view == ReservationView.make
           ? buildReservationDetailsBottomSheet(
-              buttonTitle: 'Make Reservation',
-              context: context,
-              onPressed: () async {
-                try {
-                  buildLoadingIndicator(context, 'Making Reservation');
-                  await RentWheelsReservationsMethods()
-                      .makeReservation(reservationDetails: reservation);
-                  if (!mounted) return;
-                  Navigator.pop(context);
-                  Navigator.push(
-                    context,
-                    CupertinoPageRoute(
-                      builder: (context) => const ReservationSuccessful(),
-                    ),
-                  );
-                } catch (e) {
-                  if (!mounted) return;
-                  Navigator.pop(context);
-                  showErrorPopUp(e.toString(), context);
-                }
-              },
-            )
-          : widget.view == ReservationView.view &&
-                  (reservation.status != 'Completed' &&
-                      reservation.status != 'Cancelled')
-              ? buildReservationDetailsBottomSheet(
+              items: [
+                buildGenericButtonWidget(
+                  isActive: true,
                   context: context,
-                  btnColor: rentWheelsErrorDark700,
-                  buttonTitle: 'Cancel Reservation',
-                  onPressed: () async {
-                    try {
-                      buildLoadingIndicator(context, 'Cancelling Reservation');
-                      await RentWheelsReservationsMethods()
-                          .changeReservationStatus(
-                              reservationId: reservation.id!,
-                              status: 'Cancelled');
-                      if (!mounted) return;
-                      Navigator.pop(context);
-                      showSuccessPopUp('Reservation Cancelled', context);
-
-                      setState(() {
-                        reservation.status = 'Cancelled';
-                      });
-                    } catch (e) {
-                      if (!mounted) return;
-                      Navigator.pop(context);
-                      showErrorPopUp(e.toString(), context);
-                    }
-                  },
-                )
+                  buttonName: 'Make Reservation',
+                  width: Sizes().width(context, 0.85),
+                  onPressed: makeReservation,
+                ),
+              ],
+              context: context,
+            )
+          : widget.view == ReservationView.view
+              ? reservation.status == 'Pending'
+                  ? buildReservationDetailsBottomSheet(
+                      context: context,
+                      items: [
+                        buildGenericButtonWidget(
+                          isActive: true,
+                          context: context,
+                          buttonName: 'Cancel Reservation',
+                          btnColor: rentWheelsErrorDark700,
+                          width: Sizes().width(context, 0.85),
+                          onPressed: () async {
+                            await cancelReservation();
+                            setState(() {
+                              reservation.status = 'Cancelled';
+                            });
+                          },
+                        ),
+                      ],
+                    )
+                  : reservation.status == 'Ongoing'
+                      ? buildReservationDetailsBottomSheet(
+                          context: context,
+                          items: [
+                            buildGenericButtonWidget(
+                              isActive: true,
+                              context: context,
+                              buttonName: 'End Trip',
+                              btnColor: rentWheelsErrorDark700,
+                              width: Sizes().width(context, 0.85),
+                              onPressed: () async {
+                                await endTrip();
+                                setState(() {
+                                  reservation.status = 'Completed';
+                                });
+                              },
+                            ),
+                          ],
+                        )
+                      : reservation.status == 'Accepted'
+                          ? buildReservationDetailsBottomSheet(
+                              context: context,
+                              items: [
+                                buildGenericButtonWidget(
+                                  isActive: true,
+                                  context: context,
+                                  buttonName: 'Make Payment',
+                                  width: Sizes().width(context, 0.4),
+                                  onPressed: null,
+                                ),
+                                Space().width(context, 0.04),
+                                buildGenericButtonWidget(
+                                  isActive: true,
+                                  context: context,
+                                  buttonName: 'Cancel Reservation',
+                                  btnColor: rentWheelsErrorDark700,
+                                  width: Sizes().width(context, 0.4),
+                                  onPressed: () async {
+                                    await cancelReservation();
+                                    setState(() {
+                                      reservation.status = 'Cancelled';
+                                    });
+                                  },
+                                ),
+                              ],
+                            )
+                          : reservation.status == 'Paid'
+                              ? buildReservationDetailsBottomSheet(
+                                  context: context,
+                                  items: [
+                                    buildGenericButtonWidget(
+                                      isActive: DateTime.now()
+                                          .isSameDate(reservation.startDate!),
+                                      context: context,
+                                      buttonName: 'Start Trip',
+                                      width: Sizes().width(context, 0.4),
+                                      onPressed: () async {
+                                        await startTrip();
+                                        setState(() {
+                                          reservation.status = 'Ongoing';
+                                        });
+                                      },
+                                    ),
+                                    Space().width(context, 0.04),
+                                    buildGenericButtonWidget(
+                                      isActive: true,
+                                      context: context,
+                                      buttonName: 'Cancel Reservation',
+                                      btnColor: rentWheelsErrorDark700,
+                                      width: Sizes().width(context, 0.4),
+                                      onPressed: () async {
+                                        await cancelReservation();
+                                        setState(() {
+                                          reservation.status = 'Cancelled';
+                                        });
+                                      },
+                                    ),
+                                  ],
+                                )
+                              : buildReservationDetailsBottomSheet(
+                                  context: context,
+                                  items: [
+                                    buildGenericButtonWidget(
+                                      isActive: true,
+                                      context: context,
+                                      onPressed: bookAgain,
+                                      buttonName: 'Book Again',
+                                      width: Sizes().width(context, 0.85),
+                                    ),
+                                  ],
+                                )
               : null,
     );
   }
