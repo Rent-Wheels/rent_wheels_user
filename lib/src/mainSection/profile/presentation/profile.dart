@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:rent_wheels/core/widgets/buttons/generic_button_widget.dart';
+import 'package:rent_wheels/core/widgets/dialogs/confirmation_dialog_widget.dart';
 
 import 'package:rent_wheels/core/widgets/loadingIndicator/loading_indicator.dart';
 import 'package:rent_wheels/core/widgets/spacing/spacing.dart';
@@ -136,25 +137,32 @@ class _ProfileState extends State<Profile> {
           isActive: true,
           buttonName: 'Logout',
           context: context,
-          onPressed: () async {
-            buildLoadingIndicator(context, 'Logging Out');
-            try {
-              await AuthService.firebase().logout();
-              if (!mounted) return;
+          onPressed: () => buildConfirmationDialog(
+            label: 'Logout',
+            context: context,
+            buttonName: 'Logout',
+            message: 'Are you sure you want to log out?',
+            onAccept: () async {
               Navigator.pop(context);
-              Navigator.pushAndRemoveUntil(
-                context,
-                CupertinoPageRoute(
-                  builder: (context) => const Login(),
-                ),
-                (route) => false,
-              );
-            } catch (e) {
-              if (!mounted) return;
-              Navigator.pop(context);
-              showErrorPopUp('Error logging out', context);
-            }
-          },
+              buildLoadingIndicator(context, 'Logging Out');
+              try {
+                await AuthService.firebase().logout();
+                if (!mounted) return;
+                Navigator.pop(context);
+                Navigator.pushAndRemoveUntil(
+                  context,
+                  CupertinoPageRoute(
+                    builder: (context) => const Login(),
+                  ),
+                  (route) => false,
+                );
+              } catch (e) {
+                if (!mounted) return;
+                Navigator.pop(context);
+                showErrorPopUp('Error logging out', context);
+              }
+            },
+          ),
         ),
       ),
     );

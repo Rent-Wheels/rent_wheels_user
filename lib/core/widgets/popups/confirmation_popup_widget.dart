@@ -9,63 +9,66 @@ import 'package:rent_wheels/core/widgets/buttons/generic_button_widget.dart';
 buildConfirmationPopup({
   String? message,
   required String label,
+  required String buttonName,
   required BuildContext context,
   required void Function()? onCancel,
   required void Function()? onAccept,
 }) {
-  return Stack(
+  return Dialog(
+    shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(
+      Sizes().height(context, 0.015),
+    )),
+    clipBehavior: Clip.antiAlias,
     alignment: Alignment.bottomCenter,
-    children: [
-      Container(
-        height: double.infinity,
-        color: Colors.black.withOpacity(0.4),
+    child: Container(
+      height: Sizes().height(context, 0.28),
+      padding: EdgeInsets.symmetric(
+        vertical: Sizes().height(context, 0.01),
+        horizontal: Sizes().width(context, 0.04),
       ),
-      Container(
-        width: Sizes().width(context, 0.85),
-        height: Sizes().height(context, 0.28),
-        padding: EdgeInsets.all(Sizes().height(context, 0.02)),
-        margin: EdgeInsets.only(bottom: Sizes().height(context, 0.1)),
-        decoration: BoxDecoration(
-          color: rentWheelsNeutralLight0,
-          borderRadius: BorderRadius.circular(
-            Sizes().height(context, 0.015),
-          ),
-        ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Text(
-                  label,
-                  style: heading3Information,
-                ),
-                Icon(
+      color: rentWheelsNeutralLight0,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Text(
+                label,
+                style: heading3Information,
+              ),
+              GestureDetector(
+                onTap: onCancel,
+                child: Icon(
                   Icons.close,
                   color: rentWheelsNeutral,
                   size: Sizes().height(context, 0.04),
-                )
+                ),
+              )
+            ],
+          ),
+          if (message != null)
+            Wrap(
+              children: [
+                Space().height(context, 0.02),
+                Text(
+                  message,
+                  style: body1Neutral500,
+                ),
               ],
             ),
-            Space().height(context, 0.02),
-            Text(
-              message ?? '',
-              style: body1Neutral500,
-            ),
-            Space().height(context, 0.02),
-            buildGenericButtonWidget(
-              width: Sizes().width(context, 0.85),
-              isActive: true,
-              buttonName: 'Logout',
-              context: context,
-              onPressed: null,
-            ),
-          ],
-        ),
-      )
-    ],
+          buildGenericButtonWidget(
+            width: Sizes().width(context, 0.85),
+            isActive: true,
+            buttonName: buttonName,
+            context: context,
+            onPressed: onAccept,
+          ),
+        ],
+      ),
+    ),
   );
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:rent_wheels/core/widgets/dialogs/confirmation_dialog_widget.dart';
 import 'package:rent_wheels/src/mainSection/reservations/presentation/booking/make_reservation_page_one.dart';
 
 import 'package:rent_wheels/src/mainSection/reservations/widgets/reservation_details_widget.dart';
@@ -62,6 +63,7 @@ class _MakeReservationPageTwoState extends State<MakeReservationPageTwo> {
 
   cancelReservation() async {
     try {
+      Navigator.pop(context);
       buildLoadingIndicator(context, 'Cancelling Reservation');
       await RentWheelsReservationsMethods().changeReservationStatus(
           reservationId: widget.reservation.id!, status: 'Cancelled');
@@ -190,12 +192,19 @@ class _MakeReservationPageTwoState extends State<MakeReservationPageTwo> {
                           buttonName: 'Cancel Reservation',
                           btnColor: rentWheelsErrorDark700,
                           width: Sizes().width(context, 0.85),
-                          onPressed: () async {
-                            await cancelReservation();
-                            setState(() {
-                              reservation.status = 'Cancelled';
-                            });
-                          },
+                          onPressed: () => buildConfirmationDialog(
+                            context: context,
+                            label: 'Cancel Reservation',
+                            buttonName: 'Cancel Reservation',
+                            message:
+                                'Are you sure you want to cancel your reservation?',
+                            onAccept: () async {
+                              await cancelReservation();
+                              setState(() {
+                                reservation.status = 'Cancelled';
+                              });
+                            },
+                          ),
                         ),
                       ],
                     )
@@ -236,12 +245,19 @@ class _MakeReservationPageTwoState extends State<MakeReservationPageTwo> {
                                   buttonName: 'Cancel Reservation',
                                   btnColor: rentWheelsErrorDark700,
                                   width: Sizes().width(context, 0.4),
-                                  onPressed: () async {
-                                    await cancelReservation();
-                                    setState(() {
-                                      reservation.status = 'Cancelled';
-                                    });
-                                  },
+                                  onPressed: () => buildConfirmationDialog(
+                                    context: context,
+                                    label: 'Cancel Reservation',
+                                    buttonName: 'Cancel Reservation',
+                                    message:
+                                        'Are you sure you want to cancel your reservation?',
+                                    onAccept: () async {
+                                      await cancelReservation();
+                                      setState(() {
+                                        reservation.status = 'Cancelled';
+                                      });
+                                    },
+                                  ),
                                 ),
                               ],
                             )
@@ -250,11 +266,11 @@ class _MakeReservationPageTwoState extends State<MakeReservationPageTwo> {
                                   context: context,
                                   items: [
                                     buildGenericButtonWidget(
-                                      isActive: DateTime.now()
-                                          .isSameDate(reservation.startDate!),
                                       context: context,
                                       buttonName: 'Start Trip',
                                       width: Sizes().width(context, 0.4),
+                                      isActive: DateTime.now()
+                                          .isSameDate(reservation.startDate!),
                                       onPressed: () async {
                                         await startTrip();
                                         setState(() {
@@ -269,12 +285,19 @@ class _MakeReservationPageTwoState extends State<MakeReservationPageTwo> {
                                       buttonName: 'Cancel Reservation',
                                       btnColor: rentWheelsErrorDark700,
                                       width: Sizes().width(context, 0.4),
-                                      onPressed: () async {
-                                        await cancelReservation();
-                                        setState(() {
-                                          reservation.status = 'Cancelled';
-                                        });
-                                      },
+                                      onPressed: () => buildConfirmationDialog(
+                                        context: context,
+                                        label: 'Cancel Reservation',
+                                        buttonName: 'Cancel Reservation',
+                                        message:
+                                            'Are you sure want to cancel your reservation? Only 50% of the trip price will be refunded to you.',
+                                        onAccept: () async {
+                                          await cancelReservation();
+                                          setState(() {
+                                            reservation.status = 'Cancelled';
+                                          });
+                                        },
+                                      ),
                                     ),
                                   ],
                                 )
