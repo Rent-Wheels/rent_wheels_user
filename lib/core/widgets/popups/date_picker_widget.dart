@@ -104,9 +104,5 @@ presentDatePicker({
             return;
           }
           onDateTimeChanged(pickedDate);
-          // setState(() {
-          //   dob.text = formatDatepickedDate);
-          //   isDobValid = true;
-          // });
         });
 }

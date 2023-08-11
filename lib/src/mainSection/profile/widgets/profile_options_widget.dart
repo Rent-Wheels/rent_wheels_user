@@ -7,6 +7,8 @@ import 'package:rent_wheels/core/widgets/spacing/spacing.dart';
 import 'package:rent_wheels/core/widgets/textStyles/text_styles.dart';
 
 buildProfileOptions({
+  Color? color,
+  TextStyle? style,
   required String svg,
   required String section,
   required BuildContext context,
@@ -23,7 +25,7 @@ buildProfileOptions({
             width: Sizes().width(context, 0.082),
             height: Sizes().height(context, 0.04),
             decoration: BoxDecoration(
-              border: Border.all(color: rentWheelsInformationDark900),
+              border: Border.all(color: color ?? rentWheelsInformationDark900),
               color: rentWheelsNeutralLight0,
               borderRadius: BorderRadius.circular(
                 Sizes().height(context, 0.015),
@@ -35,8 +37,8 @@ buildProfileOptions({
                 svg,
                 fit: BoxFit.scaleDown,
                 height: Sizes().height(context, 0.01),
-                colorFilter: const ColorFilter.mode(
-                  rentWheelsInformationDark900,
+                colorFilter: ColorFilter.mode(
+                  color ?? rentWheelsInformationDark900,
                   BlendMode.srcIn,
                 ),
               ),
@@ -45,7 +47,7 @@ buildProfileOptions({
           Space().width(context, 0.04),
           Text(
             section,
-            style: heading5Information500,
+            style: style ?? heading5Information500,
           )
         ],
       ),

@@ -263,6 +263,12 @@ const heading5Error = TextStyle(
   fontSize: 16,
   color: rentWheelsErrorDark900,
 );
+const heading5Error700 = TextStyle(
+  fontWeight: FontWeight.w700,
+  fontFamily: 'Urbanist',
+  fontSize: 16,
+  color: rentWheelsErrorDark700,
+);
 const heading6Error = TextStyle(
   fontWeight: FontWeight.w500,
   fontFamily: 'Urbanist',
