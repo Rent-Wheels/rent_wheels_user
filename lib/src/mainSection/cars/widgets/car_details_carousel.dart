@@ -33,7 +33,7 @@ buildCarImageCarousel({
             width: index == entry.key
                 ? Sizes().width(context, 0.1)
                 : Sizes().width(context, 0.03),
-            height: 12.0,
+            height: Sizes().height(context, 0.012),
             margin: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 4.0),
             decoration: ShapeDecoration(
               shape: index == entry.key
