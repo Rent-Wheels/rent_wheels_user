@@ -122,8 +122,12 @@ class FirebaseAuthService implements FirebaseAuthProvider {
   @override
   Future<void> deleteUser({required User user}) async {
     try {
+      await RentWheelsFilesMethods()
+          .deleteDirectory(directoryPath: 'users/${user.uid}/');
+
+      await RentWheelsFilesMethods()
+          .deleteDirectory(directoryPath: 'users/${user.uid}/cars');
       await user.delete();
-      await RentWheelsFilesMethods().deleteFile(filePath: 'users/${user.uid}/');
       await BackendAuthService().deleteUser(userId: user.uid);
     } on FirebaseAuthException catch (e) {
       if (e.code == 'requires-recent-login') {

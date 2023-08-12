@@ -19,4 +19,20 @@ class RentWheelsFilesMethods {
 
     await ref.delete();
   }
+
+  Future deleteDirectory({required String directoryPath}) async {
+    List<Reference> files = [];
+    final ref = FirebaseStorage.instance.ref().child(directoryPath);
+
+    final refs = await ref.listAll();
+    for (var prefix in refs.prefixes) {
+      final list = await prefix.listAll();
+      if (list.items.isNotEmpty) {
+        files.addAll(list.items);
+      }
+    }
+    for (var file in files) {
+      await file.delete();
+    }
+  }
 }

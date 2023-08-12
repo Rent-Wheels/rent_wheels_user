@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:rent_wheels/core/auth/auth_exceptions.dart';
 
 import 'package:rent_wheels/src/authentication/login/presentation/login.dart';
 import 'package:rent_wheels/src/mainSection/profile/widgets/profile_options_widget.dart';
@@ -19,6 +19,7 @@ import 'package:rent_wheels/core/backend/users/methods/user_methods.dart';
 import 'package:rent_wheels/core/widgets/buttons/generic_button_widget.dart';
 import 'package:rent_wheels/core/widgets/loadingIndicator/loading_indicator.dart';
 import 'package:rent_wheels/core/widgets/dialogs/confirmation_dialog_widget.dart';
+import 'package:rent_wheels/src/mainSection/profile/widgets/reauthenticate_user_widget.dart';
 
 class Profile extends StatefulWidget {
   const Profile({super.key});
@@ -28,6 +29,7 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
+  TextEditingController password = TextEditingController();
   @override
   void initState() {
     RentWheelsUserMethods().getUserDetails(userId: global.user!.uid).then(
@@ -130,30 +132,67 @@ class _ProfileState extends State<Profile> {
                   svg: 'assets/svgs/trash.svg',
                   style: heading5Error700,
                   color: rentWheelsErrorDark700,
-                  onTap: () => buildConfirmationDialog(
+                  onTap: () => buildReauthenticateUserDialog(
                     context: context,
-                    label: 'Delete Account',
-                    buttonName: 'Delete Account',
-                    message:
-                        'Are you sure you want to delete your account? This action is irreversible!',
-                    onAccept: () async {
+                    controller: password,
+                    onSubmit: () async {
                       try {
-                        buildLoadingIndicator(context, 'Deleting Account');
-                        await AuthService.firebase().deleteUser(
-                            user: FirebaseAuth.instance.currentUser!);
+                        buildLoadingIndicator(context, '');
+                        final reauthenticatedUser =
+                            await AuthService.firebase().reauthenticateUser(
+                          email: global.userDetails!.email,
+                          password: password.text,
+                        );
+
+                        await global.setGlobals(
+                          currentUser: reauthenticatedUser!.user!,
+                        );
 
                         if (!mounted) return;
-                        Navigator.pushAndRemoveUntil(
-                          context,
-                          CupertinoPageRoute(
-                            builder: (context) => const Login(),
-                          ),
-                          (route) => false,
+                        Navigator.pop(context);
+                        Navigator.pop(context);
+
+                        buildConfirmationDialog(
+                          context: context,
+                          label: 'Delete Account',
+                          buttonName: 'Delete Account',
+                          message:
+                              'Are you sure you want to delete your account? This action is irreversible!',
+                          onAccept: () async {
+                            try {
+                              buildLoadingIndicator(
+                                  context, 'Deleting Account');
+                              await AuthService.firebase()
+                                  .deleteUser(user: global.user!);
+
+                              if (!mounted) return;
+                              Navigator.pop(context);
+                              Navigator.pushAndRemoveUntil(
+                                context,
+                                CupertinoPageRoute(
+                                  builder: (context) => const Login(),
+                                ),
+                                (route) => false,
+                              );
+                            } catch (e) {
+                              if (!mounted) return;
+                              Navigator.pop(context);
+                              Navigator.pop(context);
+                              showErrorPopUp(e.toString(), context);
+                            }
+                          },
                         );
                       } catch (e) {
                         if (!mounted) return;
                         Navigator.pop(context);
-                        showErrorPopUp(e.toString(), context);
+                        if (e is InvalidPasswordAuthException) {
+                          showErrorPopUp('Incorrect Password', context);
+                        } else {
+                          showErrorPopUp(
+                            e.toString(),
+                            context,
+                          );
+                        }
                       }
                     },
                   ),
