@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 
 import 'package:rent_wheels/core/widgets/sizes/sizes.dart';
-import 'package:rent_wheels/core/widgets/theme/colors.dart';
+import 'package:rent_wheels/core/widgets/carousel/carousel_dots_widget.dart';
 
 buildCarImageCarousel({
   required int index,
@@ -27,26 +27,10 @@ buildCarImageCarousel({
       Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: items.asMap().entries.map((entry) {
-          return AnimatedContainer(
-            curve: Curves.easeInOut,
-            duration: const Duration(milliseconds: 200),
-            width: index == entry.key
-                ? Sizes().width(context, 0.1)
-                : Sizes().width(context, 0.03),
-            height: Sizes().height(context, 0.012),
-            margin: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 4.0),
-            decoration: ShapeDecoration(
-              shape: index == entry.key
-                  ? RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(
-                        Sizes().width(context, 0.03),
-                      ),
-                    )
-                  : const CircleBorder(),
-              color: index == entry.key
-                  ? rentWheelsBrandDark900
-                  : rentWheelsNeutralLight0,
-            ),
+          return buildCarouselDots(
+            index: entry.key,
+            currentIndex: index,
+            context: context,
           );
         }).toList(),
       )
