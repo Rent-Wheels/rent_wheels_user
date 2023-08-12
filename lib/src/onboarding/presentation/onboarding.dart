@@ -28,24 +28,24 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     List<Widget> slides = [
       buildOnboadingSlide(
         context: context,
-        heading: 'Endless Options',
+        heading: 'Your Journey Begins Here',
         imagePath: 'assets/images/onboarding_1.JPG',
         description:
-            "Choose out of hundred of models you won't find anywhere else. Pick it up or get it delivered where you want it.",
+            "Get ready to experience hassle-free car rentals with Rent Wheels. We're here to make your travel dreams a reality.",
       ),
       buildOnboadingSlide(
         context: context,
-        heading: 'Drive Easy Dreams',
+        heading: 'Find Your Perfect Match',
         imagePath: 'assets/images/onboarding_3.JPG',
         description:
-            "Turning your travel dreams into reality. Avoid the hassle of going about to find car to rent. Focus on planning your next travel and rent a car with us whenever you're ready.",
+            "Explore a fleet of cars tailored to your preferences. From compact to luxury, we have the ride that suits your style.",
       ),
       buildOnboadingSlide(
         context: context,
-        heading: 'Wheels & Deals',
+        heading: 'Hit the Road in Minutes',
         imagePath: 'assets/images/onboarding_2.JPG',
         description:
-            "Hop on board effortlessly! Sign up now and experience hassle-free car rentals with exclusive offers.",
+            "With Rent Wheels, renting a car is a breeze. Just a few taps and you're off on your adventure. Your journey, your way.",
       ),
     ];
     return Scaffold(
