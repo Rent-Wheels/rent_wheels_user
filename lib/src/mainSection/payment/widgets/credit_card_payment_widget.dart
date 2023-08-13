@@ -33,7 +33,7 @@ Widget buildCreditCardPayment({
           showBackView: isCvvFocused,
           cardHolderName: cardHolderName,
           cardBgColor: rentWheelsBrandDark900,
-          onCreditCardWidgetChange: (brand) {},
+          onCreditCardWidgetChange: (_) {},
         ),
         CreditCardForm(
           cvvCode: cvvCode,

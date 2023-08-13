@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:rent_wheels/screen_implementer.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:rent_wheels/src/loading/loading.dart';
@@ -27,7 +26,7 @@ class RentWheelsApp extends StatelessWidget {
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Rent Wheels',
-      home: PaymentMock(),
+      home: ConnectionPage(),
     );
   }
 }
@@ -73,7 +72,9 @@ class _ConnectionPageState extends State<ConnectionPage> {
               return const OnboardingScreen();
             } else if (global.user != null && global.userDetails != null) {
               if (global.user!.emailVerified) {
-                return const MainSection();
+                return const MainSection(
+                  pageIndex: 2,
+                );
               }
               return const VerifyEmail();
             } else {

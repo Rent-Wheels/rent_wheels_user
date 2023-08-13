@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:rent_wheels/core/widgets/dialogs/confirmation_dialog_widget.dart';
+import 'package:rent_wheels/screen_implementer.dart';
 import 'package:rent_wheels/src/mainSection/reservations/presentation/booking/make_reservation_page_one.dart';
 
 import 'package:rent_wheels/src/mainSection/reservations/widgets/reservation_details_widget.dart';
@@ -236,7 +237,15 @@ class _MakeReservationPageTwoState extends State<MakeReservationPageTwo> {
                                   context: context,
                                   buttonName: 'Make Payment',
                                   width: Sizes().width(context, 0.4),
-                                  onPressed: null,
+                                  onPressed: () => Navigator.push(
+                                    context,
+                                    CupertinoPageRoute(
+                                      builder: (context) => PaymentMock(
+                                        car: car,
+                                        reservation: reservation,
+                                      ),
+                                    ),
+                                  ),
                                 ),
                                 Space().width(context, 0.04),
                                 buildGenericButtonWidget(
