@@ -1,5 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import 'package:rent_wheels/screen_implementer.dart';
+import 'package:rent_wheels/src/mainSection/payment/presentation/payment.dart';
 
 import 'package:rent_wheels/src/mainSection/reservations/widgets/filter_buttons_widget.dart';
 import 'package:rent_wheels/src/mainSection/reservations/presentation/booking/make_reservation_page_one.dart';
@@ -205,15 +205,21 @@ class _ReservationsDataState extends State<ReservationsData> {
                                       context: context,
                                       car: reservation.car!,
                                       reservation: reservation,
-                                      onPayment: () => Navigator.push(
-                                        context,
-                                        CupertinoPageRoute(
-                                          builder: (context) => PaymentMock(
-                                            car: reservation.car!,
-                                            reservation: reservation,
+                                      onPayment: () async {
+                                        final status = await Navigator.push(
+                                          context,
+                                          CupertinoPageRoute(
+                                            builder: (context) => Payment(
+                                              car: reservation.car!,
+                                              reservation: reservation,
+                                            ),
                                           ),
-                                        ),
-                                      ),
+                                        );
+                                        setState(() {
+                                          reservation.status =
+                                              status ?? reservation.status;
+                                        });
+                                      },
                                       onBook: () =>
                                           bookTrip(car: reservation.car!),
                                       onStart: () async {
