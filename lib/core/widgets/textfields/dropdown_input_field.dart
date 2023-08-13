@@ -5,11 +5,11 @@ import 'package:rent_wheels/core/widgets/theme/colors.dart';
 import 'package:rent_wheels/core/widgets/textStyles/text_styles.dart';
 
 buildDropDownInputField({
-  required BuildContext context,
   dynamic value,
-  required items,
-  required onChanged,
   String? hintText,
+  required BuildContext context,
+  required void Function(Object?)? onChanged,
+  required List<DropdownMenuItem<Object>>? items,
 }) {
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
@@ -17,7 +17,7 @@ buildDropDownInputField({
       Padding(
         padding: EdgeInsets.only(bottom: Sizes().width(context, 0.02)),
         child: Text(
-          hintText!,
+          hintText ?? '',
           style: heading5Information,
         ),
       ),
