@@ -54,6 +54,7 @@ dependencies:
   syncfusion_flutter_datepicker: ^22.1.39
   dotted_dashed_line: ^0.0.3
   shared_preferences: ^2.2.0
+  flutter_credit_card: ^3.0.7
 
 dev_dependencies:
   flutter_test:
