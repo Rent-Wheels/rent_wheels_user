@@ -68,12 +68,12 @@ class _PaymentPageTwoState extends State<PaymentPageTwo> {
           right: Sizes().width(context, 0.04),
         ),
         child: Column(
+          mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisSize: MainAxisSize.min,
           children: [
             Flexible(
-              flex: 2,
+              flex: 4,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -110,70 +110,67 @@ class _PaymentPageTwoState extends State<PaymentPageTwo> {
                 ],
               ),
             ),
-            Space().height(context, 0.06),
-            Flexible(
-              flex: 1,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Text(
-                    "Order Summary",
-                    style: heading5Neutral,
+            // Space().height(context, 0.06),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text(
+                  "Order Summary",
+                  style: heading5Neutral,
+                ),
+                Space().height(context, 0.02),
+                buildPriceDetailsKeyValue(
+                  label: 'Trip Price',
+                  value: 'GH¢ ${widget.car.rate} ${widget.car.plan}',
+                  context: context,
+                ),
+                Space().height(context, 0.01),
+                buildPriceDetailsKeyValue(
+                  label: 'Car',
+                  value:
+                      '${widget.car.yearOfManufacture} ${widget.car.make} ${widget.car.model}',
+                  context: context,
+                ),
+                Space().height(context, 0.01),
+                buildPriceDetailsKeyValue(
+                  label: 'Destination',
+                  value: widget.reservation.destination!,
+                  context: context,
+                ),
+                Space().height(context, 0.01),
+                buildPriceDetailsKeyValue(
+                  label: 'Duration',
+                  value: duration.inDays == 1
+                      ? '${duration.inDays} day'
+                      : '${duration.inDays} days',
+                  context: context,
+                ),
+                Space().height(context, 0.01),
+                DottedDashedLine(
+                  height: 0,
+                  axis: Axis.horizontal,
+                  width: Sizes().width(context, 1),
+                  dashColor: rentWheelsNeutral,
+                ),
+                Space().height(context, 0.01),
+                SizedBox(
+                  width: Sizes().width(context, 1),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      const Text(
+                        'Total',
+                        style: heading5Neutral,
+                      ),
+                      Text(
+                        'GH¢ ${widget.reservation.price}',
+                        style: heading5Neutral,
+                      ),
+                    ],
                   ),
-                  Space().height(context, 0.02),
-                  buildPriceDetailsKeyValue(
-                    label: 'Trip Price',
-                    value: 'GH¢ ${widget.car.rate} ${widget.car.plan}',
-                    context: context,
-                  ),
-                  Space().height(context, 0.01),
-                  buildPriceDetailsKeyValue(
-                    label: 'Car',
-                    value:
-                        '${widget.car.yearOfManufacture} ${widget.car.make} ${widget.car.model}',
-                    context: context,
-                  ),
-                  Space().height(context, 0.01),
-                  buildPriceDetailsKeyValue(
-                    label: 'Destination',
-                    value: widget.reservation.destination!,
-                    context: context,
-                  ),
-                  Space().height(context, 0.01),
-                  buildPriceDetailsKeyValue(
-                    label: 'Duration',
-                    value: duration.inDays == 1
-                        ? '${duration.inDays} day'
-                        : '${duration.inDays} days',
-                    context: context,
-                  ),
-                  Space().height(context, 0.01),
-                  DottedDashedLine(
-                    height: 0,
-                    axis: Axis.horizontal,
-                    width: Sizes().width(context, 1),
-                    dashColor: rentWheelsNeutral,
-                  ),
-                  Space().height(context, 0.01),
-                  SizedBox(
-                    width: Sizes().width(context, 1),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        const Text(
-                          'Total',
-                          style: heading5Neutral,
-                        ),
-                        Text(
-                          'GH¢ ${widget.reservation.price}',
-                          style: heading5Neutral,
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
+                ),
+              ],
             ),
           ],
         ),

@@ -167,11 +167,12 @@ class _PaymentState extends State<Payment> {
           onPressed: () {
             if (currentIndex == 0) {
               Navigator.pop(context);
+            } else {
+              payments.previousPage(
+                duration: const Duration(milliseconds: 300),
+                curve: Curves.linear,
+              );
             }
-            payments.previousPage(
-              duration: const Duration(milliseconds: 300),
-              curve: Curves.linear,
-            );
           },
         ),
       ),
