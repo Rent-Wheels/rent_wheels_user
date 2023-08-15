@@ -24,7 +24,7 @@ buildDateRangePicker({
           return Dialog(
             child: Container(
               width: Sizes().width(context, 0.8),
-              height: Sizes().height(context, 0.5),
+              height: Sizes().height(context, 0.55),
               padding: EdgeInsets.symmetric(
                 horizontal: Sizes().width(context, 0.04),
               ),

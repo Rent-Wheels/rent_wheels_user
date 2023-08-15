@@ -90,7 +90,7 @@ class _PaymentPageOneState extends State<PaymentPageOne> {
                         widget.paymentType == PaymentMethods.mobileMoney ||
                         widget.paymentType == PaymentMethods.vfCash
                     ? 4
-                    : 5,
+                    : 3,
                 child: SingleChildScrollView(
                   child: AnimatedContainer(
                     duration: const Duration(milliseconds: 300),

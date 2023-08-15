@@ -46,8 +46,8 @@ class _ConnectionPageState extends State<ConnectionPage> {
   }
 
   userStatus() async {
-    firstTime = await getOnboardingStatus();
     await AuthService.firebase().initialize();
+    firstTime = await getOnboardingStatus();
 
     final user = FirebaseAuth.instance.currentUser;
 

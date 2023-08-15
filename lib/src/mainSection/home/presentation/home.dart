@@ -138,33 +138,7 @@ class _HomeState extends State<Home> {
                         items: carouselItems,
                       ),
                       Space().height(context, 0.04),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          const Text(
-                            'Vehicles Near You',
-                            style: heading4Information,
-                          ),
-                          GestureDetector(
-                            onTap: () => Navigator.pushAndRemoveUntil(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) =>
-                                      const MainSection(pageIndex: 1),
-                                ),
-                                (route) => false),
-                            child: const Text(
-                              'See all',
-                              style: heading6Neutral500,
-                            ),
-                          )
-                        ],
-                      ),
-                      Space().height(context, 0.02),
-                      SizedBox(
-                        height: Sizes().height(context, 0.35),
-                        child: const AvailableCarsNearYouData(),
-                      ),
+                      const AvailableCarsNearYouData(),
                       Space().height(context, 0.04),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
