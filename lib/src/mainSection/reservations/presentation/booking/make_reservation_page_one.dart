@@ -25,7 +25,7 @@ import 'package:rent_wheels/core/widgets/loadingIndicator/loading_indicator.dart
 import 'package:rent_wheels/core/widgets/buttons/adaptive_back_button_widget.dart';
 
 class MakeReservationPageOne extends StatefulWidget {
-  final Car car;
+  final Car? car;
   const MakeReservationPageOne({super.key, required this.car});
 
   @override
@@ -51,9 +51,9 @@ class _MakeReservationPageOneState extends State<MakeReservationPageOne> {
   }
 
   Duration getDuration() {
-    Car car = widget.car;
+    Car? car = widget.car;
     num days = 0;
-
+    if (car == null) return const Duration(days: 0);
     switch (car.durationUnit) {
       case 'weeks':
         days = car.maxDuration! * 7;
@@ -100,7 +100,8 @@ class _MakeReservationPageOneState extends State<MakeReservationPageOne> {
   }
 
   num setCarPrice() {
-    Car car = widget.car;
+    Car? car = widget.car;
+    if (car == null) return 0;
 
     Duration duration = endDate?.difference(startDate ?? DateTime.now()) ??
         const Duration(days: 0);
@@ -124,13 +125,13 @@ class _MakeReservationPageOneState extends State<MakeReservationPageOne> {
 
   @override
   void initState() {
-    price = widget.car.rate!;
+    price = widget.car?.rate! ?? 0;
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    Car car = widget.car;
+    Car? car = widget.car;
 
     return Scaffold(
       backgroundColor: rentWheelsNeutralLight0,
@@ -157,11 +158,12 @@ class _MakeReservationPageOneState extends State<MakeReservationPageOne> {
               RichText(
                 text: TextSpan(
                   text:
-                      "You can rent this ${car.make} ${car.model} for a maximum of ",
+                      "You can rent this ${car?.make ?? ''} ${car?.model ?? ''} for a maximum of ",
                   style: body2Brand,
                   children: [
                     TextSpan(
-                      text: ' ${car.maxDuration} ${car.durationUnit}',
+                      text:
+                          ' ${car?.maxDuration ?? ''} ${car?.durationUnit ?? ''}',
                       style: heading6BrandBold,
                     ),
                   ],
@@ -237,7 +239,7 @@ class _MakeReservationPageOneState extends State<MakeReservationPageOne> {
                         id: global.userDetails!.id,
                         name: global.userDetails!.name,
                       ),
-                      renter: Renter(id: car.owner!),
+                      renter: Renter(id: car!.owner!),
                       car: car,
                       startDate: startDate,
                       returnDate: endDate,

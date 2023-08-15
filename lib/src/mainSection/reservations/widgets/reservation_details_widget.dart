@@ -15,8 +15,8 @@ import 'package:rent_wheels/core/widgets/details/key_value_widget.dart';
 import 'package:rent_wheels/core/models/reservations/reservations_model.dart';
 
 buildReservationDetails({
-  required Car car,
-  required Renter renter,
+  required Car? car,
+  required Renter? renter,
   required String pageTitle,
   required Duration duration,
   required BuildContext context,
@@ -50,19 +50,19 @@ buildReservationDetails({
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      '${car.yearOfManufacture} ${car.make} ${car.model}',
+                      '${car?.yearOfManufacture ?? ''} ${car?.make ?? ''} ${car?.model ?? ''}',
                       style: heading5Neutral,
                     ),
                     Space().height(context, 0.008),
                     Text(
-                      'GH¢ ${car.rate} ${car.plan}',
+                      'GH¢ ${car?.rate ?? ''} ${car?.plan ?? ''}',
                       style: heading5Information,
                     ),
                     Space().height(context, 0.008),
                     SizedBox(
                       width: Sizes().width(context, 0.6),
                       child: Text(
-                        '${car.location}',
+                        car?.location ?? '',
                         style: body2Neutral900,
                       ),
                     ),
@@ -83,7 +83,7 @@ buildReservationDetails({
                     image: DecorationImage(
                       fit: BoxFit.cover,
                       image: CachedNetworkImageProvider(
-                        car.media![0].mediaURL,
+                        car?.media![0].mediaURL ?? '',
                       ),
                     ),
                     border: Border.all(color: rentWheelsNeutralLight200),
@@ -103,25 +103,25 @@ buildReservationDetails({
             Space().height(context, 0.02),
             buildDetailsKeyValue(
               label: 'Full Name',
-              value: renter.name!,
+              value: renter?.name ?? '',
               context: context,
             ),
             Space().height(context, 0.01),
             buildDetailsKeyValue(
               label: 'Address Line',
-              value: renter.placeOfResidence!,
+              value: renter?.placeOfResidence ?? '',
               context: context,
             ),
             Space().height(context, 0.01),
             buildDetailsKeyValue(
               label: 'Phone Number',
-              value: renter.phoneNumber!,
+              value: renter?.phoneNumber ?? '',
               context: context,
             ),
             Space().height(context, 0.01),
             buildDetailsKeyValue(
               label: 'Email Address',
-              value: renter.email!,
+              value: renter?.email ?? '',
               context: context,
             ),
           ],
@@ -140,7 +140,7 @@ buildReservationDetails({
             Space().height(context, 0.02),
             buildPriceDetailsKeyValue(
               label: 'Trip Price',
-              value: 'GH¢ ${car.rate} ${car.plan}',
+              value: 'GH¢ ${car?.rate ?? ''} ${car?.plan ?? ''}',
               context: context,
             ),
             Space().height(context, 0.01),

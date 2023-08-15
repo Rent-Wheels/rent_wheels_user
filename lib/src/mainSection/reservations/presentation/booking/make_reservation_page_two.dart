@@ -24,8 +24,8 @@ import 'package:rent_wheels/core/widgets/buttons/adaptive_back_button_widget.dar
 import 'package:rent_wheels/core/backend/reservations/methods/reservations_methods.dart';
 
 class MakeReservationPageTwo extends StatefulWidget {
-  final Car car;
-  final Renter renter;
+  final Car? car;
+  final Renter? renter;
   final ReservationView view;
   final ReservationModel reservation;
 
@@ -117,8 +117,8 @@ class _MakeReservationPageTwoState extends State<MakeReservationPageTwo> {
 
   @override
   Widget build(BuildContext context) {
-    Car car = widget.car;
-    Renter renter = widget.renter;
+    Car? car = widget.car;
+    Renter? renter = widget.renter;
     ReservationModel reservation = widget.reservation;
 
     Duration getDuration() {
@@ -182,7 +182,7 @@ class _MakeReservationPageTwoState extends State<MakeReservationPageTwo> {
               ],
               context: context,
             )
-          : widget.view == ReservationView.view
+          : widget.view == ReservationView.view && car != null
               ? reservation.status == 'Pending'
                   ? buildReservationDetailsBottomSheet(
                       context: context,

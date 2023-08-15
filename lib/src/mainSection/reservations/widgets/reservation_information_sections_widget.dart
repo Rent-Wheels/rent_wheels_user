@@ -12,7 +12,7 @@ import 'package:rent_wheels/core/widgets/theme/colors.dart';
 import 'package:rent_wheels/src/mainSection/reservations/widgets/car_image_widget.dart';
 
 Widget buildReservationSections({
-  required Car car,
+  required Car? car,
   required bool isLoading,
   required BuildContext context,
   required void Function()? onPressed,
@@ -32,7 +32,7 @@ Widget buildReservationSections({
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             buildCarImage(
-              imageUrl: car.media![0].mediaURL,
+              imageUrl: car?.media?[0].mediaURL ?? '',
               reservationStatus: reservation.status ?? '',
               context: context,
             ),
@@ -48,7 +48,7 @@ Widget buildReservationSections({
                     ),
                   )
                 : Text(
-                    '${car.yearOfManufacture} ${car.make} ${car.model}',
+                    '${car?.yearOfManufacture ?? ''} ${car?.make ?? ''} ${car?.model ?? ''}',
                     style: heading3Information,
                   ),
             Space().height(context, 0.01),
@@ -73,76 +73,78 @@ Widget buildReservationSections({
       Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
-          reservation.status == 'Pending'
-              ? buildGenericButtonWidget(
-                  width: Sizes().width(context, 0.9),
-                  isActive: true,
-                  btnColor: rentWheelsErrorDark700,
-                  buttonName: 'Cancel Reservation',
-                  context: context,
-                  onPressed: onCancel,
-                )
-              : reservation.status == 'Ongoing'
+          car != null
+              ? reservation.status == 'Pending'
                   ? buildGenericButtonWidget(
                       width: Sizes().width(context, 0.9),
                       isActive: true,
                       btnColor: rentWheelsErrorDark700,
-                      buttonName: 'End Trip',
+                      buttonName: 'Cancel Reservation',
                       context: context,
-                      onPressed: onEnd,
+                      onPressed: onCancel,
                     )
-                  : reservation.status == 'Completed' ||
-                          reservation.status == 'Cancelled' ||
-                          reservation.status == 'Declined'
+                  : reservation.status == 'Ongoing'
                       ? buildGenericButtonWidget(
                           width: Sizes().width(context, 0.9),
                           isActive: true,
-                          buttonName: 'Book Again',
+                          btnColor: rentWheelsErrorDark700,
+                          buttonName: 'End Trip',
                           context: context,
-                          onPressed: onBook,
+                          onPressed: onEnd,
                         )
-                      : reservation.status == 'Paid'
-                          ? Wrap(
-                              children: [
-                                buildGenericButtonWidget(
-                                  width: Sizes().width(context, 0.4),
-                                  isActive: DateTime.now()
-                                      .isSameDate(reservation.startDate!),
-                                  buttonName: 'Start Trip',
-                                  context: context,
-                                  onPressed: onStart,
-                                ),
-                                Space().width(context, 0.04),
-                                buildGenericButtonWidget(
-                                  width: Sizes().width(context, 0.4),
-                                  isActive: true,
-                                  context: context,
-                                  onPressed: onCancel,
-                                  btnColor: rentWheelsErrorDark700,
-                                  buttonName: 'Cancel Reservation',
-                                ),
-                              ],
+                      : reservation.status == 'Completed' ||
+                              reservation.status == 'Cancelled' ||
+                              reservation.status == 'Declined'
+                          ? buildGenericButtonWidget(
+                              width: Sizes().width(context, 0.9),
+                              isActive: true,
+                              buttonName: 'Book Again',
+                              context: context,
+                              onPressed: onBook,
                             )
-                          : Wrap(
-                              children: [
-                                buildGenericButtonWidget(
-                                  width: Sizes().width(context, 0.4),
-                                  isActive: true,
-                                  buttonName: 'Make Payment',
-                                  context: context,
-                                  onPressed: onPayment,
-                                ),
-                                Space().width(context, 0.04),
-                                buildGenericButtonWidget(
-                                  isActive: true,
-                                  context: context,
-                                  btnColor: rentWheelsErrorDark700,
-                                  buttonName: 'Cancel Reservation',
-                                  width: Sizes().width(context, 0.4),
-                                  onPressed: onCancel,
-                                ),
-                              ],
-                            )
+                          : reservation.status == 'Paid'
+                              ? Wrap(
+                                  children: [
+                                    buildGenericButtonWidget(
+                                      width: Sizes().width(context, 0.4),
+                                      isActive: DateTime.now()
+                                          .isSameDate(reservation.startDate!),
+                                      buttonName: 'Start Trip',
+                                      context: context,
+                                      onPressed: onStart,
+                                    ),
+                                    Space().width(context, 0.04),
+                                    buildGenericButtonWidget(
+                                      width: Sizes().width(context, 0.4),
+                                      isActive: true,
+                                      context: context,
+                                      onPressed: onCancel,
+                                      btnColor: rentWheelsErrorDark700,
+                                      buttonName: 'Cancel Reservation',
+                                    ),
+                                  ],
+                                )
+                              : Wrap(
+                                  children: [
+                                    buildGenericButtonWidget(
+                                      width: Sizes().width(context, 0.4),
+                                      isActive: true,
+                                      buttonName: 'Make Payment',
+                                      context: context,
+                                      onPressed: onPayment,
+                                    ),
+                                    Space().width(context, 0.04),
+                                    buildGenericButtonWidget(
+                                      isActive: true,
+                                      context: context,
+                                      btnColor: rentWheelsErrorDark700,
+                                      buttonName: 'Cancel Reservation',
+                                      width: Sizes().width(context, 0.4),
+                                      onPressed: onCancel,
+                                    ),
+                                  ],
+                                )
+              : const SizedBox(),
         ],
       )
     ],

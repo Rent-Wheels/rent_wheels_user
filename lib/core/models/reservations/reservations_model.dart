@@ -31,9 +31,10 @@ class ReservationModel {
   factory ReservationModel.fromJSON(Map<String, dynamic> json) {
     return ReservationModel(
       id: json['_id'],
-      customer: Customer.fromJSON(json['customer']),
-      renter: Renter.fromJSON(json['renter']),
-      car: Car.fromJSON(json['car']),
+      customer:
+          json['customer'] != null ? Customer.fromJSON(json['customer']) : null,
+      renter: json['renter'] != null ? Renter.fromJSON(json['renter']) : null,
+      car: json['car'] != null ? Car.fromJSON(json['car']) : null,
       startDate: DateTime.parse(json['startDate']),
       returnDate: DateTime.parse(json['returnDate']),
       createdAt: DateTime.parse(json['createdAt']),

@@ -203,7 +203,7 @@ class _ReservationsDataState extends State<ReservationsData> {
                                     child: buildReservationSections(
                                       isLoading: false,
                                       context: context,
-                                      car: reservation.car!,
+                                      car: reservation.car,
                                       reservation: reservation,
                                       onPayment: () async {
                                         final status = await Navigator.push(
@@ -257,9 +257,9 @@ class _ReservationsDataState extends State<ReservationsData> {
                                           CupertinoPageRoute(
                                             builder: (context) =>
                                                 MakeReservationPageTwo(
-                                              car: reservation.car!,
+                                              car: reservation.car,
                                               view: ReservationView.view,
-                                              renter: reservation.renter!,
+                                              renter: reservation.renter,
                                               reservation: reservation,
                                             ),
                                           ),
