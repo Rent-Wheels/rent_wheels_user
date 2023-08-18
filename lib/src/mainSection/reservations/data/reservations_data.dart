@@ -31,26 +31,26 @@ class ReservationsData extends StatefulWidget {
 class _ReservationsDataState extends State<ReservationsData> {
   int currentIndex = 0;
 
-  modifyTrip({
+  modifyReservation({
     required String reservationId,
-    required String tripStatus,
+    required String reservationStatus,
   }) async {
-    String loadingMessage = tripStatus == 'Cancelled'
+    String loadingMessage = reservationStatus == 'Cancelled'
         ? 'Cancelling Reservation'
-        : tripStatus == 'Ongoing'
+        : reservationStatus == 'Ongoing'
             ? 'Starting Trip'
             : 'Ending Trip';
 
-    String successMessage = tripStatus == 'Cancelled'
+    String successMessage = reservationStatus == 'Cancelled'
         ? 'Reservation Cancelled'
-        : tripStatus == 'Ongoing'
+        : reservationStatus == 'Ongoing'
             ? 'Trip Started'
             : 'Trip Ended';
     try {
       Navigator.pop(context);
       buildLoadingIndicator(context, loadingMessage);
       await RentWheelsReservationsMethods().changeReservationStatus(
-          reservationId: reservationId, status: tripStatus);
+          reservationId: reservationId, status: reservationStatus);
       if (!mounted) return;
       Navigator.pop(context);
       showSuccessPopUp(successMessage, context);
@@ -167,18 +167,18 @@ class _ReservationsDataState extends State<ReservationsData> {
                                       onBook: () =>
                                           bookTrip(car: reservation.car!),
                                       onStart: () async {
-                                        await modifyTrip(
+                                        await modifyReservation(
                                           reservationId: reservation.id!,
-                                          tripStatus: 'Ongoing',
+                                          reservationStatus: 'Ongoing',
                                         );
                                         setState(() {
                                           reservation.status = 'Ongoing';
                                         });
                                       },
                                       onEnd: () async {
-                                        await modifyTrip(
+                                        await modifyReservation(
                                           reservationId: reservation.id!,
-                                          tripStatus: 'Completed',
+                                          reservationStatus: 'Completed',
                                         );
                                         setState(() {
                                           reservation.status = 'Completed';
@@ -192,9 +192,9 @@ class _ReservationsDataState extends State<ReservationsData> {
                                             ? 'Are you sure want to cancel your reservation? Only 50% of the trip price will be refunded to you.'
                                             : 'Are you sure you want to cancel your reservation?',
                                         onAccept: () async {
-                                          await modifyTrip(
+                                          await modifyReservation(
                                             reservationId: reservation.id!,
-                                            tripStatus: 'Cancelled',
+                                            reservationStatus: 'Cancelled',
                                           );
                                           setState(() {
                                             reservation.status = 'Cancelled';
