@@ -31,45 +31,29 @@ class ReservationsData extends StatefulWidget {
 class _ReservationsDataState extends State<ReservationsData> {
   int currentIndex = 0;
 
-  cancelReservation({required String reservationId}) async {
-    try {
-      Navigator.pop(context);
-      buildLoadingIndicator(context, 'Cancelling Reservation');
-      await RentWheelsReservationsMethods().changeReservationStatus(
-          reservationId: reservationId, status: 'Cancelled');
-      if (!mounted) return;
-      Navigator.pop(context);
-      showSuccessPopUp('Reservation Cancelled', context);
-    } catch (e) {
-      if (!mounted) return;
-      Navigator.pop(context);
-      showErrorPopUp(e.toString(), context);
-    }
-  }
+  modifyTrip({
+    required String reservationId,
+    required String tripStatus,
+  }) async {
+    String loadingMessage = tripStatus == 'Cancelled'
+        ? 'Cancelling Reservation'
+        : tripStatus == 'Ongoing'
+            ? 'Starting Trip'
+            : 'Ending Trip';
 
-  startTrip({required String reservationId}) async {
+    String successMessage = tripStatus == 'Cancelled'
+        ? 'Reservation Cancelled'
+        : tripStatus == 'Ongoing'
+            ? 'Trip Started'
+            : 'Trip Ended';
     try {
-      buildLoadingIndicator(context, 'Starting Trip');
+      Navigator.pop(context);
+      buildLoadingIndicator(context, loadingMessage);
       await RentWheelsReservationsMethods().changeReservationStatus(
-          reservationId: reservationId, status: 'Ongoing');
+          reservationId: reservationId, status: tripStatus);
       if (!mounted) return;
       Navigator.pop(context);
-      showSuccessPopUp('Trip Started', context);
-    } catch (e) {
-      if (!mounted) return;
-      Navigator.pop(context);
-      showErrorPopUp(e.toString(), context);
-    }
-  }
-
-  endTrip({required String reservationId}) async {
-    try {
-      buildLoadingIndicator(context, 'Ending Trip');
-      await RentWheelsReservationsMethods().changeReservationStatus(
-          reservationId: reservationId, status: 'Completed');
-      if (!mounted) return;
-      Navigator.pop(context);
-      showSuccessPopUp('Trip Ended', context);
+      showSuccessPopUp(successMessage, context);
     } catch (e) {
       if (!mounted) return;
       Navigator.pop(context);
@@ -183,15 +167,19 @@ class _ReservationsDataState extends State<ReservationsData> {
                                       onBook: () =>
                                           bookTrip(car: reservation.car!),
                                       onStart: () async {
-                                        await startTrip(
-                                            reservationId: reservation.id!);
+                                        await modifyTrip(
+                                          reservationId: reservation.id!,
+                                          tripStatus: 'Ongoing',
+                                        );
                                         setState(() {
                                           reservation.status = 'Ongoing';
                                         });
                                       },
                                       onEnd: () async {
-                                        await endTrip(
-                                            reservationId: reservation.id!);
+                                        await modifyTrip(
+                                          reservationId: reservation.id!,
+                                          tripStatus: 'Completed',
+                                        );
                                         setState(() {
                                           reservation.status = 'Completed';
                                         });
@@ -204,8 +192,10 @@ class _ReservationsDataState extends State<ReservationsData> {
                                             ? 'Are you sure want to cancel your reservation? Only 50% of the trip price will be refunded to you.'
                                             : 'Are you sure you want to cancel your reservation?',
                                         onAccept: () async {
-                                          await cancelReservation(
-                                              reservationId: reservation.id!);
+                                          await modifyTrip(
+                                            reservationId: reservation.id!,
+                                            tripStatus: 'Cancelled',
+                                          );
                                           setState(() {
                                             reservation.status = 'Cancelled';
                                           });
