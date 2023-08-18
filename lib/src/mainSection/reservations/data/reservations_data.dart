@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
-import 'package:rent_wheels/src/mainSection/payment/presentation/payment.dart';
 
+import 'package:rent_wheels/src/mainSection/payment/presentation/payment.dart';
 import 'package:rent_wheels/src/mainSection/reservations/widgets/filter_buttons_widget.dart';
 import 'package:rent_wheels/src/mainSection/reservations/presentation/booking/make_reservation_page_one.dart';
 import 'package:rent_wheels/src/mainSection/reservations/presentation/booking/make_reservation_page_two.dart';
@@ -97,65 +97,25 @@ class _ReservationsDataState extends State<ReservationsData> {
             );
           }
 
-          List<ReservationModel> pendingReservations() {
-            return reservations
-                .where((reservation) =>
-                    reservation.status!.toLowerCase() == 'pending')
-                .toList();
+          Map<String, List<ReservationModel>> getReservations() {
+            Map<String, List<ReservationModel>> reservationCategories = {};
+
+            for (var reservation in reservations) {
+              String status = reservation.status!;
+              if (reservationCategories.containsKey(status)) {
+                reservationCategories[status]!.add(reservation);
+              } else {
+                reservationCategories.addEntries({
+                  reservation.status!: [reservation]
+                }.entries);
+              }
+            }
+
+            return reservationCategories;
           }
 
-          List<ReservationModel> acceptedReservations() {
-            return reservations
-                .where((reservation) =>
-                    reservation.status!.toLowerCase() == 'accepted')
-                .toList();
-          }
-
-          List<ReservationModel> declinedReservations() {
-            return reservations
-                .where((reservation) =>
-                    reservation.status!.toLowerCase() == 'declined')
-                .toList();
-          }
-
-          List<ReservationModel> paidReservations() {
-            return reservations
-                .where((reservation) =>
-                    reservation.status!.toLowerCase() == 'paid')
-                .toList();
-          }
-
-          List<ReservationModel> ongoingReservations() {
-            return reservations
-                .where((reservation) =>
-                    reservation.status!.toLowerCase() == 'ongoing')
-                .toList();
-          }
-
-          List<ReservationModel> completedReservations() {
-            return reservations
-                .where((reservation) =>
-                    reservation.status!.toLowerCase() == 'completed')
-                .toList();
-          }
-
-          List<ReservationModel> cancelledReservations() {
-            return reservations
-                .where((reservation) =>
-                    reservation.status!.toLowerCase() == 'cancelled')
-                .toList();
-          }
-
-          final Map<String, List<ReservationModel>> sections = {
-            'All': reservations,
-            'Pending': pendingReservations(),
-            'Accepted': acceptedReservations(),
-            'Declined': declinedReservations(),
-            'Paid': paidReservations(),
-            'Ongoing': ongoingReservations(),
-            'Completed': completedReservations(),
-            'Cancelled': cancelledReservations(),
-          };
+          final Map<String, List<ReservationModel>> sections =
+              getReservations();
 
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
