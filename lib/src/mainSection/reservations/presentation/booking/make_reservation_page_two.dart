@@ -77,7 +77,6 @@ class _MakeReservationPageTwoState extends State<MakeReservationPageTwo> {
             ? 'Trip Started'
             : 'Trip Ended';
     try {
-      Navigator.pop(context);
       buildLoadingIndicator(context, loadingMessage);
       await RentWheelsReservationsMethods().changeReservationStatus(
           reservationId: widget.reservation.id!, status: reservationStatus);

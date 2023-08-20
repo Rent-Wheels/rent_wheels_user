@@ -47,7 +47,6 @@ class _ReservationsDataState extends State<ReservationsData> {
             ? 'Trip Started'
             : 'Trip Ended';
     try {
-      Navigator.pop(context);
       buildLoadingIndicator(context, loadingMessage);
       await RentWheelsReservationsMethods().changeReservationStatus(
           reservationId: reservationId, status: reservationStatus);
@@ -82,7 +81,9 @@ class _ReservationsDataState extends State<ReservationsData> {
           }
 
           Map<String, List<ReservationModel>> getReservations() {
-            Map<String, List<ReservationModel>> reservationCategories = {};
+            Map<String, List<ReservationModel>> reservationCategories = {
+              'All': reservations
+            };
 
             for (var reservation in reservations) {
               String status = reservation.status!;
