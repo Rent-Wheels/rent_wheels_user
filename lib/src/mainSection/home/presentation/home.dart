@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:rent_wheels/core/models/enums/enums.dart';
+import 'package:rent_wheels/core/widgets/toast/toast_notification_widget.dart';
 import 'package:rent_wheels/src/mainSection/base.dart';
 
 import 'package:rent_wheels/src/mainSection/cars/data/available_cars_data.dart';
@@ -97,12 +98,12 @@ class _HomeState extends State<Home> {
                               children: [
                                 buildSVGIconButton(
                                   svg: 'assets/svgs/search.svg',
-                                  onPressed: () {},
+                                  onPressed: buildToastNotification,
                                 ),
                                 Space().width(context, 0.07),
                                 buildSVGIconButton(
                                   svg: 'assets/svgs/notifications.svg',
-                                  onPressed: () {},
+                                  onPressed: buildToastNotification,
                                 ),
                               ],
                             ),
