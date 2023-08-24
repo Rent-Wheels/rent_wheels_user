@@ -36,7 +36,7 @@ class RenterDetails extends StatelessWidget {
             children: [
               Container(
                 width: Sizes().width(context, 0.9),
-                height: Sizes().height(context, 0.3),
+                height: Sizes().height(context, 0.35),
                 padding: EdgeInsets.all(Sizes().height(context, 0.01)),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(
