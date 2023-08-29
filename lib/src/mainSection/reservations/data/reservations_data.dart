@@ -51,6 +51,7 @@ class _ReservationsDataState extends State<ReservationsData> {
       await RentWheelsReservationsMethods().changeReservationStatus(
           reservationId: reservationId, status: reservationStatus);
       if (!mounted) return;
+      if (reservationStatus == 'Cancelled') Navigator.pop(context);
       Navigator.pop(context);
       showSuccessPopUp(successMessage, context);
     } catch (e) {

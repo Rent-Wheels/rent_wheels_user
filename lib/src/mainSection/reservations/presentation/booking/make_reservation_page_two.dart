@@ -82,6 +82,7 @@ class _MakeReservationPageTwoState extends State<MakeReservationPageTwo> {
           reservationId: widget.reservation.id!, status: reservationStatus);
       if (!mounted) return;
       Navigator.pop(context);
+      if (reservationStatus == 'Cancelled') Navigator.pop(context);
       showSuccessPopUp(successMessage, context);
     } catch (e) {
       if (!mounted) return;
