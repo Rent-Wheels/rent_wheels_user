@@ -57,6 +57,12 @@ dependencies:
   flutter_credit_card: ^3.0.7
   easy_image_viewer: ^1.2.1
   fluttertoast: ^8.2.2
+  get_it:
+  flutter_bloc:
+  equatable:
+  dartz:
+  data_connection_checker_nulls: ^0.0.2
+  bloc_concurrency: ^0.2.2
 
 dev_dependencies:
   flutter_test:
