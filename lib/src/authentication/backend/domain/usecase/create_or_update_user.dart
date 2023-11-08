@@ -8,7 +8,7 @@ class CreateOrUpdateUser extends UseCase<UserInfo, Map<String, dynamic>> {
 
   CreateOrUpdateUser({required this.repository});
   @override
-  Future<Either<String, UserInfo>> call(Map<String, dynamic> params) {
-    return repository.createOrUpdateUser(params);
+  Future<Either<String, UserInfo>> call(Map<String, dynamic> params) async {
+    return await repository.createOrUpdateUser(params);
   }
 }

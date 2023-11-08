@@ -7,7 +7,7 @@ class DeleteUser extends UseCase<void, Map<String, dynamic>> {
 
   DeleteUser({required this.repository});
   @override
-  Future<Either<String, void>> call(Map<String, dynamic> params) {
-    return repository.deleteUser(params);
+  Future<Either<String, void>> call(Map<String, dynamic> params) async {
+    return await repository.deleteUser(params);
   }
 }
