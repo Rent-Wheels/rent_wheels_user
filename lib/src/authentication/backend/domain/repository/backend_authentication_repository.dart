@@ -2,7 +2,7 @@ import 'package:dartz/dartz.dart';
 import 'package:rent_wheels/src/user/domain/entity/user_info.dart';
 
 abstract class BackendAuthenticationRepository {
-  /// create or edit user params
+  /// create user params
   /// 1. avatar
   /// 2. user
   /// 3. name
@@ -11,8 +11,16 @@ abstract class BackendAuthenticationRepository {
   /// 6. dob
   /// 7. residence
 
-  Future<Either<String, UserInfo>> createOrUpdateUser(
-      Map<String, dynamic> params);
+  Future<Either<String, UserInfo>> createUser(Map<String, dynamic> params);
+
+  /// edit user params
+  /// 1. avatar
+  /// 3. name
+  /// 4. phoneNumber
+  /// 5. email
+  /// 6. dob
+  /// 7. residence
+  Future<Either<String, UserInfo>> updateUser(Map<String, dynamic> params);
 
   /// delete user params
   /// 1. userId
