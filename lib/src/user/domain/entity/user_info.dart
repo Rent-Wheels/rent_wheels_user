@@ -1,5 +1,5 @@
 class UserInfo {
-  String? id,
+  final String? id,
       userId,
       name,
       email,

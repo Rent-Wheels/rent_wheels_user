@@ -12,17 +12,21 @@ class BackendAuthenticationRepositoryImpl
   BackendAuthenticationRepositoryImpl(
       {required this.networkInfo, required this.remoteDatasource});
 
-  /// create or update user
-
+  // create user
   @override
-  Future<Either<String, UserInfo>> createOrUpdateUser(
-      Map<String, dynamic> params) {
-    // TODO: implement createOrUpdateUser
+  Future<Either<String, UserInfo>> createUser(Map<String, dynamic> params) {
+    // TODO: implement createUser
     throw UnimplementedError();
   }
 
-  /// delete user
+  // update user
+  @override
+  Future<Either<String, UserInfo>> updateUser(Map<String, dynamic> params) {
+    // TODO: implement updateUser
+    throw UnimplementedError();
+  }
 
+  // delete user
   @override
   Future<Either<String, void>> deleteUser(Map<String, dynamic> params) {
     // TODO: implement deleteUser
