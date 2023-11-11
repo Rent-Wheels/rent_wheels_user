@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:rent_wheels/src/mainSection/cars/data/available_cars_data.dart';
 
-import 'package:rent_wheels/core/models/enums/enums.dart';
+import 'package:rent_wheels/core/enums/enums.dart';
 import 'package:rent_wheels/core/widgets/sizes/sizes.dart';
 import 'package:rent_wheels/core/widgets/theme/colors.dart';
 import 'package:rent_wheels/core/global/globals.dart' as global;

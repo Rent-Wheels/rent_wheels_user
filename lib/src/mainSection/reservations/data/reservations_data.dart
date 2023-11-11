@@ -6,7 +6,7 @@ import 'package:rent_wheels/src/mainSection/reservations/presentation/booking/ma
 import 'package:rent_wheels/src/mainSection/reservations/presentation/booking/make_reservation_page_two.dart';
 import 'package:rent_wheels/src/mainSection/reservations/widgets/reservation_information_sections_widget.dart';
 
-import 'package:rent_wheels/core/models/enums/enums.dart';
+import 'package:rent_wheels/core/enums/enums.dart';
 import 'package:rent_wheels/core/widgets/sizes/sizes.dart';
 import 'package:rent_wheels/core/widgets/theme/colors.dart';
 import 'package:rent_wheels/core/models/cars/cars_model.dart';

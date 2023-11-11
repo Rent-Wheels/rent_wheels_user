@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/scheduler.dart' show timeDilation;
-import 'package:rent_wheels/core/models/enums/enums.dart';
+import 'package:rent_wheels/core/enums/enums.dart';
 import 'package:rent_wheels/core/models/renter/renter_model.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 

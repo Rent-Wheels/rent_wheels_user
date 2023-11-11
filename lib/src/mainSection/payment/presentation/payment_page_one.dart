@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_credit_card/flutter_credit_card.dart';
-import 'package:rent_wheels/core/models/enums/enums.dart';
+import 'package:rent_wheels/core/enums/enums.dart';
 import 'package:rent_wheels/core/widgets/sizes/sizes.dart';
 import 'package:rent_wheels/core/widgets/textfields/dropdown_input_field.dart';
 import 'package:rent_wheels/core/widgets/theme/colors.dart';

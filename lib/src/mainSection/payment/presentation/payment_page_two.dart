@@ -6,7 +6,7 @@ import 'package:rent_wheels/core/models/reservations/reservations_model.dart';
 
 import 'package:rent_wheels/src/mainSection/reservations/widgets/price_details_widget.dart';
 
-import 'package:rent_wheels/core/models/enums/enums.dart';
+import 'package:rent_wheels/core/enums/enums.dart';
 import 'package:rent_wheels/core/widgets/sizes/sizes.dart';
 import 'package:rent_wheels/core/widgets/theme/colors.dart';
 import 'package:rent_wheels/core/widgets/spacing/spacing.dart';
