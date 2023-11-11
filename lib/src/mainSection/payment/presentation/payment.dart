@@ -5,7 +5,7 @@ import 'package:rent_wheels/core/widgets/popups/success_popup.dart';
 import 'package:rent_wheels/src/mainSection/payment/presentation/payment_page_one.dart';
 import 'package:rent_wheels/src/mainSection/payment/presentation/payment_page_two.dart';
 
-import 'package:rent_wheels/core/models/enums/enums.dart';
+import 'package:rent_wheels/core/enums/enums.dart';
 import 'package:rent_wheels/core/widgets/sizes/sizes.dart';
 import 'package:rent_wheels/core/widgets/theme/colors.dart';
 import 'package:rent_wheels/core/models/cars/cars_model.dart';

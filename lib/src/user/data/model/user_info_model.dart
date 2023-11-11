@@ -24,4 +24,15 @@ class UserInfoModel extends UserInfo {
       placeOfResidence: json['placeOfResidence'],
     );
   }
+
+  Map<String, dynamic> toJson() => {
+        '_id': id,
+        'userId': userId,
+        'name': name,
+        'email': email,
+        'dob': dob,
+        'phoneNumber': phoneNumber,
+        'profilePicture': profilePicture,
+        'placeOfResidence': placeOfResidence,
+      };
 }
