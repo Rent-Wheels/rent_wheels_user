@@ -37,7 +37,7 @@ class BackendAuthenticationRemoteDatasourceImpl
       );
     } else {
       uri = url.returnUri(
-        endpoint: Endpoints.updateUser,
+        endpoint: Endpoints.updateGetOrDeleteUser,
         urlParameters: params['urlParameters'],
       );
 
@@ -62,7 +62,7 @@ class BackendAuthenticationRemoteDatasourceImpl
   @override
   Future<void> deleteUser(Map<String, dynamic> params) async {
     final uri = url.returnUri(
-      endpoint: Endpoints.deleteUser,
+      endpoint: Endpoints.updateGetOrDeleteUser,
       urlParameters: params['urlParameters'],
     );
 
