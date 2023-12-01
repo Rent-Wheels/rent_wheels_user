@@ -1,6 +1,6 @@
 import 'package:rent_wheels/src/user/domain/entity/user_info.dart';
 
-class UserInfoModel extends UserInfo {
+class UserInfoModel extends BackendUserInfo {
   UserInfoModel({
     required super.id,
     required super.userId,
