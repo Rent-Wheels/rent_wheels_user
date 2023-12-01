@@ -23,7 +23,7 @@ class BackendUser {
 
   factory BackendUser.fromJSON(Map<String, dynamic> json) {
     return BackendUser(
-      id: json['_id'],
+      id: json['id'],
       userId: json['userId'],
       name: json['name'],
       email: json['email'],

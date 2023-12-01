@@ -255,7 +255,7 @@ class _SignUpState extends State<SignUp> {
                 Space().height(context, 0.05),
                 buildGenericButtonWidget(
                   width: Sizes().width(context, 0.85),
-                  isActive: isActive(),
+                  isActive: true, //
                   buttonName: 'Register',
                   context: context,
                   onPressed: () async {
@@ -270,7 +270,7 @@ class _SignUpState extends State<SignUp> {
                         email: email.text,
                         password: password.text,
                         dob: DateFormat.yMMMMd().parse(dob.text),
-                        residence: residence.text,
+                        residence: "Kumasi",
                       );
 
                       await global.setGlobals(

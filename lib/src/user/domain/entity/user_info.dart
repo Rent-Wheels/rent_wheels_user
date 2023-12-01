@@ -1,4 +1,4 @@
-class UserInfo {
+class BackendUserInfo {
   final String? id,
       userId,
       name,
@@ -8,7 +8,7 @@ class UserInfo {
       profilePicture,
       placeOfResidence;
 
-  UserInfo({
+  BackendUserInfo({
     required this.id,
     required this.userId,
     required this.name,
