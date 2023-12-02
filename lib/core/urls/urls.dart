@@ -1,19 +1,20 @@
 import 'package:rent_wheels/core/urls/endpoints.dart';
 
 class Urls {
-  final UrlParser urlParser = UrlParser();
+  final UrlParser _urlParser = UrlParser();
   final Map<String, String> headers = {'Content-Type': 'application/json'};
-  final String baseURL = 'https://rent-wheels.braalex.me';
+  final String _baseURL = 'https://rent-wheels.braalex.me';
 
   returnUri({
     required Endpoints endpoint,
     Map<String, dynamic>? urlParameters,
+    Map<String, dynamic>? queryParameters,
   }) {
     String lastRoute = endpoint.value;
 
-    String parsedRoute = urlParser.urlPasser(urlParameters, lastRoute);
+    String parsedRoute = _urlParser.urlPasser(urlParameters, lastRoute);
 
-    return Uri.https(baseURL, parsedRoute);
+    return Uri.https(_baseURL, parsedRoute, queryParameters);
   }
 }
 
