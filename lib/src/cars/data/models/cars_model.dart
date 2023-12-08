@@ -24,27 +24,27 @@ class CarsModel extends Cars {
     required super.registrationNumber,
   });
 
-  factory CarsModel.fromJson(Map<String, dynamic> json) {
+  factory CarsModel.fromJson(Map<String, dynamic>? json) {
     return CarsModel(
-      id: json['id'],
-      rate: json['rate'],
-      make: json['make'],
-      type: json['type'],
-      plan: json['plan'],
-      model: json['model'],
-      color: json['color'],
-      terms: json['terms'],
-      media: json['media'],
-      ownerId: json['ownerId'],
-      capacity: json['capacity'],
-      location: json['location'],
-      condition: json['condition'],
-      description: json['description'],
-      maxDuration: json['maxDuration'],
-      durationUnit: json['durationUnit'],
-      availability: json['availability'],
-      yearOfManufacture: json['yearOfManufacture'],
-      registrationNumber: json['registrationNumber'],
+      id: json?['id'],
+      rate: json?['rate'],
+      make: json?['make'],
+      type: json?['type'],
+      plan: json?['plan'],
+      model: json?['model'],
+      color: json?['color'],
+      terms: json?['terms'],
+      media: json?['media'],
+      ownerId: json?['ownerId'],
+      capacity: json?['capacity'],
+      location: json?['location'],
+      condition: json?['condition'],
+      description: json?['description'],
+      maxDuration: json?['maxDuration'],
+      durationUnit: json?['durationUnit'],
+      availability: json?['availability'],
+      yearOfManufacture: json?['yearOfManufacture'],
+      registrationNumber: json?['registrationNumber'],
     );
   }
 }
