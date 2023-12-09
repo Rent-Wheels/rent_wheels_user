@@ -24,7 +24,7 @@ class CarsModel extends Cars {
     required super.registrationNumber,
   });
 
-  factory CarsModel.fromJson(Map<String, dynamic>? json) {
+  factory CarsModel.fromJSON(Map<String, dynamic>? json) {
     return CarsModel(
       id: json?['id'],
       rate: json?['rate'],

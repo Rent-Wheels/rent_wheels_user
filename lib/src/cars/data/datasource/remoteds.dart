@@ -31,6 +31,6 @@ class CarsRemoteDatasourceImpl implements CarsRemoteDatasource {
 
     if (response.statusCode != 200) throw Exception(decodedResponse);
 
-    return decodedResponse.map<CarsModel>((car) => CarsModel.fromJson(car));
+    return decodedResponse.map<CarsModel>((car) => CarsModel.fromJSON(car));
   }
 }

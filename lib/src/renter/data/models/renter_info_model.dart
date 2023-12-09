@@ -14,17 +14,17 @@ class RenterInfoModel extends RenterInfo {
     required super.placeOfResidence,
   });
 
-  factory RenterInfoModel.fromJSON(Map<String, dynamic> json) {
+  factory RenterInfoModel.fromJSON(Map<String, dynamic>? json) {
     return RenterInfoModel(
-      id: json['id'],
-      userId: json['userId'],
-      name: json['name'],
-      email: json['email'],
-      dob: json['dob'],
-      phoneNumber: json['phoneNumber'],
-      profilePicture: json['profilePicture'],
-      placeOfResidence: json['placeOfResidence'],
-      cars: json['cars'].map<CarsModel>((car) => CarsModel.fromJson(car)),
+      id: json?['id'],
+      userId: json?['userId'],
+      name: json?['name'],
+      email: json?['email'],
+      dob: json?['dob'],
+      phoneNumber: json?['phoneNumber'],
+      profilePicture: json?['profilePicture'],
+      placeOfResidence: json?['placeOfResidence'],
+      cars: json?['cars'].map<CarsModel>((car) => CarsModel.fromJSON(car)),
     );
   }
 }
