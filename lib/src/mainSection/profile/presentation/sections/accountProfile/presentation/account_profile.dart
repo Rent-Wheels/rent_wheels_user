@@ -126,9 +126,7 @@ class _AccountProfileState extends State<AccountProfile> {
               buildProfilePicture(
                 context: context,
                 imageFile: avatar,
-                imgUrl: global.userDetails != null
-                    ? global.userDetails!.profilePicture
-                    : null,
+                imgUrl: global.userDetails?.profilePicture,
                 onTap: bottomSheet,
               ),
               Space().height(context, 0.02),

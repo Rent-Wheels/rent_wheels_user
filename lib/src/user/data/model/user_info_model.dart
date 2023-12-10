@@ -1,7 +1,7 @@
 import 'package:rent_wheels/src/user/domain/entity/user_info.dart';
 
-class UserInfoModel extends BackendUserInfo {
-  UserInfoModel({
+class BackendUserInfoModel extends BackendUserInfo {
+  const BackendUserInfoModel({
     required super.id,
     required super.userId,
     required super.name,
@@ -12,8 +12,8 @@ class UserInfoModel extends BackendUserInfo {
     required super.placeOfResidence,
   });
 
-  factory UserInfoModel.fromJSON(Map<String, dynamic> json) {
-    return UserInfoModel(
+  factory BackendUserInfoModel.fromJSON(Map<String, dynamic> json) {
+    return BackendUserInfoModel(
       id: json['_id'],
       userId: json['userId'],
       name: json['name'],

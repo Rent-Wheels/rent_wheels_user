@@ -4,7 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:rent_wheels/core/models/user/user_model.dart';
 
 User? user;
-String accessToken = '';
+String? accessToken;
 Map<String, String> headers = {};
 // String baseURL = 'http://10.0.2.2:3000';
 // String baseURL = 'http://localhost:3000';

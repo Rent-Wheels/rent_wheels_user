@@ -25,7 +25,8 @@ class AuthenticationRemoteDatasourceImpl
   });
 
   @override
-  Future<UserInfoModel> createOrUpdateUser(Map<String, dynamic> params) async {
+  Future<BackendUserInfoModel> createOrUpdateUser(
+      Map<String, dynamic> params) async {
     final isCreate = params['type'] == 'create';
     Uri uri;
     http.Response response;
@@ -57,7 +58,7 @@ class AuthenticationRemoteDatasourceImpl
       throw Exception(decodedResponse);
     }
 
-    return UserInfoModel.fromJSON(decodedResponse);
+    return BackendUserInfoModel.fromJSON(decodedResponse);
   }
 
   @override

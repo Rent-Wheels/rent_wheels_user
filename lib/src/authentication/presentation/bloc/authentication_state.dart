@@ -75,3 +75,16 @@ final class VerifyEmailLoaded extends AuthenticationState {}
 final class InitializeFirebaseLoaded extends AuthenticationState {}
 
 final class LogoutLoaded extends AuthenticationState {}
+
+//!ERRORS
+final class GenericFirebaseAuthError extends AuthenticationState {
+  final String errorMessage;
+
+  const GenericFirebaseAuthError({required this.errorMessage});
+}
+
+final class GenericBackendAuthError extends AuthenticationState {
+  final String errorMessage;
+
+  const GenericBackendAuthError({required this.errorMessage});
+}
