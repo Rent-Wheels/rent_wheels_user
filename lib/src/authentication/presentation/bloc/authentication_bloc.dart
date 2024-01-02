@@ -6,7 +6,6 @@ import 'package:rent_wheels/src/authentication/domain/usecase/backend/create_upd
 import 'package:rent_wheels/src/authentication/domain/usecase/backend/delete_user_from_backend.dart';
 import 'package:rent_wheels/src/authentication/domain/usecase/firebase/create_user_with_email_and_password.dart';
 import 'package:rent_wheels/src/authentication/domain/usecase/firebase/delete_user_from_firebase.dart';
-import 'package:rent_wheels/src/authentication/domain/usecase/firebase/initialize_firebase.dart';
 import 'package:rent_wheels/src/authentication/domain/usecase/firebase/logout.dart';
 import 'package:rent_wheels/src/authentication/domain/usecase/firebase/reauthenticate_user.dart';
 import 'package:rent_wheels/src/authentication/domain/usecase/firebase/reset_password.dart';
@@ -24,7 +23,6 @@ class AuthenticationBloc
   final VerifyEmail verifyEmail;
   final ResetPassword resetPassword;
   final UpdateUserDetails updateUserDetails;
-  final InitializeFirebase initializeFirebase;
   final ReauthenticateUser reauthenticateUser;
   final CreateOrUpdateUser createOrUpdateUser;
   final DeleteUserFromBackend deleteUserFromBackend;
@@ -37,7 +35,6 @@ class AuthenticationBloc
     required this.verifyEmail,
     required this.resetPassword,
     required this.updateUserDetails,
-    required this.initializeFirebase,
     required this.reauthenticateUser,
     required this.createOrUpdateUser,
     required this.deleteUserFromBackend,

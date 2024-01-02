@@ -1,19 +1,22 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:rent_wheels/firebase_options.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:rent_wheels/src/loading/loading.dart';
 import 'package:rent_wheels/src/mainSection/base.dart';
+import 'package:rent_wheels/core/global/globals.dart' as global;
+import 'package:rent_wheels/core/backend/users/methods/user_methods.dart';
 import 'package:rent_wheels/src/onboarding/presentation/onboarding.dart';
 import 'package:rent_wheels/src/authentication/login/presentation/login.dart';
 import 'package:rent_wheels/src/authentication/verify/presentation/verify_email.dart';
 
-import 'package:rent_wheels/core/auth/auth_service.dart';
-import 'package:rent_wheels/core/global/globals.dart' as global;
-import 'package:rent_wheels/core/backend/users/methods/user_methods.dart';
-
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
 
   runApp(const RentWheelsApp());
 }
@@ -46,7 +49,6 @@ class _ConnectionPageState extends State<ConnectionPage> {
   }
 
   userStatus() async {
-    await AuthService.firebase().initialize();
     firstTime = await getOnboardingStatus();
 
     final user = FirebaseAuth.instance.currentUser;
