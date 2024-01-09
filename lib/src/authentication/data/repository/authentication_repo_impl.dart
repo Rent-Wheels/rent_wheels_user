@@ -96,21 +96,6 @@ class AuthenticationRepositoryImpl
   }
 
   @override
-  Future<Either<String, void>> initialize() async {
-    if (!(await networkInfo.isConnected)) {
-      return Left(networkInfo.noNetworkMessage);
-    }
-
-    try {
-      final response = await firebaseRemoteDatasource.initialize();
-
-      return Right(response);
-    } catch (e) {
-      return Left(e.toString());
-    }
-  }
-
-  @override
   Future<Either<String, void>> logout() async {
     if (!(await networkInfo.isConnected)) {
       return Left(networkInfo.noNetworkMessage);

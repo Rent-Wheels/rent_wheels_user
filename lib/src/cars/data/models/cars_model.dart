@@ -34,7 +34,6 @@ class CarsModel extends Cars {
       model: json?['model'],
       color: json?['color'],
       terms: json?['terms'],
-      media: json?['media'],
       ownerId: json?['ownerId'],
       capacity: json?['capacity'],
       location: json?['location'],
@@ -45,6 +44,9 @@ class CarsModel extends Cars {
       availability: json?['availability'],
       yearOfManufacture: json?['yearOfManufacture'],
       registrationNumber: json?['registrationNumber'],
+      media: json?['media']
+          .map<CarsMediaModel>((e) => CarsMediaModel.fromJson(e))
+          .toList(),
     );
   }
 }

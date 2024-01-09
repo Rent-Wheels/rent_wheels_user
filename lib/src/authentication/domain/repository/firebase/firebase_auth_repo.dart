@@ -4,8 +4,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 abstract class FirebaseAuthenticationRepository {
   Future<Either<String, void>> logout();
 
-  Future<Either<String, void>> initialize();
-
   /// create user with email and password params
   /// 1. email
   /// 2. password

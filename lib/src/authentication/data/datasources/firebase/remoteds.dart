@@ -4,9 +4,6 @@ abstract class FirebaseAuthenticationRemoteDatasource {
   // logout
   Future<void> logout();
 
-// initialize firebase
-  Future<void> initialize();
-
   /// create user with email and password
 
   Future<UserCredential> createUserWithEmailAndPassword({

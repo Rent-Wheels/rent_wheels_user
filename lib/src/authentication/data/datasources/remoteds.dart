@@ -1,11 +1,9 @@
 import 'dart:convert';
 
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:http/http.dart' as http;
 import 'package:rent_wheels/core/urls/endpoints.dart';
 import 'package:rent_wheels/core/urls/urls.dart';
-import 'package:rent_wheels/firebase_options.dart';
 import 'package:rent_wheels/src/authentication/data/datasources/backend/remoteds.dart';
 import 'package:rent_wheels/src/authentication/data/datasources/firebase/remoteds.dart';
 import 'package:rent_wheels/src/user/data/model/user_info_model.dart';
@@ -94,13 +92,6 @@ class AuthenticationRemoteDatasourceImpl
   @override
   Future<void> deleteUserFromFirebase({required User user}) async {
     return await user.delete();
-  }
-
-  @override
-  Future<void> initialize() async {
-    await Firebase.initializeApp(
-      options: DefaultFirebaseOptions.currentPlatform,
-    );
   }
 
   @override
