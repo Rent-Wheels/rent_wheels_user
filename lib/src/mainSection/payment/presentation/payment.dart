@@ -106,7 +106,7 @@ class _PaymentState extends State<Payment> {
     }
   }
 
-
+//
   void textOnChanged(value) {
     final mtnRegExp = RegExp(r'(?=^.{10}$)0[25][3459]\d{7}');
     final vodafoneRegExp = RegExp(r'(?=^.{10}$)0[25]0\d{7}');
