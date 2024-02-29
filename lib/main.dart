@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:rent_wheels/firebase_options.dart';
+import 'package:rent_wheels/injection.dart' as di;
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:rent_wheels/src/loading/loading.dart';
@@ -18,6 +19,7 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
+  await di.init();
   runApp(const RentWheelsApp());
 }
 
