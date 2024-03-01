@@ -1,9 +1,8 @@
 import 'package:dartz/dartz.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:rent_wheels/core/network/network_info.dart';
-import 'package:rent_wheels/src/authentication/data/datasources/backend/localds.dart';
-import 'package:rent_wheels/src/authentication/data/datasources/backend/remoteds.dart';
-import 'package:rent_wheels/src/authentication/data/datasources/firebase/remoteds.dart';
+import 'package:rent_wheels/src/authentication/data/datasources/localds.dart';
+import 'package:rent_wheels/src/authentication/data/datasources/remoteds.dart';
 import 'package:rent_wheels/src/authentication/domain/repository/backend/backend_authentication_repository.dart';
 import 'package:rent_wheels/src/authentication/domain/repository/firebase/firebase_auth_repo.dart';
 import 'package:rent_wheels/src/user/domain/entity/user_info.dart';
@@ -13,15 +12,13 @@ class AuthenticationRepositoryImpl
         FirebaseAuthenticationRepository,
         BackendAuthenticationRepository {
   final NetworkInfo networkInfo;
-  final BackendAuthenticationLocalDatasource backendLocalDatasource;
-  final BackendAuthenticationRemoteDatasource backendRemoteDatasource;
-  final FirebaseAuthenticationRemoteDatasource firebaseRemoteDatasource;
+  final AuthenticationLocalDatasource localDatasource;
+  final AuthenticationRemoteDatasourceImpl remoteDatasource;
 
   AuthenticationRepositoryImpl({
     required this.networkInfo,
-    required this.backendLocalDatasource,
-    required this.backendRemoteDatasource,
-    required this.firebaseRemoteDatasource,
+    required this.localDatasource,
+    required this.remoteDatasource,
   });
 
   @override
@@ -31,9 +28,9 @@ class AuthenticationRepositoryImpl
       return Left(networkInfo.noNetworkMessage);
     }
     try {
-      final response = await backendRemoteDatasource.createOrUpdateUser(params);
+      final response = await remoteDatasource.createOrUpdateUser(params);
 
-      await backendLocalDatasource.cacheUserInfo(response);
+      await localDatasource.cacheUserInfo(response);
 
       return Right(response);
     } catch (e) {
@@ -49,9 +46,8 @@ class AuthenticationRepositoryImpl
     }
 
     try {
-      final response =
-          await firebaseRemoteDatasource.createUserWithEmailAndPassword(
-              email: params['email'], password: params['password']);
+      final response = await remoteDatasource.createUserWithEmailAndPassword(
+          email: params['email'], password: params['password']);
 
       return Right(response);
     } catch (e) {
@@ -66,10 +62,9 @@ class AuthenticationRepositoryImpl
       return Left(networkInfo.noNetworkMessage);
     }
     try {
-      final response =
-          await backendRemoteDatasource.deleteUserFromBackend(params);
+      final response = await remoteDatasource.deleteUserFromBackend(params);
 
-      await backendLocalDatasource.deleteCachedUserInfo();
+      await localDatasource.deleteCachedUserInfo();
 
       return Right(response);
     } catch (e) {
@@ -85,7 +80,7 @@ class AuthenticationRepositoryImpl
     }
 
     try {
-      final response = await firebaseRemoteDatasource.deleteUserFromFirebase(
+      final response = await remoteDatasource.deleteUserFromFirebase(
         user: params['user'],
       );
 
@@ -102,7 +97,7 @@ class AuthenticationRepositoryImpl
     }
 
     try {
-      final response = await firebaseRemoteDatasource.logout();
+      final response = await remoteDatasource.logout();
 
       return Right(response);
     } catch (e) {
@@ -118,7 +113,7 @@ class AuthenticationRepositoryImpl
     }
 
     try {
-      final response = await firebaseRemoteDatasource.reauthenticateUser(
+      final response = await remoteDatasource.reauthenticateUser(
         user: params['user'],
         email: params['email'],
         password: params['password'],
@@ -138,7 +133,7 @@ class AuthenticationRepositoryImpl
     }
 
     try {
-      final response = await firebaseRemoteDatasource.resetPassword(
+      final response = await remoteDatasource.resetPassword(
         email: params['email'],
       );
 
@@ -156,8 +151,7 @@ class AuthenticationRepositoryImpl
     }
 
     try {
-      final response =
-          await firebaseRemoteDatasource.signInWithEmailAndPassword(
+      final response = await remoteDatasource.signInWithEmailAndPassword(
         email: params['email'],
         password: params['password'],
       );
@@ -176,7 +170,7 @@ class AuthenticationRepositoryImpl
     }
 
     try {
-      final response = await firebaseRemoteDatasource.updateUserDetails(
+      final response = await remoteDatasource.updateUserDetails(
         user: params['user'],
         email: params['email'],
         password: params['password'],
@@ -195,8 +189,7 @@ class AuthenticationRepositoryImpl
     }
 
     try {
-      final response =
-          await firebaseRemoteDatasource.verifyEmail(user: params['user']);
+      final response = await remoteDatasource.verifyEmail(user: params['user']);
 
       return Right(response);
     } catch (e) {

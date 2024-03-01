@@ -188,9 +188,8 @@ initAuth() {
   sl.registerLazySingleton(
     () => AuthenticationRepositoryImpl(
       networkInfo: sl(),
-      backendLocalDatasource: sl(),
-      backendRemoteDatasource: sl(),
-      firebaseRemoteDatasource: sl(),
+      remoteDatasource: sl(),
+      localDatasource: sl(),
     ),
   );
 

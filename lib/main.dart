@@ -20,20 +20,11 @@ void main() async {
   );
 
   await di.init();
-  runApp(const RentWheelsApp());
-}
-
-class RentWheelsApp extends StatelessWidget {
-  const RentWheelsApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Rent Wheels',
-      home: ConnectionPage(),
-    );
-  }
+  runApp(const MaterialApp(
+    debugShowCheckedModeBanner: false,
+    title: 'Rent Wheels',
+    home: ConnectionPage(),
+  ));
 }
 
 class ConnectionPage extends StatefulWidget {
