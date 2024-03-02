@@ -9,4 +9,10 @@ sealed class UserEvent extends Equatable {
 
 final class GetUserRegionEvent extends UserEvent {}
 
+final class GetUserDetailsEvent extends UserEvent {
+  final Map<String, dynamic> params;
+
+  const GetUserDetailsEvent({required this.params});
+}
+
 final class GetCachedUserInfoEvent extends UserEvent {}

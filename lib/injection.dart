@@ -2,6 +2,13 @@ import 'package:http/http.dart';
 import 'package:get_it/get_it.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:rent_wheels/src/global/data/repository/global_repository.dart';
+import 'package:rent_wheels/src/global/data/usecases/get_current_user.dart';
+import 'package:rent_wheels/src/global/domain/datasources/localds.dart';
+import 'package:rent_wheels/src/global/domain/datasources/remoteds.dart';
+import 'package:rent_wheels/src/global/domain/repository/global_repository_impl.dart';
+import 'package:rent_wheels/src/global/presentation/provider/global_provider.dart';
+import 'package:rent_wheels/src/user/domain/usecase/get_user_details.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:data_connection_checker_nulls/data_connection_checker_nulls.dart';
 
@@ -114,6 +121,44 @@ init() async {
     ..registerLazySingleton<NetworkInfo>(
       () => NetworkInfoImpl(
         dataConnectionChecker: sl(),
+      ),
+    );
+}
+
+//GLOBAL
+initGlobal() {
+  //provider
+  sl.registerFactory(
+    () => GlobalProvider(
+      getCurrentUser: sl(),
+    ),
+  );
+
+  //usecases
+  sl.registerLazySingleton(
+    () => GetCurrentUser(
+      repository: sl(),
+    ),
+  );
+
+  //repository
+  sl.registerLazySingleton<GlobalRepository>(
+    () => GlobalRepositoryImpl(
+      remoteDatasource: sl(),
+      localDatasource: sl(),
+    ),
+  );
+
+  //datasources
+  sl
+    ..registerLazySingleton<GlobalRemoteDatasource>(
+      () => GlobalRemoteDatasourceImpl(
+        firebaseAuth: sl(),
+      ),
+    )
+    ..registerLazySingleton<GlobalLocalDatasource>(
+      () => GlobalLocalDatasourceImpl(
+        sharedPreferences: sl(),
       ),
     );
 }
@@ -371,20 +416,26 @@ initUser() {
   //bloc
   sl.registerFactory(
     () => UserBloc(
-      getCachedUserInfo: sl(),
       getUserRegion: sl(),
+      getUserDetails: sl(),
+      getCachedUserInfo: sl(),
     ),
   );
 
   //usecases
   sl
     ..registerLazySingleton(
-      () => GetCachedUserInfo(
+      () => GetUserRegion(
         repository: sl(),
       ),
     )
     ..registerLazySingleton(
-      () => GetUserRegion(
+      () => GetUserDetails(
+        repository: sl(),
+      ),
+    )
+    ..registerLazySingleton(
+      () => GetCachedUserInfo(
         repository: sl(),
       ),
     );
