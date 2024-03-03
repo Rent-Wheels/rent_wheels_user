@@ -2,13 +2,6 @@ import 'package:http/http.dart';
 import 'package:get_it/get_it.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:rent_wheels/src/global/data/repository/global_repository.dart';
-import 'package:rent_wheels/src/global/data/usecases/get_current_user.dart';
-import 'package:rent_wheels/src/global/domain/datasources/localds.dart';
-import 'package:rent_wheels/src/global/domain/datasources/remoteds.dart';
-import 'package:rent_wheels/src/global/domain/repository/global_repository_impl.dart';
-import 'package:rent_wheels/src/global/presentation/provider/global_provider.dart';
-import 'package:rent_wheels/src/user/domain/usecase/get_user_details.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:data_connection_checker_nulls/data_connection_checker_nulls.dart';
 
@@ -66,10 +59,23 @@ import 'package:rent_wheels/src/user/domain/usecase/get_user_region.dart';
 import 'package:rent_wheels/src/user/domain/repository/user_repository.dart';
 import 'package:rent_wheels/src/user/domain/usecase/get_cached_user_info.dart';
 
+import 'package:rent_wheels/src/global/domain/datasources/localds.dart';
+import 'package:rent_wheels/src/global/domain/datasources/remoteds.dart';
+import 'package:rent_wheels/src/user/domain/usecase/get_user_details.dart';
+import 'package:rent_wheels/src/global/data/usecases/get_current_user.dart';
+import 'package:rent_wheels/src/global/data/repository/global_repository.dart';
+import 'package:rent_wheels/src/global/data/usecases/get_onboarding_status.dart';
+import 'package:rent_wheels/src/global/presentation/provider/global_provider.dart';
+import 'package:rent_wheels/src/global/data/usecases/update_onboarding_status.dart';
+import 'package:rent_wheels/src/global/domain/repository/global_repository_impl.dart';
+
 final sl = GetIt.instance;
 
 init() async {
   //!INTERNAL
+
+  //GLOBAL
+  initGlobal();
 
   //AUTHENTICATION
   initAuth();
@@ -131,15 +137,28 @@ initGlobal() {
   sl.registerFactory(
     () => GlobalProvider(
       getCurrentUser: sl(),
+      getOnboardingStatus: sl(),
+      updateOnboardingStatus: sl(),
     ),
   );
 
   //usecases
-  sl.registerLazySingleton(
-    () => GetCurrentUser(
-      repository: sl(),
-    ),
-  );
+  sl
+    ..registerLazySingleton(
+      () => GetCurrentUser(
+        repository: sl(),
+      ),
+    )
+    ..registerLazySingleton(
+      () => GetOnboardingStatus(
+        repository: sl(),
+      ),
+    )
+    ..registerLazySingleton(
+      () => UpdateOnboardingStatus(
+        repository: sl(),
+      ),
+    );
 
   //repository
   sl.registerLazySingleton<GlobalRepository>(

@@ -21,4 +21,9 @@ class GlobalRepositoryImpl implements GlobalRepository {
   bool getOnboardingStatus() {
     return localDatasource.getOnboardingStatus();
   }
+
+  @override
+  Future updateOnboardingStatus(bool status) {
+    return localDatasource.updateOnboardingStatus(status);
+  }
 }
