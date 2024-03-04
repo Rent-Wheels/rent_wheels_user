@@ -25,8 +25,8 @@ final GoRouter goRouterConfiguration = GoRouter(
 
     //SIGNUP
     GoRoute(
-      name: 'signup',
-      path: '/signup',
+      name: 'signUp',
+      path: '/signUp',
       builder: (context, state) => SignUp(
         onboarding: bool.tryParse(
           state.uri.queryParameters['onboarding'] ?? 'false',

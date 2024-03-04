@@ -1,8 +1,7 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
-import 'package:rent_wheels/src/authentication/signup/presentation/signup.dart';
 import 'package:rent_wheels/src/global/presentation/provider/global_provider.dart';
 import 'package:rent_wheels/src/onboarding/widgets/onboarding_slide_widget.dart';
 
@@ -12,7 +11,6 @@ import 'package:rent_wheels/core/widgets/spacing/spacing.dart';
 import 'package:rent_wheels/core/widgets/textStyles/text_styles.dart';
 import 'package:rent_wheels/core/widgets/buttons/generic_button_widget.dart';
 import 'package:rent_wheels/core/widgets/carousel/carousel_dots_widget.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class OnboardingScreen extends StatefulWidget {
   const OnboardingScreen({super.key});
@@ -24,6 +22,19 @@ class OnboardingScreen extends StatefulWidget {
 class _OnboardingScreenState extends State<OnboardingScreen> {
   int currentIndex = 0;
   final PageController _pageController = PageController(initialPage: 0);
+
+  completeOnboarding() async {
+    await context.read<GlobalProvider>().setOnboardingStatus(true);
+
+    if (!mounted) return;
+
+    context.goNamed(
+      'signUp',
+      queryParameters: {
+        'onboarding': 'true',
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -98,20 +109,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     children: [
                       if (currentIndex != slides.length - 1)
                         GestureDetector(
-                          onTap: () async {
-                            context
-                                .read<GlobalProvider>()
-                                .setOnboardingStatus(true);
-
-                            Navigator.pushReplacement(
-                              context,
-                              CupertinoPageRoute(
-                                builder: (context) => const SignUp(
-                                  onboarding: true,
-                                ),
-                              ),
-                            );
-                          },
+                          onTap: () async => await completeOnboarding(),
                           child: const Text(
                             'Skip',
                             style: body1Neutral500,
@@ -127,18 +125,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                         width: Sizes().width(context, 0.25),
                         onPressed: () async {
                           if (currentIndex == slides.length - 1) {
-                            final prefs = await SharedPreferences.getInstance();
-                            await prefs.setBool('firstTime', false);
-
-                            if (!mounted) return;
-                            Navigator.pushReplacement(
-                              context,
-                              CupertinoPageRoute(
-                                builder: (context) => const SignUp(
-                                  onboarding: true,
-                                ),
-                              ),
-                            );
+                            completeOnboarding();
                           }
                           _pageController.nextPage(
                             duration: const Duration(milliseconds: 300),
