@@ -26,6 +26,16 @@ class _ConnectionPageState extends State<ConnectionPage> {
   userStatus() async {
     // firstTime = await getOnboardingStatus();
 
+    if (!context.read<GlobalProvider>().onboardingStatus) {
+      context.goNamed(
+        'onboarding',
+        queryParameters: {
+          'onboarding': 'true',
+        },
+      );
+      return;
+    }
+
     user = context.read<GlobalProvider>().user;
 
     context.read<GlobalProvider>().updateHeaders();

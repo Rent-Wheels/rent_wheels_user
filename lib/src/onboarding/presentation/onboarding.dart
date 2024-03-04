@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:rent_wheels/src/authentication/signup/presentation/signup.dart';
+import 'package:rent_wheels/src/global/presentation/provider/global_provider.dart';
 import 'package:rent_wheels/src/onboarding/widgets/onboarding_slide_widget.dart';
 
 import 'package:rent_wheels/core/widgets/sizes/sizes.dart';
@@ -97,10 +99,10 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       if (currentIndex != slides.length - 1)
                         GestureDetector(
                           onTap: () async {
-                            final prefs = await SharedPreferences.getInstance();
-                            await prefs.setBool('firstTime', false);
+                            context
+                                .read<GlobalProvider>()
+                                .setOnboardingStatus(true);
 
-                            if (!mounted) return;
                             Navigator.pushReplacement(
                               context,
                               CupertinoPageRoute(

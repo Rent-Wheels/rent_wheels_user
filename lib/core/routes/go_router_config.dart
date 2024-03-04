@@ -1,8 +1,10 @@
 import 'package:go_router/go_router.dart';
 import 'package:rent_wheels/connection_page.dart';
 import 'package:rent_wheels/src/authentication/login/presentation/login.dart';
+import 'package:rent_wheels/src/authentication/signup/presentation/signup.dart';
 import 'package:rent_wheels/src/authentication/verify/presentation/verify_email.dart';
 import 'package:rent_wheels/src/mainSection/base.dart';
+import 'package:rent_wheels/src/onboarding/presentation/onboarding.dart';
 
 final GoRouter goRouterConfiguration = GoRouter(
   initialLocation: '/',
@@ -12,6 +14,24 @@ final GoRouter goRouterConfiguration = GoRouter(
       name: 'root',
       path: '/',
       builder: (context, state) => const ConnectionPage(),
+    ),
+
+    //ONBOARDING
+    GoRoute(
+      name: 'onboarding',
+      path: '/onboarding',
+      builder: (context, state) => const OnboardingScreen(),
+    ),
+
+    //SIGNUP
+    GoRoute(
+      name: 'signup',
+      path: '/signup',
+      builder: (context, state) => SignUp(
+        onboarding: bool.tryParse(
+          state.uri.queryParameters['onboarding'] ?? 'false',
+        ),
+      ),
     ),
 
     //LOGIN
