@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:rent_wheels/assets/images/image_constants.dart';
 
 import 'package:rent_wheels/src/global/presentation/provider/global_provider.dart';
 import 'package:rent_wheels/src/onboarding/widgets/onboarding_slide_widget.dart';
@@ -42,21 +43,21 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       buildOnboadingSlide(
         context: context,
         heading: 'Your Journey Begins Here',
-        imagePath: 'assets/images/onboarding_1.JPG',
+        imagePath: onboarding1Img,
         description:
             "Get ready to experience hassle-free car rentals with Rent Wheels. We're here to make your travel dreams a reality.",
       ),
       buildOnboadingSlide(
         context: context,
         heading: 'Find Your Perfect Match',
-        imagePath: 'assets/images/onboarding_3.JPG',
+        imagePath: onboarding3Img,
         description:
             "Explore a fleet of cars tailored to your preferences. From compact to luxury, we have the ride that suits your style.",
       ),
       buildOnboadingSlide(
         context: context,
         heading: 'Hit the Road in Minutes',
-        imagePath: 'assets/images/onboarding_2.JPG',
+        imagePath: onboarding2Img,
         description:
             "With Rent Wheels, renting a car is a breeze. Just a few taps and you're off on your adventure. Your journey, your way.",
       ),

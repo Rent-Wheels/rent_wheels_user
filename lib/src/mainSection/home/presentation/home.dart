@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:rent_wheels/assets/images/image_constants.dart';
 import 'package:rent_wheels/core/enums/enums.dart';
 import 'package:rent_wheels/core/widgets/toast/toast_notification_widget.dart';
 import 'package:rent_wheels/src/mainSection/base.dart';
@@ -41,12 +42,12 @@ class _HomeState extends State<Home> {
     List<Widget> carouselItems = [
       buildPromoCarouselItem(
         label: 'Get up to 20% off your first ride',
-        image: 'assets/images/new_user_promo_banner.jpeg',
+        image: newUserPromoBannerImg,
         context: context,
       ),
       buildPromoCarouselItem(
         label: 'New year 2023 25% off promo',
-        image: 'assets/images/new_year_promo_banner.jpg',
+        image: newYearPromoBannerImg,
         context: context,
       ),
     ];

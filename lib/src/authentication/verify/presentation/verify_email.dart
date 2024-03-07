@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:rent_wheels/assets/images/image_constants.dart';
 
 import 'package:rent_wheels/src/mainSection/base.dart';
 import 'package:rent_wheels/src/authentication/login/presentation/login.dart';
@@ -71,7 +72,7 @@ class _VerifyEmailState extends State<VerifyEmail> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Image.asset(
-              'assets/images/email-sent.jpg',
+              emailSentImg,
               width: Sizes().width(context, 0.5),
             ),
             Space().height(context, 0.02),
