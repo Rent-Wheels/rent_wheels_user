@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart' show timeDilation;
 import 'package:loading_indicator/loading_indicator.dart';
+import 'package:rent_wheels/assets/images/image_constants.dart';
 
 import 'package:rent_wheels/core/widgets/sizes/sizes.dart';
 import 'package:rent_wheels/core/widgets/theme/colors.dart';
@@ -18,7 +19,7 @@ class LoadingScreen extends StatelessWidget {
           alignment: Alignment.bottomCenter,
           children: [
             Center(
-              child: Image.asset('assets/images/launch-image.png'),
+              child: Image.asset(launchImg),
             ),
             Container(
               margin: EdgeInsets.only(bottom: Sizes().height(context, 0.05)),

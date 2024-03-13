@@ -3,6 +3,8 @@ import 'package:rent_wheels/core/urls/endpoints.dart';
 class Urls {
   final UrlParser _urlParser = UrlParser();
   final Map<String, String> headers = {'Content-Type': 'application/json'};
+  // final String _baseURL = 'http://10.0.2.2:3000';
+  // final String _baseURL = 'http://localhost:3000';
   final String _baseURL = 'https://rent-wheels.braalex.me';
 
   returnUri({

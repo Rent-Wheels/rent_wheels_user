@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rent_wheels/assets/images/image_constants.dart';
 import 'package:rent_wheels/core/widgets/spacing/spacing.dart';
 
 import 'package:rent_wheels/core/widgets/textStyles/text_styles.dart';
@@ -12,7 +13,7 @@ buildErrorMessage({
     mainAxisAlignment: MainAxisAlignment.center,
     crossAxisAlignment: CrossAxisAlignment.center,
     children: [
-      Image.asset('assets/images/error_image.png'),
+      Image.asset(errorImg),
       Space().height(context, 0.03),
       Text(
         label,

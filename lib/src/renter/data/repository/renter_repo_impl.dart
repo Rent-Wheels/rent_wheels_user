@@ -4,11 +4,11 @@ import 'package:rent_wheels/src/renter/data/datasources/remoteds.dart';
 import 'package:rent_wheels/src/renter/domain/entity/renter_info.dart';
 import 'package:rent_wheels/src/renter/domain/repository/renter_repository.dart';
 
-class RenterRpositoryImpl implements RenterRepository {
+class RenterRepositoryImpl implements RenterRepository {
   final NetworkInfo networkInfo;
   final RenterRemoteDatasource remoteDatasource;
 
-  RenterRpositoryImpl({
+  RenterRepositoryImpl({
     required this.networkInfo,
     required this.remoteDatasource,
   });

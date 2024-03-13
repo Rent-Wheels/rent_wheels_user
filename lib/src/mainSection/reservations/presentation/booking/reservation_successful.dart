@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rent_wheels/assets/images/image_constants.dart';
 
 import 'package:rent_wheels/core/widgets/sizes/sizes.dart';
 import 'package:rent_wheels/core/widgets/theme/colors.dart';
@@ -22,7 +23,7 @@ class ReservationSuccessful extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Image.asset('assets/images/car_image.webp'),
+            Image.asset(carImageImg),
             Space().height(context, 0.04),
             const Text(
               'Reservation success!',

@@ -1,7 +1,9 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
+import 'package:rent_wheels/assets/images/image_constants.dart';
 
-import 'package:rent_wheels/src/authentication/signup/presentation/signup.dart';
+import 'package:rent_wheels/src/global/presentation/provider/global_provider.dart';
 import 'package:rent_wheels/src/onboarding/widgets/onboarding_slide_widget.dart';
 
 import 'package:rent_wheels/core/widgets/sizes/sizes.dart';
@@ -10,7 +12,6 @@ import 'package:rent_wheels/core/widgets/spacing/spacing.dart';
 import 'package:rent_wheels/core/widgets/textStyles/text_styles.dart';
 import 'package:rent_wheels/core/widgets/buttons/generic_button_widget.dart';
 import 'package:rent_wheels/core/widgets/carousel/carousel_dots_widget.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class OnboardingScreen extends StatefulWidget {
   const OnboardingScreen({super.key});
@@ -23,27 +24,40 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   int currentIndex = 0;
   final PageController _pageController = PageController(initialPage: 0);
 
+  completeOnboarding() async {
+    await context.read<GlobalProvider>().setOnboardingStatus(true);
+
+    if (!mounted) return;
+
+    context.goNamed(
+      'signUp',
+      queryParameters: {
+        'onboarding': 'true',
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     List<Widget> slides = [
       buildOnboadingSlide(
         context: context,
         heading: 'Your Journey Begins Here',
-        imagePath: 'assets/images/onboarding_1.JPG',
+        imagePath: onboarding1Img,
         description:
             "Get ready to experience hassle-free car rentals with Rent Wheels. We're here to make your travel dreams a reality.",
       ),
       buildOnboadingSlide(
         context: context,
         heading: 'Find Your Perfect Match',
-        imagePath: 'assets/images/onboarding_3.JPG',
+        imagePath: onboarding3Img,
         description:
             "Explore a fleet of cars tailored to your preferences. From compact to luxury, we have the ride that suits your style.",
       ),
       buildOnboadingSlide(
         context: context,
         heading: 'Hit the Road in Minutes',
-        imagePath: 'assets/images/onboarding_2.JPG',
+        imagePath: onboarding2Img,
         description:
             "With Rent Wheels, renting a car is a breeze. Just a few taps and you're off on your adventure. Your journey, your way.",
       ),
@@ -96,20 +110,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     children: [
                       if (currentIndex != slides.length - 1)
                         GestureDetector(
-                          onTap: () async {
-                            final prefs = await SharedPreferences.getInstance();
-                            await prefs.setBool('firstTime', false);
-
-                            if (!mounted) return;
-                            Navigator.pushReplacement(
-                              context,
-                              CupertinoPageRoute(
-                                builder: (context) => const SignUp(
-                                  onboarding: true,
-                                ),
-                              ),
-                            );
-                          },
+                          onTap: () async => await completeOnboarding(),
                           child: const Text(
                             'Skip',
                             style: body1Neutral500,
@@ -125,18 +126,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                         width: Sizes().width(context, 0.25),
                         onPressed: () async {
                           if (currentIndex == slides.length - 1) {
-                            final prefs = await SharedPreferences.getInstance();
-                            await prefs.setBool('firstTime', false);
-
-                            if (!mounted) return;
-                            Navigator.pushReplacement(
-                              context,
-                              CupertinoPageRoute(
-                                builder: (context) => const SignUp(
-                                  onboarding: true,
-                                ),
-                              ),
-                            );
+                            completeOnboarding();
                           }
                           _pageController.nextPage(
                             duration: const Duration(milliseconds: 300),

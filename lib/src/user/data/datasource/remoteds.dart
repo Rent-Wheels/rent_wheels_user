@@ -24,18 +24,12 @@ class UserRemoteDatasourceImpl implements UserRemoteDatasource {
   ) async {
     final uri = urls.returnUri(
       endpoint: Endpoints.updateGetOrDeleteUser,
-      urlParameters: {
-        'userId': params['userId'],
-      },
+      urlParameters: params['urlParameters'],
     );
-
-    final headers = urls.headers;
-
-    headers.addAll(<String, String>{'Authorization': params['token']});
 
     final response = await client.get(
       uri,
-      headers: headers,
+      headers: params['headers'],
     );
 
     if (response.statusCode != 200) throw Exception(response.body);
