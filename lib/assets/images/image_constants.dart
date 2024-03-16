@@ -1,3 +1,4 @@
+//
 const errorImg = 'lib/assets/images/error_image.png';
 const launchImg = 'lib/assets/images/launch_image.png';
 const carImageImg = 'lib/assets/images/car_image.webp';
