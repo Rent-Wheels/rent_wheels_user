@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:rent_wheels/core/routes/go_router_config.dart';
+import 'package:rent_wheels/core/widgets/theme/theme.dart';
 import 'package:rent_wheels/injection.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:rent_wheels/injection.dart' as di;
@@ -23,8 +24,9 @@ void main() async {
         ),
       ],
       child: MaterialApp.router(
-        debugShowCheckedModeBanner: false,
+        theme: theme,
         title: 'Rent Wheels',
+        debugShowCheckedModeBanner: false,
         routerConfig: goRouterConfiguration,
       ),
     ),
