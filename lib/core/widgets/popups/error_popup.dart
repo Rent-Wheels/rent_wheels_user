@@ -4,7 +4,7 @@ import 'package:another_flushbar/flushbar.dart';
 import 'package:rent_wheels/core/widgets/sizes/sizes.dart';
 import 'package:rent_wheels/core/widgets/theme/colors.dart';
 import 'package:rent_wheels/core/widgets/spacing/spacing.dart';
-import 'package:rent_wheels/core/widgets/textStyles/text_styles.dart';
+import 'package:rent_wheels/core/widgets/theme/theme.dart';
 
 showErrorPopUp(String content, BuildContext context) {
   return Flushbar(
@@ -22,7 +22,9 @@ showErrorPopUp(String content, BuildContext context) {
         Space().width(context, 0.02),
         Text(
           content.replaceAll(RegExp(r'(Exception:|")'), ''),
-          style: body1NeutralLight,
+          style: theme.textTheme.bodyLarge!.copyWith(
+            color: rentWheelsNeutralLight0,
+          ),
         ),
       ],
     ),

@@ -5,7 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:rent_wheels/src/authentication/login/presentation/login.dart';
+import 'package:rent_wheels/core/widgets/theme/theme.dart';
+import 'package:rent_wheels/src/authentication/presentation/pages/login.dart';
 import 'package:string_validator/string_validator.dart';
 
 import 'package:rent_wheels/src/authentication/verify/presentation/verify_email.dart';
@@ -18,7 +19,6 @@ import 'package:rent_wheels/core/auth/auth_exceptions.dart';
 import 'package:rent_wheels/core/widgets/spacing/spacing.dart';
 import 'package:rent_wheels/core/global/globals.dart' as global;
 import 'package:rent_wheels/core/widgets/popups/error_popup.dart';
-import 'package:rent_wheels/core/widgets/textStyles/text_styles.dart';
 import 'package:rent_wheels/core/widgets/search/custom_search_bar.dart';
 import 'package:rent_wheels/core/widgets/popups/date_picker_widget.dart';
 import 'package:rent_wheels/core/widgets/buttons/generic_button_widget.dart';
@@ -100,7 +100,7 @@ class _SignUpState extends State<SignUp> {
               elevation: 0,
               foregroundColor: rentWheelsBrandDark900,
               backgroundColor: rentWheelsNeutralLight0,
-              leading: buildAdaptiveBackButton(
+              leading: AdaptiveBackButton(
                 onPressed: () => Navigator.pop(context),
               ),
             ),
@@ -113,18 +113,19 @@ class _SignUpState extends State<SignUp> {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(
+                Text(
                   "Let's get your account setup",
-                  style: heading3Information,
+                  style: theme.textTheme.titleSmall!.copyWith(
+                    color: rentWheelsInformationDark900,
+                  ),
                 ),
                 Space().height(context, 0.03),
-                buildProfilePicture(
-                  context: context,
+                ProfilePicture(
                   imageFile: avatar,
                   onTap: bottomSheet,
                 ),
                 Space().height(context, 0.02),
-                buildGenericTextfield(
+                GenericTextField(
                   hint: 'Full Name',
                   context: context,
                   controller: name,
@@ -143,7 +144,7 @@ class _SignUpState extends State<SignUp> {
                   },
                 ),
                 Space().height(context, 0.02),
-                buildGenericTextfield(
+                GenericTextField(
                   hint: 'Email',
                   context: context,
                   controller: email,
@@ -164,7 +165,7 @@ class _SignUpState extends State<SignUp> {
                   },
                 ),
                 Space().height(context, 0.02),
-                buildGenericTextfield(
+                GenericTextField(
                   hint: 'Password',
                   context: context,
                   controller: password,
@@ -186,12 +187,15 @@ class _SignUpState extends State<SignUp> {
                   },
                 ),
                 Space().height(context, 0.005),
-                const Text(
+                Text(
                   '8 or more characters\n1 or more capital letters\n1 or more special characters',
-                  style: heading6Neutral500,
+                  style: theme.textTheme.headlineSmall!.copyWith(
+                    fontWeight: FontWeight.w500,
+                    color: rentWheelsNeutralDark900,
+                  ),
                 ),
                 Space().height(context, 0.02),
-                buildGenericTextfield(
+                GenericTextField(
                   hint: 'Phone Number',
                   context: context,
                   controller: phoneNumber,
@@ -253,11 +257,10 @@ class _SignUpState extends State<SignUp> {
                       }),
                 ),
                 Space().height(context, 0.05),
-                buildGenericButtonWidget(
+                GenericButton(
                   width: Sizes().width(context, 0.85),
                   isActive: true, //
                   buttonName: 'Register',
-                  context: context,
                   onPressed: () async {
                     buildLoadingIndicator(context, 'Creating Account');
                     try {
@@ -313,9 +316,11 @@ class _SignUpState extends State<SignUp> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const Text(
+                      Text(
                         "Already have an account?",
-                        style: body2Neutral,
+                        style: theme.textTheme.bodyMedium!.copyWith(
+                          color: rentWheelsNeutral,
+                        ),
                       ),
                       Space().width(context, 0.01),
                       GestureDetector(
@@ -327,9 +332,11 @@ class _SignUpState extends State<SignUp> {
                                   ),
                                 )
                             : () => Navigator.pop(context),
-                        child: const Text(
+                        child: Text(
                           "Login",
-                          style: heading6InformationBold,
+                          style: theme.textTheme.headlineSmall!.copyWith(
+                            color: rentWheelsInformationDark900,
+                          ),
                         ),
                       ),
                     ],

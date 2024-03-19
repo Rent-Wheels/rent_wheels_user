@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:rent_wheels/assets/images/image_constants.dart';
 import 'package:rent_wheels/core/enums/enums.dart';
+import 'package:rent_wheels/core/widgets/theme/theme.dart';
 import 'package:rent_wheels/core/widgets/toast/toast_notification_widget.dart';
 import 'package:rent_wheels/src/mainSection/base.dart';
 
@@ -15,7 +16,6 @@ import 'package:rent_wheels/core/widgets/sizes/sizes.dart';
 import 'package:rent_wheels/core/widgets/theme/colors.dart';
 import 'package:rent_wheels/core/widgets/spacing/spacing.dart';
 import 'package:rent_wheels/core/global/globals.dart' as global;
-import 'package:rent_wheels/core/widgets/textStyles/text_styles.dart';
 import 'package:rent_wheels/core/widgets/loadingIndicator/shimmer_loading_placeholder.dart';
 
 class Home extends StatefulWidget {
@@ -84,14 +84,20 @@ class _HomeState extends State<Home> {
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                const Text(
+                                Text(
                                   'Your location',
-                                  style: body1Information,
+                                  style: theme.textTheme.bodyLarge!.copyWith(
+                                    color: rentWheelsInformationDark900,
+                                  ),
                                 ),
                                 Space().height(context, 0.003),
                                 Text(
                                   getLocationSuffix(),
-                                  style: heading4Information,
+                                  style:
+                                      theme.textTheme.headlineLarge!.copyWith(
+                                    fontWeight: FontWeight.w500,
+                                    color: rentWheelsInformationDark900,
+                                  ),
                                 ),
                               ],
                             ),
@@ -145,9 +151,11 @@ class _HomeState extends State<Home> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          const Text(
+                          Text(
                             'Available Vehicles',
-                            style: heading4Information,
+                            style: theme.textTheme.headlineLarge!.copyWith(
+                              color: rentWheelsInformationDark900,
+                            ),
                           ),
                           GestureDetector(
                             onTap: () => Navigator.pushAndRemoveUntil(
@@ -157,9 +165,12 @@ class _HomeState extends State<Home> {
                                       const MainSection(pageIndex: 1),
                                 ),
                                 (route) => false),
-                            child: const Text(
+                            child: Text(
                               'See all',
-                              style: heading6Neutral500,
+                              style: theme.textTheme.headlineSmall!.copyWith(
+                                fontWeight: FontWeight.w500,
+                                color: rentWheelsNeutralDark900,
+                              ),
                             ),
                           )
                         ],

@@ -2,7 +2,8 @@ import 'package:flutter/widgets.dart';
 
 import 'package:rent_wheels/core/widgets/sizes/sizes.dart';
 import 'package:rent_wheels/core/widgets/spacing/spacing.dart';
-import 'package:rent_wheels/core/widgets/textStyles/text_styles.dart';
+import 'package:rent_wheels/core/widgets/theme/colors.dart';
+import 'package:rent_wheels/core/widgets/theme/theme.dart';
 
 buildPromoCarouselItem({
   required String label,
@@ -33,7 +34,9 @@ buildPromoCarouselItem({
         Space().height(context, 0.02),
         Text(
           label,
-          style: heading3Information,
+          style: theme.textTheme.titleSmall!.copyWith(
+            color: rentWheelsInformationDark900,
+          ),
         )
       ],
     ),

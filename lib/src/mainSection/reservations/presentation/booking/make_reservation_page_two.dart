@@ -122,7 +122,7 @@ class _MakeReservationPageTwoState extends State<MakeReservationPageTwo> {
         elevation: 0,
         foregroundColor: rentWheelsBrandDark900,
         backgroundColor: rentWheelsNeutralLight0,
-        leading: buildAdaptiveBackButton(
+        leading: AdaptiveBackButton(
           onPressed: () => Navigator.pop(context, reservation.status),
         ),
       ),
@@ -155,9 +155,8 @@ class _MakeReservationPageTwoState extends State<MakeReservationPageTwo> {
       bottomSheet: widget.view == ReservationView.make
           ? buildReservationDetailsBottomSheet(
               items: [
-                buildGenericButtonWidget(
+                GenericButton(
                   isActive: true,
-                  context: context,
                   buttonName: 'Make Reservation',
                   width: Sizes().width(context, 0.85),
                   onPressed: makeReservation,
@@ -170,9 +169,8 @@ class _MakeReservationPageTwoState extends State<MakeReservationPageTwo> {
                   ? buildReservationDetailsBottomSheet(
                       context: context,
                       items: [
-                        buildGenericButtonWidget(
+                        GenericButton(
                           isActive: true,
-                          context: context,
                           buttonName: 'Cancel Reservation',
                           btnColor: rentWheelsErrorDark700,
                           width: Sizes().width(context, 0.85),
@@ -197,9 +195,8 @@ class _MakeReservationPageTwoState extends State<MakeReservationPageTwo> {
                       ? buildReservationDetailsBottomSheet(
                           context: context,
                           items: [
-                            buildGenericButtonWidget(
+                            GenericButton(
                               isActive: true,
-                              context: context,
                               buttonName: 'End Trip',
                               btnColor: rentWheelsErrorDark700,
                               width: Sizes().width(context, 0.85),
@@ -218,9 +215,8 @@ class _MakeReservationPageTwoState extends State<MakeReservationPageTwo> {
                           ? buildReservationDetailsBottomSheet(
                               context: context,
                               items: [
-                                buildGenericButtonWidget(
+                                GenericButton(
                                     isActive: true,
-                                    context: context,
                                     buttonName: 'Make Payment',
                                     width: Sizes().width(context, 0.4),
                                     onPressed: () async {
@@ -239,9 +235,8 @@ class _MakeReservationPageTwoState extends State<MakeReservationPageTwo> {
                                       });
                                     }),
                                 Space().width(context, 0.04),
-                                buildGenericButtonWidget(
+                                GenericButton(
                                   isActive: true,
-                                  context: context,
                                   buttonName: 'Cancel Reservation',
                                   btnColor: rentWheelsErrorDark700,
                                   width: Sizes().width(context, 0.4),
@@ -266,8 +261,7 @@ class _MakeReservationPageTwoState extends State<MakeReservationPageTwo> {
                               ? buildReservationDetailsBottomSheet(
                                   context: context,
                                   items: [
-                                    buildGenericButtonWidget(
-                                      context: context,
+                                    GenericButton(
                                       buttonName: 'Start Trip',
                                       width: Sizes().width(context, 0.4),
                                       isActive: DateTime.now()
@@ -282,9 +276,8 @@ class _MakeReservationPageTwoState extends State<MakeReservationPageTwo> {
                                       },
                                     ),
                                     Space().width(context, 0.04),
-                                    buildGenericButtonWidget(
+                                    GenericButton(
                                       isActive: true,
-                                      context: context,
                                       buttonName: 'Cancel Reservation',
                                       btnColor: rentWheelsErrorDark700,
                                       width: Sizes().width(context, 0.4),
@@ -308,9 +301,8 @@ class _MakeReservationPageTwoState extends State<MakeReservationPageTwo> {
                               : buildReservationDetailsBottomSheet(
                                   context: context,
                                   items: [
-                                    buildGenericButtonWidget(
+                                    GenericButton(
                                       isActive: true,
-                                      context: context,
                                       onPressed: bookAgain,
                                       buttonName: 'Book Again',
                                       width: Sizes().width(context, 0.85),

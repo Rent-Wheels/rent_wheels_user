@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:rent_wheels/core/widgets/theme/theme.dart';
 import 'package:string_validator/string_validator.dart';
 
 import 'package:rent_wheels/src/authentication/resetPassword/presentation/reset_password_success.dart';
@@ -10,7 +11,6 @@ import 'package:rent_wheels/core/auth/auth_exceptions.dart';
 import 'package:rent_wheels/core/widgets/theme/colors.dart';
 import 'package:rent_wheels/core/widgets/spacing/spacing.dart';
 import 'package:rent_wheels/core/widgets/popups/error_popup.dart';
-import 'package:rent_wheels/core/widgets/textStyles/text_styles.dart';
 import 'package:rent_wheels/core/widgets/buttons/generic_button_widget.dart';
 import 'package:rent_wheels/core/widgets/loadingIndicator/loading_indicator.dart';
 import 'package:rent_wheels/core/widgets/buttons/adaptive_back_button_widget.dart';
@@ -36,7 +36,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
         elevation: 0,
         backgroundColor: rentWheelsNeutralLight0,
         foregroundColor: rentWheelsBrandDark900,
-        leading: buildAdaptiveBackButton(
+        leading: AdaptiveBackButton(
           onPressed: () => Navigator.pop(context),
         ),
       ),
@@ -46,17 +46,21 @@ class _ForgotPasswordState extends State<ForgotPassword> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
+            Text(
               'Forgot Password?',
-              style: heading3Information,
+              style: theme.textTheme.titleSmall!.copyWith(
+                color: rentWheelsInformationDark900,
+              ),
             ),
             Space().height(context, 0.01),
-            const Text(
+            Text(
               'Please enter your email to recover your account.',
-              style: body2Neutral,
+              style: theme.textTheme.bodyMedium!.copyWith(
+                color: rentWheelsNeutral,
+              ),
             ),
             Space().height(context, 0.03),
-            buildGenericTextfield(
+            GenericTextField(
               maxLines: 1,
               context: context,
               controller: email,
@@ -77,8 +81,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
               },
             ),
             Space().height(context, 0.05),
-            buildGenericButtonWidget(
-              context: context,
+            GenericButton(
               buttonName: 'Recover Account',
               isActive: isEmailValid,
               width: Sizes().width(context, 0.85),

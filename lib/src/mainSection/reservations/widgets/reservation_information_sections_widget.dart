@@ -7,8 +7,8 @@ import 'package:rent_wheels/core/util/date_formatter.dart';
 import 'package:rent_wheels/core/widgets/buttons/generic_button_widget.dart';
 import 'package:rent_wheels/core/widgets/sizes/sizes.dart';
 import 'package:rent_wheels/core/widgets/spacing/spacing.dart';
-import 'package:rent_wheels/core/widgets/textStyles/text_styles.dart';
 import 'package:rent_wheels/core/widgets/theme/colors.dart';
+import 'package:rent_wheels/core/widgets/theme/theme.dart';
 import 'package:rent_wheels/src/mainSection/reservations/widgets/car_image_widget.dart';
 
 Widget buildReservationSections({
@@ -49,7 +49,10 @@ Widget buildReservationSections({
                   )
                 : Text(
                     '${car?.yearOfManufacture ?? ''} ${car?.make ?? ''} ${car?.model ?? ''}',
-                    style: heading3Information,
+                    style: theme.textTheme.titleSmall!.copyWith(
+                      fontWeight: FontWeight.w500,
+                      color: rentWheelsInformationDark900,
+                    ),
                   ),
             Space().height(context, 0.01),
             isLoading
@@ -64,7 +67,9 @@ Widget buildReservationSections({
                   )
                 : Text(
                     '${reservation.destination}, ${formatDate(reservation.startDate!)} - ${formatDate(reservation.returnDate!)}',
-                    style: heading6Brand,
+                    style: theme.textTheme.headlineSmall!.copyWith(
+                      color: rentWheelsBrandDark900,
+                    ),
                   ),
           ],
         ),
@@ -75,49 +80,44 @@ Widget buildReservationSections({
         children: [
           car != null
               ? reservation.status == 'Pending'
-                  ? buildGenericButtonWidget(
+                  ? GenericButton(
                       width: Sizes().width(context, 0.9),
                       isActive: true,
                       btnColor: rentWheelsErrorDark700,
                       buttonName: 'Cancel Reservation',
-                      context: context,
                       onPressed: onCancel,
                     )
                   : reservation.status == 'Ongoing'
-                      ? buildGenericButtonWidget(
+                      ? GenericButton(
                           width: Sizes().width(context, 0.9),
                           isActive: true,
                           btnColor: rentWheelsErrorDark700,
                           buttonName: 'End Trip',
-                          context: context,
                           onPressed: onEnd,
                         )
                       : reservation.status == 'Completed' ||
                               reservation.status == 'Cancelled' ||
                               reservation.status == 'Declined'
-                          ? buildGenericButtonWidget(
+                          ? GenericButton(
                               width: Sizes().width(context, 0.9),
                               isActive: true,
                               buttonName: 'Book Again',
-                              context: context,
                               onPressed: onBook,
                             )
                           : reservation.status == 'Paid'
                               ? Wrap(
                                   children: [
-                                    buildGenericButtonWidget(
+                                    GenericButton(
                                       width: Sizes().width(context, 0.4),
                                       isActive: DateTime.now()
                                           .isSameDate(reservation.startDate!),
                                       buttonName: 'Start Trip',
-                                      context: context,
                                       onPressed: onStart,
                                     ),
                                     Space().width(context, 0.04),
-                                    buildGenericButtonWidget(
+                                    GenericButton(
                                       width: Sizes().width(context, 0.4),
                                       isActive: true,
-                                      context: context,
                                       onPressed: onCancel,
                                       btnColor: rentWheelsErrorDark700,
                                       buttonName: 'Cancel Reservation',
@@ -126,17 +126,15 @@ Widget buildReservationSections({
                                 )
                               : Wrap(
                                   children: [
-                                    buildGenericButtonWidget(
+                                    GenericButton(
                                       width: Sizes().width(context, 0.4),
                                       isActive: true,
                                       buttonName: 'Make Payment',
-                                      context: context,
                                       onPressed: onPayment,
                                     ),
                                     Space().width(context, 0.04),
-                                    buildGenericButtonWidget(
+                                    GenericButton(
                                       isActive: true,
-                                      context: context,
                                       btnColor: rentWheelsErrorDark700,
                                       buttonName: 'Cancel Reservation',
                                       width: Sizes().width(context, 0.4),

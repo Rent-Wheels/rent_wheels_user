@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
 import 'package:rent_wheels/core/widgets/sizes/sizes.dart';
-import 'package:rent_wheels/core/widgets/textStyles/text_styles.dart';
+import 'package:rent_wheels/core/widgets/theme/colors.dart';
+import 'package:rent_wheels/core/widgets/theme/theme.dart';
 
 class TextButtonWidget extends StatefulWidget {
   final double width;
@@ -38,7 +39,11 @@ class _TextButtonWidgetState extends State<TextButtonWidget> {
               EdgeInsets.symmetric(horizontal: Sizes().width(context, 0.02)),
           child: Text(
             widget.buttonName,
-            style: widget.isActive ? heading5Brand : heading5BrandDeselect,
+            style: theme.textTheme.headlineMedium!.copyWith(
+              color: rentWheelsBrandDark900.withOpacity(
+                widget.isActive ? 1 : 0.5,
+              ),
+            ),
           ),
         ),
       ),

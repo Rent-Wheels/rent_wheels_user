@@ -5,7 +5,7 @@ import 'package:rent_wheels/core/widgets/sizes/sizes.dart';
 import 'package:rent_wheels/core/widgets/theme/colors.dart';
 import 'package:rent_wheels/core/widgets/spacing/spacing.dart';
 import 'package:rent_wheels/core/models/renter/renter_model.dart';
-import 'package:rent_wheels/core/widgets/textStyles/text_styles.dart';
+import 'package:rent_wheels/core/widgets/theme/theme.dart';
 
 buildRenterOverview({
   required BuildContext context,
@@ -38,12 +38,17 @@ buildRenterOverview({
         children: [
           Text(
             renter.name!,
-            style: heading5Neutral,
+            style: theme.textTheme.headlineMedium!.copyWith(
+              color: rentWheelsNeutralDark900,
+            ),
           ),
           Space().height(context, 0.005),
           Text(
             renter.placeOfResidence!,
-            style: heading6Neutral500,
+            style: theme.textTheme.headlineSmall!.copyWith(
+              fontWeight: FontWeight.w500,
+              color: rentWheelsNeutralDark900,
+            ),
           ),
         ],
       )

@@ -6,7 +6,7 @@ import 'package:rent_wheels/core/enums/enums.dart';
 import 'package:rent_wheels/core/widgets/sizes/sizes.dart';
 import 'package:rent_wheels/core/models/cars/cars_model.dart';
 import 'package:rent_wheels/core/widgets/popups/error_popup.dart';
-import 'package:rent_wheels/core/widgets/cars/cars_data_widget.dart';
+import 'package:rent_wheels/src/cars/presentation/widgets/cars_info_sections.dart';
 import 'package:rent_wheels/core/backend/car/methods/cars_methods.dart';
 import 'package:rent_wheels/core/widgets/error/error_message_widget.dart';
 import 'package:rent_wheels/core/backend/users/methods/user_methods.dart';
@@ -35,8 +35,7 @@ class _AvailableCarsDataState extends State<AvailableCarsData> {
                       snapshot.data!.length > 4 ? 5 : snapshot.data!.length,
                   scrollDirection: Axis.horizontal,
                   itemBuilder: (context, index) {
-                    return buildCarsData(
-                      context: context,
+                    return CarsInfoSections(
                       isLoading: false,
                       carDetails: snapshot.data![index],
                       width: Sizes().width(context, 0.6),
@@ -80,11 +79,10 @@ class _AvailableCarsDataState extends State<AvailableCarsData> {
                       padding: EdgeInsets.symmetric(
                         vertical: Sizes().height(context, 0.02),
                       ),
-                      child: buildCarsData(
+                      child: CarsInfoSections(
                         height: Sizes().height(context, 0.15),
                         carDetails: snapshot.data![index],
                         isLoading: false,
-                        context: context,
                         width: Sizes().width(context, 0.5),
                         onTap: () async {
                           buildLoadingIndicator(context, '');
@@ -116,9 +114,8 @@ class _AvailableCarsDataState extends State<AvailableCarsData> {
                 );
         }
         if (snapshot.hasError) {
-          return buildErrorMessage(
+          return const ErrorMessage(
             label: 'An error occured',
-            context: context,
             errorMessage: 'Please check your internet connection.',
           );
         }
@@ -130,10 +127,9 @@ class _AvailableCarsDataState extends State<AvailableCarsData> {
                 itemBuilder: (context, _) {
                   return ShimmerLoading(
                     isLoading: true,
-                    child: buildCarsData(
+                    child: CarsInfoSections(
                       margin: Sizes().width(context, 0.03),
                       isLoading: true,
-                      context: context,
                       carDetails: Car(media: [Media(mediaURL: '')]),
                       width: Sizes().width(context, 0.6),
                       onTap: null,
@@ -156,11 +152,10 @@ class _AvailableCarsDataState extends State<AvailableCarsData> {
                     ),
                     child: ShimmerLoading(
                       isLoading: true,
-                      child: buildCarsData(
+                      child: CarsInfoSections(
                         height: Sizes().height(context, 0.15),
                         carDetails: Car(media: [Media(mediaURL: '')]),
                         isLoading: true,
-                        context: context,
                         width: Sizes().width(context, 0.5),
                         onTap: null,
                       ),

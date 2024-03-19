@@ -9,11 +9,11 @@ import 'package:rent_wheels/core/widgets/spacing/spacing.dart';
 import 'package:rent_wheels/core/global/globals.dart' as global;
 import 'package:rent_wheels/core/widgets/popups/error_popup.dart';
 import 'package:rent_wheels/core/widgets/popups/success_popup.dart';
-import 'package:rent_wheels/core/widgets/textStyles/text_styles.dart';
 import 'package:rent_wheels/core/widgets/buttons/generic_button_widget.dart';
 import 'package:rent_wheels/core/widgets/loadingIndicator/loading_indicator.dart';
 import 'package:rent_wheels/core/widgets/buttons/adaptive_back_button_widget.dart';
 import 'package:rent_wheels/core/widgets/textfields/generic_textfield_widget.dart';
+import 'package:rent_wheels/core/widgets/theme/theme.dart';
 
 class ChangePassword extends StatefulWidget {
   const ChangePassword({super.key});
@@ -49,7 +49,7 @@ class _ChangePasswordState extends State<ChangePassword> {
         elevation: 0,
         foregroundColor: rentWheelsBrandDark900,
         backgroundColor: rentWheelsNeutralLight0,
-        leading: buildAdaptiveBackButton(
+        leading: AdaptiveBackButton(
           onPressed: () => Navigator.pop(context),
         ),
       ),
@@ -61,12 +61,14 @@ class _ChangePasswordState extends State<ChangePassword> {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
+              Text(
                 "Reset Password",
-                style: heading3Information,
+                style: theme.textTheme.titleSmall!.copyWith(
+                  color: rentWheelsInformationDark900,
+                ),
               ),
               Space().height(context, 0.03),
-              buildGenericTextfield(
+              GenericTextField(
                 icon: isOldPasswordVisible
                     ? GestureDetector(
                         onTap: () {
@@ -107,7 +109,7 @@ class _ChangePasswordState extends State<ChangePassword> {
                 },
               ),
               Space().height(context, 0.02),
-              buildGenericTextfield(
+              GenericTextField(
                 icon: isNewPasswordVisible
                     ? GestureDetector(
                         onTap: () {
@@ -154,7 +156,7 @@ class _ChangePasswordState extends State<ChangePassword> {
                 },
               ),
               Space().height(context, 0.02),
-              buildGenericTextfield(
+              GenericTextField(
                 icon: isPasswordConfirmationVisible
                     ? GestureDetector(
                         onTap: () {
@@ -199,11 +201,10 @@ class _ChangePasswordState extends State<ChangePassword> {
                 },
               ),
               Space().height(context, 0.05),
-              buildGenericButtonWidget(
+              GenericButton(
                 width: Sizes().width(context, 0.85),
                 isActive: isActive(),
                 buttonName: 'Update Account',
-                context: context,
                 onPressed: () async {
                   buildLoadingIndicator(context, 'Resetting Password');
 

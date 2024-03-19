@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:dotted_dashed_line/dotted_dashed_line.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:rent_wheels/core/widgets/theme/theme.dart';
 
 import 'package:rent_wheels/src/mainSection/reservations/widgets/price_details_widget.dart';
 
@@ -10,7 +11,6 @@ import 'package:rent_wheels/core/widgets/theme/colors.dart';
 import 'package:rent_wheels/core/models/cars/cars_model.dart';
 import 'package:rent_wheels/core/widgets/spacing/spacing.dart';
 import 'package:rent_wheels/core/models/renter/renter_model.dart';
-import 'package:rent_wheels/core/widgets/textStyles/text_styles.dart';
 import 'package:rent_wheels/core/widgets/details/key_value_widget.dart';
 import 'package:rent_wheels/core/models/reservations/reservations_model.dart';
 
@@ -29,7 +29,9 @@ buildReservationDetails({
     children: [
       Text(
         pageTitle,
-        style: heading3Information,
+        style: theme.textTheme.titleSmall!.copyWith(
+          color: rentWheelsInformationDark900,
+        ),
       ),
       Space().height(context, 0.03),
       Flexible(
@@ -37,9 +39,11 @@ buildReservationDetails({
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
+            Text(
               "Vehicle Details",
-              style: heading5Neutral,
+              style: theme.textTheme.headlineMedium!.copyWith(
+                color: rentWheelsNeutralDark900,
+              ),
             ),
             Space().height(context, 0.02),
             Row(
@@ -51,19 +55,25 @@ buildReservationDetails({
                   children: [
                     Text(
                       '${car?.yearOfManufacture ?? ''} ${car?.make ?? ''} ${car?.model ?? ''}',
-                      style: heading5Neutral,
+                      style: theme.textTheme.headlineMedium!.copyWith(
+                        color: rentWheelsNeutralDark900,
+                      ),
                     ),
                     Space().height(context, 0.008),
                     Text(
                       'GH¢ ${car?.rate ?? ''} ${car?.plan ?? ''}',
-                      style: heading5Information,
+                      style: theme.textTheme.headlineMedium!.copyWith(
+                        color: rentWheelsInformationDark900,
+                      ),
                     ),
                     Space().height(context, 0.008),
                     SizedBox(
                       width: Sizes().width(context, 0.6),
                       child: Text(
                         car?.location ?? '',
-                        style: body2Neutral900,
+                        style: theme.textTheme.bodyMedium!.copyWith(
+                          color: rentWheelsNeutralDark900,
+                        ),
                       ),
                     ),
                     Space().height(context, 0.008),
@@ -71,7 +81,9 @@ buildReservationDetails({
                       width: Sizes().width(context, 0.6),
                       child: Text(
                         '${formatDate(reservation.startDate!)} - ${formatDate(reservation.returnDate!)}',
-                        style: heading6Neutral900Bold,
+                        style: theme.textTheme.headlineSmall!.copyWith(
+                          color: rentWheelsNeutralDark900,
+                        ),
                       ),
                     ),
                   ],
@@ -96,33 +108,31 @@ buildReservationDetails({
               ],
             ),
             Space().height(context, 0.04),
-            const Text(
+            Text(
               "Renter Information",
-              style: heading5Neutral,
+              style: theme.textTheme.headlineMedium!.copyWith(
+                color: rentWheelsNeutralDark900,
+              ),
             ),
             Space().height(context, 0.02),
-            buildDetailsKeyValue(
+            DetailsKeyValue(
               label: 'Full Name',
               value: renter?.name ?? '',
-              context: context,
             ),
             Space().height(context, 0.01),
-            buildDetailsKeyValue(
+            DetailsKeyValue(
               label: 'Address Line',
               value: renter?.placeOfResidence ?? '',
-              context: context,
             ),
             Space().height(context, 0.01),
-            buildDetailsKeyValue(
+            DetailsKeyValue(
               label: 'Phone Number',
               value: renter?.phoneNumber ?? '',
-              context: context,
             ),
             Space().height(context, 0.01),
-            buildDetailsKeyValue(
+            DetailsKeyValue(
               label: 'Email Address',
               value: renter?.email ?? '',
-              context: context,
             ),
           ],
         ),
@@ -133,9 +143,11 @@ buildReservationDetails({
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
+            Text(
               "Price",
-              style: heading5Neutral,
+              style: theme.textTheme.headlineMedium!.copyWith(
+                color: rentWheelsNeutralDark900,
+              ),
             ),
             Space().height(context, 0.02),
             buildPriceDetailsKeyValue(
@@ -171,13 +183,17 @@ buildReservationDetails({
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  const Text(
+                  Text(
                     'Total',
-                    style: heading5Neutral,
+                    style: theme.textTheme.headlineMedium!.copyWith(
+                      color: rentWheelsNeutralDark900,
+                    ),
                   ),
                   Text(
                     'GH¢ ${reservation.price}',
-                    style: heading5Neutral,
+                    style: theme.textTheme.headlineMedium!.copyWith(
+                      color: rentWheelsNeutralDark900,
+                    ),
                   ),
                 ],
               ),

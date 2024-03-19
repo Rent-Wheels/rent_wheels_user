@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:rent_wheels/core/widgets/theme/theme.dart';
 
 import 'package:rent_wheels/src/mainSection/payment/presentation/payment.dart';
 import 'package:rent_wheels/src/mainSection/reservations/widgets/filter_buttons_widget.dart';
@@ -13,7 +14,6 @@ import 'package:rent_wheels/core/models/cars/cars_model.dart';
 import 'package:rent_wheels/core/widgets/spacing/spacing.dart';
 import 'package:rent_wheels/core/widgets/popups/error_popup.dart';
 import 'package:rent_wheels/core/widgets/popups/success_popup.dart';
-import 'package:rent_wheels/core/widgets/textStyles/text_styles.dart';
 import 'package:rent_wheels/core/widgets/error/error_message_widget.dart';
 import 'package:rent_wheels/core/models/reservations/reservations_model.dart';
 import 'package:rent_wheels/core/widgets/dialogs/confirmation_dialog_widget.dart';
@@ -116,9 +116,12 @@ class _ReservationsDataState extends State<ReservationsData> {
                       btnColor: currentIndex == index
                           ? rentWheelsBrandDark900
                           : rentWheelsNeutralLight0,
-                      style: currentIndex == index
-                          ? heading6Neutral0
-                          : heading6Brand,
+                      style: theme.textTheme.headlineSmall!.copyWith(
+                        fontWeight: FontWeight.w500,
+                        color: currentIndex == index
+                            ? rentWheelsNeutralLight0
+                            : rentWheelsBrandDark900,
+                      ),
                       label: sections.keys.toList()[index],
                       context: context,
                       onTap: () {
@@ -132,9 +135,8 @@ class _ReservationsDataState extends State<ReservationsData> {
               ),
               Space().height(context, 0.02),
               reservations.isEmpty
-                  ? buildErrorMessage(
+                  ? const ErrorMessage(
                       label: 'You have no reservations!',
-                      context: context,
                     )
                   : Expanded(
                       child: SingleChildScrollView(
@@ -233,10 +235,9 @@ class _ReservationsDataState extends State<ReservationsData> {
           );
         }
         if (snapshot.hasError) {
-          return buildErrorMessage(
+          return ErrorMessage(
             label: 'An error occured',
             errorMessage: snapshot.error.toString(),
-            context: context,
           );
         }
 

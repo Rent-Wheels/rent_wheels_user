@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:rent_wheels/core/widgets/sizes/sizes.dart';
-import 'package:rent_wheels/core/widgets/textStyles/text_styles.dart';
 import 'package:rent_wheels/core/widgets/theme/colors.dart';
+import 'package:rent_wheels/core/widgets/theme/theme.dart';
 
 buildFilterButtons({
   double? width,
@@ -22,14 +22,19 @@ buildFilterButtons({
         padding: EdgeInsets.symmetric(horizontal: Sizes().width(context, 0.04)),
         height: Sizes().height(context, 0.04),
         decoration: BoxDecoration(
-            border: Border.all(color: rentWheelsNeutral),
-            borderRadius: BorderRadius.circular(
-              Sizes().height(context, 0.01),
-            ),
-            color: btnColor ?? rentWheelsNeutralLight0),
+          border: Border.all(color: rentWheelsNeutral),
+          borderRadius: BorderRadius.circular(
+            Sizes().height(context, 0.01),
+          ),
+          color: btnColor ?? rentWheelsNeutralLight0,
+        ),
         child: Text(
           label,
-          style: style ?? heading6Brand,
+          style: style ??
+              theme.textTheme.headlineSmall!.copyWith(
+                fontWeight: FontWeight.w500,
+                color: rentWheelsBrandDark900,
+              ),
         ),
       ),
     ),

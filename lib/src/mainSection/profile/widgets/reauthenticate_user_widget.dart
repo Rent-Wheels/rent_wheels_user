@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 
 import 'package:rent_wheels/core/widgets/sizes/sizes.dart';
 import 'package:rent_wheels/core/widgets/theme/colors.dart';
-import 'package:rent_wheels/core/widgets/textStyles/text_styles.dart';
 import 'package:rent_wheels/core/widgets/buttons/generic_button_widget.dart';
 import 'package:rent_wheels/core/widgets/textfields/generic_textfield_widget.dart';
+import 'package:rent_wheels/core/widgets/theme/theme.dart';
 
 buildReauthenticateUserDialog({
   required BuildContext context,
@@ -37,11 +37,13 @@ buildReauthenticateUserDialog({
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
+                    Text(
                       'Please enter your password to continue',
-                      style: heading5Neutral,
+                      style: theme.textTheme.headlineMedium!.copyWith(
+                        color: rentWheelsNeutralDark900,
+                      ),
                     ),
-                    buildGenericTextfield(
+                    GenericTextField(
                       maxLines: 1,
                       context: context,
                       hint: 'Password',
@@ -85,11 +87,10 @@ buildReauthenticateUserDialog({
                               ),
                             ),
                     ),
-                    buildGenericButtonWidget(
+                    GenericButton(
                       width: Sizes().width(context, 0.9),
                       isActive: isPasswordValid,
                       buttonName: 'Continue',
-                      context: context,
                       onPressed: onSubmit,
                     ),
                   ],

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import 'package:rent_wheels/core/widgets/sizes/sizes.dart';
 import 'package:rent_wheels/core/widgets/theme/colors.dart';
-import 'package:rent_wheels/core/widgets/textStyles/text_styles.dart';
 import 'package:rent_wheels/core/widgets/theme/theme.dart';
 
 buildDropDownInputField({
@@ -44,11 +43,6 @@ buildDropDownInputField({
             Icons.arrow_drop_down,
             color: rentWheelsNeutral,
             size: Sizes().height(context, 0.03),
-          ),
-          decoration: InputDecoration(
-            border: InputBorder.none,
-            hintText: hintText,
-            hintStyle: heading6Neutral500,
           ),
           style: theme.textTheme.headlineSmall!
               .copyWith(color: rentWheelsNeutralDark900),

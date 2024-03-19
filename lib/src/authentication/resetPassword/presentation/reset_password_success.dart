@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:rent_wheels/core/widgets/theme/theme.dart';
 
-import 'package:rent_wheels/src/authentication/login/presentation/login.dart';
+import 'package:rent_wheels/src/authentication/presentation/pages/login.dart';
 
 import 'package:rent_wheels/core/widgets/sizes/sizes.dart';
 import 'package:rent_wheels/core/widgets/theme/colors.dart';
 import 'package:rent_wheels/core/widgets/spacing/spacing.dart';
-import 'package:rent_wheels/core/widgets/textStyles/text_styles.dart';
 import 'package:rent_wheels/core/widgets/buttons/generic_button_widget.dart';
 
 class ResetPasswordSuccess extends StatelessWidget {
@@ -36,19 +36,22 @@ class ResetPasswordSuccess extends StatelessWidget {
             RichText(
               text: TextSpan(
                 text: "A password reset link has been sent to ",
-                style: body1Information,
+                style: theme.textTheme.bodyLarge!.copyWith(
+                  color: rentWheelsInformationDark900,
+                ),
                 children: [
                   TextSpan(
                     text: email,
-                    style: heading5Information,
+                    style: theme.textTheme.headlineMedium!.copyWith(
+                      color: rentWheelsInformationDark900,
+                    ),
                   )
                 ],
               ),
               textAlign: TextAlign.center,
             ),
             Space().height(context, 0.05),
-            buildGenericButtonWidget(
-              context: context,
+            GenericButton(
               width: Sizes().width(context, 0.85),
               isActive: true,
               buttonName: "Return to login",

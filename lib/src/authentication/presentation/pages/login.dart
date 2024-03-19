@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:rent_wheels/core/widgets/theme/theme.dart';
 import 'package:string_validator/string_validator.dart';
 
 import 'package:rent_wheels/src/mainSection/base.dart';
@@ -14,7 +15,6 @@ import 'package:rent_wheels/core/auth/auth_exceptions.dart';
 import 'package:rent_wheels/core/widgets/spacing/spacing.dart';
 import 'package:rent_wheels/core/global/globals.dart' as global;
 import 'package:rent_wheels/core/widgets/popups/error_popup.dart';
-import 'package:rent_wheels/core/widgets/textStyles/text_styles.dart';
 import 'package:rent_wheels/core/backend/users/methods/user_methods.dart';
 import 'package:rent_wheels/core/widgets/buttons/generic_button_widget.dart';
 import 'package:rent_wheels/core/widgets/loadingIndicator/loading_indicator.dart';
@@ -41,27 +41,32 @@ class _LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: rentWheelsNeutralLight0,
       body: Center(
         child: SingleChildScrollView(
           keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
           child: Padding(
-            padding: EdgeInsets.all(Sizes().height(context, 0.02)),
+            padding: EdgeInsets.all(
+              Sizes().height(context, 0.02),
+            ),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(
+                Text(
                   'Welcome to Rent Wheels',
-                  style: heading3Information,
+                  style: theme.textTheme.titleSmall!.copyWith(
+                    color: rentWheelsInformationDark900,
+                  ),
                 ),
                 Space().height(context, 0.01),
-                const Text(
+                Text(
                   'Enter your account details to continue.',
-                  style: body2Neutral,
+                  style: theme.textTheme.bodyMedium!.copyWith(
+                    color: rentWheelsNeutral,
+                  ),
                 ),
                 Space().height(context, 0.03),
-                buildGenericTextfield(
+                GenericTextField(
                   maxLines: 1,
                   context: context,
                   controller: email,
@@ -82,7 +87,7 @@ class _LoginState extends State<Login> {
                   },
                 ),
                 Space().height(context, 0.02),
-                buildGenericTextfield(
+                GenericTextField(
                   maxLines: 1,
                   hint: 'Password',
                   context: context,
@@ -103,8 +108,7 @@ class _LoginState extends State<Login> {
                   },
                 ),
                 Space().height(context, 0.05),
-                buildGenericButtonWidget(
-                  context: context,
+                GenericButton(
                   buttonName: 'Login',
                   isActive: isActive(),
                   width: Sizes().width(context, 0.85),
@@ -184,9 +188,11 @@ class _LoginState extends State<Login> {
                             builder: (context) => const ForgotPassword(),
                           ),
                         ),
-                        child: const Text(
+                        child: Text(
                           'Forgot Password?',
-                          style: body2Neutral,
+                          style: theme.textTheme.bodyMedium!.copyWith(
+                            color: rentWheelsNeutral,
+                          ),
                         ),
                       ),
                     ],
@@ -198,9 +204,11 @@ class _LoginState extends State<Login> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const Text(
+                      Text(
                         "Don't have an account?",
-                        style: body2Neutral,
+                        style: theme.textTheme.bodyMedium!.copyWith(
+                          color: rentWheelsNeutral,
+                        ),
                       ),
                       Space().width(context, 0.01),
                       GestureDetector(
@@ -212,9 +220,11 @@ class _LoginState extends State<Login> {
                             ),
                           );
                         },
-                        child: const Text(
+                        child: Text(
                           "Register",
-                          style: heading6InformationBold,
+                          style: theme.textTheme.headlineSmall!.copyWith(
+                            color: rentWheelsInformationDark900,
+                          ),
                         ),
                       ),
                     ],

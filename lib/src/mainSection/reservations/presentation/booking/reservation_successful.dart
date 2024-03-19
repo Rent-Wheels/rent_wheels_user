@@ -4,8 +4,8 @@ import 'package:rent_wheels/assets/images/image_constants.dart';
 import 'package:rent_wheels/core/widgets/sizes/sizes.dart';
 import 'package:rent_wheels/core/widgets/theme/colors.dart';
 import 'package:rent_wheels/core/widgets/spacing/spacing.dart';
-import 'package:rent_wheels/core/widgets/textStyles/text_styles.dart';
 import 'package:rent_wheels/core/widgets/buttons/generic_button_widget.dart';
+import 'package:rent_wheels/core/widgets/theme/theme.dart';
 import 'package:rent_wheels/src/mainSection/base.dart';
 
 class ReservationSuccessful extends StatelessWidget {
@@ -25,26 +25,31 @@ class ReservationSuccessful extends StatelessWidget {
           children: [
             Image.asset(carImageImg),
             Space().height(context, 0.04),
-            const Text(
+            Text(
               'Reservation success!',
-              style: heading3Information,
+              style: theme.textTheme.titleSmall!.copyWith(
+                color: rentWheelsInformationDark900,
+              ),
             ),
             Space().height(context, 0.01),
-            const Text(
+            Text(
               'Congratulations you booking has been made.',
-              style: body1Neutral900,
+              style: theme.textTheme.bodyLarge!.copyWith(
+                color: rentWheelsNeutralDark900,
+              ),
             ),
             Space().height(context, 0.01),
-            const Text(
+            Text(
               'Thanks for trusting us!',
-              style: body1Neutral900,
+              style: theme.textTheme.bodyLarge!.copyWith(
+                color: rentWheelsNeutralDark900,
+              ),
             ),
             Space().height(context, 0.04),
-            buildGenericButtonWidget(
+            GenericButton(
               width: Sizes().width(context, 0.85),
               isActive: true,
               buttonName: 'Back to homepage',
-              context: context,
               onPressed: () => Navigator.pushAndRemoveUntil(
                 context,
                 MaterialPageRoute(

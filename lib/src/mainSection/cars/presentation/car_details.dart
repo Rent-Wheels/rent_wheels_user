@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:easy_image_viewer/easy_image_viewer.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:rent_wheels/core/widgets/theme/theme.dart';
 
 import 'package:rent_wheels/src/mainSection/cars/widgets/car_details_carousel.dart';
 import 'package:rent_wheels/src/mainSection/renter/presentation/renter_profile.dart';
@@ -14,7 +15,6 @@ import 'package:rent_wheels/core/widgets/theme/colors.dart';
 import 'package:rent_wheels/core/models/cars/cars_model.dart';
 import 'package:rent_wheels/core/widgets/spacing/spacing.dart';
 import 'package:rent_wheels/core/models/renter/renter_model.dart';
-import 'package:rent_wheels/core/widgets/textStyles/text_styles.dart';
 import 'package:rent_wheels/core/widgets/details/key_value_widget.dart';
 import 'package:rent_wheels/core/widgets/buttons/generic_button_widget.dart';
 import 'package:rent_wheels/core/widgets/buttons/adaptive_back_button_widget.dart';
@@ -83,7 +83,7 @@ class _CarDetailsState extends State<CarDetails> {
             foregroundColor:
                 !changeColor ? rentWheelsNeutralLight0 : rentWheelsBrandDark900,
             elevation: 0,
-            leading: buildAdaptiveBackButton(
+            leading: AdaptiveBackButton(
               onPressed: () => Navigator.pop(context),
             ),
             pinned: true,
@@ -130,74 +130,79 @@ class _CarDetailsState extends State<CarDetails> {
                     children: [
                       Text(
                         '${car.yearOfManufacture} ${car.make} ${car.model}',
-                        style: heading3Information,
+                        style: theme.textTheme.titleSmall!.copyWith(
+                          color: rentWheelsInformationDark900,
+                        ),
                       ),
                       Space().height(context, 0.01),
                       Text(
                         car.description!,
-                        style: body1Neutral900,
+                        style: theme.textTheme.bodyLarge!.copyWith(
+                          color: rentWheelsNeutralDark900,
+                        ),
                       ),
                       Space().height(context, 0.02),
-                      const Text(
+                      Text(
                         'Vehicle Details',
-                        style: heading4Information,
+                        style: theme.textTheme.headlineLarge!.copyWith(
+                          color: rentWheelsInformationDark900,
+                        ),
                       ),
                       Space().height(context, 0.01),
-                      buildDetailsKeyValue(
-                        context: context,
+                      DetailsKeyValue(
                         label: 'Registration Number',
                         value: car.registrationNumber!,
                       ),
                       Space().height(context, 0.01),
-                      buildDetailsKeyValue(
-                        context: context,
+                      DetailsKeyValue(
                         label: 'Color',
                         value: car.color!,
                       ),
                       Space().height(context, 0.01),
-                      buildDetailsKeyValue(
-                        context: context,
+                      DetailsKeyValue(
                         label: 'Number of Seats',
                         value: car.capacity.toString(),
                       ),
                       Space().height(context, 0.01),
-                      buildDetailsKeyValue(
-                        context: context,
+                      DetailsKeyValue(
                         label: 'Type',
                         value: car.type!,
                       ),
                       Space().height(context, 0.01),
-                      buildDetailsKeyValue(
-                        context: context,
+                      DetailsKeyValue(
                         label: 'Condition',
                         value: car.condition!,
                       ),
                       Space().height(context, 0.01),
-                      buildDetailsKeyValue(
-                        context: context,
+                      DetailsKeyValue(
                         label: 'Maximum Rental Duration',
                         value: '${car.maxDuration!} ${car.durationUnit!}',
                       ),
                       Space().height(context, 0.01),
-                      buildDetailsKeyValue(
-                        context: context,
+                      DetailsKeyValue(
                         label: 'Location',
                         value: car.location!,
                       ),
                       Space().height(context, 0.02),
-                      const Text(
+                      Text(
                         'Terms & Conditions',
-                        style: heading4Information,
+                        style: theme.textTheme.headlineLarge!.copyWith(
+                          color: rentWheelsInformationDark900,
+                        ),
                       ),
                       Space().height(context, 0.01),
                       Text(
                         car.terms!,
-                        style: body1Neutral900,
+                        style: theme.textTheme.bodyLarge!.copyWith(
+                          color: rentWheelsNeutralDark900,
+                        ),
                       ),
                       Space().height(context, 0.02),
-                      const Text(
+                      Text(
                         'Renter Details',
-                        style: heading4Information,
+                        style: theme.textTheme.headlineLarge!.copyWith(
+                          color: rentWheelsInformationDark900,
+                        ),
                       ),
                       Space().height(context, 0.01),
                       GestureDetector(
@@ -236,20 +241,23 @@ class _CarDetailsState extends State<CarDetails> {
               children: [
                 Text(
                   '${car.yearOfManufacture} ${car.make} ${car.model}',
-                  style: heading4Information,
+                  style: theme.textTheme.headlineLarge!.copyWith(
+                    color: rentWheelsInformationDark900,
+                  ),
                 ),
                 Space().height(context, 0.01),
                 Text(
                   'GH¢${car.rate} ${car.plan}',
-                  style: body1Information,
+                  style: theme.textTheme.bodyLarge!.copyWith(
+                    color: rentWheelsInformationDark900,
+                  ),
                 ),
               ],
             ),
-            buildGenericButtonWidget(
+            GenericButton(
               width: Sizes().width(context, 0.28),
               isActive: car.availability!,
               buttonName: 'Reserve Car',
-              context: context,
               onPressed: () => Navigator.push(
                 context,
                 CupertinoPageRoute(

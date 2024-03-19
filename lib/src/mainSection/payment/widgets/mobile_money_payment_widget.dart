@@ -12,7 +12,7 @@ buildMobileMoneyPayment({
       duration: const Duration(milliseconds: 300),
       alignment: Alignment.center,
       width: Sizes().width(context, 1),
-      child: buildGenericTextfield(
+      child: GenericTextField(
         hint: hint,
         context: context,
         controller: controller,

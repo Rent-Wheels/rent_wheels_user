@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
 import 'package:rent_wheels/core/widgets/sizes/sizes.dart';
-import 'package:rent_wheels/core/widgets/textStyles/text_styles.dart';
+import 'package:rent_wheels/core/widgets/theme/colors.dart';
+import 'package:rent_wheels/core/widgets/theme/theme.dart';
 
 buildPriceDetailsKeyValue({
   required String label,
@@ -14,13 +15,18 @@ buildPriceDetailsKeyValue({
     children: [
       Text(
         label,
-        style: heading6Neutral500,
+        style: theme.textTheme.headlineSmall!.copyWith(
+          fontWeight: FontWeight.w500,
+          color: rentWheelsNeutralDark900,
+        ),
       ),
       SizedBox(
         width: Sizes().width(context, 0.5),
         child: Text(
           value,
-          style: heading6Neutral900Bold,
+          style: theme.textTheme.headlineSmall!.copyWith(
+            color: rentWheelsNeutralDark900,
+          ),
           textAlign: TextAlign.right,
         ),
       ),

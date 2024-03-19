@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:rent_wheels/core/widgets/sizes/sizes.dart';
 import 'package:rent_wheels/core/widgets/spacing/spacing.dart';
-import 'package:rent_wheels/core/widgets/textStyles/text_styles.dart';
+import 'package:rent_wheels/core/widgets/theme/colors.dart';
+import 'package:rent_wheels/core/widgets/theme/theme.dart';
 
 buildOnboadingSlide({
   required String heading,
@@ -31,12 +32,16 @@ buildOnboadingSlide({
         Space().height(context, 0.08),
         Text(
           heading,
-          style: heading3Brand,
+          style: theme.textTheme.titleSmall!.copyWith(
+            color: rentWheelsBrandDark900,
+          ),
         ),
         Space().height(context, 0.02),
         Text(
           description,
-          style: body1Neutral500,
+          style: theme.textTheme.bodyLarge!.copyWith(
+            color: rentWheelsNeutral,
+          ),
         ),
       ],
     ),

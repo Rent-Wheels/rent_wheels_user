@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:rent_wheels/core/widgets/theme/theme.dart';
 
 import 'package:rent_wheels/src/mainSection/cars/presentation/car_details.dart';
 import 'package:rent_wheels/src/mainSection/renter/widgets/renter_cars_widget.dart';
@@ -8,7 +9,6 @@ import 'package:rent_wheels/core/widgets/sizes/sizes.dart';
 import 'package:rent_wheels/core/widgets/theme/colors.dart';
 import 'package:rent_wheels/core/widgets/spacing/spacing.dart';
 import 'package:rent_wheels/core/models/renter/renter_model.dart';
-import 'package:rent_wheels/core/widgets/textStyles/text_styles.dart';
 import 'package:rent_wheels/core/widgets/buttons/adaptive_back_button_widget.dart';
 
 class RenterDetails extends StatelessWidget {
@@ -23,7 +23,7 @@ class RenterDetails extends StatelessWidget {
           backgroundColor: rentWheelsNeutralLight0,
           foregroundColor: rentWheelsBrandDark900,
           elevation: 0,
-          leading: buildAdaptiveBackButton(
+          leading: AdaptiveBackButton(
             onPressed: () => Navigator.pop(context),
           ),
         ),
@@ -54,37 +54,54 @@ class RenterDetails extends StatelessWidget {
                         children: [
                           Text(
                             renter.name!,
-                            style: heading3Information,
+                            style: theme.textTheme.titleSmall!.copyWith(
+                              color: rentWheelsInformationDark900,
+                            ),
                           ),
                           Space().height(context, 0.01),
-                          const Text(
+                          Text(
                             'Email',
-                            style: body1Neutral500,
+                            style: theme.textTheme.bodyLarge!.copyWith(
+                              color: rentWheelsNeutral,
+                            ),
                           ),
                           Space().height(context, 0.01),
                           Text(
                             renter.email!,
-                            style: heading5Information500,
+                            style: theme.textTheme.headlineMedium!.copyWith(
+                              fontWeight: FontWeight.w500,
+                              color: rentWheelsInformationDark900,
+                            ),
                           ),
                           Space().height(context, 0.01),
-                          const Text(
+                          Text(
                             'Phone Number',
-                            style: body1Neutral500,
+                            style: theme.textTheme.bodyLarge!.copyWith(
+                              color: rentWheelsNeutral,
+                            ),
                           ),
                           Space().height(context, 0.01),
                           Text(
                             renter.phoneNumber!,
-                            style: heading5Information500,
+                            style: theme.textTheme.headlineMedium!.copyWith(
+                              fontWeight: FontWeight.w500,
+                              color: rentWheelsInformationDark900,
+                            ),
                           ),
                           Space().height(context, 0.01),
-                          const Text(
+                          Text(
                             'Location',
-                            style: body1Neutral500,
+                            style: theme.textTheme.bodyLarge!.copyWith(
+                              color: rentWheelsNeutral,
+                            ),
                           ),
                           Space().height(context, 0.01),
                           Text(
                             renter.placeOfResidence!,
-                            style: heading5Information500,
+                            style: theme.textTheme.headlineMedium!.copyWith(
+                              fontWeight: FontWeight.w500,
+                              color: rentWheelsInformationDark900,
+                            ),
                           ),
                         ],
                       ),
@@ -107,9 +124,11 @@ class RenterDetails extends StatelessWidget {
                   ],
                 ),
               ),
-              const Text(
+              Text(
                 'Cars',
-                style: heading3Information,
+                style: theme.textTheme.titleSmall!.copyWith(
+                  color: rentWheelsInformationDark900,
+                ),
               ),
               Space().height(context, 0.02),
               Expanded(

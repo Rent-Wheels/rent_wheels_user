@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:rent_wheels/core/widgets/sizes/sizes.dart';
 import 'package:rent_wheels/core/widgets/theme/colors.dart';
 import 'package:rent_wheels/core/widgets/spacing/spacing.dart';
-import 'package:rent_wheels/core/widgets/textStyles/text_styles.dart';
+import 'package:rent_wheels/core/widgets/theme/theme.dart';
 
 buildProfileOptions({
   Color? color,
@@ -47,7 +47,11 @@ buildProfileOptions({
           Space().width(context, 0.04),
           Text(
             section,
-            style: style ?? heading5Information500,
+            style: style ??
+                theme.textTheme.headlineMedium!.copyWith(
+                  fontWeight: FontWeight.w500,
+                  color: rentWheelsInformationDark900,
+                ),
           )
         ],
       ),

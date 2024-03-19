@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_credit_card/flutter_credit_card.dart';
 import 'package:rent_wheels/core/widgets/sizes/sizes.dart';
-import 'package:rent_wheels/core/widgets/textStyles/text_styles.dart';
-
 import 'package:rent_wheels/core/widgets/theme/colors.dart';
+import 'package:rent_wheels/core/widgets/theme/theme.dart';
 
 Widget buildCreditCardPayment({
   required BuildContext context,
@@ -48,7 +47,10 @@ Widget buildCreditCardPayment({
             border: border,
             focusedBorder: border,
             enabledBorder: border,
-            hintStyle: heading6Neutral500,
+            hintStyle: theme.textTheme.headlineSmall!.copyWith(
+              fontWeight: FontWeight.w500,
+              color: rentWheelsNeutralDark900,
+            ),
             hintText: 'Credit Card Number',
           ),
           expiryDateDecoration: InputDecoration(
@@ -56,21 +58,30 @@ Widget buildCreditCardPayment({
             focusedBorder: border,
             enabledBorder: border,
             hintText: 'Expiry Date',
-            hintStyle: heading6Neutral500,
+            hintStyle: theme.textTheme.headlineSmall!.copyWith(
+              fontWeight: FontWeight.w500,
+              color: rentWheelsNeutralDark900,
+            ),
           ),
           cvvCodeDecoration: InputDecoration(
             border: border,
             hintText: 'CVV',
             focusedBorder: border,
             enabledBorder: border,
-            hintStyle: heading6Neutral500,
+            hintStyle: theme.textTheme.headlineSmall!.copyWith(
+              fontWeight: FontWeight.w500,
+              color: rentWheelsNeutralDark900,
+            ),
           ),
           cardHolderDecoration: InputDecoration(
             border: border,
             focusedBorder: border,
             enabledBorder: border,
             hintText: 'Card Holder',
-            hintStyle: heading6Neutral500,
+            hintStyle: theme.textTheme.headlineSmall!.copyWith(
+              fontWeight: FontWeight.w500,
+              color: rentWheelsNeutralDark900,
+            ),
           ),
         ),
       ],

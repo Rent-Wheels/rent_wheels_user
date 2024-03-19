@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import 'package:rent_wheels/core/widgets/sizes/sizes.dart';
 import 'package:rent_wheels/core/widgets/theme/colors.dart';
-import 'package:rent_wheels/core/widgets/textStyles/text_styles.dart';
 import 'package:rent_wheels/core/widgets/theme/theme.dart';
 
 class GenericTextField extends StatefulWidget {
@@ -83,8 +82,6 @@ class _GenericTextFieldState extends State<GenericTextField> {
                 widget.textCapitalization ?? TextCapitalization.sentences,
             decoration: InputDecoration(
               hintText: widget.hint,
-              border: InputBorder.none,
-              hintStyle: heading6Neutral500,
               suffix: widget.icon,
             ),
             onChanged: widget.onChanged,

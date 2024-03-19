@@ -3,6 +3,7 @@ import 'package:dotted_dashed_line/dotted_dashed_line.dart';
 import 'package:flutter_credit_card/flutter_credit_card.dart';
 import 'package:rent_wheels/core/models/cars/cars_model.dart';
 import 'package:rent_wheels/core/models/reservations/reservations_model.dart';
+import 'package:rent_wheels/core/widgets/theme/theme.dart';
 
 import 'package:rent_wheels/src/mainSection/reservations/widgets/price_details_widget.dart';
 
@@ -11,7 +12,6 @@ import 'package:rent_wheels/core/widgets/sizes/sizes.dart';
 import 'package:rent_wheels/core/widgets/theme/colors.dart';
 import 'package:rent_wheels/core/widgets/spacing/spacing.dart';
 import 'package:rent_wheels/core/global/globals.dart' as global;
-import 'package:rent_wheels/core/widgets/textStyles/text_styles.dart';
 
 class PaymentPageTwo extends StatefulWidget {
   final Car car;
@@ -77,9 +77,11 @@ class _PaymentPageTwoState extends State<PaymentPageTwo> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
+                  Text(
                     "Payment Details",
-                    style: heading5Neutral,
+                    style: theme.textTheme.headlineMedium!.copyWith(
+                      color: rentWheelsNeutralDark900,
+                    ),
                   ),
                   Space().height(context, 0.02),
                   widget.paymentType == PaymentMethods.creditCard
@@ -98,12 +100,16 @@ class _PaymentPageTwoState extends State<PaymentPageTwo> {
                           children: [
                             Text(
                               global.userDetails!.name,
-                              style: heading5Neutral,
+                              style: theme.textTheme.headlineMedium!.copyWith(
+                                color: rentWheelsNeutralDark900,
+                              ),
                             ),
                             Space().height(context, 0.008),
                             Text(
                               widget.phoneNumber,
-                              style: heading5Information,
+                              style: theme.textTheme.headlineMedium!.copyWith(
+                                color: rentWheelsInformationDark900,
+                              ),
                             ),
                           ],
                         ),
@@ -114,9 +120,11 @@ class _PaymentPageTwoState extends State<PaymentPageTwo> {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(
+                Text(
                   "Order Summary",
-                  style: heading5Neutral,
+                  style: theme.textTheme.headlineMedium!.copyWith(
+                    color: rentWheelsNeutralDark900,
+                  ),
                 ),
                 Space().height(context, 0.02),
                 buildPriceDetailsKeyValue(
@@ -159,13 +167,17 @@ class _PaymentPageTwoState extends State<PaymentPageTwo> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      const Text(
+                      Text(
                         'Total',
-                        style: heading5Neutral,
+                        style: theme.textTheme.headlineMedium!.copyWith(
+                          color: rentWheelsNeutralDark900,
+                        ),
                       ),
                       Text(
                         'GH¢ ${widget.reservation.price}',
-                        style: heading5Neutral,
+                        style: theme.textTheme.headlineMedium!.copyWith(
+                          color: rentWheelsNeutralDark900,
+                        ),
                       ),
                     ],
                   ),

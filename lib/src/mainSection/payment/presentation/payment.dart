@@ -164,7 +164,7 @@ class _PaymentState extends State<Payment> {
         elevation: 0,
         backgroundColor: rentWheelsNeutralLight0,
         foregroundColor: rentWheelsBrandDark900,
-        leading: buildAdaptiveBackButton(
+        leading: AdaptiveBackButton(
           onPressed: () {
             if (currentIndex == 0) {
               Navigator.pop(context);
@@ -196,8 +196,7 @@ class _PaymentState extends State<Payment> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  buildGenericButtonWidget(
-                    context: context,
+                  GenericButton(
                     isActive: isActive(),
                     width: Sizes().width(context, 0.85),
                     buttonName: currentIndex != pages.length - 1

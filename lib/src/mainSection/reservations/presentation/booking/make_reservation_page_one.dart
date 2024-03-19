@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/scheduler.dart' show timeDilation;
 import 'package:rent_wheels/core/enums/enums.dart';
 import 'package:rent_wheels/core/models/renter/renter_model.dart';
+import 'package:rent_wheels/core/widgets/theme/theme.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
 import 'package:rent_wheels/src/mainSection/reservations/presentation/booking/make_reservation_page_two.dart';
@@ -14,7 +15,6 @@ import 'package:rent_wheels/core/models/cars/cars_model.dart';
 import 'package:rent_wheels/core/widgets/spacing/spacing.dart';
 import 'package:rent_wheels/core/global/globals.dart' as global;
 import 'package:rent_wheels/core/widgets/popups/error_popup.dart';
-import 'package:rent_wheels/core/widgets/textStyles/text_styles.dart';
 import 'package:rent_wheels/core/widgets/search/custom_search_bar.dart';
 import 'package:rent_wheels/core/backend/users/methods/user_methods.dart';
 import 'package:rent_wheels/core/widgets/buttons/generic_button_widget.dart';
@@ -34,17 +34,16 @@ class MakeReservationPageOne extends StatefulWidget {
 
 class _MakeReservationPageOneState extends State<MakeReservationPageOne> {
   late num price;
+  DateTime? endDate;
+  DateTime? startDate;
 
   bool isDateValid = false;
   bool isLocationValid = false;
-
+  bool isDateRangeSelected = false;
   Duration duration = const Duration(days: 2);
-  TextEditingController location = TextEditingController();
-
-  DateTime? startDate;
-  DateTime? endDate;
-
   TextEditingController date = TextEditingController();
+  TextEditingController location = TextEditingController();
+  DateRangePickerController dateRangePicker = DateRangePickerController();
 
   bool isActive() {
     return isDateValid && isLocationValid;
@@ -79,24 +78,44 @@ class _MakeReservationPageOneState extends State<MakeReservationPageOne> {
   showDateRangeSelector() {
     timeDilation = 1;
     return buildDateRangePicker(
-      selectedRange: PickerDateRange(startDate, endDate),
-      context: context,
-      duration: getDuration(),
-      onCancel: () => Navigator.pop(context),
-      onSubmit: (dateRange) {
-        if (dateRange is PickerDateRange) {
-          Navigator.pop(context);
-          setState(() {
-            isDateValid = true;
-            endDate = dateRange.endDate;
-            startDate = dateRange.startDate;
-            setCarPrice();
-            date.text =
-                '${formatDate(dateRange.startDate!)} - ${formatDate(dateRange.endDate!)}';
-          });
-        }
-      },
-    );
+        endDate: endDate,
+        context: context,
+        date: dateRangePicker,
+        duration: getDuration(),
+        isDateRangeSelected: isDateRangeSelected,
+        onCancel: () => Navigator.pop(context),
+        selectedRange: PickerDateRange(startDate, endDate),
+        onSubmit: (dateRange) {
+          if (dateRange is PickerDateRange) {
+            Navigator.pop(context);
+            setState(() {
+              isDateValid = true;
+              endDate = dateRange.endDate;
+              startDate = dateRange.startDate;
+              setCarPrice();
+              date.text =
+                  '${formatDate(dateRange.startDate!)} - ${formatDate(dateRange.endDate!)}';
+            });
+          }
+        },
+        onSelectionChanged: (dateRange) {
+          if (dateRange.value is PickerDateRange) {
+            setState(() {
+              endDate = dateRange.value.startDate.add(duration);
+            });
+            if (dateRange.value.startDate != null &&
+                dateRange.value.endDate != null &&
+                !dateRange.value.endDate.isAfter(endDate)) {
+              setState(() {
+                isDateRangeSelected = true;
+              });
+            } else {
+              setState(() {
+                isDateRangeSelected = false;
+              });
+            }
+          }
+        });
   }
 
   num setCarPrice() {
@@ -139,7 +158,7 @@ class _MakeReservationPageOneState extends State<MakeReservationPageOne> {
         elevation: 0,
         foregroundColor: rentWheelsBrandDark900,
         backgroundColor: rentWheelsNeutralLight0,
-        leading: buildAdaptiveBackButton(
+        leading: AdaptiveBackButton(
           onPressed: () => Navigator.pop(context),
         ),
       ),
@@ -150,21 +169,27 @@ class _MakeReservationPageOneState extends State<MakeReservationPageOne> {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
+              Text(
                 "Make Reservation",
-                style: heading3Information,
+                style: theme.textTheme.titleSmall!.copyWith(
+                  color: rentWheelsInformationDark900,
+                ),
               ),
               Space().height(context, 0.01),
               RichText(
                 text: TextSpan(
                   text:
                       "You can rent this ${car?.make ?? ''} ${car?.model ?? ''} for a maximum of ",
-                  style: body2Brand,
+                  style: theme.textTheme.bodyMedium!.copyWith(
+                    color: rentWheelsBrandDark900,
+                  ),
                   children: [
                     TextSpan(
                       text:
                           ' ${car?.maxDuration ?? ''} ${car?.durationUnit ?? ''}',
-                      style: heading6BrandBold,
+                      style: theme.textTheme.headlineSmall!.copyWith(
+                        color: rentWheelsBrandDark900,
+                      ),
                     ),
                   ],
                 ),
@@ -216,22 +241,25 @@ class _MakeReservationPageOneState extends State<MakeReservationPageOne> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  const Text(
+                  Text(
                     'Price',
-                    style: heading4Information,
+                    style: theme.textTheme.headlineLarge!.copyWith(
+                      color: rentWheelsInformationDark900,
+                    ),
                   ),
                   Text(
                     "GH¢ $price",
-                    style: heading4Information,
+                    style: theme.textTheme.headlineLarge!.copyWith(
+                      color: rentWheelsInformationDark900,
+                    ),
                   )
                 ],
               ),
               Space().height(context, 0.04),
-              buildGenericButtonWidget(
+              GenericButton(
                 width: Sizes().width(context, 0.85),
                 isActive: isActive(),
                 buttonName: 'Continue',
-                context: context,
                 onPressed: () async {
                   try {
                     final reservation = ReservationModel(

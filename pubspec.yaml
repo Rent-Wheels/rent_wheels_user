@@ -61,7 +61,6 @@ dependencies:
   flutter_credit_card: ^3.0.7
   cached_network_image: ^3.2.3
   flutter_google_places: ^0.3.0
-  modal_bottom_sheet: ^3.0.0-pre
   google_maps_webservice: ^0.0.19
   data_connection_checker_nulls: ^0.0.2
   syncfusion_flutter_datepicker: ^22.1.39

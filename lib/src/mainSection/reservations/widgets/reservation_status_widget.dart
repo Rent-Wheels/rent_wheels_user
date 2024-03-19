@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:rent_wheels/core/widgets/sizes/sizes.dart';
 import 'package:rent_wheels/core/widgets/theme/colors.dart';
-import 'package:rent_wheels/core/widgets/textStyles/text_styles.dart';
+import 'package:rent_wheels/core/widgets/theme/theme.dart';
 
 buildReservationStatus({
   required String status,
@@ -29,7 +29,10 @@ buildReservationStatus({
     ),
     child: Text(
       status,
-      style: heading6Neutral0,
+      style: theme.textTheme.headlineSmall!.copyWith(
+        fontWeight: FontWeight.w500,
+        color: rentWheelsNeutralLight0,
+      ),
     ),
   );
 }

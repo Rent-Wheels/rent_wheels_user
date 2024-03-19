@@ -5,7 +5,7 @@ import 'package:rent_wheels/core/widgets/sizes/sizes.dart';
 import 'package:rent_wheels/core/widgets/theme/colors.dart';
 import 'package:rent_wheels/core/models/cars/cars_model.dart';
 import 'package:rent_wheels/core/widgets/spacing/spacing.dart';
-import 'package:rent_wheels/core/widgets/textStyles/text_styles.dart';
+import 'package:rent_wheels/core/widgets/theme/theme.dart';
 
 buildRenterCars({
   String? heroTag,
@@ -44,7 +44,9 @@ buildRenterCars({
           Space().height(context, 0.01),
           Text(
             '${carDetails.yearOfManufacture} ${carDetails.make} ${carDetails.model}',
-            style: heading4Information,
+            style: theme.textTheme.headlineLarge!.copyWith(
+              color: rentWheelsInformationDark900,
+            ),
           ),
         ],
       ),

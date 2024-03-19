@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart' show timeDilation;
 import 'package:rent_wheels/core/widgets/spacing/spacing.dart';
-import 'package:rent_wheels/core/widgets/textStyles/text_styles.dart';
+import 'package:rent_wheels/core/widgets/theme/colors.dart';
+import 'package:rent_wheels/core/widgets/theme/theme.dart';
 import 'package:rent_wheels/src/mainSection/base.dart';
 
 import 'package:rent_wheels/src/mainSection/cars/presentation/car_details.dart';
@@ -9,7 +10,7 @@ import 'package:rent_wheels/src/mainSection/cars/presentation/car_details.dart';
 import 'package:rent_wheels/core/widgets/sizes/sizes.dart';
 import 'package:rent_wheels/core/models/cars/cars_model.dart';
 import 'package:rent_wheels/core/widgets/popups/error_popup.dart';
-import 'package:rent_wheels/core/widgets/cars/cars_data_widget.dart';
+import 'package:rent_wheels/src/cars/presentation/widgets/cars_info_sections.dart';
 import 'package:rent_wheels/core/backend/car/methods/cars_methods.dart';
 import 'package:rent_wheels/core/widgets/error/error_message_widget.dart';
 import 'package:rent_wheels/core/backend/users/methods/user_methods.dart';
@@ -38,9 +39,11 @@ class _AvailableCarsNearYouDataState extends State<AvailableCarsNearYouData> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const Text(
+                        Text(
                           'Vehicles Near You',
-                          style: heading4Information,
+                          style: theme.textTheme.headlineLarge!.copyWith(
+                            color: rentWheelsInformationDark900,
+                          ),
                         ),
                         GestureDetector(
                           onTap: () => Navigator.pushAndRemoveUntil(
@@ -50,9 +53,12 @@ class _AvailableCarsNearYouDataState extends State<AvailableCarsNearYouData> {
                                     const MainSection(pageIndex: 1),
                               ),
                               (route) => false),
-                          child: const Text(
+                          child: Text(
                             'See all',
-                            style: heading6Neutral500,
+                            style: theme.textTheme.headlineSmall!.copyWith(
+                              fontWeight: FontWeight.w500,
+                              color: rentWheelsNeutralDark900,
+                            ),
                           ),
                         )
                       ],
@@ -67,8 +73,7 @@ class _AvailableCarsNearYouDataState extends State<AvailableCarsNearYouData> {
                         shrinkWrap: true,
                         scrollDirection: Axis.horizontal,
                         itemBuilder: (context, index) {
-                          return buildCarsData(
-                            context: context,
+                          return CarsInfoSections(
                             isLoading: false,
                             carDetails: snapshot.data![index],
                             width: Sizes().width(context, 0.6),
@@ -110,9 +115,8 @@ class _AvailableCarsNearYouDataState extends State<AvailableCarsNearYouData> {
               : const SizedBox();
         }
         if (snapshot.hasError) {
-          return buildErrorMessage(
+          return const ErrorMessage(
             label: 'An error occured',
-            context: context,
             errorMessage: 'Please check your internet connection.',
           );
         }
@@ -121,9 +125,11 @@ class _AvailableCarsNearYouDataState extends State<AvailableCarsNearYouData> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Text(
+                Text(
                   'Vehicles Near You',
-                  style: heading4Information,
+                  style: theme.textTheme.headlineLarge!.copyWith(
+                    color: rentWheelsInformationDark900,
+                  ),
                 ),
                 GestureDetector(
                   onTap: () => Navigator.pushAndRemoveUntil(
@@ -132,9 +138,12 @@ class _AvailableCarsNearYouDataState extends State<AvailableCarsNearYouData> {
                         builder: (context) => const MainSection(pageIndex: 1),
                       ),
                       (route) => false),
-                  child: const Text(
+                  child: Text(
                     'See all',
-                    style: heading6Neutral500,
+                    style: theme.textTheme.headlineSmall!.copyWith(
+                      fontWeight: FontWeight.w500,
+                      color: rentWheelsNeutralDark900,
+                    ),
                   ),
                 )
               ],
@@ -149,10 +158,9 @@ class _AvailableCarsNearYouDataState extends State<AvailableCarsNearYouData> {
                 itemBuilder: (context, _) {
                   return ShimmerLoading(
                     isLoading: true,
-                    child: buildCarsData(
+                    child: CarsInfoSections(
                       margin: Sizes().width(context, 0.03),
                       isLoading: true,
-                      context: context,
                       carDetails: Car(media: [Media(mediaURL: '')]),
                       width: Sizes().width(context, 0.6),
                       onTap: null,

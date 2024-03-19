@@ -27,10 +27,9 @@ buildCarImageCarousel({
       Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: items.asMap().entries.map((entry) {
-          return buildCarouselDots(
+          return CarouselDots(
             index: entry.key,
             currentIndex: index,
-            context: context,
           );
         }).toList(),
       )

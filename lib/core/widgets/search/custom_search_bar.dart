@@ -7,7 +7,6 @@ import 'package:flutter_google_places/flutter_google_places.dart';
 
 import 'package:rent_wheels/core/widgets/theme/colors.dart';
 import 'package:rent_wheels/core/secrets/secrets.dart' as secret;
-import 'package:rent_wheels/core/widgets/textStyles/text_styles.dart';
 import 'package:rent_wheels/core/widgets/buttons/adaptive_back_button_widget.dart';
 
 class CustomSearchScaffold extends PlacesAutocompleteWidget {
@@ -53,8 +52,6 @@ class CustomSearchScaffoldState extends PlacesAutocompleteState {
               .copyWith(color: rentWheelsNeutralDark900),
           textDecoration: const InputDecoration(
             hintText: 'Search',
-            hintStyle: heading6Neutral500,
-            border: InputBorder.none,
           ),
         ),
       ),

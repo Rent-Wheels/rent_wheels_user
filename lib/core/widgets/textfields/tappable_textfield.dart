@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import 'package:rent_wheels/core/widgets/sizes/sizes.dart';
 import 'package:rent_wheels/core/widgets/theme/colors.dart';
-import 'package:rent_wheels/core/widgets/textStyles/text_styles.dart';
 import 'package:rent_wheels/core/widgets/theme/theme.dart';
 
 buildTappableTextField({
@@ -45,7 +44,10 @@ buildTappableTextField({
                 .copyWith(color: rentWheelsNeutralDark900),
             decoration: InputDecoration(
               hintText: hint,
-              hintStyle: heading6Neutral500,
+              hintStyle: theme.textTheme.headlineSmall!.copyWith(
+                fontWeight: FontWeight.w500,
+                color: rentWheelsNeutralDark900,
+              ),
               border: InputBorder.none,
             ),
           ),

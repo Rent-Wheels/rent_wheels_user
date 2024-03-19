@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:rent_wheels/core/widgets/theme/theme.dart';
 import 'package:string_validator/string_validator.dart';
 
 import 'package:rent_wheels/core/auth/auth_service.dart';
@@ -16,7 +17,6 @@ import 'package:rent_wheels/core/widgets/spacing/spacing.dart';
 import 'package:rent_wheels/core/global/globals.dart' as global;
 import 'package:rent_wheels/core/widgets/popups/error_popup.dart';
 import 'package:rent_wheels/core/widgets/popups/success_popup.dart';
-import 'package:rent_wheels/core/widgets/textStyles/text_styles.dart';
 import 'package:rent_wheels/core/widgets/search/custom_search_bar.dart';
 import 'package:rent_wheels/core/widgets/popups/date_picker_widget.dart';
 import 'package:rent_wheels/core/auth/backend/backend_auth_service.dart';
@@ -106,7 +106,7 @@ class _AccountProfileState extends State<AccountProfile> {
         elevation: 0,
         foregroundColor: rentWheelsBrandDark900,
         backgroundColor: rentWheelsNeutralLight0,
-        leading: buildAdaptiveBackButton(
+        leading: AdaptiveBackButton(
           onPressed: () => Navigator.pop(context),
         ),
       ),
@@ -118,19 +118,20 @@ class _AccountProfileState extends State<AccountProfile> {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
+              Text(
                 "Account Profile",
-                style: heading3Information,
+                style: theme.textTheme.titleSmall!.copyWith(
+                  color: rentWheelsInformationDark900,
+                ),
               ),
               Space().height(context, 0.03),
-              buildProfilePicture(
-                context: context,
+              ProfilePicture(
                 imageFile: avatar,
                 imgUrl: global.userDetails?.profilePicture,
                 onTap: bottomSheet,
               ),
               Space().height(context, 0.02),
-              buildGenericTextfield(
+              GenericTextField(
                 hint: 'Full Name',
                 context: context,
                 controller: name,
@@ -150,7 +151,7 @@ class _AccountProfileState extends State<AccountProfile> {
                 },
               ),
               Space().height(context, 0.02),
-              buildGenericTextfield(
+              GenericTextField(
                 hint: 'Email',
                 context: context,
                 controller: email,
@@ -172,7 +173,7 @@ class _AccountProfileState extends State<AccountProfile> {
                 },
               ),
               Space().height(context, 0.02),
-              buildGenericTextfield(
+              GenericTextField(
                 hint: 'Phone Number',
                 context: context,
                 controller: phoneNumber,
@@ -236,11 +237,10 @@ class _AccountProfileState extends State<AccountProfile> {
                     }),
               ),
               Space().height(context, 0.05),
-              buildGenericButtonWidget(
+              GenericButton(
                 width: Sizes().width(context, 0.85),
                 isActive: isActive(),
                 buttonName: 'Update Account',
-                context: context,
                 onPressed: () async {
                   buildLoadingIndicator(context, 'Updating Account Details');
 

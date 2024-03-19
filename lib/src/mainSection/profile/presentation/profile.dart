@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:rent_wheels/core/auth/auth_exceptions.dart';
+import 'package:rent_wheels/core/widgets/theme/theme.dart';
 import 'package:rent_wheels/core/widgets/toast/toast_notification_widget.dart';
 
-import 'package:rent_wheels/src/authentication/login/presentation/login.dart';
+import 'package:rent_wheels/src/authentication/presentation/pages/login.dart';
 import 'package:rent_wheels/src/mainSection/profile/widgets/profile_options_widget.dart';
 import 'package:rent_wheels/src/mainSection/profile/presentation/sections/accountProfile/presentation/account_profile.dart';
 import 'package:rent_wheels/src/mainSection/profile/presentation/sections/changePassword/presentation/change_password.dart';
@@ -15,7 +16,6 @@ import 'package:rent_wheels/core/widgets/theme/colors.dart';
 import 'package:rent_wheels/core/widgets/spacing/spacing.dart';
 import 'package:rent_wheels/core/global/globals.dart' as global;
 import 'package:rent_wheels/core/widgets/popups/error_popup.dart';
-import 'package:rent_wheels/core/widgets/textStyles/text_styles.dart';
 import 'package:rent_wheels/core/backend/users/methods/user_methods.dart';
 import 'package:rent_wheels/core/widgets/buttons/generic_button_widget.dart';
 import 'package:rent_wheels/core/widgets/loadingIndicator/loading_indicator.dart';
@@ -45,16 +45,19 @@ class _ProfileState extends State<Profile> {
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
-            padding:
-                EdgeInsets.symmetric(horizontal: Sizes().width(context, 0.04)),
+            padding: EdgeInsets.symmetric(
+              horizontal: Sizes().width(context, 0.04),
+            ),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Space().height(context, 0.04),
-                const Text(
+                Text(
                   "Profile",
-                  style: heading3Information,
+                  style: theme.textTheme.titleSmall!.copyWith(
+                    color: rentWheelsInformationDark900,
+                  ),
                 ),
                 Space().height(context, 0.03),
                 Row(
@@ -84,12 +87,15 @@ class _ProfileState extends State<Profile> {
                       children: [
                         Text(
                           global.userDetails!.name,
-                          style: heading5Neutral,
+                          style: theme.textTheme.headlineMedium!.copyWith(
+                            color: rentWheelsNeutralDark900,
+                          ),
                         ),
                         Space().height(context, 0.005),
                         Text(
                           global.userDetails!.email,
-                          style: heading6Neutral900,
+                          style: theme.textTheme.headlineSmall!
+                              .copyWith(color: rentWheelsNeutralDark900),
                         ),
                       ],
                     )
@@ -131,7 +137,9 @@ class _ProfileState extends State<Profile> {
                   context: context,
                   section: 'Delete Account',
                   svg: 'assets/svgs/trash.svg',
-                  style: heading5Error700,
+                  style: theme.textTheme.headlineMedium!.copyWith(
+                    color: rentWheelsErrorDark700,
+                  ),
                   color: rentWheelsErrorDark700,
                   onTap: () => buildReauthenticateUserDialog(
                     context: context,
@@ -207,11 +215,10 @@ class _ProfileState extends State<Profile> {
         alignment: Alignment.center,
         height: Sizes().height(context, 0.1),
         color: rentWheelsNeutralLight0,
-        child: buildGenericButtonWidget(
+        child: GenericButton(
           width: Sizes().width(context, 0.85),
           isActive: true,
           buttonName: 'Logout',
-          context: context,
           onPressed: () => buildConfirmationDialog(
             label: 'Logout',
             context: context,
