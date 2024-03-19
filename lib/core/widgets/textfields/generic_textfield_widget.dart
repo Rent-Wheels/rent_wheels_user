@@ -13,7 +13,6 @@ class GenericTextField extends StatefulWidget {
   final String hint;
   final TextInputAction? textInput;
   final TextInputType? keyboardType;
-  final BuildContext context;
   final TextCapitalization? textCapitalization;
   final TextEditingController controller;
   final void Function(String) onChanged;
@@ -27,7 +26,6 @@ class GenericTextField extends StatefulWidget {
     required this.hint,
     this.textInput,
     this.keyboardType,
-    required this.context,
     this.textCapitalization,
     required this.controller,
     required this.onChanged,

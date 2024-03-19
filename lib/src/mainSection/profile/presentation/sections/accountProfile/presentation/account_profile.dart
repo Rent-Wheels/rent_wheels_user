@@ -133,7 +133,6 @@ class _AccountProfileState extends State<AccountProfile> {
               Space().height(context, 0.02),
               GenericTextField(
                 hint: 'Full Name',
-                context: context,
                 controller: name,
                 maxLines: 1,
                 textCapitalization: TextCapitalization.words,
@@ -153,7 +152,6 @@ class _AccountProfileState extends State<AccountProfile> {
               Space().height(context, 0.02),
               GenericTextField(
                 hint: 'Email',
-                context: context,
                 controller: email,
                 maxLines: 1,
                 keyboardType: TextInputType.emailAddress,
@@ -175,7 +173,6 @@ class _AccountProfileState extends State<AccountProfile> {
               Space().height(context, 0.02),
               GenericTextField(
                 hint: 'Phone Number',
-                context: context,
                 controller: phoneNumber,
                 maxLines: 1,
                 keyboardType: TextInputType.phone,

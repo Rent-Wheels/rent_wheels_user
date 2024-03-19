@@ -144,10 +144,9 @@ class RenterDetails extends StatelessWidget {
                   itemCount: renter.cars!.length,
                   shrinkWrap: true,
                   itemBuilder: (context, index) {
-                    return buildRenterCars(
+                    return RenterCars(
                       width: Sizes().width(context, 0.5),
                       carDetails: renter.cars![index],
-                      context: context,
                       onTap: () => Navigator.push(
                         context,
                         MaterialPageRoute(

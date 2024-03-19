@@ -102,8 +102,7 @@ class _ProfileState extends State<Profile> {
                   ],
                 ),
                 Space().height(context, 0.03),
-                buildProfileOptions(
-                  context: context,
+                ProfileOptions(
                   section: 'Account Profile',
                   svg: 'assets/svgs/account_profile.svg',
                   onTap: () => Navigator.push(
@@ -114,8 +113,7 @@ class _ProfileState extends State<Profile> {
                   ),
                 ),
                 const Divider(),
-                buildProfileOptions(
-                  context: context,
+                ProfileOptions(
                   section: 'Change Password',
                   svg: 'assets/svgs/change_password.svg',
                   onTap: () => Navigator.push(
@@ -126,15 +124,13 @@ class _ProfileState extends State<Profile> {
                   ),
                 ),
                 const Divider(),
-                buildProfileOptions(
-                  context: context,
+                const ProfileOptions(
                   section: 'Notifications',
                   svg: 'assets/svgs/notifications.svg',
                   onTap: buildToastNotification,
                 ),
                 const Divider(),
-                buildProfileOptions(
-                  context: context,
+                ProfileOptions(
                   section: 'Delete Account',
                   svg: 'assets/svgs/trash.svg',
                   style: theme.textTheme.headlineMedium!.copyWith(

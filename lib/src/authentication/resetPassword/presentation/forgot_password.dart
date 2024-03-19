@@ -62,7 +62,6 @@ class _ForgotPasswordState extends State<ForgotPassword> {
             Space().height(context, 0.03),
             GenericTextField(
               maxLines: 1,
-              context: context,
               controller: email,
               hint: 'Email Address',
               enableSuggestions: false,

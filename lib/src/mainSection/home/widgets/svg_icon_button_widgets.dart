@@ -3,18 +3,27 @@ import 'package:flutter/material.dart';
 
 import 'package:rent_wheels/core/widgets/theme/colors.dart';
 
-buildSVGIconButton({
-  required String svg,
-  required void Function()? onPressed,
-}) {
-  return GestureDetector(
-    onTap: () {},
-    child: SvgPicture.asset(
-      svg,
-      colorFilter: const ColorFilter.mode(
-        rentWheelsNeutralDark900,
-        BlendMode.srcIn,
+class SVGIconButton extends StatelessWidget {
+  final String svg;
+  final void Function()? onPressed;
+
+  const SVGIconButton({
+    super.key,
+    required this.svg,
+    required this.onPressed,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onPressed,
+      child: SvgPicture.asset(
+        svg,
+        colorFilter: const ColorFilter.mode(
+          rentWheelsNeutralDark900,
+          BlendMode.srcIn,
+        ),
       ),
-    ),
-  );
+    );
+  }
 }

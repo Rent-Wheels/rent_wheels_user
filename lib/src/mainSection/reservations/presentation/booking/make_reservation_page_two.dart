@@ -134,26 +134,24 @@ class _MakeReservationPageTwoState extends State<MakeReservationPageTwo> {
             bottom: Sizes().height(context, 0.15),
           ),
           child: widget.view == ReservationView.make
-              ? buildReservationDetails(
+              ? ReservationDetails(
                   car: car,
                   renter: renter,
                   pageTitle: 'Make Reservation',
                   duration: getDuration(),
-                  context: context,
                   reservation: reservation,
                 )
-              : buildReservationDetails(
+              : ReservationDetails(
                   car: car,
                   renter: renter,
                   pageTitle: 'Reservation',
                   duration: getDuration(),
-                  context: context,
                   reservation: reservation,
                 ),
         ),
       ),
       bottomSheet: widget.view == ReservationView.make
-          ? buildReservationDetailsBottomSheet(
+          ? ReservationDetailsBottomSheet(
               items: [
                 GenericButton(
                   isActive: true,
@@ -162,12 +160,10 @@ class _MakeReservationPageTwoState extends State<MakeReservationPageTwo> {
                   onPressed: makeReservation,
                 ),
               ],
-              context: context,
             )
           : widget.view == ReservationView.view && car != null
               ? reservation.status == 'Pending'
-                  ? buildReservationDetailsBottomSheet(
-                      context: context,
+                  ? ReservationDetailsBottomSheet(
                       items: [
                         GenericButton(
                           isActive: true,
@@ -192,8 +188,7 @@ class _MakeReservationPageTwoState extends State<MakeReservationPageTwo> {
                       ],
                     )
                   : reservation.status == 'Ongoing'
-                      ? buildReservationDetailsBottomSheet(
-                          context: context,
+                      ? ReservationDetailsBottomSheet(
                           items: [
                             GenericButton(
                               isActive: true,
@@ -212,8 +207,7 @@ class _MakeReservationPageTwoState extends State<MakeReservationPageTwo> {
                           ],
                         )
                       : reservation.status == 'Accepted'
-                          ? buildReservationDetailsBottomSheet(
-                              context: context,
+                          ? ReservationDetailsBottomSheet(
                               items: [
                                 GenericButton(
                                     isActive: true,
@@ -258,8 +252,7 @@ class _MakeReservationPageTwoState extends State<MakeReservationPageTwo> {
                               ],
                             )
                           : reservation.status == 'Paid'
-                              ? buildReservationDetailsBottomSheet(
-                                  context: context,
+                              ? ReservationDetailsBottomSheet(
                                   items: [
                                     GenericButton(
                                       buttonName: 'Start Trip',
@@ -298,8 +291,7 @@ class _MakeReservationPageTwoState extends State<MakeReservationPageTwo> {
                                     ),
                                   ],
                                 )
-                              : buildReservationDetailsBottomSheet(
-                                  context: context,
+                              : ReservationDetailsBottomSheet(
                                   items: [
                                     GenericButton(
                                       isActive: true,

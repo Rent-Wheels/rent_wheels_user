@@ -127,31 +127,27 @@ class _PaymentPageTwoState extends State<PaymentPageTwo> {
                   ),
                 ),
                 Space().height(context, 0.02),
-                buildPriceDetailsKeyValue(
+                PriceDetailsKeyValue(
                   label: 'Trip Price',
                   value: 'GH¢ ${widget.car.rate} ${widget.car.plan}',
-                  context: context,
                 ),
                 Space().height(context, 0.01),
-                buildPriceDetailsKeyValue(
+                PriceDetailsKeyValue(
                   label: 'Car',
                   value:
                       '${widget.car.yearOfManufacture} ${widget.car.make} ${widget.car.model}',
-                  context: context,
                 ),
                 Space().height(context, 0.01),
-                buildPriceDetailsKeyValue(
+                PriceDetailsKeyValue(
                   label: 'Destination',
                   value: widget.reservation.destination!,
-                  context: context,
                 ),
                 Space().height(context, 0.01),
-                buildPriceDetailsKeyValue(
+                PriceDetailsKeyValue(
                   label: 'Duration',
                   value: duration.inDays == 1
                       ? '${duration.inDays} day'
                       : '${duration.inDays} days',
-                  context: context,
                 ),
                 Space().height(context, 0.01),
                 DottedDashedLine(

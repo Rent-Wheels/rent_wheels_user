@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:rent_wheels/assets/images/image_constants.dart';
 import 'package:rent_wheels/core/enums/enums.dart';
+import 'package:rent_wheels/core/widgets/carousel/image_carousel_slider_widget.dart';
 import 'package:rent_wheels/core/widgets/theme/theme.dart';
 import 'package:rent_wheels/core/widgets/toast/toast_notification_widget.dart';
 import 'package:rent_wheels/src/mainSection/base.dart';
 
 import 'package:rent_wheels/src/mainSection/cars/data/available_cars_data.dart';
-import 'package:rent_wheels/src/mainSection/home/widgets/promo_carousel_widget.dart';
 import 'package:rent_wheels/src/mainSection/home/widgets/svg_icon_button_widgets.dart';
 import 'package:rent_wheels/src/mainSection/home/data/available_cars_near_you_data.dart';
 import 'package:rent_wheels/src/mainSection/home/widgets/promo_carousel_item_widget.dart';
@@ -40,15 +40,13 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     List<Widget> carouselItems = [
-      buildPromoCarouselItem(
+      const PromoCarouselItem(
         label: 'Get up to 20% off your first ride',
         image: newUserPromoBannerImg,
-        context: context,
       ),
-      buildPromoCarouselItem(
+      const PromoCarouselItem(
         label: 'New year 2023 25% off promo',
         image: newYearPromoBannerImg,
-        context: context,
       ),
     ];
 
@@ -103,12 +101,12 @@ class _HomeState extends State<Home> {
                             ),
                             Row(
                               children: [
-                                buildSVGIconButton(
+                                const SVGIconButton(
                                   svg: 'assets/svgs/search.svg',
                                   onPressed: buildToastNotification,
                                 ),
                                 Space().width(context, 0.07),
-                                buildSVGIconButton(
+                                const SVGIconButton(
                                   svg: 'assets/svgs/notifications.svg',
                                   onPressed: buildToastNotification,
                                 ),
@@ -134,9 +132,9 @@ class _HomeState extends State<Home> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      buildPromoCarousel(
+                      ImageCarouselSlider(
                         index: _promoIndex,
-                        context: context,
+                        height: Sizes().height(context, 0.35),
                         controller: _promo,
                         onPageChanged: (index, _) {
                           setState(() {
@@ -144,6 +142,7 @@ class _HomeState extends State<Home> {
                           });
                         },
                         items: carouselItems,
+                        autoPlay: carouselItems.length > 1,
                       ),
                       Space().height(context, 0.04),
                       const AvailableCarsNearYouData(),

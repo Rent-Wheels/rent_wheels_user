@@ -127,7 +127,6 @@ class _SignUpState extends State<SignUp> {
                 Space().height(context, 0.02),
                 GenericTextField(
                   hint: 'Full Name',
-                  context: context,
                   controller: name,
                   maxLines: 1,
                   textCapitalization: TextCapitalization.words,
@@ -146,7 +145,6 @@ class _SignUpState extends State<SignUp> {
                 Space().height(context, 0.02),
                 GenericTextField(
                   hint: 'Email',
-                  context: context,
                   controller: email,
                   maxLines: 1,
                   keyboardType: TextInputType.emailAddress,
@@ -167,7 +165,6 @@ class _SignUpState extends State<SignUp> {
                 Space().height(context, 0.02),
                 GenericTextField(
                   hint: 'Password',
-                  context: context,
                   controller: password,
                   isPassword: true,
                   textCapitalization: TextCapitalization.none,
@@ -197,7 +194,6 @@ class _SignUpState extends State<SignUp> {
                 Space().height(context, 0.02),
                 GenericTextField(
                   hint: 'Phone Number',
-                  context: context,
                   controller: phoneNumber,
                   maxLines: 1,
                   keyboardType: TextInputType.phone,

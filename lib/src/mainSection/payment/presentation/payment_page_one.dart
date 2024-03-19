@@ -95,8 +95,7 @@ class _PaymentPageOneState extends State<PaymentPageOne> {
                   child: AnimatedContainer(
                     duration: const Duration(milliseconds: 300),
                     child: widget.paymentType == PaymentMethods.creditCard
-                        ? buildCreditCardPayment(
-                            context: context,
+                        ? CreditCardPayment(
                             cvvCode: widget.cvvCode,
                             formKey: widget.formKey,
                             expiryDate: widget.expiryDate,
@@ -110,9 +109,8 @@ class _PaymentPageOneState extends State<PaymentPageOne> {
                                 widget.paymentType ==
                                     PaymentMethods.mobileMoney ||
                                 widget.paymentType == PaymentMethods.vfCash
-                            ? buildMobileMoneyPayment(
+                            ? MobileMoneyPayment(
                                 hint: 'Phone Number',
-                                context: context,
                                 controller: widget.controller,
                                 onChanged: widget.textOnChanged,
                               )

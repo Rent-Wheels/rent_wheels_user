@@ -3,9 +3,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:easy_image_viewer/easy_image_viewer.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:rent_wheels/core/widgets/carousel/image_carousel_slider_widget.dart';
 import 'package:rent_wheels/core/widgets/theme/theme.dart';
 
-import 'package:rent_wheels/src/mainSection/cars/widgets/car_details_carousel.dart';
 import 'package:rent_wheels/src/mainSection/renter/presentation/renter_profile.dart';
 import 'package:rent_wheels/src/mainSection/cars/widgets/renter_overview_widget.dart';
 import 'package:rent_wheels/src/mainSection/cars/widgets/car_details_carousel_items.dart';
@@ -54,8 +54,7 @@ class _CarDetailsState extends State<CarDetails> {
     });
     Car car = widget.car;
     List<Widget> carouselItems = car.media!.map((media) {
-      return buildCarDetailsCarouselItem(
-          image: media.mediaURL, context: context);
+      return CarDetailsCarouselItem(image: media.mediaURL);
     }).toList();
 
     final List<ImageProvider> carImages = car.media!
@@ -96,11 +95,11 @@ class _CarDetailsState extends State<CarDetails> {
                     tag: widget.heroTag ?? car.media![0].mediaURL,
                     child: GestureDetector(
                       onTap: showImageOverlay,
-                      child: buildCarImageCarousel(
+                      child: ImageCarouselSlider(
                         index: _carImageIndex,
                         items: carouselItems,
-                        context: context,
                         controller: _carImage,
+                        autoPlay: false,
                         onPageChanged: (index, _) {
                           setState(() {
                             _carImageIndex = index;
@@ -215,8 +214,7 @@ class _CarDetailsState extends State<CarDetails> {
                             ),
                           );
                         },
-                        child: buildRenterOverview(
-                          context: context,
+                        child: RenterOverview(
                           renter: widget.renter,
                         ),
                       )

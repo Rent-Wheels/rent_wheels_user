@@ -112,7 +112,7 @@ class _ReservationsDataState extends State<ReservationsData> {
                   scrollDirection: Axis.horizontal,
                   itemCount: sections.length,
                   itemBuilder: (context, index) {
-                    return buildFilterButtons(
+                    return FilterButtons(
                       btnColor: currentIndex == index
                           ? rentWheelsBrandDark900
                           : rentWheelsNeutralLight0,
@@ -123,7 +123,6 @@ class _ReservationsDataState extends State<ReservationsData> {
                             : rentWheelsBrandDark900,
                       ),
                       label: sections.keys.toList()[index],
-                      context: context,
                       onTap: () {
                         setState(() {
                           currentIndex = index;
@@ -148,9 +147,8 @@ class _ReservationsDataState extends State<ReservationsData> {
                                     padding: EdgeInsets.only(
                                       bottom: Sizes().height(context, 0.04),
                                     ),
-                                    child: buildReservationSections(
+                                    child: ReservationSections(
                                       isLoading: false,
-                                      context: context,
                                       car: reservation.car,
                                       reservation: reservation,
                                       onPayment: () async {
@@ -252,10 +250,9 @@ class _ReservationsDataState extends State<ReservationsData> {
                   scrollDirection: Axis.horizontal,
                   itemCount: 4,
                   itemBuilder: (context, index) {
-                    return buildFilterButtons(
+                    return FilterButtons(
                       width: Sizes().width(context, 0.2),
                       label: '',
-                      context: context,
                       onTap: null,
                     );
                   },
@@ -269,10 +266,9 @@ class _ReservationsDataState extends State<ReservationsData> {
                     return Padding(
                       padding: EdgeInsets.only(
                           bottom: Sizes().height(context, 0.04)),
-                      child: buildReservationSections(
+                      child: ReservationSections(
                         isLoading: true,
                         onPressed: null,
-                        context: context,
                         reservation: ReservationModel(),
                         car: Car(media: [Media(mediaURL: '')]),
                       ),

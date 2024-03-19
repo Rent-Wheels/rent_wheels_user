@@ -68,7 +68,6 @@ class _LoginState extends State<Login> {
                 Space().height(context, 0.03),
                 GenericTextField(
                   maxLines: 1,
-                  context: context,
                   controller: email,
                   hint: 'Email Address',
                   enableSuggestions: false,
@@ -90,7 +89,6 @@ class _LoginState extends State<Login> {
                 GenericTextField(
                   maxLines: 1,
                   hint: 'Password',
-                  context: context,
                   isPassword: true,
                   controller: password,
                   textCapitalization: TextCapitalization.none,
