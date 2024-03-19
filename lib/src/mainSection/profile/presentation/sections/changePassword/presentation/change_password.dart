@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:go_router/go_router.dart';
 
 import 'package:rent_wheels/core/auth/auth_service.dart';
 import 'package:rent_wheels/core/widgets/sizes/sizes.dart';
@@ -50,7 +51,7 @@ class _ChangePasswordState extends State<ChangePassword> {
         foregroundColor: rentWheelsBrandDark900,
         backgroundColor: rentWheelsNeutralLight0,
         leading: AdaptiveBackButton(
-          onPressed: () => Navigator.pop(context),
+          onPressed: () => context.pop(),
         ),
       ),
       body: SingleChildScrollView(
@@ -233,11 +234,11 @@ class _ChangePasswordState extends State<ChangePassword> {
                     });
 
                     if (!mounted) return;
-                    Navigator.pop(context);
+                    context.pop();
                     showSuccessPopUp('Password Reset', context);
                   } catch (e) {
                     if (!mounted) return;
-                    Navigator.pop(context);
+                    context.pop();
                     if (e is InvalidPasswordAuthException) {
                       showErrorPopUp('Incorrect Password', context);
                     } else {

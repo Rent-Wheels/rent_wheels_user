@@ -6,8 +6,10 @@ import 'package:rent_wheels/core/widgets/theme/colors.dart';
 import 'package:rent_wheels/core/widgets/spacing/spacing.dart';
 import 'package:rent_wheels/core/widgets/theme/theme.dart';
 
-Future<dynamic> buildLoadingIndicator(
-        BuildContext context, String loadingMessage) =>
+buildLoadingIndicator(
+  BuildContext context,
+  String loadingMessage,
+) =>
     showDialog(
       barrierDismissible: false,
       context: context,

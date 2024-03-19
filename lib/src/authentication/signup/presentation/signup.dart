@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
@@ -81,11 +82,11 @@ class _SignUpState extends State<SignUp> {
       context: context,
       cameraOnTap: () {
         openImage(source: ImageSource.camera);
-        Navigator.pop(context);
+        context.pop();
       },
       galleryOnTap: () {
         openImage(source: ImageSource.gallery);
-        Navigator.pop(context);
+        context.pop();
       },
     );
   }
@@ -101,7 +102,7 @@ class _SignUpState extends State<SignUp> {
               foregroundColor: rentWheelsBrandDark900,
               backgroundColor: rentWheelsNeutralLight0,
               leading: AdaptiveBackButton(
-                onPressed: () => Navigator.pop(context),
+                onPressed: () => context.pop(),
               ),
             ),
       body: SafeArea(
@@ -249,7 +250,7 @@ class _SignUpState extends State<SignUp> {
                             formatDate(DateTime(2005));
                           });
                         }
-                        Navigator.pop(context);
+                        context.pop();
                       }),
                 ),
                 Space().height(context, 0.05),
@@ -276,7 +277,7 @@ class _SignUpState extends State<SignUp> {
                           currentUser: userCredential.user!);
 
                       if (!mounted) return;
-                      Navigator.pop(context);
+                      context.pop();
                       Navigator.push(
                         context,
                         CupertinoPageRoute(
@@ -285,7 +286,7 @@ class _SignUpState extends State<SignUp> {
                       );
                     } catch (e) {
                       if (!mounted) return;
-                      Navigator.pop(context);
+                      context.pop();
                       if (e is WeakPasswordAuthException) {
                         showErrorPopUp(
                           'Please choose a stronger password',
@@ -327,7 +328,7 @@ class _SignUpState extends State<SignUp> {
                                     builder: (context) => const Login(),
                                   ),
                                 )
-                            : () => Navigator.pop(context),
+                            : () => context.pop(),
                         child: Text(
                           "Login",
                           style: theme.textTheme.headlineSmall!.copyWith(

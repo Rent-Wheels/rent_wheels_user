@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/scheduler.dart' show timeDilation;
+import 'package:go_router/go_router.dart';
 import 'package:rent_wheels/core/enums/enums.dart';
 import 'package:rent_wheels/core/models/renter/renter_model.dart';
 import 'package:rent_wheels/core/widgets/theme/theme.dart';
@@ -83,11 +84,11 @@ class _MakeReservationPageOneState extends State<MakeReservationPageOne> {
         date: dateRangePicker,
         duration: getDuration(),
         isDateRangeSelected: isDateRangeSelected,
-        onCancel: () => Navigator.pop(context),
+        onCancel: () => context.pop(),
         selectedRange: PickerDateRange(startDate, endDate),
         onSubmit: (dateRange) {
           if (dateRange is PickerDateRange) {
-            Navigator.pop(context);
+            context.pop();
             setState(() {
               isDateValid = true;
               endDate = dateRange.endDate;
@@ -159,7 +160,7 @@ class _MakeReservationPageOneState extends State<MakeReservationPageOne> {
         foregroundColor: rentWheelsBrandDark900,
         backgroundColor: rentWheelsNeutralLight0,
         leading: AdaptiveBackButton(
-          onPressed: () => Navigator.pop(context),
+          onPressed: () => context.pop(),
         ),
       ),
       body: SingleChildScrollView(
@@ -278,7 +279,7 @@ class _MakeReservationPageOneState extends State<MakeReservationPageOne> {
                     final renter = await RentWheelsUserMethods()
                         .getRenterDetails(userId: car.owner!);
                     if (!mounted) return;
-                    Navigator.pop(context);
+                    context.pop();
                     Navigator.push(
                       context,
                       CupertinoPageRoute(
@@ -292,7 +293,7 @@ class _MakeReservationPageOneState extends State<MakeReservationPageOne> {
                     );
                   } catch (e) {
                     if (!mounted) return;
-                    Navigator.pop(context);
+                    context.pop();
                     showErrorPopUp(e.toString(), context);
                   }
                 },

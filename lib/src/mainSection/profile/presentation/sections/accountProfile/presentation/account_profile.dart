@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
@@ -78,11 +79,11 @@ class _AccountProfileState extends State<AccountProfile> {
       context: context,
       cameraOnTap: () {
         openImage(source: ImageSource.camera);
-        Navigator.pop(context);
+        context.pop();
       },
       galleryOnTap: () {
         openImage(source: ImageSource.gallery);
-        Navigator.pop(context);
+        context.pop();
       },
     );
   }
@@ -107,7 +108,7 @@ class _AccountProfileState extends State<AccountProfile> {
         foregroundColor: rentWheelsBrandDark900,
         backgroundColor: rentWheelsNeutralLight0,
         leading: AdaptiveBackButton(
-          onPressed: () => Navigator.pop(context),
+          onPressed: () => context.pop(),
         ),
       ),
       body: SingleChildScrollView(
@@ -230,7 +231,7 @@ class _AccountProfileState extends State<AccountProfile> {
                           formatDate(DateTime(2005));
                         });
                       }
-                      Navigator.pop(context);
+                      context.pop();
                     }),
               ),
               Space().height(context, 0.05),
@@ -274,11 +275,11 @@ class _AccountProfileState extends State<AccountProfile> {
                     });
 
                     if (!mounted) return;
-                    Navigator.pop(context);
+                    context.pop();
                     showSuccessPopUp('Profile Updated', context);
                   } catch (e) {
                     if (!mounted) return;
-                    Navigator.pop(context);
+                    context.pop();
                     if (e is InvalidEmailException) {
                       showErrorPopUp(
                         'Email is already in use',

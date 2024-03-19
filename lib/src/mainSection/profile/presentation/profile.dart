@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:go_router/go_router.dart';
 import 'package:rent_wheels/core/auth/auth_exceptions.dart';
 import 'package:rent_wheels/core/widgets/theme/theme.dart';
 import 'package:rent_wheels/core/widgets/toast/toast_notification_widget.dart';
@@ -154,8 +155,8 @@ class _ProfileState extends State<Profile> {
                         );
 
                         if (!mounted) return;
-                        Navigator.pop(context);
-                        Navigator.pop(context);
+                        context.pop();
+                        context.pop();
 
                         buildConfirmationDialog(
                           context: context,
@@ -171,7 +172,7 @@ class _ProfileState extends State<Profile> {
                                   .deleteUser(user: global.user!);
 
                               if (!mounted) return;
-                              Navigator.pop(context);
+                              context.pop();
                               Navigator.pushAndRemoveUntil(
                                 context,
                                 CupertinoPageRoute(
@@ -181,15 +182,15 @@ class _ProfileState extends State<Profile> {
                               );
                             } catch (e) {
                               if (!mounted) return;
-                              Navigator.pop(context);
-                              Navigator.pop(context);
+                              context.pop();
+                              context.pop();
                               showErrorPopUp(e.toString(), context);
                             }
                           },
                         );
                       } catch (e) {
                         if (!mounted) return;
-                        Navigator.pop(context);
+                        context.pop();
                         if (e is InvalidPasswordAuthException) {
                           showErrorPopUp('Incorrect Password', context);
                         } else {
@@ -221,12 +222,12 @@ class _ProfileState extends State<Profile> {
             buttonName: 'Logout',
             message: 'Are you sure you want to log out?',
             onAccept: () async {
-              Navigator.pop(context);
+              context.pop();
               buildLoadingIndicator(context, 'Logging Out');
               try {
                 await AuthService.firebase().logout();
                 if (!mounted) return;
-                Navigator.pop(context);
+                context.pop();
                 Navigator.pushAndRemoveUntil(
                   context,
                   CupertinoPageRoute(
@@ -236,7 +237,7 @@ class _ProfileState extends State<Profile> {
                 );
               } catch (e) {
                 if (!mounted) return;
-                Navigator.pop(context);
+                context.pop();
                 showErrorPopUp('Error logging out', context);
               }
             },

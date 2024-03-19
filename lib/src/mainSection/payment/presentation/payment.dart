@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_credit_card/flutter_credit_card.dart';
+import 'package:go_router/go_router.dart';
 import 'package:rent_wheels/core/widgets/popups/success_popup.dart';
 
 import 'package:rent_wheels/src/mainSection/payment/presentation/payment_page_one.dart';
@@ -57,12 +58,12 @@ class _PaymentState extends State<Payment> {
       await RentWheelsReservationsMethods().changeReservationStatus(
           reservationId: reservationId, status: 'Paid');
       if (!mounted) return;
-      Navigator.pop(context);
+      context.pop();
       Navigator.pop(context, 'Paid');
       showSuccessPopUp('Payment Successful', context);
     } catch (e) {
       if (!mounted) return;
-      Navigator.pop(context);
+      context.pop();
       showErrorPopUp(e.toString(), context);
     }
   }
@@ -167,7 +168,7 @@ class _PaymentState extends State<Payment> {
         leading: AdaptiveBackButton(
           onPressed: () {
             if (currentIndex == 0) {
-              Navigator.pop(context);
+              context.pop();
             } else {
               payments.previousPage(
                 duration: const Duration(milliseconds: 300),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart' show timeDilation;
+import 'package:go_router/go_router.dart';
 import 'package:rent_wheels/core/widgets/spacing/spacing.dart';
 import 'package:rent_wheels/core/widgets/theme/colors.dart';
 import 'package:rent_wheels/core/widgets/theme/theme.dart';
@@ -88,7 +89,7 @@ class _AvailableCarsNearYouDataState extends State<AvailableCarsNearYouData> {
                                         userId: snapshot.data![index].owner!);
 
                                 if (!mounted) return;
-                                Navigator.pop(context);
+                                context.pop();
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
@@ -102,7 +103,7 @@ class _AvailableCarsNearYouDataState extends State<AvailableCarsNearYouData> {
                                 );
                               } catch (e) {
                                 if (!mounted) return;
-                                Navigator.pop(context);
+                                context.pop();
                                 showErrorPopUp(e.toString(), context);
                               }
                             },

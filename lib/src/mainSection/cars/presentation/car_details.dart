@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:easy_image_viewer/easy_image_viewer.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:go_router/go_router.dart';
 import 'package:rent_wheels/core/widgets/carousel/image_carousel_slider_widget.dart';
 import 'package:rent_wheels/core/widgets/theme/theme.dart';
 
@@ -83,7 +84,7 @@ class _CarDetailsState extends State<CarDetails> {
                 !changeColor ? rentWheelsNeutralLight0 : rentWheelsBrandDark900,
             elevation: 0,
             leading: AdaptiveBackButton(
-              onPressed: () => Navigator.pop(context),
+              onPressed: () => context.pop(),
             ),
             pinned: true,
             expandedHeight: Sizes().height(context, 0.3),

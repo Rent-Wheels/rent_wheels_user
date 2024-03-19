@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:go_router/go_router.dart';
 import 'package:rent_wheels/assets/images/image_constants.dart';
 import 'package:rent_wheels/core/widgets/theme/theme.dart';
 
@@ -48,7 +49,7 @@ class _VerifyEmailState extends State<VerifyEmail> {
                 try {
                   await AuthService.firebase().logout();
                   if (!mounted) return;
-                  Navigator.pop(context);
+                  context.pop();
                   Navigator.pushAndRemoveUntil(
                       context,
                       CupertinoPageRoute(
@@ -57,7 +58,7 @@ class _VerifyEmailState extends State<VerifyEmail> {
                       (route) => false);
                 } catch (e) {
                   if (!mounted) return;
-                  Navigator.pop(context);
+                  context.pop();
                   showErrorPopUp(e.toString(), context);
                 }
               },
@@ -123,7 +124,7 @@ class _VerifyEmailState extends State<VerifyEmail> {
                     await global.setGlobals(fetchedUserDetails: user);
 
                     if (!mounted) return;
-                    Navigator.pop(context);
+                    context.pop();
 
                     Navigator.pushAndRemoveUntil(
                       context,
@@ -134,7 +135,7 @@ class _VerifyEmailState extends State<VerifyEmail> {
                     );
                   } catch (e) {
                     if (!mounted) return;
-                    Navigator.pop(context);
+                    context.pop();
                     showErrorPopUp(e.toString(), context);
                   }
                 }),
@@ -157,11 +158,11 @@ class _VerifyEmailState extends State<VerifyEmail> {
                           .verifyEmail(user: global.user!);
 
                       if (!mounted) return;
-                      Navigator.pop(context);
+                      context.pop();
                       showSuccessPopUp('Email Verification Sent', context);
                     } catch (e) {
                       if (!mounted) return;
-                      Navigator.pop(context);
+                      context.pop();
                       showErrorPopUp(e.toString(), context);
                     }
                   },

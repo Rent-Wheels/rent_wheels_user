@@ -1,6 +1,7 @@
 import 'package:go_router/go_router.dart';
 import 'package:rent_wheels/connection_page.dart';
 import 'package:rent_wheels/src/authentication/presentation/pages/login.dart';
+import 'package:rent_wheels/src/authentication/resetPassword/presentation/forgot_password.dart';
 import 'package:rent_wheels/src/authentication/signup/presentation/signup.dart';
 import 'package:rent_wheels/src/authentication/verify/presentation/verify_email.dart';
 import 'package:rent_wheels/src/mainSection/base.dart';
@@ -36,10 +37,16 @@ final GoRouter goRouterConfiguration = GoRouter(
 
     //LOGIN
     GoRoute(
-      name: 'login',
-      path: '/login',
-      builder: (context, state) => const Login(),
-    ),
+        name: 'login',
+        path: '/login',
+        builder: (context, state) => const Login(),
+        routes: [
+          GoRoute(
+            name: 'forgotPassword',
+            path: '/forgot-password',
+            builder: (context, state) => const ForgotPassword(),
+          ),
+        ]),
 
     //VERIFY EMAIL
     GoRoute(

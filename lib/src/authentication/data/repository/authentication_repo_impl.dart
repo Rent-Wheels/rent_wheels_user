@@ -1,5 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:rent_wheels/core/auth/auth_exceptions.dart';
 import 'package:rent_wheels/core/network/network_info.dart';
 import 'package:rent_wheels/src/authentication/data/datasources/localds.dart';
 import 'package:rent_wheels/src/authentication/data/datasources/remoteds.dart';
@@ -158,6 +159,15 @@ class AuthenticationRepositoryImpl
 
       return Right(response);
     } catch (e) {
+      if (e is UserNotFoundAuthException) {
+        return const Left('User does not exist');
+      }
+      if (e is InvalidPasswordAuthException) {
+        return const Left('Invalid email or password');
+      }
+      if (e is GenericAuthException) {
+        return const Left('Please check your internet connection');
+      }
       return Left(e.toString());
     }
   }

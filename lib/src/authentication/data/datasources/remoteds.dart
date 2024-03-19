@@ -133,7 +133,7 @@ class AuthenticationRemoteDatasourceImpl
     String? password,
   }) async {
     if (email != null) {
-      await user.updateEmail(email);
+      await user.verifyBeforeUpdateEmail(email);
     }
     if (password != null) {
       await user.updatePassword(password);

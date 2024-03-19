@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:go_router/go_router.dart';
 import 'package:rent_wheels/core/widgets/theme/theme.dart';
 
 import 'package:rent_wheels/src/mainSection/cars/presentation/car_details.dart';
@@ -24,7 +25,7 @@ class RenterDetails extends StatelessWidget {
           foregroundColor: rentWheelsBrandDark900,
           elevation: 0,
           leading: AdaptiveBackButton(
-            onPressed: () => Navigator.pop(context),
+            onPressed: () => context.pop(),
           ),
         ),
         body: Padding(

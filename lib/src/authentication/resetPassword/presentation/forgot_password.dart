@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:go_router/go_router.dart';
 import 'package:rent_wheels/core/widgets/theme/theme.dart';
 import 'package:string_validator/string_validator.dart';
 
@@ -37,7 +38,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
         backgroundColor: rentWheelsNeutralLight0,
         foregroundColor: rentWheelsBrandDark900,
         leading: AdaptiveBackButton(
-          onPressed: () => Navigator.pop(context),
+          onPressed: () => context.pop(),
         ),
       ),
       body: Padding(
@@ -90,7 +91,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                   await AuthService.firebase().resetPassword(email: email.text);
 
                   if (!mounted) return;
-                  Navigator.pop(context);
+                  context.pop();
                   Navigator.pushAndRemoveUntil(
                     context,
                     CupertinoPageRoute(
@@ -101,7 +102,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                   );
                 } catch (e) {
                   if (!mounted) return;
-                  Navigator.pop(context);
+                  context.pop();
                   if (e is GenericAuthException) {
                   } else {
                     showErrorPopUp(

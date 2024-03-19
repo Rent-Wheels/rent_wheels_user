@@ -1,3 +1,4 @@
+import 'package:go_router/go_router.dart';
 import 'package:rent_wheels/core/widgets/theme/theme.dart';
 import 'package:uuid/uuid.dart';
 import 'package:flutter/material.dart';
@@ -44,7 +45,7 @@ class CustomSearchScaffoldState extends PlacesAutocompleteState {
         backgroundColor: rentWheelsNeutralLight0,
         foregroundColor: rentWheelsBrandDark900,
         leading: AdaptiveBackButton(
-          onPressed: () => Navigator.pop(context),
+          onPressed: () => context.pop(),
         ),
         elevation: 0,
         title: AppBarPlacesAutoCompleteTextField(

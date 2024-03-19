@@ -1,10 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:rent_wheels/core/models/user/user_model.dart';
 import 'package:rent_wheels/core/urls/urls.dart';
 import 'package:rent_wheels/src/global/data/usecases/get_current_user.dart';
 import 'package:rent_wheels/src/global/data/usecases/get_onboarding_status.dart';
 import 'package:rent_wheels/src/global/data/usecases/update_onboarding_status.dart';
+import 'package:rent_wheels/src/user/domain/entity/user_info.dart';
 
 class GlobalProvider extends ChangeNotifier {
   final GetCurrentUser getCurrentUser;
@@ -17,12 +17,14 @@ class GlobalProvider extends ChangeNotifier {
     required this.updateOnboardingStatus,
   });
 
-  BackendUser? _userDetails;
+  User? _user;
+  BackendUserInfo? _userDetails;
   final Map<String, String> _headers = Urls().headers;
 
-  User? get user => getCurrentUser();
+  User? get user => _user;
   Map<String, String> get headers => _headers;
-  BackendUser? get userDetails => _userDetails;
+  BackendUserInfo? get userDetails => _userDetails;
+  User? get currentUser => getCurrentUser.call();
   LinearGradient get shimmerGradient => _shimmerGradient;
   bool get onboardingStatus => getOnboardingStatus.call();
   Future<String?>? get accessToken async => await user?.getIdToken();
@@ -54,7 +56,12 @@ class GlobalProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  updateUserDetails(BackendUser value) {
+  updateCurrentUser(User? user) {
+    _user = user;
+    notifyListeners();
+  }
+
+  updateUserDetails(BackendUserInfo value) {
     _userDetails = value;
     notifyListeners();
   }

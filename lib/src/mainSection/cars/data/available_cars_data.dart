@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 import 'package:rent_wheels/src/mainSection/cars/presentation/car_details.dart';
 
@@ -48,7 +49,7 @@ class _AvailableCarsDataState extends State<AvailableCarsData> {
                                   userId: snapshot.data![index].owner!);
 
                           if (!mounted) return;
-                          Navigator.pop(context);
+                          context.pop();
                           Navigator.push(
                             context,
                             MaterialPageRoute(
@@ -60,7 +61,7 @@ class _AvailableCarsDataState extends State<AvailableCarsData> {
                           );
                         } catch (e) {
                           if (!mounted) return;
-                          Navigator.pop(context);
+                          context.pop();
                           showErrorPopUp(e.toString(), context);
                         }
                       },
@@ -92,7 +93,7 @@ class _AvailableCarsDataState extends State<AvailableCarsData> {
                                     userId: snapshot.data![index].owner!);
 
                             if (!mounted) return;
-                            Navigator.pop(context);
+                            context.pop();
                             Navigator.push(
                               context,
                               MaterialPageRoute(
@@ -104,7 +105,7 @@ class _AvailableCarsDataState extends State<AvailableCarsData> {
                             );
                           } catch (e) {
                             if (!mounted) return;
-                            Navigator.pop(context);
+                            context.pop();
                             showErrorPopUp(e.toString(), context);
                           }
                         },

@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:go_router/go_router.dart';
 import 'package:rent_wheels/core/widgets/theme/theme.dart';
 
 import 'package:rent_wheels/src/mainSection/payment/presentation/payment.dart';
@@ -51,12 +52,12 @@ class _ReservationsDataState extends State<ReservationsData> {
       await RentWheelsReservationsMethods().changeReservationStatus(
           reservationId: reservationId, status: reservationStatus);
       if (!mounted) return;
-      if (reservationStatus == 'Cancelled') Navigator.pop(context);
-      Navigator.pop(context);
+      if (reservationStatus == 'Cancelled') context.pop();
+      context.pop();
       showSuccessPopUp(successMessage, context);
     } catch (e) {
       if (!mounted) return;
-      Navigator.pop(context);
+      context.pop();
       showErrorPopUp(e.toString(), context);
     }
   }

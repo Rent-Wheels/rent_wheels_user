@@ -5,15 +5,17 @@ import 'package:rent_wheels/core/widgets/theme/colors.dart';
 import 'package:rent_wheels/core/widgets/theme/theme.dart';
 
 class TextButtonWidget extends StatefulWidget {
-  final double width;
+  final double? width;
   final bool isActive;
   final Color? btnColor;
   final String buttonName;
+  final TextStyle? textStyle;
   final void Function()? onPressed;
 
   const TextButtonWidget({
     super.key,
     this.btnColor,
+    this.textStyle,
     required this.width,
     required this.isActive,
     required this.onPressed,
@@ -31,7 +33,7 @@ class _TextButtonWidgetState extends State<TextButtonWidget> {
       onTap: widget.onPressed,
       enableFeedback: true,
       child: SizedBox(
-        width: widget.width,
+        // width: widget.width,
         height: Sizes().height(context, 0.06),
         child: Container(
           alignment: Alignment.center,
@@ -39,11 +41,12 @@ class _TextButtonWidgetState extends State<TextButtonWidget> {
               EdgeInsets.symmetric(horizontal: Sizes().width(context, 0.02)),
           child: Text(
             widget.buttonName,
-            style: theme.textTheme.headlineMedium!.copyWith(
-              color: rentWheelsBrandDark900.withOpacity(
-                widget.isActive ? 1 : 0.5,
-              ),
-            ),
+            style: widget.textStyle ??
+                theme.textTheme.headlineMedium!.copyWith(
+                  color: rentWheelsBrandDark900.withOpacity(
+                    widget.isActive ? 1 : 0.5,
+                  ),
+                ),
           ),
         ),
       ),

@@ -24,7 +24,7 @@ class _ConnectionPageState extends State<ConnectionPage> {
       return;
     }
 
-    user = context.read<GlobalProvider>().user;
+    user = context.read<GlobalProvider>().currentUser;
 
     context.read<GlobalProvider>().updateHeaders();
 
@@ -35,11 +35,7 @@ class _ConnectionPageState extends State<ConnectionPage> {
       'headers': context.read<GlobalProvider>().headers
     };
 
-    userBloc.add(
-      GetUserDetailsEvent(
-        params: params,
-      ),
-    );
+    userBloc.add(GetUserDetailsEvent(params: params));
   }
 
   @override
@@ -57,6 +53,7 @@ class _ConnectionPageState extends State<ConnectionPage> {
           context.goNamed('login');
         }
         if (state is GetUserDetailsLoaded) {
+          context.read<GlobalProvider>().updateUserDetails(state.user);
           if (user!.emailVerified) {
             context.goNamed('home');
           } else {

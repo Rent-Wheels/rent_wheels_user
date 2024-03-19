@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:go_router/go_router.dart';
 
 import 'package:rent_wheels/src/mainSection/payment/presentation/payment.dart';
 import 'package:rent_wheels/src/mainSection/reservations/widgets/reservation_details_widget.dart';
@@ -48,7 +49,7 @@ class _MakeReservationPageTwoState extends State<MakeReservationPageTwo> {
       await RentWheelsReservationsMethods()
           .makeReservation(reservationDetails: widget.reservation);
       if (!mounted) return;
-      Navigator.pop(context);
+      context.pop();
       Navigator.push(
         context,
         CupertinoPageRoute(
@@ -57,7 +58,7 @@ class _MakeReservationPageTwoState extends State<MakeReservationPageTwo> {
       );
     } catch (e) {
       if (!mounted) return;
-      Navigator.pop(context);
+      context.pop();
       showErrorPopUp(e.toString(), context);
     }
   }
@@ -81,12 +82,12 @@ class _MakeReservationPageTwoState extends State<MakeReservationPageTwo> {
       await RentWheelsReservationsMethods().changeReservationStatus(
           reservationId: widget.reservation.id!, status: reservationStatus);
       if (!mounted) return;
-      Navigator.pop(context);
-      if (reservationStatus == 'Cancelled') Navigator.pop(context);
+      context.pop();
+      if (reservationStatus == 'Cancelled') context.pop();
       showSuccessPopUp(successMessage, context);
     } catch (e) {
       if (!mounted) return;
-      Navigator.pop(context);
+      context.pop();
       showErrorPopUp(e.toString(), context);
     }
   }
