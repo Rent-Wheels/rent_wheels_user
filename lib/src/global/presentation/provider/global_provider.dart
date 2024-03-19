@@ -3,15 +3,18 @@ import 'package:flutter/material.dart';
 import 'package:rent_wheels/core/urls/urls.dart';
 import 'package:rent_wheels/src/global/data/usecases/get_current_user.dart';
 import 'package:rent_wheels/src/global/data/usecases/get_onboarding_status.dart';
+import 'package:rent_wheels/src/global/data/usecases/reload_user.dart';
 import 'package:rent_wheels/src/global/data/usecases/update_onboarding_status.dart';
 import 'package:rent_wheels/src/user/domain/entity/user_info.dart';
 
 class GlobalProvider extends ChangeNotifier {
+  final ReloadUser reloadUser;
   final GetCurrentUser getCurrentUser;
   final GetOnboardingStatus getOnboardingStatus;
   final UpdateOnboardingStatus updateOnboardingStatus;
 
   GlobalProvider({
+    required this.reloadUser,
     required this.getCurrentUser,
     required this.getOnboardingStatus,
     required this.updateOnboardingStatus,
@@ -68,5 +71,11 @@ class GlobalProvider extends ChangeNotifier {
 
   setOnboardingStatus(bool value) async {
     await updateOnboardingStatus.call(value);
+  }
+
+  reloadCurrentUser() async {
+    await reloadUser.call();
+    _user = getCurrentUser.call();
+    notifyListeners();
   }
 }

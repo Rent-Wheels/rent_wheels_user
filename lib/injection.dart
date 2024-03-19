@@ -56,12 +56,13 @@ import 'package:rent_wheels/src/user/data/datasource/remoteds.dart';
 import 'package:rent_wheels/src/user/presentation/bloc/user_bloc.dart';
 import 'package:rent_wheels/src/user/data/repository/user_repo_impl.dart';
 import 'package:rent_wheels/src/user/domain/usecase/get_user_region.dart';
+import 'package:rent_wheels/src/user/domain/usecase/get_user_details.dart';
 import 'package:rent_wheels/src/user/domain/repository/user_repository.dart';
 import 'package:rent_wheels/src/user/domain/usecase/get_cached_user_info.dart';
 
+import 'package:rent_wheels/src/global/data/usecases/reload_user.dart';
 import 'package:rent_wheels/src/global/domain/datasources/localds.dart';
 import 'package:rent_wheels/src/global/domain/datasources/remoteds.dart';
-import 'package:rent_wheels/src/user/domain/usecase/get_user_details.dart';
 import 'package:rent_wheels/src/global/data/usecases/get_current_user.dart';
 import 'package:rent_wheels/src/global/data/repository/global_repository.dart';
 import 'package:rent_wheels/src/global/data/usecases/get_onboarding_status.dart';
@@ -136,6 +137,7 @@ initGlobal() {
   //provider
   sl.registerFactory(
     () => GlobalProvider(
+      reloadUser: sl(),
       getCurrentUser: sl(),
       getOnboardingStatus: sl(),
       updateOnboardingStatus: sl(),
@@ -144,6 +146,11 @@ initGlobal() {
 
   //usecases
   sl
+    ..registerLazySingleton(
+      () => ReloadUser(
+        repository: sl(),
+      ),
+    )
     ..registerLazySingleton(
       () => GetCurrentUser(
         repository: sl(),

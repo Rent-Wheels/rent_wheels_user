@@ -10,7 +10,7 @@ import 'package:rent_wheels/core/widgets/theme/theme.dart';
 import 'package:rent_wheels/src/authentication/presentation/pages/login.dart';
 import 'package:string_validator/string_validator.dart';
 
-import 'package:rent_wheels/src/authentication/verify/presentation/verify_email.dart';
+import 'package:rent_wheels/src/authentication/presentation/pages/verify_email.dart';
 
 import 'package:rent_wheels/core/auth/auth_service.dart';
 import 'package:rent_wheels/core/widgets/sizes/sizes.dart';

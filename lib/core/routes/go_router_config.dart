@@ -3,7 +3,7 @@ import 'package:rent_wheels/connection_page.dart';
 import 'package:rent_wheels/src/authentication/presentation/pages/login.dart';
 import 'package:rent_wheels/src/authentication/resetPassword/presentation/forgot_password.dart';
 import 'package:rent_wheels/src/authentication/signup/presentation/signup.dart';
-import 'package:rent_wheels/src/authentication/verify/presentation/verify_email.dart';
+import 'package:rent_wheels/src/authentication/presentation/pages/verify_email.dart';
 import 'package:rent_wheels/src/mainSection/base.dart';
 import 'package:rent_wheels/src/onboarding/presentation/onboarding.dart';
 
