@@ -3,28 +3,45 @@ import 'package:flutter/material.dart';
 import 'package:rent_wheels/core/widgets/sizes/sizes.dart';
 import 'package:rent_wheels/core/widgets/textStyles/text_styles.dart';
 
-InkWell buildTextButtonWidget({
-  Color? btnColor,
-  required double width,
-  required bool isActive,
-  required String buttonName,
-  required BuildContext context,
-  required void Function()? onPressed,
-}) {
-  return InkWell(
-    onTap: onPressed,
-    enableFeedback: true,
-    child: SizedBox(
-      width: width,
-      height: Sizes().height(context, 0.06),
-      child: Container(
-        alignment: Alignment.center,
-        padding: EdgeInsets.symmetric(horizontal: Sizes().width(context, 0.02)),
-        child: Text(
-          buttonName,
-          style: isActive ? heading5Brand : heading5BrandDeselect,
+class TextButtonWidget extends StatefulWidget {
+  final double width;
+  final bool isActive;
+  final Color? btnColor;
+  final String buttonName;
+  final void Function()? onPressed;
+
+  const TextButtonWidget({
+    super.key,
+    this.btnColor,
+    required this.width,
+    required this.isActive,
+    required this.onPressed,
+    required this.buttonName,
+  });
+
+  @override
+  State<TextButtonWidget> createState() => _TextButtonWidgetState();
+}
+
+class _TextButtonWidgetState extends State<TextButtonWidget> {
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: widget.onPressed,
+      enableFeedback: true,
+      child: SizedBox(
+        width: widget.width,
+        height: Sizes().height(context, 0.06),
+        child: Container(
+          alignment: Alignment.center,
+          padding:
+              EdgeInsets.symmetric(horizontal: Sizes().width(context, 0.02)),
+          child: Text(
+            widget.buttonName,
+            style: widget.isActive ? heading5Brand : heading5BrandDeselect,
+          ),
         ),
       ),
-    ),
-  );
+    );
+  }
 }

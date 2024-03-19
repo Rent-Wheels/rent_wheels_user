@@ -6,48 +6,49 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:rent_wheels/core/widgets/sizes/sizes.dart';
 import 'package:rent_wheels/core/widgets/theme/colors.dart';
 
-buildProfilePicture({
-  required BuildContext context,
-  File? imageFile,
-  String? imgUrl,
-  required void Function() onTap,
-}) {
-  return GestureDetector(
-    onTap: onTap,
-    child: Center(
-      child: SizedBox(
-        width: Sizes().width(context, 0.35),
-        child: Stack(
-          alignment: Alignment.center,
-          children: [
-            Center(
-              child: Container(
-                height: Sizes().height(context, 0.15),
-                width: Sizes().width(context, 0.3),
-                decoration: BoxDecoration(
-                  image: imageFile != null
-                      ? DecorationImage(
-                          fit: BoxFit.cover,
-                          image: FileImage(imageFile),
-                        )
-                      : imgUrl != null
-                          ? DecorationImage(
-                              fit: BoxFit.cover,
-                              image: CachedNetworkImageProvider(imgUrl),
-                            )
-                          : null,
-                  border: Border.all(color: rentWheelsNeutralLight200),
-                  color: rentWheelsNeutralLight0,
-                  borderRadius: BorderRadius.circular(
-                    Sizes().height(context, 0.015),
+class ProfilePicture extends StatelessWidget {
+  final File? imageFile;
+  final String? imgUrl;
+  final void Function() onTap;
+
+  const ProfilePicture(
+      {super.key, this.imageFile, this.imgUrl, required this.onTap});
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Center(
+        child: SizedBox(
+          width: Sizes().width(context, 0.35),
+          child: Stack(
+            alignment: Alignment.bottomRight,
+            children: [
+              Center(
+                child: Container(
+                  height: Sizes().height(context, 0.15),
+                  width: Sizes().width(context, 0.3),
+                  decoration: BoxDecoration(
+                    image: imageFile != null
+                        ? DecorationImage(
+                            fit: BoxFit.cover,
+                            image: FileImage(imageFile!),
+                          )
+                        : imgUrl != null
+                            ? DecorationImage(
+                                fit: BoxFit.cover,
+                                image: CachedNetworkImageProvider(imgUrl!),
+                              )
+                            : null,
+                    border: Border.all(color: rentWheelsNeutralLight200),
+                    color: rentWheelsNeutralLight0,
+                    borderRadius: BorderRadius.circular(
+                      Sizes().height(context, 0.015),
+                    ),
                   ),
                 ),
               ),
-            ),
-            Positioned(
-              bottom: 0,
-              right: 0,
-              child: CircleAvatar(
+              CircleAvatar(
                 radius: Sizes().width(context, 0.035),
                 backgroundColor: rentWheelsNeutralLight0,
                 child: Icon(
@@ -56,10 +57,10 @@ buildProfilePicture({
                   size: Sizes().height(context, 0.03),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
-    ),
-  );
+    );
+  }
 }

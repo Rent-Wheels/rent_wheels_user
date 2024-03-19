@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:rent_wheels/core/widgets/sizes/sizes.dart';
 import 'package:rent_wheels/core/widgets/theme/colors.dart';
 import 'package:rent_wheels/core/widgets/textStyles/text_styles.dart';
+import 'package:rent_wheels/core/widgets/theme/theme.dart';
 
 buildDropDownInputField({
   dynamic value,
@@ -18,7 +19,9 @@ buildDropDownInputField({
         padding: EdgeInsets.only(bottom: Sizes().width(context, 0.02)),
         child: Text(
           hintText ?? '',
-          style: heading5Information,
+          style: theme.textTheme.headlineMedium!.copyWith(
+            color: rentWheelsInformationDark900,
+          ),
         ),
       ),
       Container(
@@ -47,7 +50,8 @@ buildDropDownInputField({
             hintText: hintText,
             hintStyle: heading6Neutral500,
           ),
-          style: heading6Neutral900,
+          style: theme.textTheme.headlineSmall!
+              .copyWith(color: rentWheelsNeutralDark900),
           dropdownColor: rentWheelsNeutralLight0,
           items: items,
           onChanged: onChanged,

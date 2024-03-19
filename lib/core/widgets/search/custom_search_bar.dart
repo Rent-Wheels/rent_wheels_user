@@ -1,3 +1,4 @@
+import 'package:rent_wheels/core/widgets/theme/theme.dart';
 import 'package:uuid/uuid.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_webservice/places.dart';
@@ -43,12 +44,13 @@ class CustomSearchScaffoldState extends PlacesAutocompleteState {
       appBar: AppBar(
         backgroundColor: rentWheelsNeutralLight0,
         foregroundColor: rentWheelsBrandDark900,
-        leading: buildAdaptiveBackButton(
+        leading: AdaptiveBackButton(
           onPressed: () => Navigator.pop(context),
         ),
         elevation: 0,
         title: AppBarPlacesAutoCompleteTextField(
-          textStyle: heading6Neutral900,
+          textStyle: theme.textTheme.headlineSmall!
+              .copyWith(color: rentWheelsNeutralDark900),
           textDecoration: const InputDecoration(
             hintText: 'Search',
             hintStyle: heading6Neutral500,

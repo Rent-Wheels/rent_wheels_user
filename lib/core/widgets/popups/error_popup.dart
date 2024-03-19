@@ -9,8 +9,9 @@ import 'package:rent_wheels/core/widgets/textStyles/text_styles.dart';
 showErrorPopUp(String content, BuildContext context) {
   return Flushbar(
     padding: EdgeInsets.symmetric(
-        horizontal: Sizes().width(context, 0.1),
-        vertical: Sizes().height(context, 0.02)),
+      horizontal: Sizes().width(context, 0.1),
+      vertical: Sizes().height(context, 0.02),
+    ),
     messageText: Wrap(
       children: [
         Icon(

@@ -3,65 +3,94 @@ import 'package:flutter/material.dart';
 import 'package:rent_wheels/core/widgets/sizes/sizes.dart';
 import 'package:rent_wheels/core/widgets/theme/colors.dart';
 import 'package:rent_wheels/core/widgets/textStyles/text_styles.dart';
+import 'package:rent_wheels/core/widgets/theme/theme.dart';
 
-buildGenericTextfield({
-  Widget? icon,
-  int? minLines,
-  int? maxLines,
-  bool? isPassword,
-  bool? enableSuggestions,
-  required String hint,
-  TextInputAction? textInput,
-  TextInputType? keyboardType,
-  required BuildContext context,
-  TextCapitalization? textCapitalization,
-  required TextEditingController controller,
-  required void Function(String) onChanged,
-}) {
-  return Column(
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: [
-      Padding(
-        padding: EdgeInsets.only(bottom: Sizes().width(context, 0.02)),
-        child: Text(
-          hint,
-          style: heading5Information,
-        ),
-      ),
-      Container(
-        width: Sizes().width(context, 0.85),
-        decoration: BoxDecoration(
-          border: Border.all(
-            color: rentWheelsNeutralLight200,
+class GenericTextField extends StatefulWidget {
+  final Widget? icon;
+  final int? minLines;
+  final int? maxLines;
+  final bool? isPassword;
+  final bool? enableSuggestions;
+  final String hint;
+  final TextInputAction? textInput;
+  final TextInputType? keyboardType;
+  final BuildContext context;
+  final TextCapitalization? textCapitalization;
+  final TextEditingController controller;
+  final void Function(String) onChanged;
+  const GenericTextField({
+    super.key,
+    this.icon,
+    this.minLines,
+    this.maxLines,
+    this.isPassword,
+    this.enableSuggestions,
+    required this.hint,
+    this.textInput,
+    this.keyboardType,
+    required this.context,
+    this.textCapitalization,
+    required this.controller,
+    required this.onChanged,
+  });
+
+  @override
+  State<GenericTextField> createState() => _GenericTextFieldState();
+}
+
+class _GenericTextFieldState extends State<GenericTextField> {
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: EdgeInsets.only(bottom: Sizes().width(context, 0.02)),
+          child: Text(
+            widget.hint,
+            style: theme.textTheme.headlineMedium!.copyWith(
+              color: rentWheelsInformationDark900,
+            ),
           ),
-          borderRadius: BorderRadius.circular(
-            Sizes().width(context, 0.035),
+        ),
+        Container(
+          width: Sizes().width(context, 0.85),
+          decoration: BoxDecoration(
+            border: Border.all(
+              color: rentWheelsNeutralLight200,
+            ),
+            borderRadius: BorderRadius.circular(
+              Sizes().width(context, 0.035),
+            ),
+          ),
+          padding:
+              EdgeInsets.symmetric(horizontal: Sizes().width(context, 0.04)),
+          child: TextField(
+            minLines: widget.minLines,
+            maxLines: widget.maxLines,
+            controller: widget.controller,
+            obscuringCharacter: '*',
+            style: theme.textTheme.headlineSmall!
+                .copyWith(color: rentWheelsNeutralDark900),
+            keyboardType: widget.keyboardType,
+            obscureText: widget.isPassword ?? false,
+            cursorColor: rentWheelsBrandDark900,
+            autocorrect: widget.enableSuggestions ?? widget.isPassword == null,
+            enableSuggestions:
+                widget.enableSuggestions ?? widget.isPassword == null,
+            textInputAction: widget.textInput ?? TextInputAction.next,
+            textCapitalization:
+                widget.textCapitalization ?? TextCapitalization.sentences,
+            decoration: InputDecoration(
+              hintText: widget.hint,
+              border: InputBorder.none,
+              hintStyle: heading6Neutral500,
+              suffix: widget.icon,
+            ),
+            onChanged: widget.onChanged,
           ),
         ),
-        padding: EdgeInsets.symmetric(horizontal: Sizes().width(context, 0.04)),
-        child: TextField(
-          minLines: minLines,
-          maxLines: maxLines,
-          controller: controller,
-          obscuringCharacter: '*',
-          style: heading6Neutral900,
-          keyboardType: keyboardType,
-          obscureText: isPassword ?? false,
-          cursorColor: rentWheelsBrandDark900,
-          autocorrect: enableSuggestions ?? isPassword == null,
-          enableSuggestions: enableSuggestions ?? isPassword == null,
-          textInputAction: textInput ?? TextInputAction.next,
-          textCapitalization:
-              textCapitalization ?? TextCapitalization.sentences,
-          decoration: InputDecoration(
-            hintText: hint,
-            border: InputBorder.none,
-            hintStyle: heading6Neutral500,
-            suffix: icon,
-          ),
-          onChanged: onChanged,
-        ),
-      ),
-    ],
-  );
+      ],
+    );
+  }
 }

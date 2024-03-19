@@ -10,7 +10,7 @@ buildConfirmationDialog({
 }) =>
     showDialog(
       context: context,
-      builder: (context) => buildConfirmationPopup(
+      builder: (context) => ConfirmationPopup(
         label: label,
         message: message,
         context: context,

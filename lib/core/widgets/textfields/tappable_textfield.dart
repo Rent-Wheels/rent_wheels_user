@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:rent_wheels/core/widgets/sizes/sizes.dart';
 import 'package:rent_wheels/core/widgets/theme/colors.dart';
 import 'package:rent_wheels/core/widgets/textStyles/text_styles.dart';
+import 'package:rent_wheels/core/widgets/theme/theme.dart';
 
 buildTappableTextField({
   required String hint,
@@ -17,7 +18,9 @@ buildTappableTextField({
         padding: EdgeInsets.only(bottom: Sizes().width(context, 0.02)),
         child: Text(
           hint,
-          style: heading5Information,
+          style: theme.textTheme.headlineMedium!.copyWith(
+            color: rentWheelsInformationDark900,
+          ),
         ),
       ),
       Container(
@@ -38,7 +41,8 @@ buildTappableTextField({
             controller: controller,
             minLines: 1,
             maxLines: null,
-            style: heading6Neutral900,
+            style: theme.textTheme.headlineSmall!
+                .copyWith(color: rentWheelsNeutralDark900),
             decoration: InputDecoration(
               hintText: hint,
               hintStyle: heading6Neutral500,
