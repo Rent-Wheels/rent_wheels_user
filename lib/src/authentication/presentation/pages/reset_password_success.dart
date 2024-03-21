@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:go_router/go_router.dart';
 import 'package:rent_wheels/core/widgets/theme/theme.dart';
-
-import 'package:rent_wheels/src/authentication/presentation/pages/login.dart';
 
 import 'package:rent_wheels/core/widgets/sizes/sizes.dart';
 import 'package:rent_wheels/core/widgets/theme/colors.dart';
@@ -52,16 +50,10 @@ class ResetPasswordSuccess extends StatelessWidget {
             ),
             Space().height(context, 0.05),
             GenericButton(
-              width: Sizes().width(context, 0.85),
               isActive: true,
               buttonName: "Return to login",
-              onPressed: () => Navigator.pushAndRemoveUntil(
-                context,
-                CupertinoPageRoute(
-                  builder: (context) => const Login(),
-                ),
-                (route) => false,
-              ),
+              width: Sizes().width(context, 0.85),
+              onPressed: () => context.goNamed('login'),
             )
           ],
         ),

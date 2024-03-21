@@ -16,6 +16,7 @@ const AppBarTheme _appBarTheme = AppBarTheme(
   elevation: 0,
   foregroundColor: rentWheelsBrandDark900,
   backgroundColor: rentWheelsNeutralLight0,
+  surfaceTintColor: rentWheelsNeutralLight0,
 );
 
 const TextTheme _textTheme = TextTheme(

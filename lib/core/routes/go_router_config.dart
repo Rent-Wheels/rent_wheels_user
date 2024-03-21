@@ -1,9 +1,10 @@
 import 'package:go_router/go_router.dart';
 import 'package:rent_wheels/connection_page.dart';
 import 'package:rent_wheels/src/authentication/presentation/pages/login.dart';
-import 'package:rent_wheels/src/authentication/resetPassword/presentation/forgot_password.dart';
+import 'package:rent_wheels/src/authentication/presentation/pages/forgot_password.dart';
 import 'package:rent_wheels/src/authentication/presentation/pages/signup.dart';
 import 'package:rent_wheels/src/authentication/presentation/pages/verify_email.dart';
+import 'package:rent_wheels/src/authentication/presentation/pages/reset_password_success.dart';
 import 'package:rent_wheels/src/mainSection/base.dart';
 import 'package:rent_wheels/src/onboarding/presentation/onboarding.dart';
 
@@ -37,22 +38,32 @@ final GoRouter goRouterConfiguration = GoRouter(
 
     //LOGIN
     GoRoute(
-        name: 'login',
-        path: '/login',
-        builder: (context, state) => const Login(),
-        routes: [
-          GoRoute(
-            name: 'forgotPassword',
-            path: '/forgot-password',
-            builder: (context, state) => const ForgotPassword(),
-          ),
-        ]),
+      name: 'login',
+      path: '/login',
+      builder: (context, state) => const Login(),
+      routes: [
+        GoRoute(
+          name: 'forgotPassword',
+          path: '/forgot-password',
+          builder: (context, state) => const ForgotPassword(),
+        ),
+      ],
+    ),
 
     //VERIFY EMAIL
     GoRoute(
       name: 'verifyEmail',
       path: '/verify-email',
       builder: (context, state) => const VerifyEmail(),
+    ),
+
+    //RESET PASSWORD SUCCESS
+    GoRoute(
+      name: 'resetPasswordSuccess',
+      path: '/reset-password-success',
+      builder: (context, state) => ResetPasswordSuccess(
+        email: state.uri.queryParameters['email'].toString(),
+      ),
     ),
 
     //HOME
