@@ -1,6 +1,5 @@
 import 'package:dartz/dartz.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:rent_wheels/core/auth/auth_exceptions.dart';
 import 'package:rent_wheels/core/network/network_info.dart';
 import 'package:rent_wheels/src/authentication/data/datasources/localds.dart';
 import 'package:rent_wheels/src/authentication/data/datasources/remoteds.dart';
@@ -48,10 +47,17 @@ class AuthenticationRepositoryImpl
 
     try {
       final response = await remoteDatasource.createUserWithEmailAndPassword(
-          email: params['email'], password: params['password']);
+        email: params['email'],
+        password: params['password'],
+      );
 
       return Right(response);
-    } catch (e) {
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'weak-password') {
+        return const Left('Please choose a stronger password');
+      } else if (e.code == 'email-already-in-use') {
+        return const Left('Email is already in use');
+      }
       return Left(e.toString());
     }
   }
@@ -158,15 +164,11 @@ class AuthenticationRepositoryImpl
       );
 
       return Right(response);
-    } catch (e) {
-      if (e is UserNotFoundAuthException) {
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'user-not-found') {
         return const Left('User does not exist');
-      }
-      if (e is InvalidPasswordAuthException) {
+      } else if (e.code == 'wrong-password') {
         return const Left('Invalid email or password');
-      }
-      if (e is GenericAuthException) {
-        return const Left('Please check your internet connection');
       }
       return Left(e.toString());
     }

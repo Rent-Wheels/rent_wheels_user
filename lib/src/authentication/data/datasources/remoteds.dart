@@ -33,7 +33,7 @@ class AuthenticationRemoteDatasourceImpl
       uri = url.returnUri(endpoint: Endpoints.registerUser);
       response = await client.post(
         uri,
-        body: params['body'],
+        body: jsonEncode(params['body']),
       );
     } else {
       uri = url.returnUri(
@@ -41,12 +41,10 @@ class AuthenticationRemoteDatasourceImpl
         urlParameters: params['urlParameters'],
       );
 
-      Map<String, String> headers = url.headers;
-      headers.addAll({'Authorization': params['token']});
-
       response = await client.patch(
         uri,
-        body: params['body'],
+        headers: params['headers'],
+        body: jsonEncode(params['body']),
       );
     }
 
@@ -77,10 +75,10 @@ class AuthenticationRemoteDatasourceImpl
       urlParameters: params['urlParameters'],
     );
 
-    Map<String, String> headers = url.headers;
-    headers.addAll({'Authorization': params['token']});
-
-    final response = await client.delete(uri);
+    final response = await client.delete(
+      uri,
+      headers: params['headers'],
+    );
 
     if (response.statusCode == 200) {
       return;

@@ -1,16 +1,14 @@
 import 'dart:io';
 
 import 'package:go_router/go_router.dart';
-import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:rent_wheels/core/widgets/theme/theme.dart';
 import 'package:string_validator/string_validator.dart';
 
 import 'package:rent_wheels/core/auth/auth_service.dart';
-import 'package:rent_wheels/core/util/date_formatter.dart';
+import 'package:rent_wheels/core/util/date_util.dart';
 import 'package:rent_wheels/core/widgets/sizes/sizes.dart';
 import 'package:rent_wheels/core/widgets/theme/colors.dart';
 import 'package:rent_wheels/core/auth/auth_exceptions.dart';
@@ -18,7 +16,6 @@ import 'package:rent_wheels/core/widgets/spacing/spacing.dart';
 import 'package:rent_wheels/core/global/globals.dart' as global;
 import 'package:rent_wheels/core/widgets/popups/error_popup.dart';
 import 'package:rent_wheels/core/widgets/popups/success_popup.dart';
-import 'package:rent_wheels/core/widgets/search/custom_search_bar.dart';
 import 'package:rent_wheels/core/widgets/popups/date_picker_widget.dart';
 import 'package:rent_wheels/core/auth/backend/backend_auth_service.dart';
 import 'package:rent_wheels/core/widgets/buttons/generic_button_widget.dart';
@@ -196,20 +193,20 @@ class _AccountProfileState extends State<AccountProfile> {
                 context: context,
                 controller: residence,
                 onTap: () async {
-                  final response = await Navigator.push(
-                    context,
-                    CupertinoPageRoute(
-                      builder: (context) => CustomSearchScaffold(),
-                    ),
-                  );
+                  // final response = await Navigator.push(
+                  //   context,
+                  //   CupertinoPageRoute(
+                  //     builder: (context) => CustomSearchScaffold(),
+                  //   ),
+                  // );
 
-                  if (response != null &&
-                      response != global.userDetails!.placeOfResidence) {
-                    setState(() {
-                      residence.text = response;
-                      isResidenceValid = true;
-                    });
-                  }
+                  // if (response != null &&
+                  //     response != global.userDetails!.placeOfResidence) {
+                  //   setState(() {
+                  //     residence.text = response;
+                  //     isResidenceValid = true;
+                  //   });
+                  // }
                 },
               ),
               Space().height(context, 0.02),
@@ -248,7 +245,7 @@ class _AccountProfileState extends State<AccountProfile> {
                       name: name.text,
                       phoneNumber: phoneNumber.text,
                       email: email.text,
-                      dob: DateFormat.yMMMMd().parse(dob.text),
+                      dob: parseDate(dob.text),
                       residence: residence.text,
                     );
 

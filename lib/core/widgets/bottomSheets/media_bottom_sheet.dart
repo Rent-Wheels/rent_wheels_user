@@ -9,7 +9,7 @@ mediaBottomSheet({
   required void Function() cameraOnTap,
   required void Function() galleryOnTap,
 }) {
-  return showBottomSheet(
+  return showModalBottomSheet(
     backgroundColor: rentWheelsNeutralLight0,
     context: context,
     builder: (context) => Container(

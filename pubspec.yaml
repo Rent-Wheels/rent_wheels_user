@@ -64,7 +64,6 @@ dependencies:
   google_maps_webservice: ^0.0.19
   data_connection_checker_nulls: ^0.0.2
   syncfusion_flutter_datepicker: ^22.1.39
-  
 
 dev_dependencies:
   flutter_test:

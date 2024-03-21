@@ -5,7 +5,7 @@ import 'package:rent_wheels/core/widgets/theme/theme.dart';
 
 import 'package:rent_wheels/src/mainSection/reservations/widgets/price_details_widget.dart';
 
-import 'package:rent_wheels/core/util/date_formatter.dart';
+import 'package:rent_wheels/core/util/date_util.dart';
 import 'package:rent_wheels/core/widgets/sizes/sizes.dart';
 import 'package:rent_wheels/core/widgets/theme/colors.dart';
 import 'package:rent_wheels/core/models/cars/cars_model.dart';

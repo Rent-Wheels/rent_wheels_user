@@ -1,5 +1,6 @@
 import 'package:http/http.dart';
 import 'package:get_it/get_it.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -70,6 +71,8 @@ import 'package:rent_wheels/src/global/presentation/provider/global_provider.dar
 import 'package:rent_wheels/src/global/data/usecases/update_onboarding_status.dart';
 import 'package:rent_wheels/src/global/domain/repository/global_repository_impl.dart';
 
+import 'package:rent_wheels/core/image/provider/image_provider.dart';
+
 final sl = GetIt.instance;
 
 init() async {
@@ -96,7 +99,12 @@ init() async {
   //USER
   initUser();
 
+  //IMAGE
+  initImage();
+
   //!EXTERNAL
+
+  sl.registerLazySingleton(() => ImagePicker());
 
   //LOCAL STORAGE
   final sharedPreferences = await SharedPreferences.getInstance();
@@ -488,4 +496,18 @@ initUser() {
         sharedPreferences: sl(),
       ),
     );
+}
+
+initImage() {
+  //provider
+  sl.registerFactory(
+    () => ImageSelectionProvider(
+      picker: sl(),
+    ),
+  );
+  //usecases
+
+  //repository
+
+  //datasources
 }

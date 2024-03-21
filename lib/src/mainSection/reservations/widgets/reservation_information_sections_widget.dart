@@ -3,7 +3,7 @@ import 'package:rent_wheels/core/extenstions/date_compare.dart';
 
 import 'package:rent_wheels/core/models/cars/cars_model.dart';
 import 'package:rent_wheels/core/models/reservations/reservations_model.dart';
-import 'package:rent_wheels/core/util/date_formatter.dart';
+import 'package:rent_wheels/core/util/date_util.dart';
 import 'package:rent_wheels/core/widgets/buttons/generic_button_widget.dart';
 import 'package:rent_wheels/core/widgets/sizes/sizes.dart';
 import 'package:rent_wheels/core/widgets/spacing/spacing.dart';

@@ -10,13 +10,12 @@ import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 import 'package:rent_wheels/src/mainSection/reservations/presentation/booking/make_reservation_page_two.dart';
 
 import 'package:rent_wheels/core/widgets/sizes/sizes.dart';
-import 'package:rent_wheels/core/util/date_formatter.dart';
+import 'package:rent_wheels/core/util/date_util.dart';
 import 'package:rent_wheels/core/widgets/theme/colors.dart';
 import 'package:rent_wheels/core/models/cars/cars_model.dart';
 import 'package:rent_wheels/core/widgets/spacing/spacing.dart';
 import 'package:rent_wheels/core/global/globals.dart' as global;
 import 'package:rent_wheels/core/widgets/popups/error_popup.dart';
-import 'package:rent_wheels/core/widgets/search/custom_search_bar.dart';
 import 'package:rent_wheels/core/backend/users/methods/user_methods.dart';
 import 'package:rent_wheels/core/widgets/buttons/generic_button_widget.dart';
 import 'package:rent_wheels/core/widgets/textfields/tappable_textfield.dart';
@@ -201,19 +200,19 @@ class _MakeReservationPageOneState extends State<MakeReservationPageOne> {
                   context: context,
                   controller: location,
                   onTap: () async {
-                    final response = await Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => CustomSearchScaffold(),
-                      ),
-                    );
+                    // final response = await Navigator.push(
+                    //   context,
+                    //   MaterialPageRoute(
+                    //     builder: (context) => CustomSearchScaffold(),
+                    //   ),
+                    // );
 
-                    if (response != null) {
-                      setState(() {
-                        location.text = response;
-                        isLocationValid = true;
-                      });
-                    }
+                    // if (response != null) {
+                    //   setState(() {
+                    //     location.text = response;
+                    //     isLocationValid = true;
+                    //   });
+                    // }
                   }),
               Space().height(context, 0.03),
               buildTappableTextField(

@@ -8,8 +8,8 @@ import 'package:rent_wheels/core/widgets/theme/colors.dart';
 
 presentDatePicker({
   required BuildContext context,
-  required void Function(DateTime) onDateTimeChanged,
   required void Function() onPressed,
+  required void Function(DateTime) onDateTimeChanged,
 }) {
   final currentDate = DateTime(
     DateTime.now().year,
@@ -61,9 +61,15 @@ presentDatePicker({
         )
       : showDatePicker(
           context: context,
-          initialDate: DateTime(2005),
+          initialDate: DateTime(
+            currentDate.year - 18,
+          ),
           firstDate: DateTime(1950),
-          lastDate: DateTime(2006),
+          lastDate: DateTime(
+            currentDate.year - 18,
+            currentDate.month,
+            currentDate.day,
+          ),
           initialEntryMode: DatePickerEntryMode.input,
           builder: (context, child) {
             return Theme(

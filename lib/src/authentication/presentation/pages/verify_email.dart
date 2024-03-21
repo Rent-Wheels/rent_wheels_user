@@ -91,7 +91,7 @@ class _VerifyEmailState extends State<VerifyEmail> {
               ),
               onPressed: logout,
             ),
-          )
+          ),
         ],
       ),
       body: MultiBlocListener(
