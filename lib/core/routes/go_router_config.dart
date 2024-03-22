@@ -29,11 +29,7 @@ final GoRouter goRouterConfiguration = GoRouter(
     GoRoute(
       name: 'signUp',
       path: '/signUp',
-      builder: (context, state) => SignUp(
-        onboarding: bool.tryParse(
-          state.uri.queryParameters['onboarding'] ?? 'false',
-        ),
-      ),
+      builder: (context, state) => const SignUp(),
     ),
 
     //LOGIN

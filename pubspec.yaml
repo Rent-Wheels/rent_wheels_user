@@ -60,6 +60,7 @@ dependencies:
   cached_network_image: ^3.2.3
   flutter_google_places: ^0.3.0
   data_connection_checker_nulls: ^0.0.2
+  google_maps_webservice:
   syncfusion_flutter_datepicker: ^22.1.39
 
 dev_dependencies:

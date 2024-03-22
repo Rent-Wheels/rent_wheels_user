@@ -26,11 +26,10 @@ class GlobalProvider extends ChangeNotifier {
 
   User? get user => _user;
   Map<String, String> get headers => _headers;
-  BackendUserInfo? get userDetails => _userDetails;
   User? get currentUser => getCurrentUser.call();
+  BackendUserInfo? get userDetails => _userDetails;
   LinearGradient get shimmerGradient => _shimmerGradient;
   bool get onboardingStatus => getOnboardingStatus.call();
-  Future<String?>? get accessToken async => await user?.getIdToken();
 
   final LinearGradient _shimmerGradient = const LinearGradient(
     colors: [
@@ -48,14 +47,14 @@ class GlobalProvider extends ChangeNotifier {
     tileMode: TileMode.clamp,
   );
 
-  updateHeaders() {
-    accessToken?.then(
-      (value) => _headers.addAll(
+  updateHeaders(User? user) {
+    user?.getIdToken().then((value) {
+      _headers.addAll(
         {
           'Authorization': 'Bearer $value',
         },
-      ),
-    );
+      );
+    });
   }
 
   updateCurrentUser(User? user) {

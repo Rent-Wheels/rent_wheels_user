@@ -22,7 +22,7 @@ class _ConnectionPageState extends State<ConnectionPage> {
   userStatus() {
     user = _globalProvider.currentUser;
 
-    _globalProvider.updateHeaders();
+    _globalProvider.updateHeaders(user);
 
     final params = {
       'urlParameters': {

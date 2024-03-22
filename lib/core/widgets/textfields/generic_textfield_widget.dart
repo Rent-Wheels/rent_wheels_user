@@ -63,21 +63,23 @@ class _GenericTextFieldState extends State<GenericTextField> {
           padding:
               EdgeInsets.symmetric(horizontal: Sizes().width(context, 0.04)),
           child: TextField(
+            obscuringCharacter: '*',
             minLines: widget.minLines,
             maxLines: widget.maxLines,
             controller: widget.controller,
-            obscuringCharacter: '*',
-            style: theme.textTheme.headlineSmall!
-                .copyWith(color: rentWheelsNeutralDark900),
             keyboardType: widget.keyboardType,
-            obscureText: widget.isPassword ?? false,
             cursorColor: rentWheelsBrandDark900,
+            obscureText: widget.isPassword ?? false,
+            textInputAction: widget.textInput ?? TextInputAction.next,
             autocorrect: widget.enableSuggestions ?? widget.isPassword == null,
             enableSuggestions:
                 widget.enableSuggestions ?? widget.isPassword == null,
-            textInputAction: widget.textInput ?? TextInputAction.next,
             textCapitalization:
                 widget.textCapitalization ?? TextCapitalization.sentences,
+            style: theme.textTheme.headlineSmall!.copyWith(
+              fontWeight: FontWeight.w600,
+              color: rentWheelsNeutralDark900,
+            ),
             decoration: InputDecoration(
               hintText: widget.hint,
               suffix: widget.icon,

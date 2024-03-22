@@ -39,7 +39,7 @@ class _LoginState extends State<Login> {
   }
 
   signInWithEmailAndPassword() {
-    buildLoadingIndicator(context, 'loadingMessage');
+    buildLoadingIndicator(context, 'Logging In');
     final params = {
       'email': _email.text,
       'password': _password.text,
@@ -63,20 +63,44 @@ class _LoginState extends State<Login> {
   Widget build(BuildContext context) {
     _globalProvider = context.watch<GlobalProvider>();
     return Scaffold(
-      body: BlocListener(
-        bloc: _userBloc,
-        listener: (context, state) {
-          if (state is GenericUserError) {
-            context.pop();
-            showErrorPopUp(state.errorMessage, context);
-          }
+      body: MultiBlocListener(
+        listeners: [
+          BlocListener(
+            bloc: _authBloc,
+            listener: (context, state) {
+              if (state is GenericFirebaseAuthError) {
+                context.pop();
+                showErrorPopUp(state.errorMessage, context);
+              }
 
-          if (state is GetUserDetailsLoaded) {
-            _globalProvider.updateUserDetails(state.user);
-            context.pop();
-            context.goNamed('home');
-          }
-        },
+              if (state is SignInWithEmailAndPasswordLoaded) {
+                _globalProvider.updateCurrentUser(state.user.user);
+                _globalProvider.updateHeaders(state.user.user);
+
+                if (!(state.user.user?.emailVerified ?? false)) {
+                  context.goNamed('verifyEmail');
+                } else {
+                  getUserDetails();
+                }
+              }
+            },
+          ),
+          BlocListener(
+            bloc: _userBloc,
+            listener: (context, state) {
+              if (state is GenericUserError) {
+                context.pop();
+                showErrorPopUp(state.errorMessage, context);
+              }
+
+              if (state is GetUserDetailsLoaded) {
+                _globalProvider.updateUserDetails(state.user);
+                context.pop();
+                context.goNamed('home');
+              }
+            },
+          ),
+        ],
         child: Center(
           child: SingleChildScrollView(
             keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
@@ -128,30 +152,11 @@ class _LoginState extends State<Login> {
                     },
                   ),
                   Space().height(context, 0.05),
-                  BlocListener(
-                    bloc: _authBloc,
-                    listener: (context, state) {
-                      if (state is GenericFirebaseAuthError) {
-                        context.pop();
-                        showErrorPopUp(state.errorMessage, context);
-                      }
-
-                      if (state is SignInWithEmailAndPasswordLoaded) {
-                        _globalProvider.updateCurrentUser(state.user.user);
-
-                        if (!(state.user.user?.emailVerified ?? false)) {
-                          context.goNamed('verifyEmail');
-                        } else {
-                          getUserDetails();
-                        }
-                      }
-                    },
-                    child: GenericButton(
-                      buttonName: 'Login',
-                      isActive: isActive(),
-                      width: Sizes().width(context, 0.85),
-                      onPressed: signInWithEmailAndPassword,
-                    ),
+                  GenericButton(
+                    buttonName: 'Login',
+                    isActive: isActive(),
+                    width: Sizes().width(context, 0.85),
+                    onPressed: signInWithEmailAndPassword,
                   ),
                   Space().height(context, 0.02),
                   SizedBox(
@@ -168,20 +173,6 @@ class _LoginState extends State<Login> {
                             color: rentWheelsNeutral,
                           ),
                         ),
-                        // GestureDetector(
-                        //   onTap: () => Navigator.push(
-                        //     context,
-                        //     CupertinoPageRoute(
-                        //       builder: (context) => const ForgotPassword(),
-                        //     ),
-                        //   ),
-                        //   child: Text(
-                        //     'Forgot Password?',
-                        //     style: theme.textTheme.bodyMedium!.copyWith(
-                        //       color: rentWheelsNeutral,
-                        //     ),
-                        //   ),
-                        // ),
                       ],
                     ),
                   ),
@@ -197,32 +188,15 @@ class _LoginState extends State<Login> {
                             color: rentWheelsNeutral,
                           ),
                         ),
-                        Space().width(context, 0.01),
                         TextButtonWidget(
                           width: null,
                           isActive: true,
                           onPressed: () => context.goNamed('signUp'),
                           buttonName: 'Register',
-                          textStyle: theme.textTheme.bodyMedium!.copyWith(
-                            color: rentWheelsNeutral,
+                          textStyle: theme.textTheme.headlineSmall!.copyWith(
+                            color: rentWheelsInformationDark900,
                           ),
                         ),
-                        // GestureDetector(
-                        //   onTap: () {
-                        //     Navigator.push(
-                        //       context,
-                        //       CupertinoPageRoute(
-                        //         builder: (context) => const SignUp(),
-                        //       ),
-                        //     );
-                        //   },
-                        //   child: Text(
-                        //     "Register",
-                        //     style: theme.textTheme.headlineSmall!.copyWith(
-                        //       color: rentWheelsInformationDark900,
-                        //     ),
-                        //   ),
-                        // ),
                       ],
                     ),
                   ),

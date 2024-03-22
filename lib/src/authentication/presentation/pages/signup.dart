@@ -4,7 +4,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_maps_webservice/places.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:rent_wheels/core/search/presentation/provider/search_provider.dart';
 import 'package:rent_wheels/core/search/presentation/widgets/custom_search_bottom_sheet.dart';
@@ -12,7 +11,6 @@ import 'package:rent_wheels/core/widgets/popups/error_popup.dart';
 import 'package:rent_wheels/core/widgets/theme/theme.dart';
 import 'package:rent_wheels/injection.dart';
 import 'package:rent_wheels/src/authentication/presentation/bloc/authentication_bloc.dart';
-import 'package:rent_wheels/src/authentication/presentation/pages/login.dart';
 import 'package:rent_wheels/core/image/provider/image_provider.dart';
 import 'package:rent_wheels/src/files/presentation/bloc/files_bloc.dart';
 import 'package:rent_wheels/src/global/presentation/provider/global_provider.dart';
@@ -31,8 +29,7 @@ import 'package:rent_wheels/core/widgets/textfields/generic_textfield_widget.dar
 import 'package:rent_wheels/core/widgets/profilePicture/profile_picture_widget.dart';
 
 class SignUp extends StatefulWidget {
-  final bool? onboarding;
-  const SignUp({super.key, this.onboarding});
+  const SignUp({super.key});
 
   @override
   State<SignUp> createState() => _SignUpState();
@@ -187,6 +184,7 @@ class _SignUpState extends State<SignUp> {
 
                 if (state is CreateUserWithEmailAndPasswordLoaded) {
                   _globalProvider.updateCurrentUser(state.user.user);
+                  _globalProvider.updateHeaders(state.user.user);
                   saveProfileImage();
                 }
 
@@ -348,14 +346,7 @@ class _SignUpState extends State<SignUp> {
                         ),
                         Space().width(context, 0.01),
                         GestureDetector(
-                          onTap: widget.onboarding != null && widget.onboarding!
-                              ? () => Navigator.push(
-                                    context,
-                                    CupertinoPageRoute(
-                                      builder: (context) => const Login(),
-                                    ),
-                                  )
-                              : () => context.pop(),
+                          onTap: () => context.goNamed('login'),
                           child: Text(
                             "Login",
                             style: theme.textTheme.headlineSmall!.copyWith(

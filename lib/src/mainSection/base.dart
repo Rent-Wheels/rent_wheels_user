@@ -1,5 +1,6 @@
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter/material.dart';
+import 'package:rent_wheels/assets/svgs/svg_constants.dart';
 
 import 'package:rent_wheels/src/mainSection/home/presentation/home.dart';
 import 'package:rent_wheels/src/mainSection/profile/presentation/profile.dart';
@@ -64,9 +65,7 @@ class _MainSectionState extends State<MainSection> {
           BottomNavigationBarItem(
             label: 'Dashboard',
             icon: SvgPicture.asset(
-              currentIndex == 0
-                  ? 'assets/svgs/active_home.svg'
-                  : 'assets/svgs/inactive_home.svg',
+              currentIndex == 0 ? activeHomeSVG : inactiveHomeSVG,
               colorFilter: const ColorFilter.mode(
                 rentWheelsBrandDark800,
                 BlendMode.srcIn,
@@ -76,9 +75,7 @@ class _MainSectionState extends State<MainSection> {
           BottomNavigationBarItem(
             label: 'Available Cars',
             icon: SvgPicture.asset(
-              currentIndex == 1
-                  ? 'assets/svgs/active_car.svg'
-                  : 'assets/svgs/inactive_car.svg',
+              currentIndex == 1 ? activeCarSVG : inactiveCarSVG,
               colorFilter: const ColorFilter.mode(
                 rentWheelsBrandDark900,
                 BlendMode.srcIn,
@@ -88,9 +85,7 @@ class _MainSectionState extends State<MainSection> {
           BottomNavigationBarItem(
             label: 'Reservations',
             icon: SvgPicture.asset(
-              currentIndex == 2
-                  ? 'assets/svgs/active_reservation.svg'
-                  : 'assets/svgs/inactive_reservation.svg',
+              currentIndex == 2 ? activeReservationSVG : inactiveReservationSVG,
               colorFilter: const ColorFilter.mode(
                 rentWheelsBrandDark900,
                 BlendMode.srcIn,
@@ -100,9 +95,7 @@ class _MainSectionState extends State<MainSection> {
           BottomNavigationBarItem(
             label: 'Profile',
             icon: SvgPicture.asset(
-              currentIndex == 3
-                  ? 'assets/svgs/active_profile.svg'
-                  : 'assets/svgs/inactive_profile.svg',
+              currentIndex == 3 ? activeProfileSVG : inactiveProfileSVG,
               colorFilter: const ColorFilter.mode(
                 rentWheelsBrandDark900,
                 BlendMode.srcIn,
