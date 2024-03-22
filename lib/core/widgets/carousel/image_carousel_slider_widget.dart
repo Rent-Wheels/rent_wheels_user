@@ -3,11 +3,13 @@ import 'package:carousel_slider/carousel_slider.dart';
 
 import 'package:rent_wheels/core/widgets/sizes/sizes.dart';
 import 'package:rent_wheels/core/widgets/carousel/carousel_dots_widget.dart';
+import 'package:rent_wheels/core/widgets/theme/colors.dart';
 
 class ImageCarouselSlider extends StatefulWidget {
   final int index;
   final bool autoPlay;
   final double? height;
+  final bool isPromotional;
   final List<Widget> items;
   final CarouselController controller;
   final Function(int, CarouselPageChangedReason) onPageChanged;
@@ -18,6 +20,7 @@ class ImageCarouselSlider extends StatefulWidget {
     required this.items,
     required this.autoPlay,
     required this.controller,
+    required this.isPromotional,
     required this.onPageChanged,
   });
 
@@ -43,13 +46,21 @@ class _ImageCarouselSliderState extends State<ImageCarouselSlider> {
           ),
         ),
         Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: widget.items.asMap().entries.map((entry) {
-            return CarouselDots(
-              index: entry.key,
-              currentIndex: widget.index,
-            );
-          }).toList(),
+          mainAxisAlignment: widget.isPromotional
+              ? MainAxisAlignment.start
+              : MainAxisAlignment.center,
+          children: widget.items
+              .asMap()
+              .entries
+              .map(
+                (entry) => CarouselDots(
+                  index: entry.key,
+                  currentIndex: widget.index,
+                  inactiveColor:
+                      widget.isPromotional ? rentWheelsNeutralLight200 : null,
+                ),
+              )
+              .toList(),
         )
       ],
     );

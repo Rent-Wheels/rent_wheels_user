@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:provider/provider.dart';
 import 'package:rent_wheels/assets/images/image_constants.dart';
+import 'package:rent_wheels/assets/svgs/svg_constants.dart';
 import 'package:rent_wheels/core/enums/enums.dart';
 import 'package:rent_wheels/core/widgets/carousel/image_carousel_slider_widget.dart';
 import 'package:rent_wheels/core/widgets/theme/theme.dart';
 import 'package:rent_wheels/core/widgets/toast/toast_notification_widget.dart';
+import 'package:rent_wheels/injection.dart';
+import 'package:rent_wheels/src/cars/presentation/bloc/cars_bloc.dart';
+import 'package:rent_wheels/src/global/presentation/provider/global_provider.dart';
 import 'package:rent_wheels/src/mainSection/base.dart';
 
 import 'package:rent_wheels/src/mainSection/cars/data/available_cars_data.dart';
@@ -28,10 +33,15 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   int _promoIndex = 0;
   final CarouselController _promo = CarouselController();
+  final _carsBloc1 = sl<CarsBloc>();
+  final _carsBloc2 = sl<CarsBloc>();
 
   String getLocationSuffix() {
-    List<String> splitLocation =
-        global.userDetails!.placeOfResidence.split(', ');
+    List<String> splitLocation = context
+        .read<GlobalProvider>()
+        .userDetails!
+        .placeOfResidence!
+        .split(', ');
     String place = splitLocation[splitLocation.length - 2];
     String country = splitLocation[splitLocation.length - 1];
     return '$place, $country';
@@ -61,16 +71,19 @@ class _HomeState extends State<Home> {
             slivers: [
               SliverAppBar(
                 pinned: true,
-                backgroundColor: rentWheelsNeutralLight0,
                 elevation: 0,
+                backgroundColor: rentWheelsNeutralLight0,
                 collapsedHeight: Sizes().height(context, 0.1),
                 expandedHeight: Sizes().height(context, 0.13),
                 flexibleSpace: FlexibleSpaceBar(
+                  centerTitle: true,
+                  expandedTitleScale: 1,
+                  titlePadding: const EdgeInsets.all(0),
                   title: Padding(
                     padding: EdgeInsets.only(
-                      left: Sizes().width(context, 0.04),
                       right: Sizes().width(context, 0.04),
-                      top: Sizes().height(context, 0.04),
+                      left: Sizes().width(context, 0.04),
+                      bottom: Sizes().height(context, 0.02),
                     ),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.end,
@@ -84,7 +97,7 @@ class _HomeState extends State<Home> {
                               children: [
                                 Text(
                                   'Your location',
-                                  style: theme.textTheme.bodyLarge!.copyWith(
+                                  style: theme.textTheme.bodyMedium!.copyWith(
                                     color: rentWheelsInformationDark900,
                                   ),
                                 ),
@@ -92,8 +105,7 @@ class _HomeState extends State<Home> {
                                 Text(
                                   getLocationSuffix(),
                                   style:
-                                      theme.textTheme.headlineLarge!.copyWith(
-                                    fontWeight: FontWeight.w500,
+                                      theme.textTheme.headlineMedium!.copyWith(
                                     color: rentWheelsInformationDark900,
                                   ),
                                 ),
@@ -102,12 +114,12 @@ class _HomeState extends State<Home> {
                             Row(
                               children: [
                                 const SVGIconButton(
-                                  svg: 'assets/svgs/search.svg',
+                                  svg: searchSVG,
                                   onPressed: buildToastNotification,
                                 ),
                                 Space().width(context, 0.07),
                                 const SVGIconButton(
-                                  svg: 'assets/svgs/notifications.svg',
+                                  svg: notificationsSVG,
                                   onPressed: buildToastNotification,
                                 ),
                               ],
@@ -117,74 +129,77 @@ class _HomeState extends State<Home> {
                       ],
                     ),
                   ),
-                  expandedTitleScale: 1,
-                  centerTitle: true,
                 ),
               ),
               SliverList(
-                  delegate: SliverChildBuilderDelegate(childCount: 1,
-                      (context, index) {
-                return Padding(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: Sizes().width(context, 0.04),
-                  ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      ImageCarouselSlider(
-                        index: _promoIndex,
-                        height: Sizes().height(context, 0.35),
-                        controller: _promo,
-                        onPageChanged: (index, _) {
-                          setState(() {
-                            _promoIndex = index;
-                          });
-                        },
-                        items: carouselItems,
-                        autoPlay: carouselItems.length > 1,
+                delegate: SliverChildBuilderDelegate(
+                  childCount: 1,
+                  (context, index) {
+                    return Padding(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: Sizes().width(context, 0.04),
                       ),
-                      Space().height(context, 0.04),
-                      const AvailableCarsNearYouData(),
-                      Space().height(context, 0.04),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
-                            'Available Vehicles',
-                            style: theme.textTheme.headlineLarge!.copyWith(
-                              color: rentWheelsInformationDark900,
-                            ),
+                          ImageCarouselSlider(
+                            controller: _promo,
+                            index: _promoIndex,
+                            isPromotional: true,
+                            height: Sizes().height(context, 0.37),
+                            onPageChanged: (index, _) {
+                              setState(() {
+                                _promoIndex = index;
+                              });
+                            },
+                            items: carouselItems,
+                            autoPlay: carouselItems.length > 1,
                           ),
-                          GestureDetector(
-                            onTap: () => Navigator.pushAndRemoveUntil(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) =>
-                                      const MainSection(pageIndex: 1),
+                          Space().height(context, 0.04),
+                          // const AvailableCarsNearYouData(),
+                          // Space().height(context, 0.04),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                'Available Vehicles',
+                                style: theme.textTheme.headlineLarge!.copyWith(
+                                  color: rentWheelsInformationDark900,
                                 ),
-                                (route) => false),
-                            child: Text(
-                              'See all',
-                              style: theme.textTheme.headlineSmall!.copyWith(
-                                fontWeight: FontWeight.w500,
-                                color: rentWheelsNeutralDark900,
                               ),
-                            ),
-                          )
+                              GestureDetector(
+                                onTap: () => Navigator.pushAndRemoveUntil(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          const MainSection(pageIndex: 1),
+                                    ),
+                                    (route) => false),
+                                child: Text(
+                                  'See all',
+                                  style:
+                                      theme.textTheme.headlineSmall!.copyWith(
+                                    fontWeight: FontWeight.w500,
+                                    color: rentWheelsNeutralDark900,
+                                  ),
+                                ),
+                              )
+                            ],
+                          ),
+                          Space().height(context, 0.02),
+                          // SizedBox(
+                          //   height: Sizes().height(context, 0.35),
+                          //   child: const AvailableCarsData(
+                          //     type: AvailableCarsType.preview,
+                          //   ),
+                          // ),
                         ],
                       ),
-                      Space().height(context, 0.02),
-                      SizedBox(
-                        height: Sizes().height(context, 0.35),
-                        child: const AvailableCarsData(
-                          type: AvailableCarsType.preview,
-                        ),
-                      ),
-                    ],
-                  ),
-                );
-              }))
+                    );
+                  },
+                ),
+              )
             ],
           ),
         ));

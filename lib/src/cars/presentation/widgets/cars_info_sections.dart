@@ -10,7 +10,7 @@ import 'package:rent_wheels/core/widgets/theme/theme.dart';
 class CarsInfoSections extends StatefulWidget {
   final double width;
   final double? margin;
-  final Car carDetails;
+  final Car? carDetails;
   final double? height;
   final bool isLoading;
   final String? heroTag;
@@ -45,7 +45,7 @@ class _CarsInfoSectionsState extends State<CarsInfoSections> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Hero(
-              tag: widget.heroTag ?? widget.carDetails.media![0].mediaURL,
+              tag: widget.heroTag ?? widget.carDetails!.media![0].mediaURL,
               child: Container(
                 height: widget.height ?? Sizes().height(context, 0.2),
                 width: widget.width,
@@ -54,12 +54,12 @@ class _CarsInfoSectionsState extends State<CarsInfoSections> {
                     Sizes().height(context, 0.02),
                   ),
                   color: rentWheelsNeutralLight0,
-                  image: widget.carDetails.media![0].mediaURL == ''
+                  image: widget.carDetails!.media![0].mediaURL == ''
                       ? null
                       : DecorationImage(
                           fit: BoxFit.cover,
                           image: CachedNetworkImageProvider(
-                            widget.carDetails.media![0].mediaURL,
+                            widget.carDetails!.media![0].mediaURL,
                           ),
                         ),
                 ),
@@ -78,7 +78,7 @@ class _CarsInfoSectionsState extends State<CarsInfoSections> {
                     ),
                   )
                 : Text(
-                    '${widget.carDetails.yearOfManufacture} ${widget.carDetails.make} ${widget.carDetails.model}',
+                    '${widget.carDetails!.yearOfManufacture} ${widget.carDetails!.make} ${widget.carDetails!.model}',
                     style: theme.textTheme.headlineLarge!.copyWith(
                       color: rentWheelsInformationDark900,
                     ),
@@ -96,7 +96,7 @@ class _CarsInfoSectionsState extends State<CarsInfoSections> {
                     ),
                   )
                 : Text(
-                    'GH¢${widget.carDetails.rate} ${widget.carDetails.plan}',
+                    'GH¢${widget.carDetails!.rate} ${widget.carDetails!.plan}',
                     style: theme.textTheme.bodyLarge!.copyWith(
                       color: rentWheelsInformationDark900,
                     ),

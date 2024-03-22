@@ -6,7 +6,5 @@ const emailSentImg = 'lib/assets/images/email_sent.jpg';
 const onboarding1Img = 'lib/assets/images/onboarding_1.JPG';
 const onboarding2Img = 'lib/assets/images/onboarding_2.JPG';
 const onboarding3Img = 'lib/assets/images/onboarding_3.JPG';
-const newYearPromoBannerImg =
-    'lib/assets/images/new_year_promo_banner_image.jpg';
-const newUserPromoBannerImg =
-    'lib/assets/images/new_user_promo_banner_image.jpeg';
+const newYearPromoBannerImg = 'lib/assets/images/new_year_promo_banner.jpg';
+const newUserPromoBannerImg = 'lib/assets/images/new_user_promo_banner.jpeg';

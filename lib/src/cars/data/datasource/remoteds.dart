@@ -25,7 +25,10 @@ class CarsRemoteDatasourceImpl implements CarsRemoteDatasource {
       queryParameters: params['queryParameters'],
     );
 
-    final response = await client.get(uri, headers: urls.headers);
+    final response = await client.get(
+      uri,
+      headers: params['headers'],
+    );
 
     final decodedResponse = jsonDecode(response.body);
 

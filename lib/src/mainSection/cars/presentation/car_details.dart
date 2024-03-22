@@ -83,9 +83,10 @@ class _CarDetailsState extends State<CarDetails> {
                     tag: widget.heroTag ?? car.media![0].mediaURL,
                     child: GestureDetector(
                       child: ImageCarouselSlider(
-                        index: _carImageIndex,
+                        isPromotional: false,
                         items: carouselItems,
                         controller: _carImage,
+                        index: _carImageIndex,
                         autoPlay: false,
                         onPageChanged: (index, _) {
                           setState(() {

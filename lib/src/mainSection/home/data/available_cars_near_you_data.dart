@@ -9,7 +9,6 @@ import 'package:rent_wheels/src/mainSection/base.dart';
 import 'package:rent_wheels/src/mainSection/cars/presentation/car_details.dart';
 
 import 'package:rent_wheels/core/widgets/sizes/sizes.dart';
-import 'package:rent_wheels/core/models/cars/cars_model.dart';
 import 'package:rent_wheels/core/widgets/popups/error_popup.dart';
 import 'package:rent_wheels/src/cars/presentation/widgets/cars_info_sections.dart';
 import 'package:rent_wheels/core/backend/car/methods/cars_methods.dart';
@@ -18,15 +17,14 @@ import 'package:rent_wheels/core/backend/users/methods/user_methods.dart';
 import 'package:rent_wheels/core/widgets/loadingIndicator/loading_indicator.dart';
 import 'package:rent_wheels/core/widgets/loadingIndicator/shimmer_loading_placeholder.dart';
 
-class AvailableCarsNearYouData extends StatefulWidget {
-  const AvailableCarsNearYouData({super.key});
+class AvailableCarsHome extends StatefulWidget {
+  const AvailableCarsHome({super.key});
 
   @override
-  State<AvailableCarsNearYouData> createState() =>
-      _AvailableCarsNearYouDataState();
+  State<AvailableCarsHome> createState() => _AvailableCarsHomeState();
 }
 
-class _AvailableCarsNearYouDataState extends State<AvailableCarsNearYouData> {
+class _AvailableCarsHomeState extends State<AvailableCarsHome> {
   @override
   Widget build(BuildContext context) {
     timeDilation = 1.5;
@@ -162,7 +160,7 @@ class _AvailableCarsNearYouDataState extends State<AvailableCarsNearYouData> {
                     child: CarsInfoSections(
                       margin: Sizes().width(context, 0.03),
                       isLoading: true,
-                      carDetails: Car(media: [Media(mediaURL: '')]),
+                      carDetails: null,
                       width: Sizes().width(context, 0.6),
                       onTap: null,
                     ),
