@@ -16,44 +16,38 @@ class ConnectionPage extends StatefulWidget {
 
 class _ConnectionPageState extends State<ConnectionPage> {
   User? user;
+  late GlobalProvider _globalProvider;
   final userBloc = sl<UserBloc>();
 
-  userStatus() async {
-    if (!context.read<GlobalProvider>().onboardingStatus) {
-      context.goNamed('onboarding');
-      return;
-    }
+  userStatus() {
+    user = _globalProvider.currentUser;
 
-    user = context.read<GlobalProvider>().currentUser;
-
-    context.read<GlobalProvider>().updateHeaders();
+    _globalProvider.updateHeaders();
 
     final params = {
       'urlParameters': {
         'userId': user?.uid,
       },
-      'headers': context.read<GlobalProvider>().headers
+      'headers': _globalProvider.headers
     };
 
     userBloc.add(GetUserDetailsEvent(params: params));
   }
 
   @override
-  void initState() {
-    userStatus();
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
+    _globalProvider = context.watch<GlobalProvider>();
+    userStatus();
     return BlocListener(
       bloc: userBloc,
       listener: (context, state) {
         if (state is GenericUserError) {
-          context.goNamed('login');
+          _globalProvider.onboardingStatus
+              ? context.goNamed('login')
+              : context.goNamed('onboarding');
         }
         if (state is GetUserDetailsLoaded) {
-          context.read<GlobalProvider>().updateUserDetails(state.user);
+          _globalProvider.updateUserDetails(state.user);
           if (user!.emailVerified) {
             context.goNamed('home');
           } else {

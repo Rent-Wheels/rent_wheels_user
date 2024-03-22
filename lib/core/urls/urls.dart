@@ -4,8 +4,8 @@ class Urls {
   final UrlParser _urlParser = UrlParser();
   final Map<String, String> headers = {'Content-Type': 'application/json'};
   // final String _baseURL = 'http://10.0.2.2:3000';
-  // final String _baseURL = 'http://localhost:3000';
-  final String _baseURL = 'https://rent-wheels.braalex.me';
+  final String _baseURL = 'localhost:3000';
+  // final String _baseURL = 'rent-wheels.braalex.me';
 
   returnUri({
     required Endpoints endpoint,
@@ -16,7 +16,8 @@ class Urls {
 
     String parsedRoute = _urlParser.urlPasser(urlParameters, lastRoute);
 
-    return Uri.https(_baseURL, parsedRoute, queryParameters);
+    // return Uri.https(_baseURL, parsedRoute, queryParameters);
+    return Uri.http(_baseURL, parsedRoute, queryParameters);
   }
 }
 

@@ -56,7 +56,6 @@ class GlobalProvider extends ChangeNotifier {
         },
       ),
     );
-    notifyListeners();
   }
 
   updateCurrentUser(User? user) {

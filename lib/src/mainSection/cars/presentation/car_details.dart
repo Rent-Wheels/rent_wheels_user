@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:easy_image_viewer/easy_image_viewer.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:go_router/go_router.dart';
 import 'package:rent_wheels/core/widgets/carousel/image_carousel_slider_widget.dart';
 import 'package:rent_wheels/core/widgets/theme/theme.dart';
@@ -58,20 +56,9 @@ class _CarDetailsState extends State<CarDetails> {
       return CarDetailsCarouselItem(image: media.mediaURL);
     }).toList();
 
-    final List<ImageProvider> carImages = car.media!
-        .map((media) => CachedNetworkImageProvider(media.mediaURL))
-        .toList();
-
-    showImageOverlay() {
-      MultiImageProvider images = MultiImageProvider(carImages);
-      showImageViewerPager(
-        context,
-        images,
-        swipeDismissible: true,
-        doubleTapZoomable: true,
-        backgroundColor: Colors.black.withOpacity(0.3),
-      );
-    }
+    // final List<ImageProvider> carImages = car.media!
+    //     .map((media) => CachedNetworkImageProvider(media.mediaURL))
+    //     .toList();
 
     return Scaffold(
       backgroundColor: rentWheelsNeutralLight0,
@@ -95,7 +82,6 @@ class _CarDetailsState extends State<CarDetails> {
                   Hero(
                     tag: widget.heroTag ?? car.media![0].mediaURL,
                     child: GestureDetector(
-                      onTap: showImageOverlay,
                       child: ImageCarouselSlider(
                         index: _carImageIndex,
                         items: carouselItems,

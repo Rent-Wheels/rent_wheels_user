@@ -44,7 +44,7 @@ final GoRouter goRouterConfiguration = GoRouter(
       routes: [
         GoRoute(
           name: 'forgotPassword',
-          path: '/forgot-password',
+          path: 'forgot-password',
           builder: (context, state) => const ForgotPassword(),
         ),
       ],

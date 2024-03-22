@@ -12,7 +12,6 @@ import 'package:rent_wheels/core/network/network_info.dart';
 import 'package:rent_wheels/src/authentication/data/datasources/localds.dart';
 import 'package:rent_wheels/src/authentication/data/datasources/remoteds.dart';
 import 'package:rent_wheels/src/authentication/domain/usecase/firebase/logout.dart';
-import 'package:rent_wheels/src/authentication/data/datasources/backend/localds.dart';
 import 'package:rent_wheels/src/authentication/domain/usecase/firebase/update_user.dart';
 import 'package:rent_wheels/src/authentication/domain/usecase/firebase/verify_email.dart';
 import 'package:rent_wheels/src/authentication/presentation/bloc/authentication_bloc.dart';
@@ -20,8 +19,11 @@ import 'package:rent_wheels/src/authentication/domain/usecase/firebase/reset_pas
 import 'package:rent_wheels/src/authentication/data/repository/authentication_repo_impl.dart';
 import 'package:rent_wheels/src/authentication/domain/usecase/backend/create_update_user.dart';
 import 'package:rent_wheels/src/authentication/domain/usecase/firebase/reauthenticate_user.dart';
+import 'package:rent_wheels/src/authentication/domain/repository/firebase/firebase_auth_repo.dart';
 import 'package:rent_wheels/src/authentication/domain/usecase/backend/delete_user_from_backend.dart';
+import 'package:rent_wheels/src/authentication/domain/usecase/firebase/delete_user_from_firebase.dart';
 import 'package:rent_wheels/src/authentication/domain/usecase/firebase/sign_in_with_email_and_password.dart';
+import 'package:rent_wheels/src/authentication/domain/repository/backend/backend_authentication_repository.dart';
 import 'package:rent_wheels/src/authentication/domain/usecase/firebase/create_user_with_email_and_password.dart';
 
 import 'package:rent_wheels/src/cars/data/datasource/remoteds.dart';
@@ -248,6 +250,11 @@ initAuth() {
       ),
     )
     ..registerLazySingleton(
+      () => DeleteUserFromFirebase(
+        repository: sl(),
+      ),
+    )
+    ..registerLazySingleton(
       () => DeleteUserFromBackend(
         repository: sl(),
       ),
@@ -264,13 +271,21 @@ initAuth() {
     );
 
   //repository
-  sl.registerLazySingleton(
-    () => AuthenticationRepositoryImpl(
-      networkInfo: sl(),
-      remoteDatasource: sl(),
-      localDatasource: sl(),
-    ),
-  );
+  sl
+    ..registerLazySingleton<FirebaseAuthenticationRepository>(
+      () => AuthenticationRepositoryImpl(
+        networkInfo: sl(),
+        remoteDatasource: sl(),
+        localDatasource: sl(),
+      ),
+    )
+    ..registerLazySingleton<BackendAuthenticationRepository>(
+      () => AuthenticationRepositoryImpl(
+        networkInfo: sl(),
+        remoteDatasource: sl(),
+        localDatasource: sl(),
+      ),
+    );
 
   //datasources
   sl
@@ -281,7 +296,7 @@ initAuth() {
         firebase: sl(),
       ),
     )
-    ..registerLazySingleton<BackendAuthenticationLocalDatasource>(
+    ..registerLazySingleton(
       () => AuthenticationLocalDatasource(
         sharedPreferences: sl(),
       ),
