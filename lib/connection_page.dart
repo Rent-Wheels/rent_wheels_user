@@ -3,7 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:rent_wheels/injection.dart';
-import 'package:rent_wheels/src/loading/loading.dart';
+import 'package:rent_wheels/loading.dart';
 import 'package:rent_wheels/src/user/presentation/bloc/user_bloc.dart';
 import 'package:rent_wheels/src/global/presentation/provider/global_provider.dart';
 

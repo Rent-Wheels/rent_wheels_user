@@ -4,7 +4,7 @@ import 'package:rent_wheels/assets/svgs/svg_constants.dart';
 
 import 'package:rent_wheels/src/home/presentation/pages/home.dart';
 import 'package:rent_wheels/src/mainSection/profile/presentation/profile.dart';
-import 'package:rent_wheels/src/mainSection/cars/presentation/available_cars.dart';
+import 'package:rent_wheels/src/cars/presentation/pages/available_cars.dart';
 import 'package:rent_wheels/src/mainSection/reservations/presentation/reservation.dart';
 
 import 'package:rent_wheels/core/widgets/theme/colors.dart';

@@ -4,8 +4,9 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:rent_wheels/core/widgets/sizes/sizes.dart';
 import 'package:rent_wheels/core/widgets/theme/theme.dart';
 import 'package:rent_wheels/core/widgets/theme/colors.dart';
-import 'package:rent_wheels/core/widgets/spacing/spacing.dart';
+
 import 'package:rent_wheels/src/cars/domain/entity/cars.dart';
+import 'package:rent_wheels/core/widgets/spacing/spacing.dart';
 
 class CarsInfoSections extends StatefulWidget {
   final double width;

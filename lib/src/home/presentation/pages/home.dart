@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:rent_wheels/core/enums/enums.dart';
 
 import 'package:rent_wheels/injection.dart';
 
@@ -19,7 +20,7 @@ import 'package:rent_wheels/core/widgets/loadingIndicator/shimmer_loading_placeh
 import 'package:rent_wheels/src/cars/presentation/bloc/cars_bloc.dart';
 import 'package:rent_wheels/src/global/presentation/provider/global_provider.dart';
 import 'package:rent_wheels/src/home/presentation/widgets/svg_icon_button_widgets.dart';
-import 'package:rent_wheels/src/home/presentation/widgets/available_cars_home_widget.dart';
+import 'package:rent_wheels/src/cars/presentation/widgets/available_cars_widget.dart';
 import 'package:rent_wheels/src/home/presentation/widgets/promo_carousel_item_widget.dart';
 
 class Home extends StatefulWidget {
@@ -180,9 +181,10 @@ class _HomeState extends State<Home> {
                           builder: (context, state) {
                             if (state is GetAllAvailableCarsLoaded) {
                               return AvailableCarsHome(
-                                cars: state.cars,
                                 isNear: true,
+                                cars: state.cars,
                                 isLoading: false,
+                                type: AvailableCarsType.preview,
                               );
                             }
 
@@ -196,6 +198,7 @@ class _HomeState extends State<Home> {
                               cars: [],
                               isNear: true,
                               isLoading: true,
+                              type: AvailableCarsType.preview,
                             );
                           },
                         ),
@@ -204,9 +207,10 @@ class _HomeState extends State<Home> {
                           builder: (context, state) {
                             if (state is GetAllAvailableCarsLoaded) {
                               return AvailableCarsHome(
-                                cars: state.cars,
                                 isNear: false,
+                                cars: state.cars,
                                 isLoading: false,
+                                type: AvailableCarsType.preview,
                               );
                             }
 
@@ -220,6 +224,7 @@ class _HomeState extends State<Home> {
                               cars: [],
                               isNear: false,
                               isLoading: true,
+                              type: AvailableCarsType.preview,
                             );
                           },
                         ),

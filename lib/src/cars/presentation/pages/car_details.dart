@@ -7,8 +7,8 @@ import 'package:rent_wheels/core/widgets/theme/theme.dart';
 import 'package:rent_wheels/src/cars/domain/entity/cars.dart';
 
 import 'package:rent_wheels/src/mainSection/renter/presentation/renter_profile.dart';
-import 'package:rent_wheels/src/mainSection/cars/widgets/renter_overview_widget.dart';
-import 'package:rent_wheels/src/mainSection/cars/widgets/car_details_carousel_items.dart';
+import 'package:rent_wheels/src/renter/presentation/widgets/renter_overview_widget.dart';
+import 'package:rent_wheels/src/cars/presentation/widgets/car_details_carousel_items.dart';
 
 import 'package:rent_wheels/core/widgets/sizes/sizes.dart';
 import 'package:rent_wheels/core/widgets/theme/colors.dart';
