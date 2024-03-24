@@ -4,6 +4,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:go_router/go_router.dart';
 import 'package:rent_wheels/core/widgets/carousel/image_carousel_slider_widget.dart';
 import 'package:rent_wheels/core/widgets/theme/theme.dart';
+import 'package:rent_wheels/src/cars/domain/entity/cars.dart';
 
 import 'package:rent_wheels/src/mainSection/renter/presentation/renter_profile.dart';
 import 'package:rent_wheels/src/mainSection/cars/widgets/renter_overview_widget.dart';
@@ -11,7 +12,6 @@ import 'package:rent_wheels/src/mainSection/cars/widgets/car_details_carousel_it
 
 import 'package:rent_wheels/core/widgets/sizes/sizes.dart';
 import 'package:rent_wheels/core/widgets/theme/colors.dart';
-import 'package:rent_wheels/core/models/cars/cars_model.dart';
 import 'package:rent_wheels/core/widgets/spacing/spacing.dart';
 import 'package:rent_wheels/core/models/renter/renter_model.dart';
 import 'package:rent_wheels/core/widgets/details/key_value_widget.dart';
@@ -20,12 +20,16 @@ import 'package:rent_wheels/core/widgets/buttons/adaptive_back_button_widget.dar
 import 'package:rent_wheels/src/mainSection/reservations/presentation/booking/make_reservation_page_one.dart';
 
 class CarDetails extends StatefulWidget {
-  final Car car;
+  final Cars car;
   final Renter renter;
   final String? heroTag;
 
-  const CarDetails(
-      {super.key, required this.car, required this.renter, this.heroTag});
+  const CarDetails({
+    super.key,
+    required this.car,
+    required this.renter,
+    this.heroTag,
+  });
 
   @override
   State<CarDetails> createState() => _CarDetailsState();
@@ -51,9 +55,9 @@ class _CarDetailsState extends State<CarDetails> {
         });
       }
     });
-    Car car = widget.car;
+    Cars car = widget.car;
     List<Widget> carouselItems = car.media!.map((media) {
-      return CarDetailsCarouselItem(image: media.mediaURL);
+      return CarDetailsCarouselItem(image: media.mediaURL!);
     }).toList();
 
     // final List<ImageProvider> carImages = car.media!
@@ -80,7 +84,7 @@ class _CarDetailsState extends State<CarDetails> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Hero(
-                    tag: widget.heroTag ?? car.media![0].mediaURL,
+                    tag: widget.heroTag ?? car.media![0].mediaURL!,
                     child: GestureDetector(
                       child: ImageCarouselSlider(
                         isPromotional: false,

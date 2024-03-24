@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:go_router/go_router.dart';
+import 'package:rent_wheels/src/cars/domain/entity/cars.dart';
 
-import 'package:rent_wheels/src/mainSection/payment/presentation/payment.dart';
 import 'package:rent_wheels/src/mainSection/reservations/widgets/reservation_details_widget.dart';
 import 'package:rent_wheels/src/mainSection/reservations/presentation/booking/reservation_successful.dart';
 import 'package:rent_wheels/src/mainSection/reservations/presentation/booking/make_reservation_page_one.dart';
@@ -11,7 +11,6 @@ import 'package:rent_wheels/src/mainSection/reservations/widgets/reservation_det
 import 'package:rent_wheels/core/enums/enums.dart';
 import 'package:rent_wheels/core/widgets/sizes/sizes.dart';
 import 'package:rent_wheels/core/widgets/theme/colors.dart';
-import 'package:rent_wheels/core/models/cars/cars_model.dart';
 import 'package:rent_wheels/core/widgets/spacing/spacing.dart';
 import 'package:rent_wheels/core/extenstions/date_compare.dart';
 import 'package:rent_wheels/core/widgets/popups/error_popup.dart';
@@ -25,7 +24,7 @@ import 'package:rent_wheels/core/widgets/buttons/adaptive_back_button_widget.dar
 import 'package:rent_wheels/core/backend/reservations/methods/reservations_methods.dart';
 
 class MakeReservationPageTwo extends StatefulWidget {
-  final Car? car;
+  final Cars? car;
   final Renter? renter;
   final ReservationView view;
   final ReservationModel reservation;
@@ -101,7 +100,7 @@ class _MakeReservationPageTwoState extends State<MakeReservationPageTwo> {
 
   @override
   Widget build(BuildContext context) {
-    Car? car = widget.car;
+    Cars? car = widget.car;
     Renter? renter = widget.renter;
     ReservationModel reservation = widget.reservation;
 
@@ -215,19 +214,19 @@ class _MakeReservationPageTwoState extends State<MakeReservationPageTwo> {
                                     buttonName: 'Make Payment',
                                     width: Sizes().width(context, 0.4),
                                     onPressed: () async {
-                                      final status = await Navigator.push(
-                                        context,
-                                        CupertinoPageRoute(
-                                          builder: (context) => Payment(
-                                            car: car,
-                                            reservation: reservation,
-                                          ),
-                                        ),
-                                      );
-                                      setState(() {
-                                        reservation.status =
-                                            status ?? reservation.status;
-                                      });
+                                      // final status = await Navigator.push(
+                                      //   context,
+                                      //   CupertinoPageRoute(
+                                      //     builder: (context) => Payment(
+                                      //       car: car,
+                                      //       reservation: reservation,
+                                      //     ),
+                                      //   ),
+                                      // );
+                                      // setState(() {
+                                      //   reservation.status =
+                                      //       status ?? reservation.status;
+                                      // });
                                     }),
                                 Space().width(context, 0.04),
                                 GenericButton(

@@ -1,14 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:go_router/go_router.dart';
 import 'package:rent_wheels/core/widgets/theme/theme.dart';
+import 'package:rent_wheels/src/cars/domain/entity/cars.dart';
 
 import 'package:rent_wheels/src/mainSection/payment/presentation/payment.dart';
 import 'package:rent_wheels/src/mainSection/reservations/widgets/filter_buttons_widget.dart';
 import 'package:rent_wheels/src/mainSection/reservations/presentation/booking/make_reservation_page_one.dart';
-import 'package:rent_wheels/src/mainSection/reservations/presentation/booking/make_reservation_page_two.dart';
 import 'package:rent_wheels/src/mainSection/reservations/widgets/reservation_information_sections_widget.dart';
 
-import 'package:rent_wheels/core/enums/enums.dart';
 import 'package:rent_wheels/core/widgets/sizes/sizes.dart';
 import 'package:rent_wheels/core/widgets/theme/colors.dart';
 import 'package:rent_wheels/core/models/cars/cars_model.dart';
@@ -62,7 +61,7 @@ class _ReservationsDataState extends State<ReservationsData> {
     }
   }
 
-  bookTrip({required Car car}) => Navigator.push(
+  bookTrip({required Cars car}) => Navigator.push(
         context,
         CupertinoPageRoute(
           builder: (context) => MakeReservationPageOne(car: car),
@@ -167,8 +166,9 @@ class _ReservationsDataState extends State<ReservationsData> {
                                               status ?? reservation.status;
                                         });
                                       },
-                                      onBook: () =>
-                                          bookTrip(car: reservation.car!),
+                                      onBook: null,
+                                      // () =>
+                                      //     bookTrip(car: reservation.car!),
                                       onStart: () async {
                                         await modifyReservation(
                                           reservationId: reservation.id!,
@@ -205,24 +205,24 @@ class _ReservationsDataState extends State<ReservationsData> {
                                         },
                                       ),
                                       onPressed: () async {
-                                        final status = await Navigator.push(
-                                          context,
-                                          CupertinoPageRoute(
-                                            builder: (context) =>
-                                                MakeReservationPageTwo(
-                                              car: reservation.car,
-                                              view: ReservationView.view,
-                                              renter: reservation.renter,
-                                              reservation: reservation,
-                                            ),
-                                          ),
-                                        );
+                                        // final status = await Navigator.push(
+                                        //   context,
+                                        //   CupertinoPageRoute(
+                                        //     builder: (context) =>
+                                        //         MakeReservationPageTwo(
+                                        //       car: reservation.car,
+                                        //       view: ReservationView.view,
+                                        //       renter: reservation.renter,
+                                        //       reservation: reservation,
+                                        //     ),
+                                        //   ),
+                                        // );
 
-                                        if (status != null) {
-                                          setState(() {
-                                            reservation.status = status;
-                                          });
-                                        }
+                                        // if (status != null) {
+                                        //   setState(() {
+                                        //     reservation.status = status;
+                                        //   });
+                                        // }
                                       },
                                     ),
                                   ))

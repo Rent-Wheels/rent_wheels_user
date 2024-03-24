@@ -3,7 +3,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:go_router/go_router.dart';
 import 'package:rent_wheels/core/widgets/theme/theme.dart';
 
-import 'package:rent_wheels/src/mainSection/cars/presentation/car_details.dart';
 import 'package:rent_wheels/src/mainSection/renter/widgets/renter_cars_widget.dart';
 
 import 'package:rent_wheels/core/widgets/sizes/sizes.dart';
@@ -148,15 +147,16 @@ class RenterDetails extends StatelessWidget {
                     return RenterCars(
                       width: Sizes().width(context, 0.5),
                       carDetails: renter.cars![index],
-                      onTap: () => Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => CarDetails(
-                            car: renter.cars![index],
-                            renter: renter,
-                          ),
-                        ),
-                      ),
+                      onTap: null,
+                      // () => Navigator.push(
+                      //   context,
+                      //   MaterialPageRoute(
+                      //     builder: (context) => CarDetails(
+                      //       car: renter.cars![index],
+                      //       renter: renter,
+                      //     ),
+                      //   ),
+                      // ),
                     );
                   },
                 ),

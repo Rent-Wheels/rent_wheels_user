@@ -6,7 +6,6 @@ import 'package:rent_wheels/core/widgets/theme/colors.dart';
 import 'package:rent_wheels/core/widgets/spacing/spacing.dart';
 import 'package:rent_wheels/core/widgets/buttons/generic_button_widget.dart';
 import 'package:rent_wheels/core/widgets/theme/theme.dart';
-import 'package:rent_wheels/src/mainSection/base.dart';
 
 class ReservationSuccessful extends StatelessWidget {
   const ReservationSuccessful({super.key});
@@ -50,15 +49,16 @@ class ReservationSuccessful extends StatelessWidget {
               width: Sizes().width(context, 0.85),
               isActive: true,
               buttonName: 'Back to homepage',
-              onPressed: () => Navigator.pushAndRemoveUntil(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const MainSection(
-                    pageIndex: 2,
-                  ),
-                ),
-                (route) => false,
-              ),
+              onPressed: null,
+              // onPressed: () => Navigator.pushAndRemoveUntil(
+              //   context,
+              //   MaterialPageRoute(
+              //     builder: (context) => const MainSection(
+              //       pageIndex: 2,
+              //     ),
+              //   ),
+              //   (route) => false,
+              // ),
             ),
           ],
         ),

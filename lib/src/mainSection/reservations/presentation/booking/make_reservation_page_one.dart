@@ -1,31 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/scheduler.dart' show timeDilation;
 import 'package:go_router/go_router.dart';
-import 'package:rent_wheels/core/enums/enums.dart';
-import 'package:rent_wheels/core/models/renter/renter_model.dart';
 import 'package:rent_wheels/core/widgets/theme/theme.dart';
+import 'package:rent_wheels/src/cars/domain/entity/cars.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
-
-import 'package:rent_wheels/src/mainSection/reservations/presentation/booking/make_reservation_page_two.dart';
 
 import 'package:rent_wheels/core/widgets/sizes/sizes.dart';
 import 'package:rent_wheels/core/util/date_util.dart';
 import 'package:rent_wheels/core/widgets/theme/colors.dart';
-import 'package:rent_wheels/core/models/cars/cars_model.dart';
 import 'package:rent_wheels/core/widgets/spacing/spacing.dart';
-import 'package:rent_wheels/core/global/globals.dart' as global;
-import 'package:rent_wheels/core/widgets/popups/error_popup.dart';
-import 'package:rent_wheels/core/backend/users/methods/user_methods.dart';
 import 'package:rent_wheels/core/widgets/buttons/generic_button_widget.dart';
 import 'package:rent_wheels/core/widgets/textfields/tappable_textfield.dart';
-import 'package:rent_wheels/core/models/reservations/reservations_model.dart';
 import 'package:rent_wheels/core/widgets/popups/date_range_picker_widget.dart';
-import 'package:rent_wheels/core/widgets/loadingIndicator/loading_indicator.dart';
 import 'package:rent_wheels/core/widgets/buttons/adaptive_back_button_widget.dart';
 
 class MakeReservationPageOne extends StatefulWidget {
-  final Car? car;
+  final Cars? car;
   const MakeReservationPageOne({super.key, required this.car});
 
   @override
@@ -50,7 +40,7 @@ class _MakeReservationPageOneState extends State<MakeReservationPageOne> {
   }
 
   Duration getDuration() {
-    Car? car = widget.car;
+    Cars? car = widget.car;
     num days = 0;
     if (car == null) return const Duration(days: 0);
     switch (car.durationUnit) {
@@ -119,7 +109,7 @@ class _MakeReservationPageOneState extends State<MakeReservationPageOne> {
   }
 
   num setCarPrice() {
-    Car? car = widget.car;
+    Cars? car = widget.car;
     if (car == null) return 0;
 
     Duration duration = endDate?.difference(startDate ?? DateTime.now()) ??
@@ -150,7 +140,7 @@ class _MakeReservationPageOneState extends State<MakeReservationPageOne> {
 
   @override
   Widget build(BuildContext context) {
-    Car? car = widget.car;
+    Cars? car = widget.car;
 
     return Scaffold(
       backgroundColor: rentWheelsNeutralLight0,
@@ -260,42 +250,43 @@ class _MakeReservationPageOneState extends State<MakeReservationPageOne> {
                 width: Sizes().width(context, 0.85),
                 isActive: isActive(),
                 buttonName: 'Continue',
-                onPressed: () async {
-                  try {
-                    final reservation = ReservationModel(
-                      customer: Customer(
-                        id: global.userDetails!.id,
-                        name: global.userDetails!.name,
-                      ),
-                      renter: Renter(id: car!.owner!),
-                      car: car,
-                      startDate: startDate,
-                      returnDate: endDate,
-                      destination: location.text,
-                      price: price,
-                    );
-                    buildLoadingIndicator(context, '');
-                    final renter = await RentWheelsUserMethods()
-                        .getRenterDetails(userId: car.owner!);
-                    if (!mounted) return;
-                    context.pop();
-                    Navigator.push(
-                      context,
-                      CupertinoPageRoute(
-                        builder: (context) => MakeReservationPageTwo(
-                          car: car,
-                          renter: renter,
-                          reservation: reservation,
-                          view: ReservationView.make,
-                        ),
-                      ),
-                    );
-                  } catch (e) {
-                    if (!mounted) return;
-                    context.pop();
-                    showErrorPopUp(e.toString(), context);
-                  }
-                },
+                onPressed: null,
+                // () async {
+                //   try {
+                //     final reservation = ReservationModel(
+                //       customer: Customer(
+                //         id: global.userDetails!.id,
+                //         name: global.userDetails!.name,
+                //       ),
+                //       renter: Renter(id: car!.ownerId!),
+                //       car: car,
+                //       startDate: startDate,
+                //       returnDate: endDate,
+                //       destination: location.text,
+                //       price: price,
+                //     );
+                //     buildLoadingIndicator(context, '');
+                //     final renter = await RentWheelsUserMethods()
+                //         .getRenterDetails(userId: car.owner!);
+                //     if (!mounted) return;
+                //     context.pop();
+                //     Navigator.push(
+                //       context,
+                //       CupertinoPageRoute(
+                //         builder: (context) => MakeReservationPageTwo(
+                //           car: car,
+                //           renter: renter,
+                //           reservation: reservation,
+                //           view: ReservationView.make,
+                //         ),
+                //       ),
+                //     );
+                //   } catch (e) {
+                //     if (!mounted) return;
+                //     context.pop();
+                //     showErrorPopUp(e.toString(), context);
+                //   }
+                // },
               ),
             ],
           ),

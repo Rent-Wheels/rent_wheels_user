@@ -5,7 +5,7 @@ import 'package:rent_wheels/src/authentication/presentation/pages/forgot_passwor
 import 'package:rent_wheels/src/authentication/presentation/pages/signup.dart';
 import 'package:rent_wheels/src/authentication/presentation/pages/verify_email.dart';
 import 'package:rent_wheels/src/authentication/presentation/pages/reset_password_success.dart';
-import 'package:rent_wheels/src/mainSection/base.dart';
+import 'package:rent_wheels/src/home/presentation/pages/base.dart';
 import 'package:rent_wheels/src/onboarding/presentation/onboarding.dart';
 
 final GoRouter goRouterConfiguration = GoRouter(
@@ -67,6 +67,15 @@ final GoRouter goRouterConfiguration = GoRouter(
       name: 'home',
       path: '/home',
       builder: (context, state) => const MainSection(),
+    ),
+
+    //CARS
+    GoRoute(
+      name: 'allCars',
+      path: '/all-cars',
+      builder: (context, state) => const MainSection(
+        pageIndex: 1,
+      ),
     ),
   ],
 );

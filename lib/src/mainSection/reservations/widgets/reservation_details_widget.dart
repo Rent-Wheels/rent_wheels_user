@@ -2,20 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:dotted_dashed_line/dotted_dashed_line.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:rent_wheels/core/widgets/theme/theme.dart';
+import 'package:rent_wheels/src/cars/domain/entity/cars.dart';
 
 import 'package:rent_wheels/src/mainSection/reservations/widgets/price_details_widget.dart';
 
 import 'package:rent_wheels/core/util/date_util.dart';
 import 'package:rent_wheels/core/widgets/sizes/sizes.dart';
 import 'package:rent_wheels/core/widgets/theme/colors.dart';
-import 'package:rent_wheels/core/models/cars/cars_model.dart';
 import 'package:rent_wheels/core/widgets/spacing/spacing.dart';
 import 'package:rent_wheels/core/models/renter/renter_model.dart';
 import 'package:rent_wheels/core/widgets/details/key_value_widget.dart';
 import 'package:rent_wheels/core/models/reservations/reservations_model.dart';
 
 class ReservationDetails extends StatelessWidget {
-  final Car? car;
+  final Cars? car;
   final Renter? renter;
   final String pageTitle;
   final Duration duration;

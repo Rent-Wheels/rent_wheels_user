@@ -2,7 +2,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:flutter/material.dart';
 import 'package:rent_wheels/assets/svgs/svg_constants.dart';
 
-import 'package:rent_wheels/src/mainSection/home/presentation/home.dart';
+import 'package:rent_wheels/src/home/presentation/pages/home.dart';
 import 'package:rent_wheels/src/mainSection/profile/presentation/profile.dart';
 import 'package:rent_wheels/src/mainSection/cars/presentation/available_cars.dart';
 import 'package:rent_wheels/src/mainSection/reservations/presentation/reservation.dart';
