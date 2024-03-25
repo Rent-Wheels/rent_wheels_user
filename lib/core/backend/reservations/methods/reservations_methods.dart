@@ -36,9 +36,9 @@ class RentWheelsReservationsMethods extends RentWheelsReservationsEndpoint {
 
     try {
       final body = {
-        'car': reservationDetails.car!.carId,
+        // 'car': reservationDetails.car!.carId,
         'price': reservationDetails.price,
-        'renter': reservationDetails.renter!.id,
+        // 'renter': reservationDetails.renter!.id,
         'destination': reservationDetails.destination,
         'startDate': reservationDetails.startDate!.toIso8601String(),
         'returnDate': reservationDetails.returnDate!.toIso8601String(),

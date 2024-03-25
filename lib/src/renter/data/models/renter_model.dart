@@ -1,8 +1,8 @@
 import 'package:rent_wheels/src/cars/data/models/cars_model.dart';
-import 'package:rent_wheels/src/renter/domain/entity/renter_info.dart';
+import 'package:rent_wheels/src/renter/domain/entity/renter.dart';
 
-class RenterInfoModel extends RenterInfo {
-  const RenterInfoModel({
+class RenterModel extends Renter {
+  const RenterModel({
     required super.id,
     required super.dob,
     required super.cars,
@@ -14,8 +14,8 @@ class RenterInfoModel extends RenterInfo {
     required super.placeOfResidence,
   });
 
-  factory RenterInfoModel.fromJSON(Map<String, dynamic>? json) {
-    return RenterInfoModel(
+  factory RenterModel.fromJSON(Map<String, dynamic>? json) {
+    return RenterModel(
       id: json?['id'],
       dob: json?['dob'],
       name: json?['name'],
@@ -24,9 +24,8 @@ class RenterInfoModel extends RenterInfo {
       phoneNumber: json?['phoneNumber'],
       profilePicture: json?['profilePicture'],
       placeOfResidence: json?['placeOfResidence'],
-      cars: json?['cars']
-          .map<CarsModel>((car) => CarsModel.fromJSON(car))
-          .toList(),
+      cars:
+          json?['cars'].map<CarModel>((car) => CarModel.fromJSON(car)).toList(),
     );
   }
 }

@@ -1,8 +1,8 @@
 import 'package:rent_wheels/src/cars/domain/entity/car_media.dart';
 import 'package:rent_wheels/src/cars/domain/entity/cars.dart';
 
-class CarsModel extends Cars {
-  const CarsModel({
+class CarModel extends Car {
+  const CarModel({
     required super.id,
     required super.rate,
     required super.make,
@@ -24,8 +24,8 @@ class CarsModel extends Cars {
     required super.registrationNumber,
   });
 
-  factory CarsModel.fromJSON(Map<String, dynamic>? json) {
-    return CarsModel(
+  factory CarModel.fromJSON(Map<String, dynamic>? json) {
+    return CarModel(
       id: json?['id'],
       rate: json?['rate'],
       make: json?['make'],

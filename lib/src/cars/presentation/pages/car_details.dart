@@ -9,8 +9,8 @@ import 'package:rent_wheels/core/widgets/theme/theme.dart';
 import 'package:rent_wheels/src/cars/data/models/cars_model.dart';
 import 'package:rent_wheels/src/cars/domain/entity/cars.dart';
 
-import 'package:rent_wheels/src/renter/data/models/renter_info_model.dart';
-import 'package:rent_wheels/src/renter/domain/entity/renter_info.dart';
+import 'package:rent_wheels/src/renter/data/models/renter_model.dart';
+import 'package:rent_wheels/src/renter/domain/entity/renter.dart';
 import 'package:rent_wheels/src/renter/presentation/widgets/renter_overview_widget.dart';
 import 'package:rent_wheels/src/cars/presentation/widgets/car_details_carousel_items.dart';
 
@@ -39,8 +39,8 @@ class CarDetails extends StatefulWidget {
 }
 
 class _CarDetailsState extends State<CarDetails> {
-  Cars? _car;
-  RenterInfo? _renter;
+  Car? _car;
+  Renter? _renter;
 
   int _carImageIndex = 0;
   bool changeColor = false;
@@ -49,8 +49,8 @@ class _CarDetailsState extends State<CarDetails> {
   final CarouselController _carImage = CarouselController();
 
   parseData() {
-    _car = CarsModel.fromJSON(jsonDecode(widget.car));
-    _renter = RenterInfoModel.fromJSON(jsonDecode(widget.renter));
+    _car = CarModel.fromJSON(jsonDecode(widget.car));
+    _renter = RenterModel.fromJSON(jsonDecode(widget.renter));
   }
 
   @override

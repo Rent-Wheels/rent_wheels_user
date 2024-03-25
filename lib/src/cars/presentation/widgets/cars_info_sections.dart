@@ -13,7 +13,7 @@ class CarsInfoSections extends StatefulWidget {
   final double? margin;
   final double? height;
   final String? heroTag;
-  final Cars? carDetails;
+  final Car? carDetails;
   final void Function()? onTap;
 
   const CarsInfoSections({

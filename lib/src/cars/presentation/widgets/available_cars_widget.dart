@@ -15,7 +15,7 @@ import 'package:rent_wheels/src/cars/presentation/widgets/cars_info_sections.dar
 class AvailableCarsHome extends StatefulWidget {
   final bool? isNear;
   final bool isLoading;
-  final List<Cars> cars;
+  final List<Car> cars;
   final AvailableCarsType type;
   final void Function(int)? onTap;
   const AvailableCarsHome({

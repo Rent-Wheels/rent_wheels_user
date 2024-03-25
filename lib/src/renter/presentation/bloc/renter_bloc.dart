@@ -1,6 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:rent_wheels/src/renter/domain/entity/renter_info.dart';
+import 'package:rent_wheels/src/renter/domain/entity/renter.dart';
 import 'package:rent_wheels/src/renter/domain/usecases/get_renter_details.dart';
 
 part 'renter_event.dart';

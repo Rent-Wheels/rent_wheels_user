@@ -3,9 +3,9 @@ import 'package:cached_network_image/cached_network_image.dart';
 
 import 'package:rent_wheels/core/widgets/sizes/sizes.dart';
 import 'package:rent_wheels/core/widgets/theme/colors.dart';
-import 'package:rent_wheels/core/models/cars/cars_model.dart';
 import 'package:rent_wheels/core/widgets/spacing/spacing.dart';
 import 'package:rent_wheels/core/widgets/theme/theme.dart';
+import 'package:rent_wheels/src/cars/domain/entity/cars.dart';
 
 class RenterCars extends StatelessWidget {
   final String? heroTag;
@@ -31,7 +31,7 @@ class RenterCars extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Hero(
-              tag: heroTag ?? carDetails.media![0].mediaURL,
+              tag: heroTag ?? carDetails.media![0].mediaURL!,
               child: Container(
                 height: Sizes().height(context, 0.15),
                 width: width,
@@ -44,7 +44,7 @@ class RenterCars extends StatelessWidget {
                       : DecorationImage(
                           fit: BoxFit.cover,
                           image: CachedNetworkImageProvider(
-                            carDetails.media![0].mediaURL,
+                            carDetails.media![0].mediaURL!,
                           ),
                         ),
                 ),

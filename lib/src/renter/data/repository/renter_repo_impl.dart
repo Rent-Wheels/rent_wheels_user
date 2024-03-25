@@ -1,7 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:rent_wheels/core/network/network_info.dart';
 import 'package:rent_wheels/src/renter/data/datasources/remoteds.dart';
-import 'package:rent_wheels/src/renter/domain/entity/renter_info.dart';
+import 'package:rent_wheels/src/renter/domain/entity/renter.dart';
 import 'package:rent_wheels/src/renter/domain/repository/renter_repository.dart';
 
 class RenterRepositoryImpl implements RenterRepository {
@@ -13,7 +13,7 @@ class RenterRepositoryImpl implements RenterRepository {
     required this.remoteDatasource,
   });
   @override
-  Future<Either<String, RenterInfo>> getRenterDetails(
+  Future<Either<String, Renter>> getRenterDetails(
       Map<String, dynamic> params) async {
     if (!(await networkInfo.isConnected)) {
       return Left(

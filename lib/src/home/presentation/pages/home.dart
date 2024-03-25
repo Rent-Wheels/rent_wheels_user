@@ -38,7 +38,7 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  Cars? _car;
+  Car? _car;
   int _promoIndex = 0;
   final _carsBloc1 = sl<CarsBloc>();
   final _carsBloc2 = sl<CarsBloc>();

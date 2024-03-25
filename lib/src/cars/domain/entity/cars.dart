@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:rent_wheels/src/cars/domain/entity/car_media.dart';
 
-class Cars extends Equatable {
+class Car extends Equatable {
   final bool? availability;
   final List<CarMedia>? media;
   final num? capacity, maxDuration, rate;
@@ -20,7 +20,7 @@ class Cars extends Equatable {
       yearOfManufacture,
       registrationNumber;
 
-  const Cars({
+  const Car({
     required this.id,
     required this.rate,
     required this.make,

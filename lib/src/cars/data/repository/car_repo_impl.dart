@@ -14,7 +14,7 @@ class CarRepositoryImpl implements CarRepository {
   });
 
   @override
-  Future<Either<String, List<Cars>>> getAllAvailableCars(
+  Future<Either<String, List<Car>>> getAllAvailableCars(
     Map<String, dynamic> params,
   ) async {
     if (!(await networkInfo.isConnected)) {

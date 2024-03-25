@@ -1,13 +1,13 @@
 import 'package:equatable/equatable.dart';
 import 'package:rent_wheels/src/cars/domain/entity/cars.dart';
-import 'package:rent_wheels/src/renter/domain/entity/renter_info.dart';
+import 'package:rent_wheels/src/renter/domain/entity/renter.dart';
 import 'package:rent_wheels/src/reservations/domain/entity/customer.dart';
 
 class Reservation extends Equatable {
-  final Cars? car;
+  final Car? car;
   final num? price;
   final Customer? customer;
-  final RenterInfo? renter;
+  final Renter? renter;
   final String? id,
       status,
       startDate,

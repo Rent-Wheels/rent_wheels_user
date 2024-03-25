@@ -27,7 +27,7 @@ class AvailableCars extends StatefulWidget {
 }
 
 class _AvailableCarsState extends State<AvailableCars> {
-  Cars? _car;
+  Car? _car;
   final _carsBloc = sl<CarsBloc>();
   final _renterBloc = sl<RenterBloc>();
 

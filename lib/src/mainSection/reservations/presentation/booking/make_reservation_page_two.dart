@@ -14,7 +14,6 @@ import 'package:rent_wheels/core/widgets/theme/colors.dart';
 import 'package:rent_wheels/core/widgets/spacing/spacing.dart';
 import 'package:rent_wheels/core/extenstions/date_compare.dart';
 import 'package:rent_wheels/core/widgets/popups/error_popup.dart';
-import 'package:rent_wheels/core/models/renter/renter_model.dart';
 import 'package:rent_wheels/core/widgets/popups/success_popup.dart';
 import 'package:rent_wheels/core/widgets/buttons/generic_button_widget.dart';
 import 'package:rent_wheels/core/models/reservations/reservations_model.dart';
@@ -22,9 +21,10 @@ import 'package:rent_wheels/core/widgets/dialogs/confirmation_dialog_widget.dart
 import 'package:rent_wheels/core/widgets/loadingIndicator/loading_indicator.dart';
 import 'package:rent_wheels/core/widgets/buttons/adaptive_back_button_widget.dart';
 import 'package:rent_wheels/core/backend/reservations/methods/reservations_methods.dart';
+import 'package:rent_wheels/src/renter/domain/entity/renter.dart';
 
 class MakeReservationPageTwo extends StatefulWidget {
-  final Cars? car;
+  final Car? car;
   final Renter? renter;
   final ReservationView view;
   final ReservationModel reservation;
@@ -100,7 +100,7 @@ class _MakeReservationPageTwoState extends State<MakeReservationPageTwo> {
 
   @override
   Widget build(BuildContext context) {
-    Cars? car = widget.car;
+    Car? car = widget.car;
     Renter? renter = widget.renter;
     ReservationModel reservation = widget.reservation;
 

@@ -36,7 +36,7 @@ class _ReservationsState extends State<Reservations> {
                       color: rentWheelsInformationDark900,
                     )),
                 Space().height(context, 0.02),
-                const Expanded(child: ReservationsData()),
+                // const Expanded(child: ReservationsData()),
               ],
             ),
           ),

@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:rent_wheels/src/cars/domain/entity/cars.dart';
 
-class RenterInfo extends Equatable {
+class Renter extends Equatable {
   final String? id,
       dob,
       name,
@@ -10,9 +10,9 @@ class RenterInfo extends Equatable {
       phoneNumber,
       profilePicture,
       placeOfResidence;
-  final List<Cars>? cars;
+  final List<Car>? cars;
 
-  const RenterInfo({
+  const Renter({
     required this.id,
     required this.dob,
     required this.cars,

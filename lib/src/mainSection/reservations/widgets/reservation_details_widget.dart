@@ -10,12 +10,12 @@ import 'package:rent_wheels/core/util/date_util.dart';
 import 'package:rent_wheels/core/widgets/sizes/sizes.dart';
 import 'package:rent_wheels/core/widgets/theme/colors.dart';
 import 'package:rent_wheels/core/widgets/spacing/spacing.dart';
-import 'package:rent_wheels/core/models/renter/renter_model.dart';
 import 'package:rent_wheels/core/widgets/details/key_value_widget.dart';
 import 'package:rent_wheels/core/models/reservations/reservations_model.dart';
+import 'package:rent_wheels/src/renter/domain/entity/renter.dart';
 
 class ReservationDetails extends StatelessWidget {
-  final Cars? car;
+  final Car? car;
   final Renter? renter;
   final String pageTitle;
   final Duration duration;

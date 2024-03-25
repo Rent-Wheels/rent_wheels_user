@@ -13,7 +13,7 @@ final class RenterInitial extends RenterState {}
 final class GetRenterDetailsLoading extends RenterState {}
 
 final class GetRenterDetailsLoaded extends RenterState {
-  final RenterInfo renter;
+  final Renter renter;
   final bool? isNear;
 
   const GetRenterDetailsLoaded({required this.renter, this.isNear});

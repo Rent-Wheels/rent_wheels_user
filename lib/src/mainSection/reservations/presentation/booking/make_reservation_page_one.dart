@@ -15,7 +15,7 @@ import 'package:rent_wheels/core/widgets/popups/date_range_picker_widget.dart';
 import 'package:rent_wheels/core/widgets/buttons/adaptive_back_button_widget.dart';
 
 class MakeReservationPageOne extends StatefulWidget {
-  final Cars? car;
+  final Car? car;
   const MakeReservationPageOne({super.key, required this.car});
 
   @override
@@ -40,7 +40,7 @@ class _MakeReservationPageOneState extends State<MakeReservationPageOne> {
   }
 
   Duration getDuration() {
-    Cars? car = widget.car;
+    Car? car = widget.car;
     num days = 0;
     if (car == null) return const Duration(days: 0);
     switch (car.durationUnit) {
@@ -109,7 +109,7 @@ class _MakeReservationPageOneState extends State<MakeReservationPageOne> {
   }
 
   num setCarPrice() {
-    Cars? car = widget.car;
+    Car? car = widget.car;
     if (car == null) return 0;
 
     Duration duration = endDate?.difference(startDate ?? DateTime.now()) ??
@@ -140,7 +140,7 @@ class _MakeReservationPageOneState extends State<MakeReservationPageOne> {
 
   @override
   Widget build(BuildContext context) {
-    Cars? car = widget.car;
+    Car? car = widget.car;
 
     return Scaffold(
       backgroundColor: rentWheelsNeutralLight0,

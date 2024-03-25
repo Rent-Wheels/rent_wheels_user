@@ -1,11 +1,8 @@
-import 'package:rent_wheels/core/models/cars/cars_model.dart';
-import 'package:rent_wheels/core/models/renter/renter_model.dart';
-
 class ReservationModel {
   String? id;
   Customer? customer;
-  Renter? renter;
-  Car? car;
+  // Renter? renter;
+  // Car? car;
   DateTime? startDate;
   DateTime? returnDate;
   String? status;
@@ -17,8 +14,8 @@ class ReservationModel {
   ReservationModel({
     this.id,
     this.customer,
-    this.renter,
-    this.car,
+    // this.renter,
+    // this.car,
     this.startDate,
     this.returnDate,
     this.createdAt,
@@ -33,8 +30,8 @@ class ReservationModel {
       id: json['_id'],
       customer:
           json['customer'] != null ? Customer.fromJSON(json['customer']) : null,
-      renter: json['renter'] != null ? Renter.fromJSON(json['renter']) : null,
-      car: json['car'] != null ? Car.fromJSON(json['car']) : null,
+      // renter: json['renter'] != null ? Renter.fromJSON(json['renter']) : null,
+      // car: json['car'] != null ? Car.fromJSON(json['car']) : null,
       startDate: DateTime.parse(json['startDate']),
       returnDate: DateTime.parse(json['returnDate']),
       createdAt: DateTime.parse(json['createdAt']),
