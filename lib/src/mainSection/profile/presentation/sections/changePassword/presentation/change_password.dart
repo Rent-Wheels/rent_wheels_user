@@ -45,7 +45,6 @@ class _ChangePasswordState extends State<ChangePassword> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: rentWheelsNeutralLight0,
       appBar: AppBar(
         elevation: 0,
         foregroundColor: rentWheelsBrandDark900,

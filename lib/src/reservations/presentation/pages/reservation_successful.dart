@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:rent_wheels/assets/images/image_constants.dart';
 
 import 'package:rent_wheels/core/widgets/sizes/sizes.dart';
@@ -13,7 +14,6 @@ class ReservationSuccessful extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: rentWheelsNeutralLight0,
       body: Padding(
         padding: EdgeInsets.symmetric(
           horizontal: Sizes().width(context, 0.04),
@@ -49,16 +49,7 @@ class ReservationSuccessful extends StatelessWidget {
               width: Sizes().width(context, 0.85),
               isActive: true,
               buttonName: 'Back to homepage',
-              onPressed: null,
-              // onPressed: () => Navigator.pushAndRemoveUntil(
-              //   context,
-              //   MaterialPageRoute(
-              //     builder: (context) => const MainSection(
-              //       pageIndex: 2,
-              //     ),
-              //   ),
-              //   (route) => false,
-              // ),
+              onPressed: () => context.goNamed('home'),
             ),
           ],
         ),

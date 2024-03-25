@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:rent_wheels/core/extenstions/date_compare.dart';
 
-import 'package:rent_wheels/core/models/reservations/reservations_model.dart';
 import 'package:rent_wheels/core/util/date_util.dart';
 import 'package:rent_wheels/core/widgets/buttons/generic_button_widget.dart';
 import 'package:rent_wheels/core/widgets/sizes/sizes.dart';
@@ -9,18 +8,19 @@ import 'package:rent_wheels/core/widgets/spacing/spacing.dart';
 import 'package:rent_wheels/core/widgets/theme/colors.dart';
 import 'package:rent_wheels/core/widgets/theme/theme.dart';
 import 'package:rent_wheels/src/cars/domain/entity/cars.dart';
-import 'package:rent_wheels/src/mainSection/reservations/widgets/car_image_widget.dart';
+import 'package:rent_wheels/src/reservations/domain/entity/reservations.dart';
+import 'package:rent_wheels/src/reservations/presentation/widgets/car_image_widget.dart';
 
 class ReservationSections extends StatefulWidget {
   final Car? car;
   final bool isLoading;
   final void Function()? onEnd;
   final void Function()? onBook;
+  final Reservation? reservation;
   final void Function()? onStart;
   final void Function()? onCancel;
   final void Function()? onPayment;
   final void Function()? onPressed;
-  final ReservationModel reservation;
 
   const ReservationSections({
     super.key,
@@ -52,7 +52,7 @@ class _ReservationSectionsState extends State<ReservationSections> {
             children: [
               CarImage(
                 imageUrl: widget.car?.media?[0].mediaURL ?? '',
-                reservationStatus: widget.reservation.status ?? '',
+                reservationStatus: widget.reservation?.status ?? '',
               ),
               Space().height(context, 0.01),
               widget.isLoading
@@ -68,7 +68,7 @@ class _ReservationSectionsState extends State<ReservationSections> {
                   : Text(
                       '${widget.car?.yearOfManufacture ?? ''} ${widget.car?.make ?? ''} ${widget.car?.model ?? ''}',
                       style: theme.textTheme.titleSmall!.copyWith(
-                        fontWeight: FontWeight.w500,
+                        fontWeight: FontWeight.w600,
                         color: rentWheelsInformationDark900,
                       ),
                     ),
@@ -84,8 +84,9 @@ class _ReservationSectionsState extends State<ReservationSections> {
                       ),
                     )
                   : Text(
-                      '${widget.reservation.destination}, ${formatDate(widget.reservation.startDate!)} - ${formatDate(widget.reservation.returnDate!)}',
+                      '${widget.reservation?.destination}, ${formatDate(DateTime.parse(widget.reservation!.startDate!))} - ${formatDate(DateTime.parse(widget.reservation!.returnDate!))}',
                       style: theme.textTheme.headlineSmall!.copyWith(
+                        fontWeight: FontWeight.w500,
                         color: rentWheelsBrandDark900,
                       ),
                     ),
@@ -97,7 +98,7 @@ class _ReservationSectionsState extends State<ReservationSections> {
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             widget.car != null
-                ? widget.reservation.status == 'Pending'
+                ? widget.reservation?.status == 'Pending'
                     ? GenericButton(
                         width: Sizes().width(context, 0.9),
                         isActive: true,
@@ -105,7 +106,7 @@ class _ReservationSectionsState extends State<ReservationSections> {
                         buttonName: 'Cancel Reservation',
                         onPressed: widget.onCancel,
                       )
-                    : widget.reservation.status == 'Ongoing'
+                    : widget.reservation?.status == 'Ongoing'
                         ? GenericButton(
                             width: Sizes().width(context, 0.9),
                             isActive: true,
@@ -113,22 +114,25 @@ class _ReservationSectionsState extends State<ReservationSections> {
                             buttonName: 'End Trip',
                             onPressed: widget.onEnd,
                           )
-                        : widget.reservation.status == 'Completed' ||
-                                widget.reservation.status == 'Cancelled' ||
-                                widget.reservation.status == 'Declined'
+                        : widget.reservation?.status == 'Completed' ||
+                                widget.reservation?.status == 'Cancelled' ||
+                                widget.reservation?.status == 'Declined'
                             ? GenericButton(
                                 width: Sizes().width(context, 0.9),
                                 isActive: true,
                                 buttonName: 'Book Again',
                                 onPressed: widget.onBook,
                               )
-                            : widget.reservation.status == 'Paid'
+                            : widget.reservation?.status == 'Paid'
                                 ? Wrap(
                                     children: [
                                       GenericButton(
                                         width: Sizes().width(context, 0.4),
                                         isActive: DateTime.now().isSameDate(
-                                            widget.reservation.startDate!),
+                                          DateTime.parse(
+                                            widget.reservation!.startDate!,
+                                          ),
+                                        ),
                                         buttonName: 'Start Trip',
                                         onPressed: widget.onStart,
                                       ),

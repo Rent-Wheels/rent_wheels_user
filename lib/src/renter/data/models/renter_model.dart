@@ -24,8 +24,9 @@ class RenterModel extends Renter {
       phoneNumber: json?['phoneNumber'],
       profilePicture: json?['profilePicture'],
       placeOfResidence: json?['placeOfResidence'],
-      cars:
-          json?['cars'].map<CarModel>((car) => CarModel.fromJSON(car)).toList(),
+      cars: json?['cars']
+          ?.map<CarModel>((car) => CarModel.fromJSON(car))
+          .toList(),
     );
   }
 }

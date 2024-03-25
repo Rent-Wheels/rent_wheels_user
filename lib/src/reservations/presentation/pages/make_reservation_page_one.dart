@@ -143,7 +143,6 @@ class _MakeReservationPageOneState extends State<MakeReservationPageOne> {
     Car? car = widget.car;
 
     return Scaffold(
-      backgroundColor: rentWheelsNeutralLight0,
       appBar: AppBar(
         elevation: 0,
         foregroundColor: rentWheelsBrandDark900,

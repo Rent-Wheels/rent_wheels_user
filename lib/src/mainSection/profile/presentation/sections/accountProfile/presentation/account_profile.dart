@@ -99,7 +99,6 @@ class _AccountProfileState extends State<AccountProfile> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: rentWheelsNeutralLight0,
       appBar: AppBar(
         elevation: 0,
         foregroundColor: rentWheelsBrandDark900,

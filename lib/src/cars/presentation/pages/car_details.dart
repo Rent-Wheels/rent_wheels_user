@@ -20,7 +20,7 @@ import 'package:rent_wheels/core/widgets/spacing/spacing.dart';
 import 'package:rent_wheels/core/widgets/details/key_value_widget.dart';
 import 'package:rent_wheels/core/widgets/buttons/generic_button_widget.dart';
 import 'package:rent_wheels/core/widgets/buttons/adaptive_back_button_widget.dart';
-import 'package:rent_wheels/src/mainSection/reservations/presentation/booking/make_reservation_page_one.dart';
+import 'package:rent_wheels/src/reservations/presentation/pages/make_reservation_page_one.dart';
 
 class CarDetails extends StatefulWidget {
   final String car;
@@ -82,7 +82,6 @@ class _CarDetailsState extends State<CarDetails> {
     //     .toList();
 
     return Scaffold(
-      backgroundColor: rentWheelsNeutralLight0,
       body: CustomScrollView(
         controller: scroll,
         slivers: [

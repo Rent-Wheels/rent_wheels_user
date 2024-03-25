@@ -4,7 +4,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:rent_wheels/core/widgets/theme/theme.dart';
 import 'package:rent_wheels/src/cars/domain/entity/cars.dart';
 
-import 'package:rent_wheels/src/mainSection/reservations/widgets/price_details_widget.dart';
+import 'package:rent_wheels/src/reservations/presentation/widgets/price_details_widget.dart';
 
 import 'package:rent_wheels/core/util/date_util.dart';
 import 'package:rent_wheels/core/widgets/sizes/sizes.dart';

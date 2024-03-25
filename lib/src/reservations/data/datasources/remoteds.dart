@@ -30,13 +30,9 @@ class ReservationsRemoteDatasourceImpl implements ReservationsRemoteDatasource {
       urlParameters: params['reservationId'],
     );
 
-    Map<String, String> headers = urls.headers;
-
-    headers.addAll(<String, String>{'Authorization': params['token']});
-
     final response = await client.patch(
       uri,
-      headers: headers,
+      headers: params['headers'],
       body: jsonEncode(params['body']),
     );
 
@@ -51,14 +47,13 @@ class ReservationsRemoteDatasourceImpl implements ReservationsRemoteDatasource {
   ) async {
     final uri = urls.returnUri(
       endpoint: Endpoints.getOrCreateReservations,
-      queryParameters: {'userId': params['userId']},
+      queryParameters: params['queryParameters'],
     );
 
-    Map<String, String> headers = urls.headers;
-
-    headers.addAll(<String, String>{'Authorization': params['token']});
-
-    final response = await client.get(uri, headers: headers);
+    final response = await client.get(
+      uri,
+      headers: params['headers'],
+    );
 
     if (response.statusCode != 200) throw Exception(response.body);
 
@@ -77,12 +72,8 @@ class ReservationsRemoteDatasourceImpl implements ReservationsRemoteDatasource {
       endpoint: Endpoints.getOrCreateReservations,
     );
 
-    Map<String, String> headers = urls.headers;
-
-    headers.addAll(<String, String>{'Authorization': params['token']});
-
     final response = await client.post(uri,
-        body: jsonEncode(params['body']), headers: headers);
+        body: jsonEncode(params['body']), headers: params['headers']);
 
     if (response.statusCode != 201) throw Exception(response.body);
 

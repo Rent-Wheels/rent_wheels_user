@@ -69,7 +69,6 @@ class _PaymentPageOneState extends State<PaymentPageOne> {
         value: widget.value.isNotEmpty ? widget.value : null,
         onChanged: widget.dropdownOnChanged);
     return Scaffold(
-      backgroundColor: rentWheelsNeutralLight0,
       body: Padding(
         padding: EdgeInsets.only(
           left: Sizes().width(context, 0.04),

@@ -51,6 +51,7 @@ class _GenericButtonState extends State<GenericButton> {
             widget.buttonName,
             style: widget.textStyle ??
                 theme.textTheme.headlineMedium!.copyWith(
+                  fontWeight: FontWeight.w500,
                   color: rentWheelsNeutralLight0,
                 ),
           ),

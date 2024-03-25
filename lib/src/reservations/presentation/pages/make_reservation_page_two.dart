@@ -3,10 +3,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:go_router/go_router.dart';
 import 'package:rent_wheels/src/cars/domain/entity/cars.dart';
 
-import 'package:rent_wheels/src/mainSection/reservations/widgets/reservation_details_widget.dart';
-import 'package:rent_wheels/src/mainSection/reservations/presentation/booking/reservation_successful.dart';
-import 'package:rent_wheels/src/mainSection/reservations/presentation/booking/make_reservation_page_one.dart';
-import 'package:rent_wheels/src/mainSection/reservations/widgets/reservation_details_bottom_sheet_widget.dart';
+import 'package:rent_wheels/src/reservations/presentation/widgets/reservation_details_widget.dart';
+import 'package:rent_wheels/src/reservations/presentation/pages/reservation_successful.dart';
+import 'package:rent_wheels/src/reservations/presentation/pages/make_reservation_page_one.dart';
+import 'package:rent_wheels/src/reservations/presentation/widgets/reservation_details_bottom_sheet_widget.dart';
 
 import 'package:rent_wheels/core/enums/enums.dart';
 import 'package:rent_wheels/core/widgets/sizes/sizes.dart';
@@ -117,7 +117,6 @@ class _MakeReservationPageTwoState extends State<MakeReservationPageTwo> {
     }
 
     return Scaffold(
-      backgroundColor: rentWheelsNeutralLight0,
       appBar: AppBar(
         elevation: 0,
         foregroundColor: rentWheelsBrandDark900,

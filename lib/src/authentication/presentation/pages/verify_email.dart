@@ -75,7 +75,6 @@ class _VerifyEmailState extends State<VerifyEmail> {
   Widget build(BuildContext context) {
     _globalProvider = context.watch<GlobalProvider>();
     return Scaffold(
-      backgroundColor: rentWheelsNeutralLight0,
       appBar: AppBar(
         elevation: 0,
         backgroundColor: rentWheelsNeutralLight0,

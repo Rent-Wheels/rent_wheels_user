@@ -5,7 +5,7 @@ import 'package:rent_wheels/assets/svgs/svg_constants.dart';
 import 'package:rent_wheels/src/home/presentation/pages/home.dart';
 import 'package:rent_wheels/src/mainSection/profile/presentation/profile.dart';
 import 'package:rent_wheels/src/cars/presentation/pages/available_cars.dart';
-import 'package:rent_wheels/src/mainSection/reservations/presentation/reservation.dart';
+import 'package:rent_wheels/src/reservations/presentation/pages/reservation.dart';
 
 import 'package:rent_wheels/core/widgets/theme/colors.dart';
 
@@ -50,7 +50,6 @@ class _MainSectionState extends State<MainSection> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: rentWheelsNeutralLight0,
       body: _pages.elementAt(currentIndex),
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,

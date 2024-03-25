@@ -42,7 +42,6 @@ class _ProfileState extends State<Profile> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: rentWheelsNeutralLight0,
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(

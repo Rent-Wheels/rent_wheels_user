@@ -61,7 +61,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: rentWheelsNeutralLight0,
       body: Padding(
         padding: EdgeInsets.symmetric(
           horizontal: Sizes().width(context, 0.04),

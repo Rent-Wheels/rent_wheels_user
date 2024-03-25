@@ -3,7 +3,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 
 import 'package:rent_wheels/core/widgets/sizes/sizes.dart';
 import 'package:rent_wheels/core/widgets/theme/colors.dart';
-import 'package:rent_wheels/src/mainSection/reservations/widgets/reservation_status_widget.dart';
+import 'package:rent_wheels/src/reservations/presentation/widgets/reservation_status_widget.dart';
 
 class CarImage extends StatelessWidget {
   final String imageUrl;
