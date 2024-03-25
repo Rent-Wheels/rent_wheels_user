@@ -18,7 +18,10 @@ class RenterBloc extends Bloc<RenterEvent, RenterState> {
       emit(
         response.fold(
           (errorMessage) => GenericRenterError(errorMessage: errorMessage),
-          (response) => GetRenterDetailsLoaded(renter: response),
+          (response) => GetRenterDetailsLoaded(
+            renter: response,
+            isNear: event.params['isNear'],
+          ),
         ),
       );
     });

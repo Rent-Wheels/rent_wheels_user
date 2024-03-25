@@ -22,15 +22,10 @@ class RenterRemoteDatasourceImpl implements RenterRemoteDatasource {
   Future<RenterInfoModel> getRenterDetails(Map<String, dynamic> params) async {
     final uri = urls.returnUri(
       endpoint: Endpoints.getRenter,
-      urlParameters: {
-        'renterId': params['renterId'],
-      },
+      urlParameters: params['urlParameters'],
     );
 
-    final headers = urls.headers;
-    headers.addAll(<String, String>{'Authorization': params['token']});
-
-    final response = await client.get(uri, headers: headers);
+    final response = await client.get(uri, headers: params['headers']);
 
     if (response.statusCode != 200) throw Exception(response.body);
     return RenterInfoModel.fromJSON(jsonDecode(response.body));

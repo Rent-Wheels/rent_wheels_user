@@ -17,7 +17,7 @@ class AvailableCarsHome extends StatefulWidget {
   final bool isLoading;
   final List<Cars> cars;
   final AvailableCarsType type;
-  final void Function()? onTap;
+  final void Function(int)? onTap;
   const AvailableCarsHome({
     super.key,
     this.onTap,
@@ -100,12 +100,14 @@ class _AvailableCarsHomeState extends State<AvailableCarsHome> {
                                   : widget.cars.length,
                               itemBuilder: (context, index) {
                                 return CarsInfoSections(
-                                  onTap: widget.onTap,
+                                  onTap: widget.isLoading
+                                      ? null
+                                      : () => widget.onTap!(index),
                                   carDetails: widget.cars[index],
                                   width: Sizes().width(context, 0.6),
                                   margin: Sizes().width(context, 0.03),
                                   heroTag:
-                                      'near-${widget.cars[index].registrationNumber}',
+                                      '${(widget.isNear ?? false) ? 'near' : 'available'}-${widget.cars[index].registrationNumber}',
                                   // onTap: () async {
                                   //   buildLoadingIndicator(context, '');
                                   //   try {
@@ -156,7 +158,10 @@ class _AvailableCarsHomeState extends State<AvailableCarsHome> {
                               carDetails: widget.cars[index],
                               width: Sizes().width(context, 0.5),
                               height: Sizes().height(context, 0.15),
-                              onTap: widget.onTap,
+                              onTap: widget.isLoading
+                                  ? null
+                                  : () => widget.onTap!(index),
+
                               // onTap: () async {
                               //   buildLoadingIndicator(context, '');
                               //   try {

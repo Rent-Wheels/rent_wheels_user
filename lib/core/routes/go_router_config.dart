@@ -5,6 +5,7 @@ import 'package:rent_wheels/src/authentication/presentation/pages/forgot_passwor
 import 'package:rent_wheels/src/authentication/presentation/pages/signup.dart';
 import 'package:rent_wheels/src/authentication/presentation/pages/verify_email.dart';
 import 'package:rent_wheels/src/authentication/presentation/pages/reset_password_success.dart';
+import 'package:rent_wheels/src/cars/presentation/pages/car_details.dart';
 import 'package:rent_wheels/src/home/presentation/pages/base.dart';
 import 'package:rent_wheels/src/onboarding/presentation/onboarding.dart';
 
@@ -71,11 +72,21 @@ final GoRouter goRouterConfiguration = GoRouter(
 
     //CARS
     GoRoute(
-      name: 'allCars',
-      path: '/all-cars',
-      builder: (context, state) => const MainSection(
-        pageIndex: 1,
-      ),
-    ),
+        name: 'allCars',
+        path: '/cars',
+        builder: (context, state) => const MainSection(
+              pageIndex: 1,
+            ),
+        routes: [
+          GoRoute(
+            name: 'carDetails',
+            path: 'cars/:carId',
+            builder: (context, state) => CarDetails(
+              car: state.uri.queryParameters['car'].toString(),
+              renter: state.uri.queryParameters['renter'].toString(),
+              heroTag: state.uri.queryParameters['heroTag'],
+            ),
+          )
+        ]),
   ],
 );

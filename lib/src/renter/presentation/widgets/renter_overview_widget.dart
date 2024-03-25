@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:rent_wheels/core/models/renter/renter_model.dart';
 
 import 'package:rent_wheels/core/widgets/sizes/sizes.dart';
+import 'package:rent_wheels/core/widgets/theme/theme.dart';
 import 'package:rent_wheels/core/widgets/theme/colors.dart';
 import 'package:rent_wheels/core/widgets/spacing/spacing.dart';
-import 'package:rent_wheels/core/widgets/theme/theme.dart';
+import 'package:rent_wheels/src/renter/domain/entity/renter_info.dart';
 
 class RenterOverview extends StatelessWidget {
-  final Renter renter;
-  // final RenterInfoModel renter;
+  final RenterInfo renter;
 
   const RenterOverview({super.key, required this.renter});
 

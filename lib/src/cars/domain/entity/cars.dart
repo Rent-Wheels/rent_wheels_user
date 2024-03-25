@@ -64,4 +64,26 @@ class Cars extends Equatable {
         yearOfManufacture,
         registrationNumber,
       ];
+
+  Map<String, dynamic> toMap() => {
+        'id': id,
+        'rate': rate,
+        'make': make,
+        'type': type,
+        'plan': plan,
+        'model': model,
+        'color': color,
+        'terms': terms,
+        'ownerId': ownerId,
+        'capacity': capacity,
+        'location': location,
+        'condition': condition,
+        'description': description,
+        'maxDuration': maxDuration,
+        'durationUnit': durationUnit,
+        'availability': availability,
+        'yearOfManufacture': yearOfManufacture,
+        'registrationNumber': registrationNumber,
+        'media': media?.map<Map<String, dynamic>>((e) => e.toMap()).toList(),
+      };
 }
