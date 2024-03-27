@@ -1,27 +1,21 @@
 import 'dart:io';
 
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:rent_wheels/core/widgets/theme/theme.dart';
+import 'package:rent_wheels/src/global/presentation/provider/global_provider.dart';
 import 'package:string_validator/string_validator.dart';
 
-import 'package:rent_wheels/core/auth/auth_service.dart';
 import 'package:rent_wheels/core/util/date_util.dart';
 import 'package:rent_wheels/core/widgets/sizes/sizes.dart';
 import 'package:rent_wheels/core/widgets/theme/colors.dart';
-import 'package:rent_wheels/core/auth/auth_exceptions.dart';
 import 'package:rent_wheels/core/widgets/spacing/spacing.dart';
-import 'package:rent_wheels/core/global/globals.dart' as global;
-import 'package:rent_wheels/core/widgets/popups/error_popup.dart';
-import 'package:rent_wheels/core/widgets/popups/success_popup.dart';
 import 'package:rent_wheels/core/widgets/popups/date_picker_widget.dart';
-import 'package:rent_wheels/core/auth/backend/backend_auth_service.dart';
 import 'package:rent_wheels/core/widgets/buttons/generic_button_widget.dart';
 import 'package:rent_wheels/core/widgets/textfields/tappable_textfield.dart';
 import 'package:rent_wheels/core/widgets/bottomSheets/media_bottom_sheet.dart';
-import 'package:rent_wheels/core/widgets/loadingIndicator/loading_indicator.dart';
 import 'package:rent_wheels/core/widgets/textfields/generic_textfield_widget.dart';
 import 'package:rent_wheels/core/widgets/buttons/adaptive_back_button_widget.dart';
 import 'package:rent_wheels/core/widgets/profilePicture/profile_picture_widget.dart';
@@ -44,6 +38,7 @@ class _AccountProfileState extends State<AccountProfile> {
 
   File? avatar;
   final picker = ImagePicker();
+  late GlobalProvider _globalProvider;
 
   TextEditingController dob = TextEditingController();
   TextEditingController name = TextEditingController();
@@ -85,19 +80,24 @@ class _AccountProfileState extends State<AccountProfile> {
     );
   }
 
+  fillDetails() {
+    final global = context.read<GlobalProvider>();
+    name.text = global.userDetails!.name!;
+    email.text = global.userDetails!.email!;
+    phoneNumber.text = global.userDetails!.phoneNumber!;
+    residence.text = global.userDetails!.placeOfResidence!;
+    dob.text = formatDate(DateTime.parse(global.userDetails!.dob!));
+  }
+
   @override
   void initState() {
-    name.text = global.userDetails!.name;
-    email.text = global.userDetails!.email;
-    phoneNumber.text = global.userDetails!.phoneNumber;
-    residence.text = global.userDetails!.placeOfResidence;
-    dob.text = formatDate(global.userDetails!.dob);
-
+    fillDetails();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    _globalProvider = context.watch<GlobalProvider>();
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -124,7 +124,7 @@ class _AccountProfileState extends State<AccountProfile> {
               Space().height(context, 0.03),
               ProfilePicture(
                 imageFile: avatar,
-                imgUrl: global.userDetails?.profilePicture,
+                imgUrl: _globalProvider.userDetails?.profilePicture,
                 onTap: bottomSheet,
               ),
               Space().height(context, 0.02),
@@ -134,16 +134,10 @@ class _AccountProfileState extends State<AccountProfile> {
                 maxLines: 1,
                 textCapitalization: TextCapitalization.words,
                 onChanged: (value) {
-                  if (value.length >= 4 &&
-                      value.trimRight() != global.userDetails!.name) {
-                    setState(() {
-                      isNameValid = true;
-                    });
-                  } else {
-                    setState(() {
-                      isNameValid = false;
-                    });
-                  }
+                  setState(() {
+                    isNameValid = value.length >= 4 &&
+                        value.trimRight() != _globalProvider.userDetails!.name;
+                  });
                 },
               ),
               Space().height(context, 0.02),
@@ -155,16 +149,10 @@ class _AccountProfileState extends State<AccountProfile> {
                 textCapitalization: TextCapitalization.none,
                 enableSuggestions: false,
                 onChanged: (value) {
-                  if (isEmail(value) &&
-                      value.trimRight() != global.userDetails!.email) {
-                    setState(() {
-                      isEmailValid = true;
-                    });
-                  } else {
-                    setState(() {
-                      isEmailValid = false;
-                    });
-                  }
+                  setState(() {
+                    isEmailValid = isEmail(value) &&
+                        value.trimRight() != _globalProvider.userDetails!.email;
+                  });
                 },
               ),
               Space().height(context, 0.02),
@@ -174,16 +162,11 @@ class _AccountProfileState extends State<AccountProfile> {
                 maxLines: 1,
                 keyboardType: TextInputType.phone,
                 onChanged: (value) {
-                  if (value.length == 10 &&
-                      value.trimRight() != global.userDetails!.phoneNumber) {
-                    setState(() {
-                      isPhoneNumberValid = true;
-                    });
-                  } else {
-                    setState(() {
-                      isPhoneNumberValid = false;
-                    });
-                  }
+                  setState(() {
+                    isPhoneNumberValid = value.length == 10 &&
+                        value.trimRight() !=
+                            _globalProvider.userDetails!.phoneNumber;
+                  });
                 },
               ),
               Space().height(context, 0.02),
@@ -236,58 +219,58 @@ class _AccountProfileState extends State<AccountProfile> {
                 isActive: isActive(),
                 buttonName: 'Update Account',
                 onPressed: () async {
-                  buildLoadingIndicator(context, 'Updating Account Details');
+                  // buildLoadingIndicator(context, 'Updating Account Details');
 
-                  try {
-                    final updatedUser = await BackendAuthService().updateUser(
-                      avatar: avatar?.path,
-                      name: name.text,
-                      phoneNumber: phoneNumber.text,
-                      email: email.text,
-                      dob: parseDate(dob.text),
-                      residence: residence.text,
-                    );
+                  // try {
+                  //   final updatedUser = await BackendAuthService().updateUser(
+                  //     avatar: avatar?.path,
+                  //     name: name.text,
+                  //     phoneNumber: phoneNumber.text,
+                  //     email: email.text,
+                  //     dob: parseDate(dob.text),
+                  //     residence: residence.text,
+                  //   );
 
-                    await global.setGlobals(fetchedUserDetails: updatedUser);
+                  //   await global.setGlobals(fetchedUserDetails: updatedUser);
 
-                    if (isEmailValid) {
-                      await AuthService.firebase().updateUserDetails(
-                          user: global.user!, email: email.text);
+                  //   if (isEmailValid) {
+                  //     await AuthService.firebase().updateUserDetails(
+                  //         user: global.user!, email: email.text);
 
-                      await FirebaseAuth.instance.currentUser!.reload();
+                  //     await FirebaseAuth.instance.currentUser!.reload();
 
-                      final user = FirebaseAuth.instance.currentUser;
-                      await global.setGlobals(currentUser: user);
-                    }
+                  //     final user = FirebaseAuth.instance.currentUser;
+                  //     await global.setGlobals(currentUser: user);
+                  //   }
 
-                    setState(() {
-                      isAvatarValid = false;
-                      isDobValid = false;
-                      isNameValid = false;
-                      isEmailValid = false;
-                      isPasswordValid = false;
-                      isResidenceValid = false;
-                      isPhoneNumberValid = false;
-                    });
+                  //   setState(() {
+                  //     isAvatarValid = false;
+                  //     isDobValid = false;
+                  //     isNameValid = false;
+                  //     isEmailValid = false;
+                  //     isPasswordValid = false;
+                  //     isResidenceValid = false;
+                  //     isPhoneNumberValid = false;
+                  //   });
 
-                    if (!mounted) return;
-                    context.pop();
-                    showSuccessPopUp('Profile Updated', context);
-                  } catch (e) {
-                    if (!mounted) return;
-                    context.pop();
-                    if (e is InvalidEmailException) {
-                      showErrorPopUp(
-                        'Email is already in use',
-                        context,
-                      );
-                    } else {
-                      showErrorPopUp(
-                        e.toString(),
-                        context,
-                      );
-                    }
-                  }
+                  //   if (!mounted) return;
+                  //   context.pop();
+                  //   showSuccessPopUp('Profile Updated', context);
+                  // } catch (e) {
+                  //   if (!mounted) return;
+                  //   context.pop();
+                  //   if (e is InvalidEmailException) {
+                  //     showErrorPopUp(
+                  //       'Email is already in use',
+                  //       context,
+                  //     );
+                  //   } else {
+                  //     showErrorPopUp(
+                  //       e.toString(),
+                  //       context,
+                  //     );
+                  //   }
+                  // }
                 },
               ),
               Space().height(context, 0.03),

@@ -8,6 +8,8 @@ import 'package:rent_wheels/src/authentication/presentation/pages/reset_password
 import 'package:rent_wheels/src/cars/presentation/pages/car_details.dart';
 import 'package:rent_wheels/src/home/presentation/pages/base.dart';
 import 'package:rent_wheels/src/onboarding/presentation/onboarding.dart';
+import 'package:rent_wheels/src/user/presentation/pages/account_profile.dart';
+import 'package:rent_wheels/src/user/presentation/pages/change_password.dart';
 
 final GoRouter goRouterConfiguration = GoRouter(
   initialLocation: '/',
@@ -72,21 +74,43 @@ final GoRouter goRouterConfiguration = GoRouter(
 
     //CARS
     GoRoute(
-        name: 'allCars',
-        path: '/cars',
-        builder: (context, state) => const MainSection(
-              pageIndex: 1,
-            ),
-        routes: [
-          GoRoute(
-            name: 'carDetails',
-            path: 'cars/:carId',
-            builder: (context, state) => CarDetails(
-              car: state.uri.queryParameters['car'].toString(),
-              renter: state.uri.queryParameters['renter'].toString(),
-              heroTag: state.uri.queryParameters['heroTag'],
-            ),
-          )
-        ]),
+      name: 'allCars',
+      path: '/cars',
+      builder: (context, state) => const MainSection(
+        pageIndex: 1,
+      ),
+      routes: [
+        GoRoute(
+          name: 'carDetails',
+          path: 'cars/:carId',
+          builder: (context, state) => CarDetails(
+            car: state.uri.queryParameters['car'].toString(),
+            renter: state.uri.queryParameters['renter'].toString(),
+            heroTag: state.uri.queryParameters['heroTag'],
+          ),
+        )
+      ],
+    ),
+
+    //PROFILE
+    GoRoute(
+      name: 'allProfile',
+      path: '/profile',
+      builder: (context, state) => const MainSection(
+        pageIndex: 3,
+      ),
+      routes: [
+        GoRoute(
+          name: 'accountProfile',
+          path: 'account-profile',
+          builder: (context, state) => const AccountProfile(),
+        ),
+        GoRoute(
+          name: 'changePassword',
+          path: 'change-password',
+          builder: (context, state) => const ChangePassword(),
+        ),
+      ],
+    ),
   ],
 );

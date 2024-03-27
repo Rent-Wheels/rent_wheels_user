@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:rent_wheels/assets/svgs/svg_constants.dart';
 
 import 'package:rent_wheels/src/home/presentation/pages/home.dart';
-import 'package:rent_wheels/src/mainSection/profile/presentation/profile.dart';
+import 'package:rent_wheels/src/user/presentation/pages/profile.dart';
 import 'package:rent_wheels/src/cars/presentation/pages/available_cars.dart';
 import 'package:rent_wheels/src/reservations/presentation/pages/reservation.dart';
 

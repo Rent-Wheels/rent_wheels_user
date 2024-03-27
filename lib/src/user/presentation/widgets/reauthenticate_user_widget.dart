@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:rent_wheels/src/mainSection/profile/widgets/reauthenticate_user_dialog.dart';
+import 'package:rent_wheels/src/user/presentation/widgets/reauthenticate_user_dialog.dart';
 
 buildReauthenticateUserDialog({
   required BuildContext context,

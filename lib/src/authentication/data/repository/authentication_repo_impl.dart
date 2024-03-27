@@ -127,7 +127,10 @@ class AuthenticationRepositoryImpl
       );
 
       return Right(response);
-    } catch (e) {
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'wrong-password') {
+        return const Left('Incorrect password');
+      }
       return Left(e.toString());
     }
   }
