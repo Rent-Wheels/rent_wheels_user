@@ -25,9 +25,10 @@ class ProfileOptions extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: onTap,
-      child: SizedBox(
-        width: Sizes().width(context, 0.85),
-        height: Sizes().height(context, 0.07),
+      child: Container(
+        padding: EdgeInsets.symmetric(
+          vertical: Sizes().height(context, 0.007),
+        ),
         child: Row(
           children: [
             Container(

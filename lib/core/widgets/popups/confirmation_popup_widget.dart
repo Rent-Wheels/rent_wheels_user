@@ -31,61 +31,63 @@ class ConfirmationPopup extends StatefulWidget {
 class _ConfirmationPopupState extends State<ConfirmationPopup> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: Sizes().height(context, 0.28),
-      padding: EdgeInsets.symmetric(
-        vertical: Sizes().height(context, 0.01),
-        horizontal: Sizes().width(context, 0.04),
-      ),
-      decoration: BoxDecoration(
-        color: rentWheelsNeutralLight0,
-        borderRadius: BorderRadius.circular(
-          Sizes().height(context, 0.015),
+    return Dialog(
+      child: Container(
+        height: Sizes().height(context, 0.28),
+        padding: EdgeInsets.symmetric(
+          vertical: Sizes().height(context, 0.01),
+          horizontal: Sizes().width(context, 0.04),
         ),
-      ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Text(
-                widget.label,
-                style: theme.textTheme.titleSmall!.copyWith(
-                  color: rentWheelsInformationDark900,
-                ),
-              ),
-              GestureDetector(
-                onTap: widget.onCancel,
-                child: Icon(
-                  Icons.close,
-                  color: rentWheelsNeutral,
-                  size: Sizes().height(context, 0.04),
-                ),
-              )
-            ],
+        decoration: BoxDecoration(
+          color: rentWheelsNeutralLight0,
+          borderRadius: BorderRadius.circular(
+            Sizes().height(context, 0.015),
           ),
-          if (widget.message != null)
-            Wrap(
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Space().height(context, 0.02),
                 Text(
-                  widget.message!,
-                  style: theme.textTheme.bodyLarge!.copyWith(
-                    color: rentWheelsNeutral,
+                  widget.label,
+                  style: theme.textTheme.titleSmall!.copyWith(
+                    color: rentWheelsInformationDark900,
                   ),
                 ),
+                GestureDetector(
+                  onTap: widget.onCancel,
+                  child: Icon(
+                    Icons.close,
+                    color: rentWheelsNeutral,
+                    size: Sizes().height(context, 0.04),
+                  ),
+                )
               ],
             ),
-          GenericButton(
-            width: Sizes().width(context, 0.85),
-            isActive: true,
-            buttonName: widget.buttonName,
-            onPressed: widget.onAccept,
-          ),
-        ],
+            if (widget.message != null)
+              Wrap(
+                children: [
+                  Space().height(context, 0.02),
+                  Text(
+                    widget.message!,
+                    style: theme.textTheme.bodyLarge!.copyWith(
+                      color: rentWheelsNeutral,
+                    ),
+                  ),
+                ],
+              ),
+            GenericButton(
+              width: Sizes().width(context, 0.85),
+              isActive: true,
+              buttonName: widget.buttonName,
+              onPressed: widget.onAccept,
+            ),
+          ],
+        ),
       ),
     );
   }

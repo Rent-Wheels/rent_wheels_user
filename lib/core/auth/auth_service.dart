@@ -20,20 +20,4 @@ class AuthService implements FirebaseAuthProvider {
         email: email,
         password: password,
       );
-
-  @override
-  Future<void> deleteUser({
-    required User user,
-  }) =>
-      provider.deleteUser(user: user);
-
-  @override
-  Future<UserCredential?> reauthenticateUser({
-    required email,
-    required password,
-  }) =>
-      provider.reauthenticateUser(
-        email: email,
-        password: password,
-      );
 }

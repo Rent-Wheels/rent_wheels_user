@@ -4,8 +4,6 @@ import 'package:go_router/go_router.dart';
 import 'package:rent_wheels/assets/svgs/svg_constants.dart';
 import 'package:rent_wheels/core/widgets/theme/theme.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:rent_wheels/core/widgets/toast/toast_notification_widget.dart';
-
 import 'package:rent_wheels/src/global/presentation/provider/global_provider.dart';
 import 'package:rent_wheels/src/user/presentation/widgets/profile_options_widget.dart';
 
@@ -26,11 +24,16 @@ class Profile extends StatefulWidget {
 class _ProfileState extends State<Profile> {
   late GlobalProvider _globalProvider;
 
-  TextEditingController password = TextEditingController();
-
   @override
   Widget build(BuildContext context) {
     _globalProvider = context.watch<GlobalProvider>();
+
+    final Map<String, void Function()> sectionOnTap = {
+      'accountProfile': () => context.pushNamed('accountProfile'),
+      'changePassword': () => context.pushNamed('changePassword'),
+      'notifications': () => context.pushNamed('notifications'),
+      'deleteAccount': () => buildReauthenticateUserDialog(context),
+    };
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
@@ -94,94 +97,25 @@ class _ProfileState extends State<Profile> {
                   ],
                 ),
                 Space().height(context, 0.03),
-                ProfileOptions(
-                  section: 'Account Profile',
-                  svg: accountProfileSVG,
-                  onTap: () => context.pushNamed('accountProfile'),
-                ),
-                const Divider(),
-                ProfileOptions(
-                  section: 'Change Password',
-                  svg: changePasswordSVG,
-                  onTap: () => context.pushNamed('changePassword'),
-                ),
-                const Divider(),
-                const ProfileOptions(
-                  section: 'Notifications',
-                  svg: notificationsSVG,
-                  onTap: buildToastNotification,
-                ),
-                const Divider(),
-                ProfileOptions(
-                  section: 'Delete Account',
-                  svg: trashSVG,
-                  style: theme.textTheme.headlineMedium!.copyWith(
-                    color: rentWheelsErrorDark700,
-                  ),
-                  color: rentWheelsErrorDark700,
-                  onTap: () => buildReauthenticateUserDialog(
-                    context: context,
-                    controller: password,
-                    onSubmit: () async {
-                      // try {
-                      //   buildLoadingIndicator(context, '');
-                      //   final reauthenticatedUser =
-                      //       await AuthService.firebase().reauthenticateUser(
-                      //     email: _globalProvider.userDetails!.email,
-                      //     password: password.text,
-                      //   );
-
-                      //   await _globalProvider.setGlobals(
-                      //     currentUser: reauthenticatedUser!.user!,
-                      //   );
-
-                      //   if (!mounted) return;
-                      //   context.pop();
-                      //   context.pop();
-
-                      //   buildConfirmationDialog(
-                      //     context: context,
-                      //     label: 'Delete Account',
-                      //     buttonName: 'Delete Account',
-                      //     message:
-                      //         'Are you sure you want to delete your account? This action is irreversible!',
-                      //     onAccept: () async {
-                      //       try {
-                      //         buildLoadingIndicator(
-                      //             context, 'Deleting Account');
-                      //         await AuthService.firebase()
-                      //             .deleteUser(user: _globalProvider.user!);
-
-                      //         if (!mounted) return;
-                      //         context.pop();
-                      //         Navigator.pushAndRemoveUntil(
-                      //           context,
-                      //           CupertinoPageRoute(
-                      //             builder: (context) => const Login(),
-                      //           ),
-                      //           (route) => false,
-                      //         );
-                      //       } catch (e) {
-                      //         if (!mounted) return;
-                      //         context.pop();
-                      //         context.pop();
-                      //         showErrorPopUp(e.toString(), context);
-                      //       }
-                      //     },
-                      //   );
-                      // } catch (e) {
-                      //   if (!mounted) return;
-                      //   context.pop();
-                      //   if (e is InvalidPasswordAuthException) {
-                      //     showErrorPopUp('Incorrect Password', context);
-                      //   } else {
-                      //     showErrorPopUp(
-                      //       e.toString(),
-                      //       context,
-                      //     );
-                      //   }
-                      // }
-                    },
+                ...ProfileSections.values.map(
+                  (e) => Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      ProfileOptions(
+                        svg: e.icon,
+                        section: e.label,
+                        onTap: sectionOnTap[e.name],
+                        style: e.name != 'deleteAccount'
+                            ? null
+                            : theme.textTheme.headlineMedium!.copyWith(
+                                color: rentWheelsErrorDark700,
+                              ),
+                        color: e.name != 'deleteAccount'
+                            ? null
+                            : rentWheelsErrorDark700,
+                      ),
+                      if (e.name != 'deleteAccount') const Divider(),
+                    ],
                   ),
                 ),
               ],
@@ -227,4 +161,15 @@ class _ProfileState extends State<Profile> {
       ),
     );
   }
+}
+
+enum ProfileSections {
+  accountProfile(icon: accountProfileSVG, label: 'Account Profile'),
+  changePassword(icon: changePasswordSVG, label: 'Change Password'),
+  notifications(icon: notificationsSVG, label: 'Notifications'),
+  deleteAccount(icon: trashSVG, label: 'Delete Account');
+
+  final String icon, label;
+
+  const ProfileSections({required this.icon, required this.label});
 }
