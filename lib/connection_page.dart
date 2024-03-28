@@ -47,6 +47,7 @@ class _ConnectionPageState extends State<ConnectionPage> {
               : context.goNamed('onboarding');
         }
         if (state is GetUserDetailsLoaded) {
+          _globalProvider.reloadCurrentUser();
           _globalProvider.updateUserDetails(state.user);
           if (user!.emailVerified) {
             context.goNamed('home');

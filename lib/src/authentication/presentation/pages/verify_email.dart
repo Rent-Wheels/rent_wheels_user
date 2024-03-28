@@ -37,7 +37,7 @@ class _VerifyEmailState extends State<VerifyEmail> {
   verifyEmail() {
     buildLoadingIndicator(context, '');
 
-    _globalProvider.reloadUser();
+    _globalProvider.reloadCurrentUser();
 
     if (!_globalProvider.user!.emailVerified) {
       context.pop();

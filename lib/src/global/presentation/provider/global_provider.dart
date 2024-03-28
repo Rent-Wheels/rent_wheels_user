@@ -73,5 +73,7 @@ class GlobalProvider extends ChangeNotifier {
   reloadCurrentUser() async {
     await reloadUser.call();
     _user = getCurrentUser.call();
+
+    notifyListeners();
   }
 }

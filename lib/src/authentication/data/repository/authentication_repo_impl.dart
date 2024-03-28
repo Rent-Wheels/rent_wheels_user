@@ -55,9 +55,12 @@ class AuthenticationRepositoryImpl
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
         return const Left('Please choose a stronger password');
-      } else if (e.code == 'email-already-in-use') {
+      }
+      if (e.code == 'email-already-in-use') {
         return const Left('Email is already in use');
       }
+      return Left(e.toString());
+    } catch (e) {
       return Left(e.toString());
     }
   }
@@ -132,6 +135,8 @@ class AuthenticationRepositoryImpl
         return const Left('Incorrect password');
       }
       return Left(e.toString());
+    } catch (e) {
+      return Left(e.toString());
     }
   }
 
@@ -170,9 +175,12 @@ class AuthenticationRepositoryImpl
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         return const Left('User does not exist');
-      } else if (e.code == 'wrong-password') {
+      }
+      if (e.code == 'wrong-password') {
         return const Left('Invalid email or password');
       }
+      return Left(e.toString());
+    } catch (e) {
       return Left(e.toString());
     }
   }
@@ -192,6 +200,11 @@ class AuthenticationRepositoryImpl
       );
 
       return Right(response);
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'wrong-password') {
+        return const Left('Invalid email or password');
+      }
+      return Left(e.toString());
     } catch (e) {
       return Left(e.toString());
     }

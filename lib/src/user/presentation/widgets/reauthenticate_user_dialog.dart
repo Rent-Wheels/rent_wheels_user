@@ -39,7 +39,7 @@ class _ReauthenticateUserDialogState extends State<ReauthenticateUserDialog> {
 
     final params = {
       'password': password.text,
-      'user': _globalProvider.currentUser,
+      'user': _globalProvider.user,
       'email': _globalProvider.userDetails?.email,
     };
 
@@ -48,7 +48,7 @@ class _ReauthenticateUserDialogState extends State<ReauthenticateUserDialog> {
 
   deleteUserDirectory() {
     final params = {
-      'directoryPath': 'users/${_globalProvider.currentUser!.uid}',
+      'directoryPath': 'users/${_globalProvider.user!.uid}',
     };
 
     _fileBloc.add(DeleteDirectoryEvent(params: params));
@@ -56,7 +56,7 @@ class _ReauthenticateUserDialogState extends State<ReauthenticateUserDialog> {
 
   deleteFirebaseUser() {
     final params = {
-      'user': _globalProvider.currentUser,
+      'user': _globalProvider.user,
     };
 
     _authBloc.add(DeleteUserFromFirebaseEvent(params: params));
@@ -65,7 +65,7 @@ class _ReauthenticateUserDialogState extends State<ReauthenticateUserDialog> {
   deleteBackendUser() {
     final params = {
       'urlParameters': {
-        'userId': _globalProvider.currentUser?.uid,
+        'userId': _globalProvider.user?.uid,
       },
       'headers': _globalProvider.headers,
     };
@@ -161,34 +161,13 @@ class _ReauthenticateUserDialogState extends State<ReauthenticateUserDialog> {
                     isPasswordValid = value.length > 5;
                   });
                 },
+                isPassword: true,
                 controller: password,
                 enableSuggestions: false,
-                isPassword: !isPasswordVisible,
-                icon: isPasswordVisible
-                    ? GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            isPasswordVisible = false;
-                          });
-                        },
-                        child: Icon(
-                          Icons.visibility_off_outlined,
-                          size: Sizes().width(context, 0.045),
-                          color: rentWheelsNeutral,
-                        ),
-                      )
-                    : GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            isPasswordVisible = true;
-                          });
-                        },
-                        child: Icon(
-                          Icons.visibility_outlined,
-                          size: Sizes().width(context, 0.045),
-                          color: rentWheelsNeutral,
-                        ),
-                      ),
+                isPasswordVisible: isPasswordVisible,
+                iconOnTap: () => setState(() {
+                  isPasswordVisible = !isPasswordVisible;
+                }),
               ),
               Space().height(context, 0.02),
               GenericButton(

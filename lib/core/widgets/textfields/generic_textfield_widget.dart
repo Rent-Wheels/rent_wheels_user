@@ -5,30 +5,32 @@ import 'package:rent_wheels/core/widgets/theme/colors.dart';
 import 'package:rent_wheels/core/widgets/theme/theme.dart';
 
 class GenericTextField extends StatefulWidget {
-  final Widget? icon;
+  final String hint;
   final int? minLines;
   final int? maxLines;
   final bool? isPassword;
+  final bool? isPasswordVisible;
   final bool? enableSuggestions;
-  final String hint;
   final TextInputAction? textInput;
+  final void Function()? iconOnTap;
   final TextInputType? keyboardType;
-  final TextCapitalization? textCapitalization;
-  final TextEditingController controller;
   final void Function(String) onChanged;
+  final TextEditingController controller;
+  final TextCapitalization? textCapitalization;
   const GenericTextField({
     super.key,
-    this.icon,
     this.minLines,
     this.maxLines,
-    this.isPassword,
-    this.enableSuggestions,
-    required this.hint,
     this.textInput,
+    this.iconOnTap,
+    this.isPassword,
     this.keyboardType,
+    this.isPasswordVisible,
+    this.enableSuggestions,
     this.textCapitalization,
-    required this.controller,
+    required this.hint,
     required this.onChanged,
+    required this.controller,
   });
 
   @override
@@ -69,7 +71,8 @@ class _GenericTextFieldState extends State<GenericTextField> {
             controller: widget.controller,
             keyboardType: widget.keyboardType,
             cursorColor: rentWheelsBrandDark900,
-            obscureText: widget.isPassword ?? false,
+            obscureText: (widget.isPassword ?? false) &&
+                !(widget.isPasswordVisible ?? false),
             textInputAction: widget.textInput ?? TextInputAction.next,
             autocorrect: widget.enableSuggestions ?? widget.isPassword == null,
             enableSuggestions:
@@ -82,7 +85,25 @@ class _GenericTextFieldState extends State<GenericTextField> {
             ),
             decoration: InputDecoration(
               hintText: widget.hint,
-              suffix: widget.icon,
+              suffix: !(widget.isPassword ?? false)
+                  ? null
+                  : (widget.isPasswordVisible ?? false)
+                      ? GestureDetector(
+                          onTap: widget.iconOnTap,
+                          child: Icon(
+                            Icons.visibility_off_outlined,
+                            size: Sizes().width(context, 0.045),
+                            color: rentWheelsNeutral,
+                          ),
+                        )
+                      : GestureDetector(
+                          onTap: widget.iconOnTap,
+                          child: Icon(
+                            Icons.visibility_outlined,
+                            size: Sizes().width(context, 0.045),
+                            color: rentWheelsNeutral,
+                          ),
+                        ),
             ),
             onChanged: widget.onChanged,
           ),
