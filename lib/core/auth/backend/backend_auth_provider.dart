@@ -9,7 +9,4 @@ abstract class BackendAuthProvider {
     required DateTime dob,
     required String residence,
   });
-  Future<void> deleteUser({
-    required String userId,
-  });
 }

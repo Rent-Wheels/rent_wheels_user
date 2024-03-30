@@ -7,6 +7,7 @@ import 'package:rent_wheels/core/widgets/theme/theme.dart';
 import 'package:rent_wheels/core/widgets/theme/colors.dart';
 
 presentDatePicker({
+  DateTime? initialDate,
   required BuildContext context,
   required void Function() onPressed,
   required void Function(DateTime) onDateTimeChanged,
@@ -37,9 +38,10 @@ presentDatePicker({
                             currentDate.day,
                           ),
                           mode: CupertinoDatePickerMode.date,
-                          initialDateTime: DateTime(
-                            currentDate.year - 18,
-                          ),
+                          initialDateTime: initialDate ??
+                              DateTime(
+                                currentDate.year - 18,
+                              ),
                           onDateTimeChanged: onDateTimeChanged,
                         ),
                       );
@@ -61,9 +63,10 @@ presentDatePicker({
         )
       : showDatePicker(
           context: context,
-          initialDate: DateTime(
-            currentDate.year - 18,
-          ),
+          initialDate: initialDate ??
+              DateTime(
+                currentDate.year - 18,
+              ),
           firstDate: DateTime(1950),
           lastDate: DateTime(
             currentDate.year - 18,

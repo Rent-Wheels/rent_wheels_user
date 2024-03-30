@@ -3,8 +3,16 @@ import 'dart:io';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter/material.dart';
+import 'package:google_maps_webservice/places.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:rent_wheels/core/image/provider/image_provider.dart';
+import 'package:rent_wheels/core/search/presentation/provider/search_provider.dart';
+import 'package:rent_wheels/core/search/presentation/widgets/custom_search_bottom_sheet.dart';
+import 'package:rent_wheels/core/widgets/loadingIndicator/loading_indicator.dart';
 import 'package:rent_wheels/core/widgets/theme/theme.dart';
+import 'package:rent_wheels/injection.dart';
+import 'package:rent_wheels/src/authentication/presentation/bloc/authentication_bloc.dart';
+import 'package:rent_wheels/src/files/presentation/bloc/files_bloc.dart';
 import 'package:rent_wheels/src/global/presentation/provider/global_provider.dart';
 import 'package:string_validator/string_validator.dart';
 
@@ -28,17 +36,17 @@ class AccountProfile extends StatefulWidget {
 }
 
 class _AccountProfileState extends State<AccountProfile> {
-  bool isDobValid = false;
-  bool isNameValid = false;
-  bool isEmailValid = false;
-  bool isAvatarValid = false;
-  bool isPasswordValid = false;
-  bool isResidenceValid = false;
-  bool isPhoneNumberValid = false;
+  File? _avatar;
 
-  File? avatar;
-  final picker = ImagePicker();
   late GlobalProvider _globalProvider;
+  late ImageSelectionProvider _imageProvider;
+
+  bool _isDobValid = false;
+  bool _isNameValid = false;
+  bool _isEmailValid = false;
+  bool _isAvatarValid = false;
+  bool _isResidenceValid = false;
+  bool _isPhoneNumberValid = false;
 
   TextEditingController dob = TextEditingController();
   TextEditingController name = TextEditingController();
@@ -46,24 +54,35 @@ class _AccountProfileState extends State<AccountProfile> {
   TextEditingController residence = TextEditingController();
   TextEditingController phoneNumber = TextEditingController();
 
+  final _filesBloc = sl<FilesBloc>();
+  final _authBloc = sl<AuthenticationBloc>();
+
   bool isActive() {
-    return isAvatarValid ||
-        isDobValid ||
-        isNameValid ||
-        isEmailValid ||
-        isPasswordValid ||
-        isResidenceValid ||
-        isPhoneNumberValid;
+    return _isAvatarValid ||
+        _isDobValid ||
+        _isNameValid ||
+        _isEmailValid ||
+        _isResidenceValid ||
+        _isPhoneNumberValid;
   }
 
   openImage({required ImageSource source}) async {
-    final XFile? image = await picker.pickImage(source: source);
-    if (image != null) {
-      setState(() {
-        avatar = File(image.path);
-        isAvatarValid = true;
-      });
-    }
+    _avatar = await _imageProvider.openImage(source: source);
+
+    if (_avatar == null) return;
+
+    setState(() {
+      _isAvatarValid = true;
+    });
+  }
+
+  placeOnTap(Prediction p) async {
+    residence.text = await context.read<SearchProvider>().setLocation(p);
+    _isResidenceValid = true;
+    setState(() {});
+
+    if (!mounted) return;
+    context.pop();
   }
 
   bottomSheet() {
@@ -89,6 +108,43 @@ class _AccountProfileState extends State<AccountProfile> {
     dob.text = formatDate(DateTime.parse(global.userDetails!.dob!));
   }
 
+  initUpdate() {
+    buildLoadingIndicator(context, 'Updating Account Details');
+
+    if (_avatar != null) {
+      uploadProfileImage();
+    } else {
+      updateUser();
+    }
+  }
+
+  updateUser({String? profilePicture}) {
+    final params = {
+      'body': {
+        'userId': _globalProvider.user!.uid,
+        'name': name,
+        'phoneNumber': phoneNumber,
+        'email': email,
+        'dob': parseDate(dob.text).toIso8601String(),
+        'placeOfResidence': residence,
+        'profilePicture':
+            profilePicture ?? _globalProvider.userDetails!.profilePicture
+      }
+    };
+    _authBloc.add(UpdateUserEvent(params: params));
+  }
+
+  uploadProfileImage() {
+    final params = {
+      'fileUrl': _avatar!.path,
+    };
+    _filesBloc.add(
+      GetFileUrlEvent(
+        params: params,
+      ),
+    );
+  }
+
   @override
   void initState() {
     fillDetails();
@@ -98,11 +154,9 @@ class _AccountProfileState extends State<AccountProfile> {
   @override
   Widget build(BuildContext context) {
     _globalProvider = context.watch<GlobalProvider>();
+    _imageProvider = context.watch<ImageSelectionProvider>();
     return Scaffold(
       appBar: AppBar(
-        elevation: 0,
-        foregroundColor: rentWheelsBrandDark900,
-        backgroundColor: rentWheelsNeutralLight0,
         leading: AdaptiveBackButton(
           onPressed: () => context.pop(),
         ),
@@ -112,7 +166,6 @@ class _AccountProfileState extends State<AccountProfile> {
         child: Padding(
           padding: EdgeInsets.all(Sizes().height(context, 0.02)),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
@@ -123,9 +176,9 @@ class _AccountProfileState extends State<AccountProfile> {
               ),
               Space().height(context, 0.03),
               ProfilePicture(
-                imageFile: avatar,
-                imgUrl: _globalProvider.userDetails?.profilePicture,
+                imageFile: _avatar,
                 onTap: bottomSheet,
+                imgUrl: _globalProvider.userDetails?.profilePicture,
               ),
               Space().height(context, 0.02),
               GenericTextField(
@@ -135,7 +188,7 @@ class _AccountProfileState extends State<AccountProfile> {
                 textCapitalization: TextCapitalization.words,
                 onChanged: (value) {
                   setState(() {
-                    isNameValid = value.length >= 4 &&
+                    _isNameValid = value.length >= 4 &&
                         value.trimRight() != _globalProvider.userDetails!.name;
                   });
                 },
@@ -150,7 +203,7 @@ class _AccountProfileState extends State<AccountProfile> {
                 enableSuggestions: false,
                 onChanged: (value) {
                   setState(() {
-                    isEmailValid = isEmail(value) &&
+                    _isEmailValid = isEmail(value) &&
                         value.trimRight() != _globalProvider.userDetails!.email;
                   });
                 },
@@ -163,7 +216,7 @@ class _AccountProfileState extends State<AccountProfile> {
                 keyboardType: TextInputType.phone,
                 onChanged: (value) {
                   setState(() {
-                    isPhoneNumberValid = value.length == 10 &&
+                    _isPhoneNumberValid = value.length == 10 &&
                         value.trimRight() !=
                             _globalProvider.userDetails!.phoneNumber;
                   });
@@ -174,22 +227,10 @@ class _AccountProfileState extends State<AccountProfile> {
                 hint: 'Residence',
                 context: context,
                 controller: residence,
-                onTap: () async {
-                  // final response = await Navigator.push(
-                  //   context,
-                  //   CupertinoPageRoute(
-                  //     builder: (context) => CustomSearchScaffold(),
-                  //   ),
-                  // );
-
-                  // if (response != null &&
-                  //     response != global.userDetails!.placeOfResidence) {
-                  //   setState(() {
-                  //     residence.text = response;
-                  //     isResidenceValid = true;
-                  //   });
-                  // }
-                },
+                onTap: () => buildCustomSearchBottomSheet(
+                  context: context,
+                  placeOnTap: placeOnTap,
+                ),
               ),
               Space().height(context, 0.02),
               buildTappableTextField(
@@ -198,10 +239,11 @@ class _AccountProfileState extends State<AccountProfile> {
                 controller: dob,
                 onTap: () => presentDatePicker(
                     context: context,
+                    initialDate: parseDate(dob.text),
                     onDateTimeChanged: (pickedDate) {
                       setState(() {
                         dob.text = formatDate(pickedDate);
-                        isDobValid = true;
+                        _isDobValid = true;
                       });
                     },
                     onPressed: () {
@@ -219,7 +261,7 @@ class _AccountProfileState extends State<AccountProfile> {
                 isActive: isActive(),
                 buttonName: 'Update Account',
                 onPressed: () async {
-                  // buildLoadingIndicator(context, 'Updating Account Details');
+                  //
 
                   // try {
                   //   final updatedUser = await BackendAuthService().updateUser(

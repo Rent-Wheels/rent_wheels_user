@@ -3,7 +3,6 @@ import 'dart:convert';
 
 import 'package:http/http.dart';
 
-import 'package:rent_wheels/core/auth/auth_exceptions.dart';
 import 'package:rent_wheels/core/models/user/user_model.dart';
 import 'package:rent_wheels/core/global/globals.dart' as global;
 import 'package:rent_wheels/core/backend/files/file_methods.dart';
@@ -50,15 +49,5 @@ class BackendAuthService implements BackendAuthProvider {
     } catch (e) {
       throw Exception(e);
     }
-  }
-
-  @override
-  deleteUser({required String userId}) async {
-    final response = await delete(
-      Uri.parse('${global.baseURL}/users/$userId'),
-      headers: global.headers,
-    );
-
-    if (response.statusCode != 200) throw GenericAuthException();
   }
 }
