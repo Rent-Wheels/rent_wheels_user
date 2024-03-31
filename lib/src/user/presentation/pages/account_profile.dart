@@ -122,6 +122,7 @@ class _AccountProfileState extends State<AccountProfile> {
 
   updateUser({String? profilePicture}) {
     final params = {
+      'headers': _globalProvider.headers,
       'body': {
         'name': name.text,
         'email': email.text,
@@ -137,8 +138,11 @@ class _AccountProfileState extends State<AccountProfile> {
   }
 
   uploadProfileImage() {
+    final ext = _avatar!.path.split('.').last;
     final params = {
-      'fileUrl': _avatar!.path,
+      'file': _avatar,
+      'filePath':
+          'users/${_globalProvider.user!.uid}/avatar/${_globalProvider.user!.uid}.$ext',
     };
     _filesBloc.add(
       GetFileUrlEvent(
@@ -150,7 +154,7 @@ class _AccountProfileState extends State<AccountProfile> {
   updateEmail() {
     final params = {
       'user': _globalProvider.user,
-      'emal': email.text,
+      'email': email.text,
     };
 
     _authBloc.add(UpdateUserEvent(params: params));
@@ -208,6 +212,14 @@ class _AccountProfileState extends State<AccountProfile> {
                 } else {
                   context.pop();
                   showSuccessPopUp('Profile Updated', context);
+                  setState(() {
+                    _isAvatarValid = false;
+                    _isDobValid = false;
+                    _isNameValid = false;
+                    _isEmailValid = false;
+                    _isResidenceValid = false;
+                    _isPhoneNumberValid = false;
+                  });
                 }
               }
 

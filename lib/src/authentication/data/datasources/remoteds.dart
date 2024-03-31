@@ -26,21 +26,15 @@ class AuthenticationRemoteDatasourceImpl
   Future<BackendUserInfoModel> createOrUpdateUser(
       Map<String, dynamic> params) async {
     final isCreate = params['type'] == 'create';
-    Uri uri;
     http.Response response;
 
+    final uri = url.returnUri(endpoint: Endpoints.registerUpdateOrDeleteUser);
     if (isCreate) {
-      uri = url.returnUri(endpoint: Endpoints.registerUser);
       response = await client.post(
         uri,
         body: jsonEncode(params['body']),
       );
     } else {
-      uri = url.returnUri(
-        endpoint: Endpoints.updateGetOrDeleteUser,
-        urlParameters: params['urlParameters'],
-      );
-
       response = await client.patch(
         uri,
         headers: params['headers'],
@@ -50,7 +44,7 @@ class AuthenticationRemoteDatasourceImpl
 
     final decodedResponse = json.decode(response.body);
 
-    if (response.statusCode != 201 || response.statusCode != 200) {
+    if (response.statusCode != 201 && response.statusCode != 200) {
       throw Exception(decodedResponse);
     }
 
@@ -70,10 +64,7 @@ class AuthenticationRemoteDatasourceImpl
 
   @override
   Future<void> deleteUserFromBackend(Map<String, dynamic> params) async {
-    final uri = url.returnUri(
-      endpoint: Endpoints.updateGetOrDeleteUser,
-      urlParameters: params['urlParameters'],
-    );
+    final uri = url.returnUri(endpoint: Endpoints.registerUpdateOrDeleteUser);
 
     final response = await client.delete(
       uri,

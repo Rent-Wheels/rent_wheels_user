@@ -23,7 +23,7 @@ class UserRemoteDatasourceImpl implements UserRemoteDatasource {
     Map<String, dynamic> params,
   ) async {
     final uri = urls.returnUri(
-      endpoint: Endpoints.updateGetOrDeleteUser,
+      endpoint: Endpoints.getUser,
       urlParameters: params['urlParameters'],
     );
 

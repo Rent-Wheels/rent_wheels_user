@@ -1,8 +1,8 @@
 enum Endpoints {
   login(value: '/users/login'),
-  registerUser(value: '/users/'),
+  registerUpdateOrDeleteUser(value: '/users/'),
   getRenter(value: '/renters/:renterId'),
-  updateGetOrDeleteUser(value: '/users/:userId'),
+  getUser(value: '/users/:userId'),
   getRenterCars(value: '/renters/:renterId/cars'),
   getOrDeleteUserReservationHistory(
     value: '/users/:userId/reservations/history',
