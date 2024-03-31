@@ -2,8 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:rent_wheels/assets/svgs/svg_constants.dart';
+import 'package:rent_wheels/core/widgets/loadingIndicator/loading_indicator.dart';
+import 'package:rent_wheels/core/widgets/popups/error_popup.dart';
 import 'package:rent_wheels/core/widgets/theme/theme.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:rent_wheels/injection.dart';
+import 'package:rent_wheels/src/authentication/presentation/bloc/authentication_bloc.dart';
 import 'package:rent_wheels/src/global/presentation/provider/global_provider.dart';
 import 'package:rent_wheels/src/user/presentation/widgets/profile_options_widget.dart';
 
@@ -23,6 +27,14 @@ class Profile extends StatefulWidget {
 
 class _ProfileState extends State<Profile> {
   late GlobalProvider _globalProvider;
+  final _authBloc = sl<AuthenticationBloc>();
+
+  logout() {
+    context.pop();
+    buildLoadingIndicator(context, 'Logging Out');
+
+    _authBloc.add(LogoutEvent());
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -123,41 +135,38 @@ class _ProfileState extends State<Profile> {
           ),
         ),
       ),
-      bottomSheet: Container(
-        alignment: Alignment.center,
-        height: Sizes().height(context, 0.1),
-        color: rentWheelsNeutralLight0,
-        child: GenericButton(
-          width: Sizes().width(context, 0.85),
-          isActive: true,
-          buttonName: 'Logout',
-          onPressed: () => buildConfirmationDialog(
-            label: 'Logout',
-            context: context,
-            buttonName: 'Logout',
-            message: 'Are you sure you want to log out?',
-            onAccept: () async {
-              // context.pop();
-              // buildLoadingIndicator(context, 'Logging Out');
-              // try {
-              //   await AuthService.firebase().logout();
-              //   if (!mounted) return;
-              //   context.pop();
-              //   Navigator.pushAndRemoveUntil(
-              //     context,
-              //     CupertinoPageRoute(
-              //       builder: (context) => const Login(),
-              //     ),
-              //     (route) => false,
-              //   );
-              // } catch (e) {
-              //   if (!mounted) return;
-              //   context.pop();
-              //   showErrorPopUp('Error logging out', context);
-              // }
-            },
-          ),
-        ),
+      bottomSheet: BlocConsumer(
+        bloc: _authBloc,
+        listener: (context, state) {
+          if (state is GenericFirebaseAuthError) {
+            context.pop();
+            showErrorPopUp(state.errorMessage, context);
+          }
+
+          if (state is LogoutLoaded) {
+            _globalProvider.clearUserInfo();
+            context.goNamed('login');
+          }
+        },
+        builder: (context, state) {
+          return Container(
+            alignment: Alignment.center,
+            height: Sizes().height(context, 0.1),
+            color: rentWheelsNeutralLight0,
+            child: GenericButton(
+              width: Sizes().width(context, 0.85),
+              isActive: true,
+              buttonName: 'Logout',
+              onPressed: () => buildConfirmationDialog(
+                label: 'Logout',
+                context: context,
+                buttonName: 'Logout',
+                message: 'Are you sure you want to log out?',
+                onAccept: logout,
+              ),
+            ),
+          );
+        },
       ),
     );
   }

@@ -22,7 +22,7 @@ class GlobalProvider extends ChangeNotifier {
 
   User? _user;
   BackendUserInfo? _userDetails;
-  final Map<String, String> _headers = Urls().headers;
+  Map<String, String> _headers = Urls().headers;
   final LinearGradient _shimmerGradient = const LinearGradient(
     colors: [
       Color(0xFFEBEBF4),
@@ -74,6 +74,13 @@ class GlobalProvider extends ChangeNotifier {
     await reloadUser.call();
     _user = getCurrentUser.call();
 
+    notifyListeners();
+  }
+
+  clearUserInfo() {
+    _user = null;
+    _userDetails = null;
+    _headers = {};
     notifyListeners();
   }
 }
