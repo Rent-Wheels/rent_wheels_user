@@ -9,6 +9,8 @@ import 'package:rent_wheels/core/image/provider/image_provider.dart';
 import 'package:rent_wheels/core/search/presentation/provider/search_provider.dart';
 import 'package:rent_wheels/core/search/presentation/widgets/custom_search_bottom_sheet.dart';
 import 'package:rent_wheels/core/widgets/loadingIndicator/loading_indicator.dart';
+import 'package:rent_wheels/core/widgets/popups/error_popup.dart';
+import 'package:rent_wheels/core/widgets/popups/success_popup.dart';
 import 'package:rent_wheels/core/widgets/theme/theme.dart';
 import 'package:rent_wheels/injection.dart';
 import 'package:rent_wheels/src/authentication/presentation/bloc/authentication_bloc.dart';
@@ -121,17 +123,17 @@ class _AccountProfileState extends State<AccountProfile> {
   updateUser({String? profilePicture}) {
     final params = {
       'body': {
+        'name': name.text,
+        'email': email.text,
+        'phoneNumber': phoneNumber.text,
+        'placeOfResidence': residence.text,
         'userId': _globalProvider.user!.uid,
-        'name': name,
-        'phoneNumber': phoneNumber,
-        'email': email,
         'dob': parseDate(dob.text).toIso8601String(),
-        'placeOfResidence': residence,
         'profilePicture':
             profilePicture ?? _globalProvider.userDetails!.profilePicture
       }
     };
-    _authBloc.add(UpdateUserEvent(params: params));
+    _authBloc.add(CreateOrUpdateUserEvent(params: params));
   }
 
   uploadProfileImage() {
@@ -143,6 +145,15 @@ class _AccountProfileState extends State<AccountProfile> {
         params: params,
       ),
     );
+  }
+
+  updateEmail() {
+    final params = {
+      'user': _globalProvider.user,
+      'emal': email.text,
+    };
+
+    _authBloc.add(UpdateUserEvent(params: params));
   }
 
   @override
@@ -161,162 +172,168 @@ class _AccountProfileState extends State<AccountProfile> {
           onPressed: () => context.pop(),
         ),
       ),
-      body: SingleChildScrollView(
-        keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
-        child: Padding(
-          padding: EdgeInsets.all(Sizes().height(context, 0.02)),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                "Account Profile",
-                style: theme.textTheme.titleSmall!.copyWith(
-                  color: rentWheelsInformationDark900,
+      body: MultiBlocListener(
+        listeners: [
+          BlocListener(
+            bloc: _filesBloc,
+            listener: (context, state) {
+              if (state is GenericFilesError) {
+                context.pop();
+                showErrorPopUp(state.errorMessage, context);
+              }
+
+              if (state is GetFileUrlLoaded) {
+                updateUser(profilePicture: state.fileUrl);
+              }
+            },
+          ),
+          BlocListener(
+            bloc: _authBloc,
+            listener: (context, state) {
+              if (state is GenericBackendAuthError) {
+                context.pop();
+                showErrorPopUp(state.errorMessage, context);
+              }
+
+              if (state is GenericFirebaseAuthError) {
+                context.pop();
+                showErrorPopUp(state.errorMessage, context);
+              }
+
+              if (state is CreateUpdateUserLoaded) {
+                _globalProvider.updateUserDetails(state.user);
+
+                if (_isEmailValid) {
+                  updateEmail();
+                } else {
+                  context.pop();
+                  showSuccessPopUp('Profile Updated', context);
+                }
+              }
+
+              if (state is UpdateUserLoaded) {
+                _globalProvider.reloadCurrentUser();
+                setState(() {
+                  _isAvatarValid = false;
+                  _isDobValid = false;
+                  _isNameValid = false;
+                  _isEmailValid = false;
+                  _isResidenceValid = false;
+                  _isPhoneNumberValid = false;
+                });
+
+                context.pop();
+                showSuccessPopUp('Profile Updated', context);
+              }
+            },
+          ),
+        ],
+        child: SingleChildScrollView(
+          keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+          child: Padding(
+            padding: EdgeInsets.all(Sizes().height(context, 0.02)),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  "Account Profile",
+                  style: theme.textTheme.titleSmall!.copyWith(
+                    color: rentWheelsInformationDark900,
+                  ),
                 ),
-              ),
-              Space().height(context, 0.03),
-              ProfilePicture(
-                imageFile: _avatar,
-                onTap: bottomSheet,
-                imgUrl: _globalProvider.userDetails?.profilePicture,
-              ),
-              Space().height(context, 0.02),
-              GenericTextField(
-                hint: 'Full Name',
-                controller: name,
-                maxLines: 1,
-                textCapitalization: TextCapitalization.words,
-                onChanged: (value) {
-                  setState(() {
-                    _isNameValid = value.length >= 4 &&
-                        value.trimRight() != _globalProvider.userDetails!.name;
-                  });
-                },
-              ),
-              Space().height(context, 0.02),
-              GenericTextField(
-                hint: 'Email',
-                controller: email,
-                maxLines: 1,
-                keyboardType: TextInputType.emailAddress,
-                textCapitalization: TextCapitalization.none,
-                enableSuggestions: false,
-                onChanged: (value) {
-                  setState(() {
-                    _isEmailValid = isEmail(value) &&
-                        value.trimRight() != _globalProvider.userDetails!.email;
-                  });
-                },
-              ),
-              Space().height(context, 0.02),
-              GenericTextField(
-                hint: 'Phone Number',
-                controller: phoneNumber,
-                maxLines: 1,
-                keyboardType: TextInputType.phone,
-                onChanged: (value) {
-                  setState(() {
-                    _isPhoneNumberValid = value.length == 10 &&
-                        value.trimRight() !=
-                            _globalProvider.userDetails!.phoneNumber;
-                  });
-                },
-              ),
-              Space().height(context, 0.02),
-              buildTappableTextField(
-                hint: 'Residence',
-                context: context,
-                controller: residence,
-                onTap: () => buildCustomSearchBottomSheet(
+                Space().height(context, 0.03),
+                ProfilePicture(
+                  imageFile: _avatar,
+                  onTap: bottomSheet,
+                  imgUrl: _globalProvider.userDetails?.profilePicture,
+                ),
+                Space().height(context, 0.02),
+                GenericTextField(
+                  hint: 'Full Name',
+                  controller: name,
+                  maxLines: 1,
+                  textCapitalization: TextCapitalization.words,
+                  onChanged: (value) {
+                    setState(() {
+                      _isNameValid = value.length >= 4 &&
+                          value.trimRight() !=
+                              _globalProvider.userDetails!.name;
+                    });
+                  },
+                ),
+                Space().height(context, 0.02),
+                GenericTextField(
+                  hint: 'Email',
+                  controller: email,
+                  maxLines: 1,
+                  keyboardType: TextInputType.emailAddress,
+                  textCapitalization: TextCapitalization.none,
+                  enableSuggestions: false,
+                  onChanged: (value) {
+                    setState(() {
+                      _isEmailValid = isEmail(value) &&
+                          value.trimRight() !=
+                              _globalProvider.userDetails!.email;
+                    });
+                  },
+                ),
+                Space().height(context, 0.02),
+                GenericTextField(
+                  hint: 'Phone Number',
+                  controller: phoneNumber,
+                  maxLines: 1,
+                  keyboardType: TextInputType.phone,
+                  onChanged: (value) {
+                    setState(() {
+                      _isPhoneNumberValid = value.length == 10 &&
+                          value.trimRight() !=
+                              _globalProvider.userDetails!.phoneNumber;
+                    });
+                  },
+                ),
+                Space().height(context, 0.02),
+                buildTappableTextField(
+                  hint: 'Residence',
                   context: context,
-                  placeOnTap: placeOnTap,
-                ),
-              ),
-              Space().height(context, 0.02),
-              buildTappableTextField(
-                hint: 'Date of Birth',
-                context: context,
-                controller: dob,
-                onTap: () => presentDatePicker(
+                  controller: residence,
+                  onTap: () => buildCustomSearchBottomSheet(
                     context: context,
-                    initialDate: parseDate(dob.text),
-                    onDateTimeChanged: (pickedDate) {
-                      setState(() {
-                        dob.text = formatDate(pickedDate);
-                        _isDobValid = true;
-                      });
-                    },
-                    onPressed: () {
-                      if (dob.text.isEmpty) {
+                    placeOnTap: placeOnTap,
+                  ),
+                ),
+                Space().height(context, 0.02),
+                buildTappableTextField(
+                  hint: 'Date of Birth',
+                  context: context,
+                  controller: dob,
+                  onTap: () => presentDatePicker(
+                      context: context,
+                      initialDate: parseDate(dob.text),
+                      onDateTimeChanged: (pickedDate) {
                         setState(() {
-                          formatDate(DateTime(2005));
+                          dob.text = formatDate(pickedDate);
+                          _isDobValid = true;
                         });
-                      }
-                      context.pop();
-                    }),
-              ),
-              Space().height(context, 0.05),
-              GenericButton(
-                width: Sizes().width(context, 0.85),
-                isActive: isActive(),
-                buttonName: 'Update Account',
-                onPressed: () async {
-                  //
-
-                  // try {
-                  //   final updatedUser = await BackendAuthService().updateUser(
-                  //     avatar: avatar?.path,
-                  //     name: name.text,
-                  //     phoneNumber: phoneNumber.text,
-                  //     email: email.text,
-                  //     dob: parseDate(dob.text),
-                  //     residence: residence.text,
-                  //   );
-
-                  //   await global.setGlobals(fetchedUserDetails: updatedUser);
-
-                  //   if (isEmailValid) {
-                  //     await AuthService.firebase().updateUserDetails(
-                  //         user: global.user!, email: email.text);
-
-                  //     await FirebaseAuth.instance.currentUser!.reload();
-
-                  //     final user = FirebaseAuth.instance.currentUser;
-                  //     await global.setGlobals(currentUser: user);
-                  //   }
-
-                  //   setState(() {
-                  //     isAvatarValid = false;
-                  //     isDobValid = false;
-                  //     isNameValid = false;
-                  //     isEmailValid = false;
-                  //     isPasswordValid = false;
-                  //     isResidenceValid = false;
-                  //     isPhoneNumberValid = false;
-                  //   });
-
-                  //   if (!mounted) return;
-                  //   context.pop();
-                  //   showSuccessPopUp('Profile Updated', context);
-                  // } catch (e) {
-                  //   if (!mounted) return;
-                  //   context.pop();
-                  //   if (e is InvalidEmailException) {
-                  //     showErrorPopUp(
-                  //       'Email is already in use',
-                  //       context,
-                  //     );
-                  //   } else {
-                  //     showErrorPopUp(
-                  //       e.toString(),
-                  //       context,
-                  //     );
-                  //   }
-                  // }
-                },
-              ),
-              Space().height(context, 0.03),
-            ],
+                      },
+                      onPressed: () {
+                        if (dob.text.isEmpty) {
+                          setState(() {
+                            formatDate(DateTime(2005));
+                          });
+                        }
+                        context.pop();
+                      }),
+                ),
+                Space().height(context, 0.05),
+                GenericButton(
+                  width: Sizes().width(context, 0.85),
+                  isActive: isActive(),
+                  buttonName: 'Update Account',
+                  onPressed: initUpdate,
+                ),
+                Space().height(context, 0.03),
+              ],
+            ),
           ),
         ),
       ),

@@ -204,6 +204,9 @@ class AuthenticationRepositoryImpl
       if (e.code == 'wrong-password') {
         return const Left('Invalid email or password');
       }
+      if (e.code == 'email-already-in-use') {
+        const Left('Email is already in use');
+      }
       return Left(e.toString());
     } catch (e) {
       return Left(e.toString());
