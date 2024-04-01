@@ -8,6 +8,7 @@ import 'package:rent_wheels/src/authentication/presentation/pages/reset_password
 import 'package:rent_wheels/src/cars/presentation/pages/car_details.dart';
 import 'package:rent_wheels/src/home/presentation/pages/base.dart';
 import 'package:rent_wheels/src/onboarding/presentation/onboarding.dart';
+import 'package:rent_wheels/src/renter/presentation/pages/renter_profile.dart';
 import 'package:rent_wheels/src/user/presentation/pages/account_profile.dart';
 import 'package:rent_wheels/src/user/presentation/pages/change_password.dart';
 
@@ -82,12 +83,21 @@ final GoRouter goRouterConfiguration = GoRouter(
       routes: [
         GoRoute(
           name: 'carDetails',
-          path: 'cars/:carId',
+          path: ':carId',
           builder: (context, state) => CarDetails(
             car: state.uri.queryParameters['car'].toString(),
             renter: state.uri.queryParameters['renter'].toString(),
             heroTag: state.uri.queryParameters['heroTag'],
           ),
+          routes: [
+            GoRoute(
+              name: 'renterDetails',
+              path: 'renter',
+              builder: (context, state) => RenterDetails(
+                renter: state.uri.queryParameters['renter'].toString(),
+              ),
+            )
+          ],
         )
       ],
     ),

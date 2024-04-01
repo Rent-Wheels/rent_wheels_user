@@ -1,9 +1,12 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:go_router/go_router.dart';
 import 'package:rent_wheels/core/widgets/theme/theme.dart';
+import 'package:rent_wheels/src/renter/data/models/renter_model.dart';
 
-import 'package:rent_wheels/src/mainSection/renter/widgets/renter_cars_widget.dart';
+import 'package:rent_wheels/src/renter/presentation/widgets/renter_cars_widget.dart';
 
 import 'package:rent_wheels/core/widgets/sizes/sizes.dart';
 import 'package:rent_wheels/core/widgets/theme/colors.dart';
@@ -11,9 +14,21 @@ import 'package:rent_wheels/core/widgets/spacing/spacing.dart';
 import 'package:rent_wheels/core/widgets/buttons/adaptive_back_button_widget.dart';
 import 'package:rent_wheels/src/renter/domain/entity/renter.dart';
 
-class RenterDetails extends StatelessWidget {
-  final Renter renter;
+class RenterDetails extends StatefulWidget {
+  final String renter;
   const RenterDetails({super.key, required this.renter});
+
+  @override
+  State<RenterDetails> createState() => _RenterDetailsState();
+}
+
+class _RenterDetailsState extends State<RenterDetails> {
+  Renter? _renter;
+  @override
+  void initState() {
+    _renter = RenterModel.fromJSON(jsonDecode(widget.renter));
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -53,7 +68,7 @@ class RenterDetails extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            renter.name!,
+                            _renter!.name!,
                             style: theme.textTheme.titleSmall!.copyWith(
                               color: rentWheelsInformationDark900,
                             ),
@@ -67,7 +82,7 @@ class RenterDetails extends StatelessWidget {
                           ),
                           Space().height(context, 0.01),
                           Text(
-                            renter.email!,
+                            _renter!.email!,
                             style: theme.textTheme.headlineMedium!.copyWith(
                               fontWeight: FontWeight.w500,
                               color: rentWheelsInformationDark900,
@@ -82,7 +97,7 @@ class RenterDetails extends StatelessWidget {
                           ),
                           Space().height(context, 0.01),
                           Text(
-                            renter.phoneNumber!,
+                            _renter!.phoneNumber!,
                             style: theme.textTheme.headlineMedium!.copyWith(
                               fontWeight: FontWeight.w500,
                               color: rentWheelsInformationDark900,
@@ -97,7 +112,7 @@ class RenterDetails extends StatelessWidget {
                           ),
                           Space().height(context, 0.01),
                           Text(
-                            renter.placeOfResidence!,
+                            _renter!.placeOfResidence!,
                             style: theme.textTheme.headlineMedium!.copyWith(
                               fontWeight: FontWeight.w500,
                               color: rentWheelsInformationDark900,
@@ -115,7 +130,7 @@ class RenterDetails extends StatelessWidget {
                         ),
                         image: DecorationImage(
                           image: CachedNetworkImageProvider(
-                            renter.profilePicture!,
+                            _renter!.profilePicture!,
                           ),
                           fit: BoxFit.cover,
                         ),
@@ -141,22 +156,22 @@ class RenterDetails extends StatelessWidget {
                     mainAxisExtent: Sizes().height(context, 0.24),
                     crossAxisSpacing: Sizes().width(context, 0.02),
                   ),
-                  itemCount: renter.cars!.length,
+                  itemCount: _renter!.cars!.length,
                   shrinkWrap: true,
                   itemBuilder: (context, index) {
                     return RenterCars(
                       width: Sizes().width(context, 0.5),
-                      carDetails: renter.cars![index],
-                      onTap: null,
-                      // () => Navigator.push(
-                      //   context,
-                      //   MaterialPageRoute(
-                      //     builder: (context) => CarDetails(
-                      //       car: renter.cars![index],
-                      //       renter: renter,
-                      //     ),
-                      //   ),
-                      // ),
+                      carDetails: _renter!.cars![index],
+                      onTap: () => context.pushNamed(
+                        'carDetails',
+                        pathParameters: {
+                          'carId': _renter!.cars![index].id!,
+                        },
+                        queryParameters: {
+                          'car': jsonEncode(_renter!.cars![index].toMap()),
+                          'renter': jsonEncode(_renter!.toMap()),
+                        },
+                      ),
                     );
                   },
                 ),

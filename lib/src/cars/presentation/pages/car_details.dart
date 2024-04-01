@@ -2,24 +2,24 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:go_router/go_router.dart';
-import 'package:rent_wheels/core/widgets/carousel/image_carousel_slider_widget.dart';
-import 'package:rent_wheels/core/widgets/theme/theme.dart';
-import 'package:rent_wheels/src/cars/data/models/cars_model.dart';
-import 'package:rent_wheels/src/cars/domain/entity/cars.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 
-import 'package:rent_wheels/src/renter/data/models/renter_model.dart';
+import 'package:rent_wheels/src/cars/domain/entity/cars.dart';
+import 'package:rent_wheels/src/cars/data/models/cars_model.dart';
 import 'package:rent_wheels/src/renter/domain/entity/renter.dart';
+import 'package:rent_wheels/src/renter/data/models/renter_model.dart';
 import 'package:rent_wheels/src/renter/presentation/widgets/renter_overview_widget.dart';
 import 'package:rent_wheels/src/cars/presentation/widgets/car_details_carousel_items.dart';
 
 import 'package:rent_wheels/core/widgets/sizes/sizes.dart';
+import 'package:rent_wheels/core/widgets/theme/theme.dart';
 import 'package:rent_wheels/core/widgets/theme/colors.dart';
 import 'package:rent_wheels/core/widgets/spacing/spacing.dart';
 import 'package:rent_wheels/core/widgets/details/key_value_widget.dart';
 import 'package:rent_wheels/core/widgets/buttons/generic_button_widget.dart';
 import 'package:rent_wheels/core/widgets/buttons/adaptive_back_button_widget.dart';
+import 'package:rent_wheels/core/widgets/carousel/image_carousel_slider_widget.dart';
 import 'package:rent_wheels/src/reservations/presentation/pages/make_reservation_page_one.dart';
 
 class CarDetails extends StatefulWidget {
@@ -213,15 +213,15 @@ class _CarDetailsState extends State<CarDetails> {
                       ),
                       Space().height(context, 0.01),
                       GestureDetector(
-                        // onTap: () {
-                        //   Navigator.push(
-                        //     context,
-                        //     CupertinoPageRoute(
-                        //       builder: (context) =>
-                        //           RenterDetails(renter: _renter),
-                        //     ),
-                        //   );
-                        // },
+                        onTap: () => context.pushNamed(
+                          'renterDetails',
+                          pathParameters: {
+                            'carId': _car!.id!,
+                          },
+                          queryParameters: {
+                            'renter': jsonEncode(_renter!.toMap()),
+                          },
+                        ),
                         child: RenterOverview(
                           renter: _renter!,
                         ),
@@ -236,29 +236,35 @@ class _CarDetailsState extends State<CarDetails> {
       ),
       bottomSheet: Container(
         color: rentWheelsNeutralLight0,
-        padding: EdgeInsets.all(Sizes().height(context, 0.02)),
-        height: Sizes().height(context, 0.13),
+        padding: EdgeInsets.only(
+          top: Sizes().height(context, 0.02),
+          left: Sizes().width(context, 0.04),
+          right: Sizes().width(context, 0.04),
+        ),
+        height: Sizes().height(context, 0.14),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  '${_car!.yearOfManufacture} ${_car!.make} ${_car!.model}',
-                  style: theme.textTheme.headlineLarge!.copyWith(
-                    color: rentWheelsInformationDark900,
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    '${_car!.yearOfManufacture} ${_car!.make} ${_car!.model}',
+                    style: theme.textTheme.headlineLarge!.copyWith(
+                      color: rentWheelsInformationDark900,
+                    ),
                   ),
-                ),
-                Space().height(context, 0.01),
-                Text(
-                  'GH¢${_car!.rate} ${_car!.plan}',
-                  style: theme.textTheme.bodyLarge!.copyWith(
-                    color: rentWheelsInformationDark900,
+                  Space().height(context, 0.01),
+                  Text(
+                    'GH¢${_car!.rate} ${_car!.plan}',
+                    style: theme.textTheme.bodyLarge!.copyWith(
+                      color: rentWheelsInformationDark900,
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
             GenericButton(
               width: Sizes().width(context, 0.28),
