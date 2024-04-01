@@ -6,7 +6,6 @@ import 'package:rent_wheels/core/widgets/theme/theme.dart';
 import 'package:rent_wheels/core/widgets/sizes/sizes.dart';
 import 'package:rent_wheels/core/widgets/theme/colors.dart';
 import 'package:rent_wheels/core/widgets/spacing/spacing.dart';
-import 'package:rent_wheels/core/global/globals.dart' as global;
 import 'package:rent_wheels/core/widgets/loadingIndicator/shimmer_loading_placeholder.dart';
 import 'package:rent_wheels/injection.dart';
 import 'package:rent_wheels/src/global/presentation/provider/global_provider.dart';
@@ -23,6 +22,7 @@ class Reservations extends StatefulWidget {
 class _ReservationsState extends State<Reservations> {
   int _currentIndex = 0;
   final _reservationsBloc = sl<ReservationsBloc>();
+  late GlobalProvider _globalProvider;
 
   getAllReservations() {
     final params = {
@@ -43,10 +43,11 @@ class _ReservationsState extends State<Reservations> {
 
   @override
   Widget build(BuildContext context) {
+    _globalProvider = context.watch<GlobalProvider>();
     return Scaffold(
       body: SafeArea(
         child: Shimmer(
-          linearGradient: global.shimmerGradient,
+          linearGradient: _globalProvider.shimmerGradient,
           child: Padding(
             padding:
                 EdgeInsets.symmetric(horizontal: Sizes().width(context, 0.04)),

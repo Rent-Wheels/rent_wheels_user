@@ -62,12 +62,12 @@ class _PaymentPageOneState extends State<PaymentPageOne> {
   ];
   @override
   Widget build(BuildContext context) {
-    Widget options = buildDropDownInputField(
-        context: context,
-        items: dropdownItems,
-        hintText: 'Select Payment Option',
-        value: widget.value.isNotEmpty ? widget.value : null,
-        onChanged: widget.dropdownOnChanged);
+    Widget options = DropdownInputField(
+      items: dropdownItems,
+      hintText: 'Select Payment Option',
+      value: widget.value.isNotEmpty ? widget.value : null,
+      onChanged: widget.dropdownOnChanged,
+    );
     return Scaffold(
       body: Padding(
         padding: EdgeInsets.only(

@@ -20,7 +20,6 @@ import 'package:rent_wheels/core/models/reservations/reservations_model.dart';
 import 'package:rent_wheels/core/widgets/dialogs/confirmation_dialog_widget.dart';
 import 'package:rent_wheels/core/widgets/loadingIndicator/loading_indicator.dart';
 import 'package:rent_wheels/core/widgets/buttons/adaptive_back_button_widget.dart';
-import 'package:rent_wheels/core/backend/reservations/methods/reservations_methods.dart';
 import 'package:rent_wheels/src/renter/domain/entity/renter.dart';
 
 class MakeReservationPageTwo extends StatefulWidget {
@@ -42,54 +41,54 @@ class MakeReservationPageTwo extends StatefulWidget {
 }
 
 class _MakeReservationPageTwoState extends State<MakeReservationPageTwo> {
-  makeReservation() async {
-    try {
-      buildLoadingIndicator(context, 'Making Reservation');
-      await RentWheelsReservationsMethods()
-          .makeReservation(reservationDetails: widget.reservation);
-      if (!mounted) return;
-      context.pop();
-      Navigator.push(
-        context,
-        CupertinoPageRoute(
-          builder: (context) => const ReservationSuccessful(),
-        ),
-      );
-    } catch (e) {
-      if (!mounted) return;
-      context.pop();
-      showErrorPopUp(e.toString(), context);
-    }
-  }
+  // makeReservation() async {
+  //   try {
+  //     buildLoadingIndicator(context, 'Making Reservation');
+  //     await RentWheelsReservationsMethods()
+  //         .makeReservation(reservationDetails: widget.reservation);
+  //     if (!mounted) return;
+  //     context.pop();
+  //     Navigator.push(
+  //       context,
+  //       CupertinoPageRoute(
+  //         builder: (context) => const ReservationSuccessful(),
+  //       ),
+  //     );
+  //   } catch (e) {
+  //     if (!mounted) return;
+  //     context.pop();
+  //     showErrorPopUp(e.toString(), context);
+  //   }
+  // }
 
-  modifyReservation({
-    required String reservationStatus,
-  }) async {
-    String loadingMessage = reservationStatus == 'Cancelled'
-        ? 'Cancelling Reservation'
-        : reservationStatus == 'Ongoing'
-            ? 'Starting Trip'
-            : 'Ending Trip';
+  // modifyReservation({
+  //   required String reservationStatus,
+  // }) async {
+  //   String loadingMessage = reservationStatus == 'Cancelled'
+  //       ? 'Cancelling Reservation'
+  //       : reservationStatus == 'Ongoing'
+  //           ? 'Starting Trip'
+  //           : 'Ending Trip';
 
-    String successMessage = reservationStatus == 'Cancelled'
-        ? 'Reservation Cancelled'
-        : reservationStatus == 'Ongoing'
-            ? 'Trip Started'
-            : 'Trip Ended';
-    try {
-      buildLoadingIndicator(context, loadingMessage);
-      await RentWheelsReservationsMethods().changeReservationStatus(
-          reservationId: widget.reservation.id!, status: reservationStatus);
-      if (!mounted) return;
-      context.pop();
-      if (reservationStatus == 'Cancelled') context.pop();
-      showSuccessPopUp(successMessage, context);
-    } catch (e) {
-      if (!mounted) return;
-      context.pop();
-      showErrorPopUp(e.toString(), context);
-    }
-  }
+  //   String successMessage = reservationStatus == 'Cancelled'
+  //       ? 'Reservation Cancelled'
+  //       : reservationStatus == 'Ongoing'
+  //           ? 'Trip Started'
+  //           : 'Trip Ended';
+  //   try {
+  //     buildLoadingIndicator(context, loadingMessage);
+  //     await RentWheelsReservationsMethods().changeReservationStatus(
+  //         reservationId: widget.reservation.id!, status: reservationStatus);
+  //     if (!mounted) return;
+  //     context.pop();
+  //     if (reservationStatus == 'Cancelled') context.pop();
+  //     showSuccessPopUp(successMessage, context);
+  //   } catch (e) {
+  //     if (!mounted) return;
+  //     context.pop();
+  //     showErrorPopUp(e.toString(), context);
+  //   }
+  // }
 
   bookAgain() => Navigator.push(
         context,
@@ -156,7 +155,8 @@ class _MakeReservationPageTwoState extends State<MakeReservationPageTwo> {
                   isActive: true,
                   buttonName: 'Make Reservation',
                   width: Sizes().width(context, 0.85),
-                  onPressed: makeReservation,
+                  // onPressed: makeReservation,
+                  onPressed: null,
                 ),
               ],
             )
@@ -176,8 +176,8 @@ class _MakeReservationPageTwoState extends State<MakeReservationPageTwo> {
                             message:
                                 'Are you sure you want to cancel your reservation?',
                             onAccept: () async {
-                              await modifyReservation(
-                                  reservationStatus: 'Cancelled');
+                              // await modifyReservation(
+                              //     reservationStatus: 'Cancelled');
                               setState(() {
                                 reservation.status = 'Cancelled';
                               });
@@ -195,8 +195,8 @@ class _MakeReservationPageTwoState extends State<MakeReservationPageTwo> {
                               btnColor: rentWheelsErrorDark700,
                               width: Sizes().width(context, 0.85),
                               onPressed: () async {
-                                await modifyReservation(
-                                    reservationStatus: 'Completed');
+                                // await modifyReservation(
+                                //     reservationStatus: 'Completed');
 
                                 setState(() {
                                   reservation.status = 'Completed';
@@ -240,8 +240,8 @@ class _MakeReservationPageTwoState extends State<MakeReservationPageTwo> {
                                     message:
                                         'Are you sure you want to cancel your reservation?',
                                     onAccept: () async {
-                                      await modifyReservation(
-                                          reservationStatus: 'Cancelled');
+                                      // await modifyReservation(
+                                      //     reservationStatus: 'Cancelled');
                                       setState(() {
                                         reservation.status = 'Cancelled';
                                       });
@@ -259,8 +259,8 @@ class _MakeReservationPageTwoState extends State<MakeReservationPageTwo> {
                                       isActive: DateTime.now()
                                           .isSameDate(reservation.startDate!),
                                       onPressed: () async {
-                                        await modifyReservation(
-                                            reservationStatus: 'Ongoing');
+                                        // await modifyReservation(
+                                        //     reservationStatus: 'Ongoing');
 
                                         setState(() {
                                           reservation.status = 'Ongoing';
@@ -280,8 +280,8 @@ class _MakeReservationPageTwoState extends State<MakeReservationPageTwo> {
                                         message:
                                             'Are you sure want to cancel your reservation? Only 50% of the trip price will be refunded to you.',
                                         onAccept: () async {
-                                          await modifyReservation(
-                                              reservationStatus: 'Cancelled');
+                                          // await modifyReservation(
+                                          //     reservationStatus: 'Cancelled');
                                           setState(() {
                                             reservation.status = 'Cancelled';
                                           });

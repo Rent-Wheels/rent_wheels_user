@@ -7,7 +7,6 @@ import 'package:google_maps_webservice/places.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:rent_wheels/core/image/provider/image_provider.dart';
 import 'package:rent_wheels/core/search/presentation/provider/search_provider.dart';
-import 'package:rent_wheels/core/search/presentation/widgets/custom_search_bottom_sheet.dart';
 import 'package:rent_wheels/core/widgets/loadingIndicator/loading_indicator.dart';
 import 'package:rent_wheels/core/widgets/popups/error_popup.dart';
 import 'package:rent_wheels/core/widgets/popups/success_popup.dart';
@@ -304,19 +303,16 @@ class _AccountProfileState extends State<AccountProfile> {
                   },
                 ),
                 Space().height(context, 0.02),
-                buildTappableTextField(
-                  hint: 'Residence',
-                  context: context,
-                  controller: residence,
-                  onTap: () => buildCustomSearchBottomSheet(
-                    context: context,
-                    placeOnTap: placeOnTap,
-                  ),
-                ),
+                GenericTextField(
+                    hint: 'Residence',
+                    controller: residence,
+                    maxLines: 1,
+                    onChanged: (value) => setState(() {
+                          _isResidenceValid = value.length > 1;
+                        })),
                 Space().height(context, 0.02),
-                buildTappableTextField(
+                TappableTextfield(
                   hint: 'Date of Birth',
-                  context: context,
                   controller: dob,
                   onTap: () => presentDatePicker(
                       context: context,

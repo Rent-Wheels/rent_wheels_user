@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart' show timeDilation;
 import 'package:go_router/go_router.dart';
+import 'package:rent_wheels/core/widgets/textfields/generic_textfield_widget.dart';
 import 'package:rent_wheels/core/widgets/theme/theme.dart';
 import 'package:rent_wheels/src/cars/domain/entity/cars.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
@@ -184,29 +185,32 @@ class _MakeReservationPageOneState extends State<MakeReservationPageOne> {
                 ),
               ),
               Space().height(context, 0.03),
-              buildTappableTextField(
+              GenericTextField(
                   hint: 'Destination',
-                  context: context,
                   controller: location,
-                  onTap: () async {
-                    // final response = await Navigator.push(
-                    //   context,
-                    //   MaterialPageRoute(
-                    //     builder: (context) => CustomSearchScaffold(),
-                    //   ),
-                    // );
+                  maxLines: 1,
+                  onChanged: (value) => setState(() {
+                        isLocationValid = value.length > 1;
+                      })
+                  // onTap: () async {
+                  // final response = await Navigator.push(
+                  //   context,
+                  //   MaterialPageRoute(
+                  //     builder: (context) => CustomSearchScaffold(),
+                  //   ),
+                  // );
 
-                    // if (response != null) {
-                    //   setState(() {
-                    //     location.text = response;
-                    //     isLocationValid = true;
-                    //   });
-                    // }
-                  }),
+                  // if (response != null) {
+                  //   setState(() {
+                  //     location.text = response;
+                  //     isLocationValid = true;
+                  //   });
+                  // }
+                  // }
+                  ),
               Space().height(context, 0.03),
-              buildTappableTextField(
+              TappableTextfield(
                 hint: 'Date',
-                context: context,
                 controller: date,
                 onTap: showDateRangeSelector,
               ),

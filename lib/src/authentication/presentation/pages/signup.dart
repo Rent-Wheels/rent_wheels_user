@@ -6,7 +6,6 @@ import 'package:google_maps_webservice/places.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:rent_wheels/core/search/presentation/provider/search_provider.dart';
-import 'package:rent_wheels/core/search/presentation/widgets/custom_search_bottom_sheet.dart';
 import 'package:rent_wheels/core/widgets/popups/error_popup.dart';
 import 'package:rent_wheels/core/widgets/theme/theme.dart';
 import 'package:rent_wheels/injection.dart';
@@ -292,19 +291,17 @@ class _SignUpState extends State<SignUp> {
                     }),
                   ),
                   Space().height(context, 0.02),
-                  buildTappableTextField(
+                  GenericTextField(
                     hint: 'Residence',
-                    context: context,
                     controller: _residence,
-                    onTap: () => buildCustomSearchBottomSheet(
-                      context: context,
-                      placeOnTap: placeOnTap,
-                    ),
+                    maxLines: 1,
+                    onChanged: (value) => setState(() {
+                      _isResidenceValid = value.length > 1;
+                    }),
                   ),
                   Space().height(context, 0.02),
-                  buildTappableTextField(
+                  TappableTextfield(
                     hint: 'Date of Birth',
-                    context: context,
                     controller: _dob,
                     onTap: () => presentDatePicker(
                         context: context,
