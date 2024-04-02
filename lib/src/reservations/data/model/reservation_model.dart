@@ -1,5 +1,5 @@
 import 'package:rent_wheels/src/cars/data/models/cars_model.dart';
-import 'package:rent_wheels/src/renter/data/models/renter_info_model.dart';
+import 'package:rent_wheels/src/renter/data/models/renter_model.dart';
 import 'package:rent_wheels/src/reservations/domain/entity/customer.dart';
 import 'package:rent_wheels/src/reservations/domain/entity/reservations.dart';
 
@@ -22,8 +22,8 @@ class ReservationModel extends Reservation {
     return ReservationModel(
       id: json['id'],
       customer: CustomerModel.fromJSON(json['customer']),
-      renter: RenterInfoModel.fromJSON(json['renter']),
-      car: CarsModel.fromJSON(json['car']),
+      renter: RenterModel.fromJSON(json['renter']),
+      car: CarModel.fromJSON(json['car']),
       startDate: json['startDate'],
       returnDate: json['returnDate'],
       createdAt: json['createdAt'],

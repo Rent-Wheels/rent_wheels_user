@@ -1,4 +1,4 @@
-// import 'package:dartz/dartz.dart';
+import 'package:dartz/dartz.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:rent_wheels/core/network/network_info.dart';
 import 'package:rent_wheels/src/authentication/data/datasources/localds.dart';
@@ -47,9 +47,19 @@ class AuthenticationRepositoryImpl
 
     try {
       final response = await remoteDatasource.createUserWithEmailAndPassword(
-          email: params['email'], password: params['password']);
+        email: params['email'],
+        password: params['password'],
+      );
 
       return Right(response);
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'weak-password') {
+        return const Left('Please choose a stronger password');
+      }
+      if (e.code == 'email-already-in-use') {
+        return const Left('Email is already in use');
+      }
+      return Left(e.toString());
     } catch (e) {
       return Left(e.toString());
     }
@@ -120,6 +130,11 @@ class AuthenticationRepositoryImpl
       );
 
       return Right(response);
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'wrong-password') {
+        return const Left('Incorrect password');
+      }
+      return Left(e.toString());
     } catch (e) {
       return Left(e.toString());
     }
@@ -157,6 +172,14 @@ class AuthenticationRepositoryImpl
       );
 
       return Right(response);
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'user-not-found') {
+        return const Left('User does not exist');
+      }
+      if (e.code == 'wrong-password') {
+        return const Left('Invalid email or password');
+      }
+      return Left(e.toString());
     } catch (e) {
       return Left(e.toString());
     }
@@ -177,6 +200,14 @@ class AuthenticationRepositoryImpl
       );
 
       return Right(response);
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'wrong-password') {
+        return const Left('Invalid email or password');
+      }
+      if (e.code == 'email-already-in-use') {
+        const Left('Email is already in use');
+      }
+      return Left(e.toString());
     } catch (e) {
       return Left(e.toString());
     }

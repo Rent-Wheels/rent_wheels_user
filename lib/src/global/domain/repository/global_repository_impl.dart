@@ -26,4 +26,9 @@ class GlobalRepositoryImpl implements GlobalRepository {
   Future updateOnboardingStatus(bool status) {
     return localDatasource.updateOnboardingStatus(status);
   }
+
+  @override
+  Future<void> reloadUser() async {
+    return await remoteDatasource.reloadUser();
+  }
 }

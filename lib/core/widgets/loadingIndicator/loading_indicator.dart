@@ -4,10 +4,12 @@ import 'package:loading_indicator/loading_indicator.dart';
 import 'package:rent_wheels/core/widgets/sizes/sizes.dart';
 import 'package:rent_wheels/core/widgets/theme/colors.dart';
 import 'package:rent_wheels/core/widgets/spacing/spacing.dart';
-import 'package:rent_wheels/core/widgets/textStyles/text_styles.dart';
+import 'package:rent_wheels/core/widgets/theme/theme.dart';
 
-Future<dynamic> buildLoadingIndicator(
-        BuildContext context, String loadingMessage) =>
+buildLoadingIndicator(
+  BuildContext context,
+  String loadingMessage,
+) =>
     showDialog(
       barrierDismissible: false,
       context: context,
@@ -36,7 +38,9 @@ Future<dynamic> buildLoadingIndicator(
 
             Center(
               child: DefaultTextStyle(
-                style: body1NeutralLight,
+                style: theme.textTheme.bodyLarge!.copyWith(
+                  color: rentWheelsNeutralLight0,
+                ),
                 child: Text(
                   loadingMessage,
                 ),

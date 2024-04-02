@@ -12,7 +12,7 @@ final class CarsInitial extends CarsState {}
 final class GetAllAvailableCarsLoading extends CarsState {}
 
 final class GetAllAvailableCarsLoaded extends CarsState {
-  final List<Cars> cars;
+  final List<Car> cars;
 
   const GetAllAvailableCarsLoaded({required this.cars});
 }

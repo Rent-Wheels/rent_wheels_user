@@ -14,7 +14,7 @@ class BackendUserInfoModel extends BackendUserInfo {
 
   factory BackendUserInfoModel.fromJSON(Map<String, dynamic> json) {
     return BackendUserInfoModel(
-      id: json['_id'],
+      id: json['id'],
       userId: json['userId'],
       name: json['name'],
       email: json['email'],
@@ -26,7 +26,7 @@ class BackendUserInfoModel extends BackendUserInfo {
   }
 
   Map<String, dynamic> toJson() => {
-        '_id': id,
+        'id': id,
         'userId': userId,
         'name': name,
         'email': email,

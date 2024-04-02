@@ -3,6 +3,7 @@ import 'package:rent_wheels/core/widgets/popups/confirmation_popup_widget.dart';
 
 buildConfirmationDialog({
   String? message,
+  Color? btnColor,
   required String label,
   required String buttonName,
   required BuildContext context,
@@ -10,12 +11,11 @@ buildConfirmationDialog({
 }) =>
     showDialog(
       context: context,
-      builder: (context) => buildConfirmationPopup(
+      builder: (context) => ConfirmationPopup(
         label: label,
         message: message,
-        context: context,
-        onCancel: () => Navigator.pop(context),
         onAccept: onAccept,
+        btnColor: btnColor,
         buttonName: buttonName,
       ),
     );

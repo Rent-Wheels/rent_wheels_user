@@ -3,7 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:rent_wheels/injection.dart';
-import 'package:rent_wheels/src/loading/loading.dart';
+import 'package:rent_wheels/loading.dart';
 import 'package:rent_wheels/src/user/presentation/bloc/user_bloc.dart';
 import 'package:rent_wheels/src/global/presentation/provider/global_provider.dart';
 
@@ -16,47 +16,39 @@ class ConnectionPage extends StatefulWidget {
 
 class _ConnectionPageState extends State<ConnectionPage> {
   User? user;
+  late GlobalProvider _globalProvider;
   final userBloc = sl<UserBloc>();
 
-  userStatus() async {
-    if (!context.read<GlobalProvider>().onboardingStatus) {
-      context.goNamed('onboarding');
-      return;
-    }
+  userStatus() {
+    user = _globalProvider.currentUser;
 
-    user = context.read<GlobalProvider>().user;
-
-    context.read<GlobalProvider>().updateHeaders();
+    _globalProvider.updateHeaders(user);
 
     final params = {
       'urlParameters': {
         'userId': user?.uid,
       },
-      'headers': context.read<GlobalProvider>().headers
+      'headers': _globalProvider.headers
     };
 
-    userBloc.add(
-      GetUserDetailsEvent(
-        params: params,
-      ),
-    );
-  }
-
-  @override
-  void initState() {
-    userStatus();
-    super.initState();
+    userBloc.add(GetUserDetailsEvent(params: params));
   }
 
   @override
   Widget build(BuildContext context) {
+    _globalProvider = context.watch<GlobalProvider>();
+    userStatus();
     return BlocListener(
       bloc: userBloc,
       listener: (context, state) {
         if (state is GenericUserError) {
-          context.goNamed('login');
+          _globalProvider.onboardingStatus
+              ? context.goNamed('login')
+              : context.goNamed('onboarding');
         }
         if (state is GetUserDetailsLoaded) {
+          _globalProvider.reloadCurrentUser();
+          _globalProvider.updateUserDetails(state.user);
           if (user!.emailVerified) {
             context.goNamed('home');
           } else {

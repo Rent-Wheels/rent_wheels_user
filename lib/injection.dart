@@ -1,5 +1,6 @@
 import 'package:http/http.dart';
 import 'package:get_it/get_it.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -11,7 +12,6 @@ import 'package:rent_wheels/core/network/network_info.dart';
 import 'package:rent_wheels/src/authentication/data/datasources/localds.dart';
 import 'package:rent_wheels/src/authentication/data/datasources/remoteds.dart';
 import 'package:rent_wheels/src/authentication/domain/usecase/firebase/logout.dart';
-import 'package:rent_wheels/src/authentication/data/datasources/backend/localds.dart';
 import 'package:rent_wheels/src/authentication/domain/usecase/firebase/update_user.dart';
 import 'package:rent_wheels/src/authentication/domain/usecase/firebase/verify_email.dart';
 import 'package:rent_wheels/src/authentication/presentation/bloc/authentication_bloc.dart';
@@ -19,8 +19,11 @@ import 'package:rent_wheels/src/authentication/domain/usecase/firebase/reset_pas
 import 'package:rent_wheels/src/authentication/data/repository/authentication_repo_impl.dart';
 import 'package:rent_wheels/src/authentication/domain/usecase/backend/create_update_user.dart';
 import 'package:rent_wheels/src/authentication/domain/usecase/firebase/reauthenticate_user.dart';
+import 'package:rent_wheels/src/authentication/domain/repository/firebase/firebase_auth_repo.dart';
 import 'package:rent_wheels/src/authentication/domain/usecase/backend/delete_user_from_backend.dart';
+import 'package:rent_wheels/src/authentication/domain/usecase/firebase/delete_user_from_firebase.dart';
 import 'package:rent_wheels/src/authentication/domain/usecase/firebase/sign_in_with_email_and_password.dart';
+import 'package:rent_wheels/src/authentication/domain/repository/backend/backend_authentication_repository.dart';
 import 'package:rent_wheels/src/authentication/domain/usecase/firebase/create_user_with_email_and_password.dart';
 
 import 'package:rent_wheels/src/cars/data/datasource/remoteds.dart';
@@ -56,18 +59,21 @@ import 'package:rent_wheels/src/user/data/datasource/remoteds.dart';
 import 'package:rent_wheels/src/user/presentation/bloc/user_bloc.dart';
 import 'package:rent_wheels/src/user/data/repository/user_repo_impl.dart';
 import 'package:rent_wheels/src/user/domain/usecase/get_user_region.dart';
+import 'package:rent_wheels/src/user/domain/usecase/get_user_details.dart';
 import 'package:rent_wheels/src/user/domain/repository/user_repository.dart';
 import 'package:rent_wheels/src/user/domain/usecase/get_cached_user_info.dart';
 
+import 'package:rent_wheels/src/global/data/usecases/reload_user.dart';
 import 'package:rent_wheels/src/global/domain/datasources/localds.dart';
 import 'package:rent_wheels/src/global/domain/datasources/remoteds.dart';
-import 'package:rent_wheels/src/user/domain/usecase/get_user_details.dart';
 import 'package:rent_wheels/src/global/data/usecases/get_current_user.dart';
 import 'package:rent_wheels/src/global/data/repository/global_repository.dart';
 import 'package:rent_wheels/src/global/data/usecases/get_onboarding_status.dart';
 import 'package:rent_wheels/src/global/presentation/provider/global_provider.dart';
 import 'package:rent_wheels/src/global/data/usecases/update_onboarding_status.dart';
 import 'package:rent_wheels/src/global/domain/repository/global_repository_impl.dart';
+
+import 'package:rent_wheels/core/image/provider/image_provider.dart';
 
 final sl = GetIt.instance;
 
@@ -95,7 +101,12 @@ init() async {
   //USER
   initUser();
 
+  //IMAGE
+  initImage();
+
   //!EXTERNAL
+
+  sl.registerLazySingleton(() => ImagePicker());
 
   //LOCAL STORAGE
   final sharedPreferences = await SharedPreferences.getInstance();
@@ -136,6 +147,7 @@ initGlobal() {
   //provider
   sl.registerFactory(
     () => GlobalProvider(
+      reloadUser: sl(),
       getCurrentUser: sl(),
       getOnboardingStatus: sl(),
       updateOnboardingStatus: sl(),
@@ -144,6 +156,11 @@ initGlobal() {
 
   //usecases
   sl
+    ..registerLazySingleton(
+      () => ReloadUser(
+        repository: sl(),
+      ),
+    )
     ..registerLazySingleton(
       () => GetCurrentUser(
         repository: sl(),
@@ -233,6 +250,11 @@ initAuth() {
       ),
     )
     ..registerLazySingleton(
+      () => DeleteUserFromFirebase(
+        repository: sl(),
+      ),
+    )
+    ..registerLazySingleton(
       () => DeleteUserFromBackend(
         repository: sl(),
       ),
@@ -249,13 +271,21 @@ initAuth() {
     );
 
   //repository
-  sl.registerLazySingleton(
-    () => AuthenticationRepositoryImpl(
-      networkInfo: sl(),
-      remoteDatasource: sl(),
-      localDatasource: sl(),
-    ),
-  );
+  sl
+    ..registerLazySingleton<FirebaseAuthenticationRepository>(
+      () => AuthenticationRepositoryImpl(
+        networkInfo: sl(),
+        remoteDatasource: sl(),
+        localDatasource: sl(),
+      ),
+    )
+    ..registerLazySingleton<BackendAuthenticationRepository>(
+      () => AuthenticationRepositoryImpl(
+        networkInfo: sl(),
+        remoteDatasource: sl(),
+        localDatasource: sl(),
+      ),
+    );
 
   //datasources
   sl
@@ -266,7 +296,7 @@ initAuth() {
         firebase: sl(),
       ),
     )
-    ..registerLazySingleton<BackendAuthenticationLocalDatasource>(
+    ..registerLazySingleton(
       () => AuthenticationLocalDatasource(
         sharedPreferences: sl(),
       ),
@@ -481,4 +511,18 @@ initUser() {
         sharedPreferences: sl(),
       ),
     );
+}
+
+initImage() {
+  //provider
+  sl.registerFactory(
+    () => ImageSelectionProvider(
+      picker: sl(),
+    ),
+  );
+  //usecases
+
+  //repository
+
+  //datasources
 }

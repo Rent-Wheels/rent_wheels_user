@@ -1,9 +1,10 @@
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
 import 'package:rent_wheels/src/reservations/domain/entity/reservations.dart';
-import 'package:rent_wheels/src/reservations/domain/usecases/change_reservation_status.dart';
-import 'package:rent_wheels/src/reservations/domain/usecases/get_all_reservations.dart';
 import 'package:rent_wheels/src/reservations/domain/usecases/make_reservation.dart';
+import 'package:rent_wheels/src/reservations/domain/usecases/get_all_reservations.dart';
+import 'package:rent_wheels/src/reservations/domain/usecases/change_reservation_status.dart';
 
 part 'reservations_event.dart';
 part 'reservations_state.dart';

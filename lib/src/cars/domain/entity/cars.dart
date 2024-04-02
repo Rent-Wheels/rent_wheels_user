@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:rent_wheels/src/cars/domain/entity/car_media.dart';
 
-class Cars extends Equatable {
+class Car extends Equatable {
   final bool? availability;
   final List<CarMedia>? media;
   final num? capacity, maxDuration, rate;
@@ -20,7 +20,7 @@ class Cars extends Equatable {
       yearOfManufacture,
       registrationNumber;
 
-  const Cars({
+  const Car({
     required this.id,
     required this.rate,
     required this.make,
@@ -64,4 +64,26 @@ class Cars extends Equatable {
         yearOfManufacture,
         registrationNumber,
       ];
+
+  Map<String, dynamic> toMap() => {
+        'id': id,
+        'rate': rate,
+        'make': make,
+        'type': type,
+        'plan': plan,
+        'model': model,
+        'color': color,
+        'terms': terms,
+        'ownerId': ownerId,
+        'capacity': capacity,
+        'location': location,
+        'condition': condition,
+        'description': description,
+        'maxDuration': maxDuration,
+        'durationUnit': durationUnit,
+        'availability': availability,
+        'yearOfManufacture': yearOfManufacture,
+        'registrationNumber': registrationNumber,
+        'media': media?.map<Map<String, dynamic>>((e) => e.toMap()).toList(),
+      };
 }

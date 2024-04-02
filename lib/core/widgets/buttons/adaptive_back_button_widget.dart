@@ -2,11 +2,21 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 
-buildAdaptiveBackButton({required void Function() onPressed}) {
-  return IconButton(
-    onPressed: onPressed,
-    icon: Platform.isIOS
-        ? const Icon(Icons.arrow_back_ios)
-        : const Icon(Icons.arrow_back),
-  );
+class AdaptiveBackButton extends StatelessWidget {
+  final void Function() onPressed;
+
+  const AdaptiveBackButton({
+    super.key,
+    required this.onPressed,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onPressed,
+      child: Platform.isIOS
+          ? const Icon(Icons.arrow_back_ios)
+          : const Icon(Icons.arrow_back),
+    );
+  }
 }

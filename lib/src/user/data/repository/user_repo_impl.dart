@@ -34,12 +34,6 @@ class UserRepositoryImpl implements UserRepository {
 
   @override
   Future<Either<String, BackendUserInfo>> getCachedUserInfo() async {
-    if (!(await networkInfo.isConnected)) {
-      return Left(
-        networkInfo.noNetworkMessage,
-      );
-    }
-
     try {
       final response = await localDatasource.getCachedUserDetails();
       return Right(response);

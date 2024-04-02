@@ -13,4 +13,9 @@ class Customer extends Equatable {
         id,
         name,
       ];
+
+  Map<String, dynamic> toMap() => {
+        'id': id,
+        'name': name,
+      };
 }

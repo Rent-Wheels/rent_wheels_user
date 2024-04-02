@@ -1,74 +1,94 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 import 'package:rent_wheels/core/widgets/sizes/sizes.dart';
+import 'package:rent_wheels/core/widgets/theme/theme.dart';
 import 'package:rent_wheels/core/widgets/theme/colors.dart';
 import 'package:rent_wheels/core/widgets/spacing/spacing.dart';
-import 'package:rent_wheels/core/widgets/textStyles/text_styles.dart';
 import 'package:rent_wheels/core/widgets/buttons/generic_button_widget.dart';
 
-buildConfirmationPopup({
-  String? message,
-  required String label,
-  required String buttonName,
-  required BuildContext context,
-  required void Function()? onCancel,
-  required void Function()? onAccept,
-}) {
-  return Dialog(
-    shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(
-      Sizes().height(context, 0.015),
-    )),
-    clipBehavior: Clip.antiAlias,
-    alignment: Alignment.bottomCenter,
-    child: Container(
-      height: Sizes().height(context, 0.28),
-      padding: EdgeInsets.symmetric(
-        vertical: Sizes().height(context, 0.01),
-        horizontal: Sizes().width(context, 0.04),
-      ),
-      color: rentWheelsNeutralLight0,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Text(
-                label,
-                style: heading3Information,
-              ),
-              GestureDetector(
-                onTap: onCancel,
-                child: Icon(
-                  Icons.close,
-                  color: rentWheelsNeutral,
-                  size: Sizes().height(context, 0.04),
-                ),
-              )
-            ],
+class ConfirmationPopup extends StatefulWidget {
+  final String label;
+  final String? message;
+  final Color? btnColor;
+  final String buttonName;
+  final void Function()? onAccept;
+
+  const ConfirmationPopup({
+    super.key,
+    this.message,
+    this.btnColor,
+    required this.label,
+    required this.onAccept,
+    required this.buttonName,
+  });
+
+  @override
+  State<ConfirmationPopup> createState() => _ConfirmationPopupState();
+}
+
+class _ConfirmationPopupState extends State<ConfirmationPopup> {
+  @override
+  Widget build(BuildContext context) {
+    return Dialog(
+      child: Container(
+        height: Sizes().height(context, 0.28),
+        padding: EdgeInsets.symmetric(
+          vertical: Sizes().height(context, 0.01),
+          horizontal: Sizes().width(context, 0.04),
+        ),
+        decoration: BoxDecoration(
+          color: rentWheelsNeutralLight0,
+          borderRadius: BorderRadius.circular(
+            Sizes().height(context, 0.015),
           ),
-          if (message != null)
-            Wrap(
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Space().height(context, 0.02),
                 Text(
-                  message,
-                  style: body1Neutral500,
+                  widget.label,
+                  style: theme.textTheme.titleSmall!.copyWith(
+                    color: rentWheelsInformationDark900,
+                  ),
                 ),
+                GestureDetector(
+                  onTap: () => context.pop(),
+                  child: Icon(
+                    Icons.close,
+                    color: rentWheelsNeutral,
+                    size: Sizes().height(context, 0.04),
+                  ),
+                )
               ],
             ),
-          buildGenericButtonWidget(
-            width: Sizes().width(context, 0.85),
-            isActive: true,
-            buttonName: buttonName,
-            context: context,
-            onPressed: onAccept,
-          ),
-        ],
+            if (widget.message != null)
+              Wrap(
+                children: [
+                  Space().height(context, 0.02),
+                  Text(
+                    widget.message!,
+                    style: theme.textTheme.bodyLarge!.copyWith(
+                      color: rentWheelsNeutral,
+                    ),
+                  ),
+                ],
+              ),
+            GenericButton(
+              isActive: true,
+              btnColor: widget.btnColor,
+              onPressed: widget.onAccept,
+              buttonName: widget.buttonName,
+              width: Sizes().width(context, 0.85),
+            ),
+          ],
+        ),
       ),
-    ),
-  );
+    );
+  }
 }

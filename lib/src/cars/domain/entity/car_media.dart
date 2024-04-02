@@ -13,4 +13,9 @@ class CarMedia extends Equatable {
         id,
         mediaURL,
       ];
+
+  Map<String, dynamic> toMap() => {
+        'id': id,
+        'mediaURL': mediaURL,
+      };
 }

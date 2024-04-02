@@ -3,10 +3,10 @@ import 'dart:convert';
 import 'package:http/http.dart';
 import 'package:rent_wheels/core/urls/endpoints.dart';
 import 'package:rent_wheels/core/urls/urls.dart';
-import 'package:rent_wheels/src/renter/data/models/renter_info_model.dart';
+import 'package:rent_wheels/src/renter/data/models/renter_model.dart';
 
 abstract class RenterRemoteDatasource {
-  Future<RenterInfoModel> getRenterDetails(Map<String, dynamic> params);
+  Future<RenterModel> getRenterDetails(Map<String, dynamic> params);
 }
 
 class RenterRemoteDatasourceImpl implements RenterRemoteDatasource {
@@ -19,20 +19,15 @@ class RenterRemoteDatasourceImpl implements RenterRemoteDatasource {
   });
 
   @override
-  Future<RenterInfoModel> getRenterDetails(Map<String, dynamic> params) async {
+  Future<RenterModel> getRenterDetails(Map<String, dynamic> params) async {
     final uri = urls.returnUri(
       endpoint: Endpoints.getRenter,
-      urlParameters: {
-        'renterId': params['renterId'],
-      },
+      urlParameters: params['urlParameters'],
     );
 
-    final headers = urls.headers;
-    headers.addAll(<String, String>{'Authorization': params['token']});
-
-    final response = await client.get(uri, headers: headers);
+    final response = await client.get(uri, headers: params['headers']);
 
     if (response.statusCode != 200) throw Exception(response.body);
-    return RenterInfoModel.fromJSON(jsonDecode(response.body));
+    return RenterModel.fromJSON(jsonDecode(response.body));
   }
 }

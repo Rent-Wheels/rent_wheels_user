@@ -47,12 +47,10 @@ dependencies:
   image_picker: ^0.8.8
   firebase_auth: ^4.6.1
   firebase_core: ^2.13.0
-  cupertino_icons: ^1.0.2
   carousel_slider: ^4.2.1
   string_validator: ^1.0.0
   bloc_concurrency: ^0.2.2
   firebase_storage: ^11.2.4
-  easy_image_viewer: ^1.2.1
   loading_indicator: ^3.1.1
   another_flushbar: ^1.12.30
   dotted_dashed_line: ^0.0.3
@@ -61,11 +59,9 @@ dependencies:
   flutter_credit_card: ^3.0.7
   cached_network_image: ^3.2.3
   flutter_google_places: ^0.3.0
-  modal_bottom_sheet: ^3.0.0-pre
-  google_maps_webservice: ^0.0.19
   data_connection_checker_nulls: ^0.0.2
+  google_maps_webservice:
   syncfusion_flutter_datepicker: ^22.1.39
-  
 
 dev_dependencies:
   flutter_test:
