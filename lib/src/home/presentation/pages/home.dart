@@ -10,7 +10,6 @@ import 'package:rent_wheels/injection.dart';
 import 'package:rent_wheels/assets/svgs/svg_constants.dart';
 import 'package:rent_wheels/assets/images/image_constants.dart';
 
-import 'package:rent_wheels/core/enums/enums.dart';
 import 'package:rent_wheels/core/widgets/theme/theme.dart';
 import 'package:rent_wheels/core/widgets/sizes/sizes.dart';
 import 'package:rent_wheels/core/widgets/theme/colors.dart';

@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_credit_card/flutter_credit_card.dart';
-import 'package:rent_wheels/core/enums/enums.dart';
+
 import 'package:rent_wheels/core/widgets/sizes/sizes.dart';
 import 'package:rent_wheels/core/widgets/textfields/dropdown_input_field.dart';
-import 'package:rent_wheels/core/widgets/theme/colors.dart';
-import 'package:rent_wheels/src/mainSection/payment/widgets/credit_card_payment_widget.dart';
-import 'package:rent_wheels/src/mainSection/payment/widgets/mobile_money_payment_widget.dart';
+import 'package:rent_wheels/src/payment/presentation/widgets/credit_card_payment_widget.dart';
+import 'package:rent_wheels/src/payment/presentation/widgets/mobile_money_payment_widget.dart';
 
 class PaymentPageOne extends StatefulWidget {
   final String value;
@@ -60,6 +59,7 @@ class _PaymentPageOneState extends State<PaymentPageOne> {
       child: const Text('VFCash'),
     ),
   ];
+
   @override
   Widget build(BuildContext context) {
     Widget options = DropdownInputField(
@@ -122,4 +122,15 @@ class _PaymentPageOneState extends State<PaymentPageOne> {
       ),
     );
   }
+}
+
+enum PaymentMethods {
+  vfCash(value: 'VFCash'),
+  creditCard(value: 'Credit Card'),
+  airtelTigoCash(value: 'Tigo Cash'),
+  mobileMoney(value: 'MTN Mobile Money');
+
+  const PaymentMethods({required this.value});
+
+  final String value;
 }

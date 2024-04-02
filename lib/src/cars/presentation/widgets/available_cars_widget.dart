@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter/scheduler.dart' show timeDilation;
 
-import 'package:rent_wheels/core/enums/enums.dart';
 import 'package:rent_wheels/core/widgets/theme/theme.dart';
 import 'package:rent_wheels/core/widgets/sizes/sizes.dart';
 import 'package:rent_wheels/core/widgets/theme/colors.dart';
@@ -108,32 +107,6 @@ class _AvailableCarsHomeState extends State<AvailableCarsHome> {
                                   margin: Sizes().width(context, 0.03),
                                   heroTag:
                                       '${(widget.isNear ?? false) ? 'near' : 'available'}-${widget.cars[index].registrationNumber}',
-                                  // onTap: () async {
-                                  //   buildLoadingIndicator(context, '');
-                                  //   try {
-                                  //     final renter = await RentWheelsUserMethods()
-                                  //         .getRenterDetails(
-                                  //             userId: widget.cars[index].ownerId!);
-
-                                  //     if (!mounted) return;
-                                  //     context.pop();
-                                  //     Navigator.push(
-                                  //       context,
-                                  //       MaterialPageRoute(
-                                  //         builder: (context) => CarDetails(
-                                  //           renter: renter,
-                                  //           car: widget.cars[index],
-                                  //           heroTag:
-                                  //               'near-${widget.cars[index].registrationNumber}',
-                                  //         ),
-                                  //       ),
-                                  //     );
-                                  //   } catch (e) {
-                                  //     if (!mounted) return;
-                                  //     context.pop();
-                                  //     showErrorPopUp(e.toString(), context);
-                                  //   }
-                                  // },
                                 );
                               },
                             ),
@@ -161,31 +134,6 @@ class _AvailableCarsHomeState extends State<AvailableCarsHome> {
                               onTap: widget.isLoading
                                   ? null
                                   : () => widget.onTap!(index),
-
-                              // onTap: () async {
-                              //   buildLoadingIndicator(context, '');
-                              //   try {
-                              //     final renter = await RentWheelsUserMethods()
-                              //         .getRenterDetails(
-                              //             userId: widget.cars[index].owner!);
-
-                              //     if (!mounted) return;
-                              //     context.pop();
-                              //     Navigator.push(
-                              //       context,
-                              //       MaterialPageRoute(
-                              //         builder: (context) => CarDetails(
-                              //           car: widget.cars[index],
-                              //           renter: renter,
-                              //         ),
-                              //       ),
-                              //     );
-                              //   } catch (e) {
-                              //     if (!mounted) return;
-                              //     context.pop();
-                              //     showErrorPopUp(e.toString(), context);
-                              //   }
-                              // },
                             ),
                           ),
                         ),
@@ -193,7 +141,7 @@ class _AvailableCarsHomeState extends State<AvailableCarsHome> {
                 : const SizedBox(),
       ],
     );
-
-    //
   }
 }
+
+enum AvailableCarsType { preview, allAvailableCars }

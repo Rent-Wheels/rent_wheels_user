@@ -8,7 +8,6 @@ import 'package:rent_wheels/core/widgets/popups/error_popup.dart';
 
 import 'package:rent_wheels/injection.dart';
 
-import 'package:rent_wheels/core/enums/enums.dart';
 import 'package:rent_wheels/core/widgets/sizes/sizes.dart';
 import 'package:rent_wheels/core/widgets/error/error_message_widget.dart';
 import 'package:rent_wheels/core/widgets/loadingIndicator/shimmer_loading_placeholder.dart';

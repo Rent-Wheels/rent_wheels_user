@@ -1,16 +1,17 @@
 import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:rent_wheels/core/widgets/loadingIndicator/loading_indicator.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import 'package:rent_wheels/injection.dart';
 import 'package:rent_wheels/core/widgets/popups/error_popup.dart';
 import 'package:rent_wheels/core/widgets/popups/success_popup.dart';
-import 'package:rent_wheels/injection.dart';
-import 'package:rent_wheels/src/cars/domain/entity/cars.dart';
-import 'package:rent_wheels/src/global/presentation/provider/global_provider.dart';
+import 'package:rent_wheels/core/widgets/loadingIndicator/loading_indicator.dart';
 
+import 'package:rent_wheels/src/cars/domain/entity/cars.dart';
 import 'package:rent_wheels/src/reservations/domain/entity/reservations.dart';
+import 'package:rent_wheels/src/global/presentation/provider/global_provider.dart';
 import 'package:rent_wheels/src/reservations/presentation/bloc/reservations_bloc.dart';
 import 'package:rent_wheels/src/reservations/presentation/widgets/reservations_loading.dart';
 import 'package:rent_wheels/src/reservations/presentation/widgets/reservation_information.dart';
@@ -33,6 +34,7 @@ class ReservationsData extends StatefulWidget {
 }
 
 class _ReservationsDataState extends State<ReservationsData> {
+  int? _currentIndex;
   final _reservationBloc = sl<ReservationsBloc>();
 
   List<Reservation>? _reservations;
@@ -93,8 +95,10 @@ class _ReservationsDataState extends State<ReservationsData> {
     );
 
     if (update != null && update is Reservation) {
+      _reservations = widget.reservations;
       final i = _reservations!.indexWhere((e) => e.id! == update.id!);
       setState(() {
+        _currentIndex = 0;
         _reservations![i] = update;
       });
     }
@@ -152,7 +156,7 @@ class _ReservationsDataState extends State<ReservationsData> {
               onBook: bookTrip,
               sections: sections,
               onPayment: onPayment,
-              currentIndex: widget.currentIndex,
+              currentIndex: _currentIndex ?? widget.currentIndex,
               reservations: widget.reservations,
               filterButtonOnTap: widget.isLoading
                   ? null

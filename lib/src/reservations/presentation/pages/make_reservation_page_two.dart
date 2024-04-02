@@ -5,7 +5,6 @@ import 'package:go_router/go_router.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:rent_wheels/injection.dart';
-import 'package:rent_wheels/core/enums/enums.dart';
 import 'package:rent_wheels/core/widgets/sizes/sizes.dart';
 import 'package:rent_wheels/core/widgets/theme/colors.dart';
 import 'package:rent_wheels/core/widgets/spacing/spacing.dart';
@@ -337,3 +336,5 @@ class _MakeReservationPageTwoState extends State<MakeReservationPageTwo> {
     );
   }
 }
+
+enum ReservationView { make, view }

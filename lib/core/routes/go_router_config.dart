@@ -1,6 +1,5 @@
 import 'package:go_router/go_router.dart';
 import 'package:rent_wheels/connection_page.dart';
-import 'package:rent_wheels/core/enums/enums.dart';
 import 'package:rent_wheels/src/authentication/presentation/pages/login.dart';
 import 'package:rent_wheels/src/authentication/presentation/pages/forgot_password.dart';
 import 'package:rent_wheels/src/authentication/presentation/pages/signup.dart';
@@ -8,7 +7,7 @@ import 'package:rent_wheels/src/authentication/presentation/pages/verify_email.d
 import 'package:rent_wheels/src/authentication/presentation/pages/reset_password_success.dart';
 import 'package:rent_wheels/src/cars/presentation/pages/car_details.dart';
 import 'package:rent_wheels/src/home/presentation/pages/base.dart';
-import 'package:rent_wheels/src/mainSection/payment/presentation/payment.dart';
+import 'package:rent_wheels/src/payment/presentation/pages/payment.dart';
 import 'package:rent_wheels/src/onboarding/presentation/onboarding.dart';
 import 'package:rent_wheels/src/renter/presentation/pages/renter_profile.dart';
 import 'package:rent_wheels/src/reservations/presentation/pages/make_reservation_page_one.dart';
