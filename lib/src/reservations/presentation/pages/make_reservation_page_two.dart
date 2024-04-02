@@ -1,7 +1,12 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:go_router/go_router.dart';
+import 'package:rent_wheels/src/cars/data/models/cars_model.dart';
 import 'package:rent_wheels/src/cars/domain/entity/cars.dart';
+import 'package:rent_wheels/src/renter/data/models/renter_model.dart';
+import 'package:rent_wheels/src/reservations/data/model/reservation_model.dart';
+import 'package:rent_wheels/src/reservations/domain/entity/reservations.dart';
 
 import 'package:rent_wheels/src/reservations/presentation/widgets/reservation_details_widget.dart';
 import 'package:rent_wheels/src/reservations/presentation/pages/reservation_successful.dart';
@@ -16,17 +21,16 @@ import 'package:rent_wheels/core/extenstions/date_compare.dart';
 import 'package:rent_wheels/core/widgets/popups/error_popup.dart';
 import 'package:rent_wheels/core/widgets/popups/success_popup.dart';
 import 'package:rent_wheels/core/widgets/buttons/generic_button_widget.dart';
-import 'package:rent_wheels/core/models/reservations/reservations_model.dart';
 import 'package:rent_wheels/core/widgets/dialogs/confirmation_dialog_widget.dart';
 import 'package:rent_wheels/core/widgets/loadingIndicator/loading_indicator.dart';
 import 'package:rent_wheels/core/widgets/buttons/adaptive_back_button_widget.dart';
 import 'package:rent_wheels/src/renter/domain/entity/renter.dart';
 
 class MakeReservationPageTwo extends StatefulWidget {
-  final Car? car;
-  final Renter? renter;
+  final String? car;
+  final String? renter;
   final ReservationView view;
-  final ReservationModel reservation;
+  final String reservation;
 
   const MakeReservationPageTwo({
     super.key,
@@ -41,6 +45,10 @@ class MakeReservationPageTwo extends StatefulWidget {
 }
 
 class _MakeReservationPageTwoState extends State<MakeReservationPageTwo> {
+  Car? _car;
+  Renter? _renter;
+  Reservation? _reservation;
+
   // makeReservation() async {
   //   try {
   //     buildLoadingIndicator(context, 'Making Reservation');
@@ -90,25 +98,38 @@ class _MakeReservationPageTwoState extends State<MakeReservationPageTwo> {
   //   }
   // }
 
-  bookAgain() => Navigator.push(
-        context,
-        CupertinoPageRoute(
-          builder: (context) => MakeReservationPageOne(car: widget.car),
-        ),
+  bookAgain() => context.pushNamed(
+        'makeReservation',
+        queryParameters: {
+          'car': jsonEncode(_car!.toMap()),
+        },
       );
+
+  initData() {
+    if (widget.car != null) {
+      _car = CarModel.fromJSON(jsonDecode(widget.car!));
+    }
+    if (widget.renter != null) {
+      _renter = RenterModel.fromJSON(jsonDecode(widget.renter!));
+    }
+    _reservation = ReservationModel.fromJSON(jsonDecode(widget.reservation));
+  }
+
+  @override
+  void initState() {
+    initData();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
-    Car? car = widget.car;
-    Renter? renter = widget.renter;
-    ReservationModel reservation = widget.reservation;
+    DateTime startDate = DateTime.parse(_reservation!.startDate!);
+    DateTime returnDate = DateTime.parse(_reservation!.returnDate!);
 
     Duration getDuration() {
-      Duration duration = reservation.returnDate
-              ?.difference(reservation.startDate ?? DateTime.now()) ??
-          const Duration(days: 0);
+      Duration duration = returnDate.difference(startDate);
 
-      if (reservation.returnDate!.isAtSameMomentAs(reservation.startDate!)) {
+      if (returnDate.isAtSameMomentAs(startDate)) {
         duration = const Duration(days: 1);
       }
 
@@ -121,7 +142,7 @@ class _MakeReservationPageTwoState extends State<MakeReservationPageTwo> {
         foregroundColor: rentWheelsBrandDark900,
         backgroundColor: rentWheelsNeutralLight0,
         leading: AdaptiveBackButton(
-          onPressed: () => Navigator.pop(context, reservation.status),
+          onPressed: () => Navigator.pop(context, _reservation!.status),
         ),
       ),
       body: SingleChildScrollView(
@@ -133,18 +154,18 @@ class _MakeReservationPageTwoState extends State<MakeReservationPageTwo> {
           ),
           child: widget.view == ReservationView.make
               ? ReservationDetails(
-                  car: car,
-                  renter: renter,
+                  car: _car,
+                  renter: _renter,
                   pageTitle: 'Make Reservation',
                   duration: getDuration(),
-                  reservation: reservation,
+                  reservation: _reservation!,
                 )
               : ReservationDetails(
-                  car: car,
-                  renter: renter,
+                  car: _car,
+                  renter: _renter,
                   pageTitle: 'Reservation',
                   duration: getDuration(),
-                  reservation: reservation,
+                  reservation: _reservation!,
                 ),
         ),
       ),
@@ -160,8 +181,8 @@ class _MakeReservationPageTwoState extends State<MakeReservationPageTwo> {
                 ),
               ],
             )
-          : widget.view == ReservationView.view && car != null
-              ? reservation.status == 'Pending'
+          : widget.view == ReservationView.view && _car != null
+              ? _reservation!.status == 'Pending'
                   ? ReservationDetailsBottomSheet(
                       items: [
                         GenericButton(
@@ -178,15 +199,15 @@ class _MakeReservationPageTwoState extends State<MakeReservationPageTwo> {
                             onAccept: () async {
                               // await modifyReservation(
                               //     reservationStatus: 'Cancelled');
-                              setState(() {
-                                reservation.status = 'Cancelled';
-                              });
+                              // setState(() {
+                              //   reservation.status = 'Cancelled';
+                              // });
                             },
                           ),
                         ),
                       ],
                     )
-                  : reservation.status == 'Ongoing'
+                  : _reservation!.status == 'Ongoing'
                       ? ReservationDetailsBottomSheet(
                           items: [
                             GenericButton(
@@ -198,14 +219,14 @@ class _MakeReservationPageTwoState extends State<MakeReservationPageTwo> {
                                 // await modifyReservation(
                                 //     reservationStatus: 'Completed');
 
-                                setState(() {
-                                  reservation.status = 'Completed';
-                                });
+                                // setState(() {
+                                //   reservation.status = 'Completed';
+                                // });
                               },
                             ),
                           ],
                         )
-                      : reservation.status == 'Accepted'
+                      : _reservation!.status == 'Accepted'
                           ? ReservationDetailsBottomSheet(
                               items: [
                                 GenericButton(
@@ -242,29 +263,29 @@ class _MakeReservationPageTwoState extends State<MakeReservationPageTwo> {
                                     onAccept: () async {
                                       // await modifyReservation(
                                       //     reservationStatus: 'Cancelled');
-                                      setState(() {
-                                        reservation.status = 'Cancelled';
-                                      });
+                                      // setState(() {
+                                      //   reservation.status = 'Cancelled';
+                                      // });
                                     },
                                   ),
                                 ),
                               ],
                             )
-                          : reservation.status == 'Paid'
+                          : _reservation!.status == 'Paid'
                               ? ReservationDetailsBottomSheet(
                                   items: [
                                     GenericButton(
                                       buttonName: 'Start Trip',
                                       width: Sizes().width(context, 0.4),
-                                      isActive: DateTime.now()
-                                          .isSameDate(reservation.startDate!),
+                                      isActive:
+                                          DateTime.now().isSameDate(startDate),
                                       onPressed: () async {
                                         // await modifyReservation(
                                         //     reservationStatus: 'Ongoing');
 
-                                        setState(() {
-                                          reservation.status = 'Ongoing';
-                                        });
+                                        // setState(() {
+                                        //   reservation.status = 'Ongoing';
+                                        // });
                                       },
                                     ),
                                     Space().width(context, 0.04),
@@ -282,9 +303,9 @@ class _MakeReservationPageTwoState extends State<MakeReservationPageTwo> {
                                         onAccept: () async {
                                           // await modifyReservation(
                                           //     reservationStatus: 'Cancelled');
-                                          setState(() {
-                                            reservation.status = 'Cancelled';
-                                          });
+                                          // setState(() {
+                                          //   reservation.status = 'Cancelled';
+                                          // });
                                         },
                                       ),
                                     ),

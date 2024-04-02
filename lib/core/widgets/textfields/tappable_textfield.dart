@@ -44,8 +44,9 @@ class _TappableTextfieldState extends State<TappableTextfield> {
               Sizes().width(context, 0.035),
             ),
           ),
-          padding:
-              EdgeInsets.symmetric(horizontal: Sizes().width(context, 0.04)),
+          padding: EdgeInsets.symmetric(
+            horizontal: Sizes().width(context, 0.04),
+          ),
           child: GestureDetector(
             onTap: widget.onTap,
             child: TextField(
@@ -53,8 +54,10 @@ class _TappableTextfieldState extends State<TappableTextfield> {
               controller: widget.controller,
               minLines: 1,
               maxLines: null,
-              style: theme.textTheme.headlineSmall!
-                  .copyWith(color: rentWheelsNeutralDark900),
+              style: theme.textTheme.headlineSmall!.copyWith(
+                fontWeight: FontWeight.w600,
+                color: rentWheelsNeutralDark900,
+              ),
               decoration: InputDecoration(
                 hintText: widget.hint,
                 hintStyle: theme.textTheme.headlineSmall!.copyWith(

@@ -1,9 +1,12 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
-import 'package:rent_wheels/core/widgets/error/error_message_widget.dart';
+import 'package:go_router/go_router.dart';
 import 'package:rent_wheels/core/widgets/sizes/sizes.dart';
-import 'package:rent_wheels/core/widgets/spacing/spacing.dart';
-import 'package:rent_wheels/core/widgets/theme/colors.dart';
 import 'package:rent_wheels/core/widgets/theme/theme.dart';
+import 'package:rent_wheels/core/widgets/theme/colors.dart';
+import 'package:rent_wheels/core/widgets/spacing/spacing.dart';
+import 'package:rent_wheels/core/widgets/error/error_message_widget.dart';
 import 'package:rent_wheels/src/reservations/domain/entity/reservations.dart';
 import 'package:rent_wheels/src/reservations/presentation/widgets/filter_buttons_widget.dart';
 import 'package:rent_wheels/src/reservations/presentation/widgets/reservation_information_sections_widget.dart';
@@ -123,18 +126,19 @@ class ReservationInformation extends StatelessWidget {
                               //   },
                               // ),
                               onPressed: () async {
-                                // final status = await Navigator.push(
-                                //   context,
-                                //   CupertinoPageRoute(
-                                //     builder: (context) =>
-                                //         MakeReservationPageTwo(
-                                //       car: reservation.car,
-                                //       view: ReservationView.view,
-                                //       renter: reservation.renter,
-                                //       reservation: reservation,
-                                //     ),
-                                //   ),
-                                // );
+                                final status = await context.pushNamed(
+                                  'reservationDetails',
+                                  pathParameters: {
+                                    'reservationId': reservation.id!,
+                                  },
+                                  queryParameters: {
+                                    'car': jsonEncode(reservation.car!.toMap()),
+                                    'renter':
+                                        jsonEncode(reservation.renter!.toMap()),
+                                    'reservation':
+                                        jsonEncode(reservation.toMap()),
+                                  },
+                                );
 
                                 // if (status != null) {
                                 //   setState(() {

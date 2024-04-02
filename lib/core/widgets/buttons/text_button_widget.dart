@@ -29,9 +29,8 @@ class TextButtonWidget extends StatefulWidget {
 class _TextButtonWidgetState extends State<TextButtonWidget> {
   @override
   Widget build(BuildContext context) {
-    return InkWell(
+    return GestureDetector(
       onTap: widget.onPressed,
-      enableFeedback: true,
       child: SizedBox(
         // width: widget.width,
         height: Sizes().height(context, 0.06),

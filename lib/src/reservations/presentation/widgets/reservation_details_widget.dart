@@ -3,6 +3,7 @@ import 'package:dotted_dashed_line/dotted_dashed_line.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:rent_wheels/core/widgets/theme/theme.dart';
 import 'package:rent_wheels/src/cars/domain/entity/cars.dart';
+import 'package:rent_wheels/src/reservations/domain/entity/reservations.dart';
 
 import 'package:rent_wheels/src/reservations/presentation/widgets/price_details_widget.dart';
 
@@ -11,7 +12,6 @@ import 'package:rent_wheels/core/widgets/sizes/sizes.dart';
 import 'package:rent_wheels/core/widgets/theme/colors.dart';
 import 'package:rent_wheels/core/widgets/spacing/spacing.dart';
 import 'package:rent_wheels/core/widgets/details/key_value_widget.dart';
-import 'package:rent_wheels/core/models/reservations/reservations_model.dart';
 import 'package:rent_wheels/src/renter/domain/entity/renter.dart';
 
 class ReservationDetails extends StatelessWidget {
@@ -19,7 +19,7 @@ class ReservationDetails extends StatelessWidget {
   final Renter? renter;
   final String pageTitle;
   final Duration duration;
-  final ReservationModel reservation;
+  final Reservation reservation;
 
   const ReservationDetails({
     super.key,
@@ -90,7 +90,7 @@ class ReservationDetails extends StatelessWidget {
                       SizedBox(
                         width: Sizes().width(context, 0.6),
                         child: Text(
-                          '${formatDate(reservation.startDate!)} - ${formatDate(reservation.returnDate!)}',
+                          '${formatDate(DateTime.parse(reservation.startDate!))} - ${formatDate(DateTime.parse(reservation.returnDate!))}',
                           style: theme.textTheme.headlineSmall!.copyWith(
                             color: rentWheelsNeutralDark900,
                           ),

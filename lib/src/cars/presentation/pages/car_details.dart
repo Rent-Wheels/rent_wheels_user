@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:go_router/go_router.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 
@@ -20,7 +19,6 @@ import 'package:rent_wheels/core/widgets/details/key_value_widget.dart';
 import 'package:rent_wheels/core/widgets/buttons/generic_button_widget.dart';
 import 'package:rent_wheels/core/widgets/buttons/adaptive_back_button_widget.dart';
 import 'package:rent_wheels/core/widgets/carousel/image_carousel_slider_widget.dart';
-import 'package:rent_wheels/src/reservations/presentation/pages/make_reservation_page_one.dart';
 
 class CarDetails extends StatefulWidget {
   final String car;
@@ -270,11 +268,11 @@ class _CarDetailsState extends State<CarDetails> {
               width: Sizes().width(context, 0.28),
               isActive: _car!.availability!,
               buttonName: 'Reserve Car',
-              onPressed: () => Navigator.push(
-                context,
-                CupertinoPageRoute(
-                  builder: (context) => MakeReservationPageOne(car: _car),
-                ),
+              onPressed: () => context.pushNamed(
+                'makeReservation',
+                queryParameters: {
+                  'car': jsonEncode(_car!.toMap()),
+                },
               ),
             ),
           ],

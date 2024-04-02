@@ -6,28 +6,28 @@ import 'package:rent_wheels/src/reservations/domain/entity/customer.dart';
 class Reservation extends Equatable {
   final Car? car;
   final num? price;
-  final Customer? customer;
   final Renter? renter;
+  final Customer? customer;
   final String? id,
       status,
+      updatedAt,
+      createdAt,
       startDate,
       returnDate,
-      destination,
-      createdAt,
-      updatedAt;
+      destination;
 
   const Reservation({
+    required this.id,
     required this.car,
     required this.price,
-    required this.customer,
     required this.renter,
-    required this.id,
     required this.status,
+    required this.customer,
     required this.startDate,
-    required this.returnDate,
-    required this.destination,
     required this.createdAt,
     required this.updatedAt,
+    required this.returnDate,
+    required this.destination,
   });
 
   @override
@@ -44,4 +44,18 @@ class Reservation extends Equatable {
         createdAt,
         updatedAt,
       ];
+
+  Map<String, dynamic> toMap() => {
+        'id': id,
+        'price': price,
+        'status': status,
+        'car': car?.toMap(),
+        'startDate': startDate,
+        'createdAt': createdAt,
+        'updatedAt': updatedAt,
+        'returnDate': returnDate,
+        'renter': renter?.toMap(),
+        'destination': destination,
+        'customer': customer?.toMap(),
+      };
 }
