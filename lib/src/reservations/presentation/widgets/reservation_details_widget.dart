@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:dotted_dashed_line/dotted_dashed_line.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:rent_wheels/core/widgets/theme/theme.dart';
-import 'package:rent_wheels/src/cars/domain/entity/cars.dart';
-import 'package:rent_wheels/src/reservations/domain/entity/reservations.dart';
-
-import 'package:rent_wheels/src/reservations/presentation/widgets/price_details_widget.dart';
 
 import 'package:rent_wheels/core/util/date_util.dart';
+import 'package:rent_wheels/core/widgets/theme/theme.dart';
 import 'package:rent_wheels/core/widgets/sizes/sizes.dart';
 import 'package:rent_wheels/core/widgets/theme/colors.dart';
 import 'package:rent_wheels/core/widgets/spacing/spacing.dart';
 import 'package:rent_wheels/core/widgets/details/key_value_widget.dart';
+
+import 'package:rent_wheels/src/cars/domain/entity/cars.dart';
 import 'package:rent_wheels/src/renter/domain/entity/renter.dart';
+import 'package:rent_wheels/src/reservations/domain/entity/reservations.dart';
+import 'package:rent_wheels/src/reservations/presentation/widgets/price_details_widget.dart';
 
 class ReservationDetails extends StatelessWidget {
   final Car? car;
@@ -33,9 +33,9 @@ class ReservationDetails extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
+      mainAxisSize: MainAxisSize.min,
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisSize: MainAxisSize.min,
       children: [
         Text(
           pageTitle,

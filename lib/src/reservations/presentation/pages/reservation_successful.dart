@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:rent_wheels/assets/images/image_constants.dart';
 
+import 'package:rent_wheels/core/widgets/theme/theme.dart';
 import 'package:rent_wheels/core/widgets/sizes/sizes.dart';
 import 'package:rent_wheels/core/widgets/theme/colors.dart';
 import 'package:rent_wheels/core/widgets/spacing/spacing.dart';
 import 'package:rent_wheels/core/widgets/buttons/generic_button_widget.dart';
-import 'package:rent_wheels/core/widgets/theme/theme.dart';
 
 class ReservationSuccessful extends StatelessWidget {
   const ReservationSuccessful({super.key});

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 import 'package:rent_wheels/core/widgets/sizes/sizes.dart';
 import 'package:rent_wheels/core/widgets/theme/theme.dart';
@@ -9,17 +10,15 @@ import 'package:rent_wheels/core/widgets/buttons/generic_button_widget.dart';
 class ConfirmationPopup extends StatefulWidget {
   final String label;
   final String? message;
+  final Color? btnColor;
   final String buttonName;
-  final BuildContext context;
-  final void Function()? onCancel;
   final void Function()? onAccept;
 
   const ConfirmationPopup({
     super.key,
     this.message,
+    this.btnColor,
     required this.label,
-    required this.context,
-    required this.onCancel,
     required this.onAccept,
     required this.buttonName,
   });
@@ -59,7 +58,7 @@ class _ConfirmationPopupState extends State<ConfirmationPopup> {
                   ),
                 ),
                 GestureDetector(
-                  onTap: widget.onCancel,
+                  onTap: () => context.pop(),
                   child: Icon(
                     Icons.close,
                     color: rentWheelsNeutral,
@@ -81,10 +80,11 @@ class _ConfirmationPopupState extends State<ConfirmationPopup> {
                 ],
               ),
             GenericButton(
-              width: Sizes().width(context, 0.85),
               isActive: true,
-              buttonName: widget.buttonName,
+              btnColor: widget.btnColor,
               onPressed: widget.onAccept,
+              buttonName: widget.buttonName,
+              width: Sizes().width(context, 0.85),
             ),
           ],
         ),

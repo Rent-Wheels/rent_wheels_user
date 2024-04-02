@@ -76,8 +76,6 @@ class _VerifyEmailState extends State<VerifyEmail> {
     _globalProvider = context.watch<GlobalProvider>();
     return Scaffold(
       appBar: AppBar(
-        elevation: 0,
-        backgroundColor: rentWheelsNeutralLight0,
         actions: [
           Padding(
             padding: EdgeInsets.symmetric(

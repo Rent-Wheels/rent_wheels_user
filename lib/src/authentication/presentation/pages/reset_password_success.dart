@@ -14,11 +14,7 @@ class ResetPasswordSuccess extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        elevation: 0,
-        foregroundColor: rentWheelsBrandDark900,
-        backgroundColor: rentWheelsNeutralLight0,
-      ),
+      appBar: AppBar(),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,

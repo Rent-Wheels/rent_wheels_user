@@ -33,11 +33,7 @@ class _RenterDetailsState extends State<RenterDetails> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: rentWheelsNeutralLight0,
         appBar: AppBar(
-          backgroundColor: rentWheelsNeutralLight0,
-          foregroundColor: rentWheelsBrandDark900,
-          elevation: 0,
           leading: AdaptiveBackButton(
             onPressed: () => context.pop(),
           ),

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:rent_wheels/core/widgets/popups/confirmation_popup_widget.dart';
 
 buildConfirmationDialog({
   String? message,
+  Color? btnColor,
   required String label,
   required String buttonName,
   required BuildContext context,
@@ -14,9 +14,8 @@ buildConfirmationDialog({
       builder: (context) => ConfirmationPopup(
         label: label,
         message: message,
-        context: context,
-        onCancel: () => context.pop(),
         onAccept: onAccept,
+        btnColor: btnColor,
         buttonName: buttonName,
       ),
     );

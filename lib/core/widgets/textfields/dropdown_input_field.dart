@@ -57,8 +57,10 @@ class _DropdownInputFieldState extends State<DropdownInputField> {
               color: rentWheelsNeutral,
               size: Sizes().height(context, 0.03),
             ),
-            style: theme.textTheme.headlineSmall!
-                .copyWith(color: rentWheelsNeutralDark900),
+            style: theme.textTheme.headlineSmall!.copyWith(
+              fontWeight: FontWeight.w600,
+              color: rentWheelsNeutralDark900,
+            ),
             dropdownColor: rentWheelsNeutralLight0,
             items: widget.items,
             onChanged: widget.onChanged,

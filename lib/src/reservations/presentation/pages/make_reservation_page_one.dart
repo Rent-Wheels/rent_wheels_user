@@ -159,9 +159,6 @@ class _MakeReservationPageOneState extends State<MakeReservationPageOne> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        elevation: 0,
-        foregroundColor: rentWheelsBrandDark900,
-        backgroundColor: rentWheelsNeutralLight0,
         leading: AdaptiveBackButton(
           onPressed: () => context.pop(),
         ),

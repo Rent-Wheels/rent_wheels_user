@@ -2,17 +2,9 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:rent_wheels/src/cars/data/models/cars_model.dart';
-import 'package:rent_wheels/src/cars/domain/entity/cars.dart';
-import 'package:rent_wheels/src/renter/data/models/renter_model.dart';
-import 'package:rent_wheels/src/reservations/data/model/reservation_model.dart';
-import 'package:rent_wheels/src/reservations/domain/entity/reservations.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:rent_wheels/src/reservations/presentation/widgets/reservation_details_widget.dart';
-import 'package:rent_wheels/src/reservations/presentation/pages/reservation_successful.dart';
-import 'package:rent_wheels/src/reservations/presentation/pages/make_reservation_page_one.dart';
-import 'package:rent_wheels/src/reservations/presentation/widgets/reservation_details_bottom_sheet_widget.dart';
-
+import 'package:rent_wheels/injection.dart';
 import 'package:rent_wheels/core/enums/enums.dart';
 import 'package:rent_wheels/core/widgets/sizes/sizes.dart';
 import 'package:rent_wheels/core/widgets/theme/colors.dart';
@@ -24,13 +16,23 @@ import 'package:rent_wheels/core/widgets/buttons/generic_button_widget.dart';
 import 'package:rent_wheels/core/widgets/dialogs/confirmation_dialog_widget.dart';
 import 'package:rent_wheels/core/widgets/loadingIndicator/loading_indicator.dart';
 import 'package:rent_wheels/core/widgets/buttons/adaptive_back_button_widget.dart';
+
+import 'package:rent_wheels/src/cars/domain/entity/cars.dart';
+import 'package:rent_wheels/src/cars/data/models/cars_model.dart';
 import 'package:rent_wheels/src/renter/domain/entity/renter.dart';
+import 'package:rent_wheels/src/renter/data/models/renter_model.dart';
+import 'package:rent_wheels/src/reservations/domain/entity/reservations.dart';
+import 'package:rent_wheels/src/reservations/data/model/reservation_model.dart';
+import 'package:rent_wheels/src/global/presentation/provider/global_provider.dart';
+import 'package:rent_wheels/src/reservations/presentation/bloc/reservations_bloc.dart';
+import 'package:rent_wheels/src/reservations/presentation/widgets/reservation_details_widget.dart';
+import 'package:rent_wheels/src/reservations/presentation/widgets/reservation_details_bottom_sheet_widget.dart';
 
 class MakeReservationPageTwo extends StatefulWidget {
   final String? car;
   final String? renter;
-  final ReservationView view;
   final String reservation;
+  final ReservationView view;
 
   const MakeReservationPageTwo({
     super.key,
@@ -47,56 +49,72 @@ class MakeReservationPageTwo extends StatefulWidget {
 class _MakeReservationPageTwoState extends State<MakeReservationPageTwo> {
   Car? _car;
   Renter? _renter;
+  DateTime? startDate;
+  DateTime? returnDate;
   Reservation? _reservation;
 
-  // makeReservation() async {
-  //   try {
-  //     buildLoadingIndicator(context, 'Making Reservation');
-  //     await RentWheelsReservationsMethods()
-  //         .makeReservation(reservationDetails: widget.reservation);
-  //     if (!mounted) return;
-  //     context.pop();
-  //     Navigator.push(
-  //       context,
-  //       CupertinoPageRoute(
-  //         builder: (context) => const ReservationSuccessful(),
-  //       ),
-  //     );
-  //   } catch (e) {
-  //     if (!mounted) return;
-  //     context.pop();
-  //     showErrorPopUp(e.toString(), context);
-  //   }
-  // }
+  final _reservationBloc = sl<ReservationsBloc>();
 
-  // modifyReservation({
-  //   required String reservationStatus,
-  // }) async {
-  //   String loadingMessage = reservationStatus == 'Cancelled'
-  //       ? 'Cancelling Reservation'
-  //       : reservationStatus == 'Ongoing'
-  //           ? 'Starting Trip'
-  //           : 'Ending Trip';
+  initPayment() async {
+    final update = await context.pushNamed(
+      'payment',
+      pathParameters: {
+        'reservationId': _reservation!.id!,
+      },
+      queryParameters: {
+        'car': jsonEncode(_car?.toMap()),
+        'reservation': jsonEncode(_reservation?.toMap()),
+      },
+    );
 
-  //   String successMessage = reservationStatus == 'Cancelled'
-  //       ? 'Reservation Cancelled'
-  //       : reservationStatus == 'Ongoing'
-  //           ? 'Trip Started'
-  //           : 'Trip Ended';
-  //   try {
-  //     buildLoadingIndicator(context, loadingMessage);
-  //     await RentWheelsReservationsMethods().changeReservationStatus(
-  //         reservationId: widget.reservation.id!, status: reservationStatus);
-  //     if (!mounted) return;
-  //     context.pop();
-  //     if (reservationStatus == 'Cancelled') context.pop();
-  //     showSuccessPopUp(successMessage, context);
-  //   } catch (e) {
-  //     if (!mounted) return;
-  //     context.pop();
-  //     showErrorPopUp(e.toString(), context);
-  //   }
-  // }
+    if (update != null) {
+      setState(() {
+        _reservation = update as Reservation;
+      });
+    }
+  }
+
+  makeReservation() async {
+    buildLoadingIndicator(context, 'Making Reservation');
+
+    final params = {
+      'headers': context.read<GlobalProvider>().headers,
+      'body': {
+        'price': _reservation!.price,
+        'carId': _reservation!.car!.id,
+        'renterId': _reservation!.renter!.id,
+        'startDate': _reservation!.startDate!,
+        'returnDate': _reservation!.returnDate!,
+        'destination': _reservation!.destination,
+        'customerId': _reservation!.customer!.id,
+      }
+    };
+
+    _reservationBloc.add(MakeReservationEvent(params: params));
+  }
+
+  modifyReservation({
+    required String reservationStatus,
+  }) async {
+    String loadingMessage = reservationStatus == 'Cancelled'
+        ? 'Cancelling Reservation'
+        : reservationStatus == 'Ongoing'
+            ? 'Starting Trip'
+            : 'Ending Trip';
+
+    buildLoadingIndicator(context, loadingMessage);
+
+    final params = {
+      'headers': context.read<GlobalProvider>().headers,
+      'urlParameters': {
+        'reservationId': _reservation!.id!,
+      },
+      'body': {
+        'status': reservationStatus,
+      }
+    };
+    _reservationBloc.add(ChangeReservationStatusEvent(params: params));
+  }
 
   bookAgain() => context.pushNamed(
         'makeReservation',
@@ -109,10 +127,25 @@ class _MakeReservationPageTwoState extends State<MakeReservationPageTwo> {
     if (widget.car != null) {
       _car = CarModel.fromJSON(jsonDecode(widget.car!));
     }
+
     if (widget.renter != null) {
       _renter = RenterModel.fromJSON(jsonDecode(widget.renter!));
     }
+
     _reservation = ReservationModel.fromJSON(jsonDecode(widget.reservation));
+
+    startDate = DateTime.parse(_reservation!.startDate!);
+    returnDate = DateTime.parse(_reservation!.returnDate!);
+  }
+
+  Duration getDuration() {
+    Duration duration = returnDate!.difference(startDate!);
+
+    if (returnDate!.isAtSameMomentAs(startDate!)) {
+      duration = const Duration(days: 1);
+    }
+
+    return duration;
   }
 
   @override
@@ -123,50 +156,65 @@ class _MakeReservationPageTwoState extends State<MakeReservationPageTwo> {
 
   @override
   Widget build(BuildContext context) {
-    DateTime startDate = DateTime.parse(_reservation!.startDate!);
-    DateTime returnDate = DateTime.parse(_reservation!.returnDate!);
-
-    Duration getDuration() {
-      Duration duration = returnDate.difference(startDate);
-
-      if (returnDate.isAtSameMomentAs(startDate)) {
-        duration = const Duration(days: 1);
-      }
-
-      return duration;
-    }
-
     return Scaffold(
       appBar: AppBar(
-        elevation: 0,
-        foregroundColor: rentWheelsBrandDark900,
-        backgroundColor: rentWheelsNeutralLight0,
         leading: AdaptiveBackButton(
-          onPressed: () => Navigator.pop(context, _reservation!.status),
+          onPressed: () => context.pop(_reservation),
         ),
       ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: EdgeInsets.only(
-            left: Sizes().width(context, 0.04),
-            right: Sizes().width(context, 0.04),
-            bottom: Sizes().height(context, 0.15),
+      body: BlocListener(
+        bloc: _reservationBloc,
+        listener: (context, state) {
+          if (state is GenericReservationsError) {
+            context.pop();
+            showErrorPopUp(state.errorMessage, context);
+          }
+
+          if (state is MakeReservationLoaded) {
+            context.pop();
+            context.goNamed('reservationSuccess');
+          }
+
+          if (state is ChangeReservationStatusLoaded) {
+            if (state.reservation.status! == 'Cancelled') context.pop();
+            context.pop();
+
+            String successMessage = state.reservation.status! == 'Cancelled'
+                ? 'Reservation Cancelled'
+                : state.reservation.status! == 'Ongoing'
+                    ? 'Trip Started'
+                    : 'Trip Ended';
+
+            showSuccessPopUp(successMessage, context);
+
+            setState(() {
+              _reservation = state.reservation;
+            });
+          }
+        },
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: EdgeInsets.only(
+              left: Sizes().width(context, 0.04),
+              right: Sizes().width(context, 0.04),
+              bottom: Sizes().height(context, 0.15),
+            ),
+            child: widget.view == ReservationView.make
+                ? ReservationDetails(
+                    car: _car,
+                    renter: _renter,
+                    duration: getDuration(),
+                    reservation: _reservation!,
+                    pageTitle: 'Make Reservation',
+                  )
+                : ReservationDetails(
+                    car: _car,
+                    renter: _renter,
+                    duration: getDuration(),
+                    pageTitle: 'Reservation',
+                    reservation: _reservation!,
+                  ),
           ),
-          child: widget.view == ReservationView.make
-              ? ReservationDetails(
-                  car: _car,
-                  renter: _renter,
-                  pageTitle: 'Make Reservation',
-                  duration: getDuration(),
-                  reservation: _reservation!,
-                )
-              : ReservationDetails(
-                  car: _car,
-                  renter: _renter,
-                  pageTitle: 'Reservation',
-                  duration: getDuration(),
-                  reservation: _reservation!,
-                ),
         ),
       ),
       bottomSheet: widget.view == ReservationView.make
@@ -174,10 +222,9 @@ class _MakeReservationPageTwoState extends State<MakeReservationPageTwo> {
               items: [
                 GenericButton(
                   isActive: true,
+                  onPressed: makeReservation,
                   buttonName: 'Make Reservation',
                   width: Sizes().width(context, 0.85),
-                  // onPressed: makeReservation,
-                  onPressed: null,
                 ),
               ],
             )
@@ -196,13 +243,9 @@ class _MakeReservationPageTwoState extends State<MakeReservationPageTwo> {
                             buttonName: 'Cancel Reservation',
                             message:
                                 'Are you sure you want to cancel your reservation?',
-                            onAccept: () async {
-                              // await modifyReservation(
-                              //     reservationStatus: 'Cancelled');
-                              // setState(() {
-                              //   reservation.status = 'Cancelled';
-                              // });
-                            },
+                            onAccept: () => modifyReservation(
+                              reservationStatus: 'Cancelled',
+                            ),
                           ),
                         ),
                       ],
@@ -215,14 +258,9 @@ class _MakeReservationPageTwoState extends State<MakeReservationPageTwo> {
                               buttonName: 'End Trip',
                               btnColor: rentWheelsErrorDark700,
                               width: Sizes().width(context, 0.85),
-                              onPressed: () async {
-                                // await modifyReservation(
-                                //     reservationStatus: 'Completed');
-
-                                // setState(() {
-                                //   reservation.status = 'Completed';
-                                // });
-                              },
+                              onPressed: () => modifyReservation(
+                                reservationStatus: 'Completed',
+                              ),
                             ),
                           ],
                         )
@@ -230,24 +268,11 @@ class _MakeReservationPageTwoState extends State<MakeReservationPageTwo> {
                           ? ReservationDetailsBottomSheet(
                               items: [
                                 GenericButton(
-                                    isActive: true,
-                                    buttonName: 'Make Payment',
-                                    width: Sizes().width(context, 0.4),
-                                    onPressed: () async {
-                                      // final status = await Navigator.push(
-                                      //   context,
-                                      //   CupertinoPageRoute(
-                                      //     builder: (context) => Payment(
-                                      //       car: car,
-                                      //       reservation: reservation,
-                                      //     ),
-                                      //   ),
-                                      // );
-                                      // setState(() {
-                                      //   reservation.status =
-                                      //       status ?? reservation.status;
-                                      // });
-                                    }),
+                                  isActive: true,
+                                  buttonName: 'Make Payment',
+                                  width: Sizes().width(context, 0.4),
+                                  onPressed: initPayment,
+                                ),
                                 Space().width(context, 0.04),
                                 GenericButton(
                                   isActive: true,
@@ -260,13 +285,9 @@ class _MakeReservationPageTwoState extends State<MakeReservationPageTwo> {
                                     buttonName: 'Cancel Reservation',
                                     message:
                                         'Are you sure you want to cancel your reservation?',
-                                    onAccept: () async {
-                                      // await modifyReservation(
-                                      //     reservationStatus: 'Cancelled');
-                                      // setState(() {
-                                      //   reservation.status = 'Cancelled';
-                                      // });
-                                    },
+                                    onAccept: () => modifyReservation(
+                                      reservationStatus: 'Cancelled',
+                                    ),
                                   ),
                                 ),
                               ],
@@ -278,15 +299,10 @@ class _MakeReservationPageTwoState extends State<MakeReservationPageTwo> {
                                       buttonName: 'Start Trip',
                                       width: Sizes().width(context, 0.4),
                                       isActive:
-                                          DateTime.now().isSameDate(startDate),
-                                      onPressed: () async {
-                                        // await modifyReservation(
-                                        //     reservationStatus: 'Ongoing');
-
-                                        // setState(() {
-                                        //   reservation.status = 'Ongoing';
-                                        // });
-                                      },
+                                          DateTime.now().isSameDate(startDate!),
+                                      onPressed: () => modifyReservation(
+                                        reservationStatus: 'Ongoing',
+                                      ),
                                     ),
                                     Space().width(context, 0.04),
                                     GenericButton(
@@ -300,13 +316,9 @@ class _MakeReservationPageTwoState extends State<MakeReservationPageTwo> {
                                         buttonName: 'Cancel Reservation',
                                         message:
                                             'Are you sure want to cancel your reservation? Only 50% of the trip price will be refunded to you.',
-                                        onAccept: () async {
-                                          // await modifyReservation(
-                                          //     reservationStatus: 'Cancelled');
-                                          // setState(() {
-                                          //   reservation.status = 'Cancelled';
-                                          // });
-                                        },
+                                        onAccept: () => modifyReservation(
+                                          reservationStatus: 'Cancelled',
+                                        ),
                                       ),
                                     ),
                                   ],
