@@ -27,6 +27,7 @@ class Login extends StatefulWidget {
 class _LoginState extends State<Login> {
   late GlobalProvider _globalProvider;
 
+  bool _showPassword = false;
   bool _isEmailValid = false;
   bool _isPasswordValid = false;
   final _userBloc = sl<UserBloc>();
@@ -143,8 +144,12 @@ class _LoginState extends State<Login> {
                     hint: 'Password',
                     isPassword: true,
                     controller: _password,
-                    textCapitalization: TextCapitalization.none,
                     textInput: TextInputAction.done,
+                    isPasswordVisible: _showPassword,
+                    textCapitalization: TextCapitalization.none,
+                    iconOnTap: () => setState(() {
+                      _showPassword = !_showPassword;
+                    }),
                     onChanged: (value) {
                       setState(() {
                         _isPasswordValid = isAscii(value) && value.length > 5;
