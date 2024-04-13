@@ -42,6 +42,7 @@ class _SignUpState extends State<SignUp> {
 
   bool _isDobValid = false;
   bool _isNameValid = false;
+  bool _showPassword = false;
   bool _isEmailValid = false;
   bool _isAvatarValid = false;
   bool _isPasswordValid = false;
@@ -128,6 +129,7 @@ class _SignUpState extends State<SignUp> {
   createBackendUser(String imagePath) {
     final params = {
       'type': 'create',
+      'headers': _globalProvider.headers,
       'body': {
         'name': _name.text,
         'userId': _globalProvider.user!.uid,
@@ -135,7 +137,7 @@ class _SignUpState extends State<SignUp> {
         'profilePicture': imagePath,
         'phoneNumber': _phoneNumber.text,
         'placeOfResidence': _residence.text,
-        'dob': parseDate(_dob.text),
+        'dob': parseDate(_dob.text).toIso8601String(),
       },
     };
 
@@ -259,11 +261,15 @@ class _SignUpState extends State<SignUp> {
                   ),
                   Space().height(context, 0.02),
                   GenericTextField(
-                    hint: 'Password',
-                    controller: _password,
-                    isPassword: true,
-                    textCapitalization: TextCapitalization.none,
                     maxLines: 1,
+                    hint: 'Password',
+                    isPassword: true,
+                    controller: _password,
+                    isPasswordVisible: _showPassword,
+                    textCapitalization: TextCapitalization.none,
+                    iconOnTap: () => setState(() {
+                      _showPassword = !_showPassword;
+                    }),
                     onChanged: (value) {
                       final regExp = RegExp(
                           r'(?=^.{8,255}$)((?=.*\d)(?=.*[A-Z])(?=.*[a-z])|(?=.*\d)(?=.*[^A-Za-z0-9])(?=.*[a-z])|(?=.*[^A-Za-z0-9])(?=.*[A-Z])(?=.*[a-z])|(?=.*\d)(?=.*[A-Z])(?=.*[^A-Za-z0-9]))^.*');

@@ -73,12 +73,15 @@ class _ProfileState extends State<Profile> {
                       height: Sizes().height(context, 0.081),
                       width: Sizes().width(context, 0.162),
                       decoration: BoxDecoration(
-                        image: DecorationImage(
-                          fit: BoxFit.cover,
-                          image: CachedNetworkImageProvider(
-                            _globalProvider.userDetails!.profilePicture!,
-                          ),
-                        ),
+                        image: _globalProvider.userDetails!.profilePicture !=
+                                null
+                            ? DecorationImage(
+                                fit: BoxFit.cover,
+                                image: CachedNetworkImageProvider(
+                                  _globalProvider.userDetails!.profilePicture!,
+                                ),
+                              )
+                            : null,
                         border: Border.all(color: rentWheelsNeutralLight200),
                         color: rentWheelsNeutralLight0,
                         borderRadius: BorderRadius.circular(
