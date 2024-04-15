@@ -29,9 +29,13 @@ class AuthenticationRemoteDatasourceImpl
     http.Response response;
 
     final uri = url.returnUri(endpoint: Endpoints.registerUpdateOrDeleteUser);
+
     if (isCreate) {
+      // print(params['headers']);
+      // throw Exception('');
       response = await client.post(
         uri,
+        headers: params['headers'],
         body: jsonEncode(params['body']),
       );
     } else {

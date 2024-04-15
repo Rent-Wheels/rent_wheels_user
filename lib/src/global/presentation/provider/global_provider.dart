@@ -80,7 +80,7 @@ class GlobalProvider extends ChangeNotifier {
   clearUserInfo() {
     _user = null;
     _userDetails = null;
-    _headers = {};
+    _headers = Urls().headers;
     notifyListeners();
   }
 }
